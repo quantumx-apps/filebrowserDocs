@@ -78,7 +78,7 @@ ignoreLogs = ['warning-goldmark-raw-html']
 
 [module]
     [[module.imports]]
-        path = "github.com/gtsteffaniak/filebrowserDocsTheme"
+        path = "github.com/quantumx-apps/filebrowserDocsTheme"
         disable = false
     [[module.imports]]
         path = "github.com/gohugoio/hugo-mod-bootstrap-scss/v5"
