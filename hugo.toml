@@ -5,7 +5,7 @@ title = 'FileBrowser Quantum Documentation'
 defaultContentLanguage = 'en'
 enableMissingTranslationPlaceholders = true
 defaultContentLanguageInSubdir = false
-googleAnalytics = ""
+
 
 [languages]
   [languages.en]
