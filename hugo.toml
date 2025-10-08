@@ -1,4 +1,5 @@
-baseURL = 'https://filebrowserquantum.com/'
+# Base URL - can be overridden with environment variable HUGO_BASE_URL
+baseURL = 'https://filebrowserquantum.com/filebrowserDocs'
 languageCode = 'en-us'
 title = 'FileBrowser Quantum Documentation'
 defaultContentLanguage = 'en'
