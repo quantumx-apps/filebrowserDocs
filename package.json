@@ -1,0 +1,24 @@
+{
+  "name": "filebrowser-quantum-docs",
+  "version": "1.0.0",
+  "description": "FileBrowser Quantum Documentation",
+  "type": "module",
+  "scripts": {
+    "i18n:sync": "node ./scripts/sync-translations.js",
+    "i18n:check": "node ./scripts/sync-translations.js --check",
+    "content:sync": "node ./scripts/translate-content-smart.js",
+    "content:check": "node ./scripts/translate-content-smart.js --check",
+    "docs:dev": "hugo server",
+    "docs:build": "hugo",
+    "docs:serve": "hugo server --bind 0.0.0.0 --port 1313"
+  },
+  "dependencies": {
+    "deepl-node": "^1.12.0",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.3.10"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

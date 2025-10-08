@@ -1,0 +1,130 @@
+# Note: Template blocks require a 'weight' parameter so they're correctly ordered on the landing page
+
+# Hero
+hero:
+  enable: true
+  weight: 10
+  width: 100%
+  template: hero
+
+  badge:
+    text: "v0.8.0"
+    color: success # primary, secondary, success, danger, warning, info, light, dark
+    pill: true # boolean
+    soft: false # boolean
+
+  titleLogo:
+    icon: "folder"
+    iconSize: "80px"
+    iconColor: "#2196F3"
+
+  title: "FileBrowser Quantum"
+  subtitle: The best free self-hosted web-based file manager with **multiple sources**, **OIDC authentication**, and **real-time indexing**.
+
+  image:
+    path: "images"
+    filename: "hero-screenshot.png"
+    alt: "FileBrowser Quantum Screenshot"
+    boxShadow: true
+    rounded: true
+
+  ctaButton:
+    color: success
+    btnText: "Get Started"
+    url: "docs/"
+  info: "**Open Source** Apache 2.0 Licensed • **Free Forever**"
+
+# Image compare (disabled - images not yet available)
+imageCompare:
+  enable: false
+  weight: 30
+  template: image compare
+
+  title: Revolutionary File Management.
+  subtitle: Experience the power of real-time indexing and multi-source browsing.
+
+  items:
+    - title: Real-Time Search
+      config: {
+        startingPoint: 50,
+        addCircle: true,
+        addCircleBlur: false,
+        showLabels: true,
+        labelOptions: {
+          before: 'Traditional Search',
+          after: 'Real-Time Indexed',
+          onHover: false
+        }
+      }
+      imagePath: "images/screenshots"
+      imageBefore: "filebrowser_traditional_search.webp"
+      imageAfter: "filebrowser_realtime_search.webp"
+
+    - title: Multiple Sources
+      config: {
+        controlColor: "#3C4257",
+        startingPoint: 25,
+        addCircle: true,
+        addCircleBlur: false,
+        showLabels: true,
+        labelOptions: {
+          before: 'Single Source',
+          after: 'Multiple Sources',
+          onHover: false
+        }
+      }
+      imagePath: "images/screenshots"
+      imageBefore: "filebrowser_single_source.webp"
+      imageAfter: "filebrowser_multi_source.webp"
+
+    - title: Office Integration
+      config: {
+        startingPoint: 25,
+        addCircle: true,
+        addCircleBlur: true,
+        showLabels: true,
+        labelOptions: {
+          before: 'View Only',
+          after: 'Edit in Browser',
+          onHover: false
+        }
+      }
+      imagePath: "images/screenshots"
+      imageBefore: "filebrowser_view_only.webp"
+      imageAfter: "filebrowser_office_edit.webp"
+
+# Features
+features:
+  enable: true
+  weight: 40
+  template: feature grid
+
+  title: "Why Choose FileBrowser Quantum?"
+  subtitle: "A massive fork with revolutionary features that set it apart from traditional file managers"
+
+  items:
+    - icon: "security"
+      title: "Advanced Authentication"
+      description: "Support for OIDC, password + 2FA, and proxy authentication. Enterprise-grade security for your files."
+
+    - icon: "edit_document"
+      title: "Office File Support"
+      description: "Edit Office documents directly in the browser with OnlyOffice integration. Support for video and office file previews."
+
+    - icon: "share"
+      title: "Configurable Sharing"
+      description: "Create shares with expiration times, user restrictions, styling options, and granular permissions."
+
+    - icon: "search"
+      title: "Real-Time Search"
+      description: "Find files instantly with content-aware search across your entire filesystem. Supports file sizes and advanced filters."
+
+    - icon: "api"
+      title: "Developer API"
+      description: "Long-lived API tokens with comprehensive Swagger documentation. Build integrations and automate workflows."
+
+    - icon: "folder"
+      title: "Directory Access Control"
+      description: "Granular permissions scoped to users or groups. Control access at the directory level with precision."
+
+# Call to action - removed as theme doesn't support cta template

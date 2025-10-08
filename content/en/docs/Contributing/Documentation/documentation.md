@@ -1,0 +1,140 @@
+---
+title: "Documentation"
+description: "Contribute to FileBrowser documentation"
+icon: "article"
+weight: 3
+---
+
+Help improve FileBrowser documentation using our Hugo-based structure.
+
+## Documentation Structure
+
+**Static Site Generator**: Hugo  
+**Theme**: Custom FileBrowser Docs Theme  
+**Deployment**: Auto-generated during releases  
+**Format**: Markdown with YAML front matter
+
+## Repository Structure
+
+```
+docs/
+├── content/docs/           # All documentation pages
+├── layouts/               # Theme overrides
+├── assets/               # Custom CSS/JS
+└── hugo.toml             # Site configuration
+```
+
+## Creating New Pages
+
+### 1. Add Page to Section
+
+Create new markdown file in appropriate folder:
+```bash
+docs/content/docs/Configuration/new-page.md
+```
+
+### 2. Add Front Matter
+
+```yaml
+---
+title: "Page Title"
+description: "Brief description (40-60 chars)"
+icon: "material_symbol_name"
+weight: 1
+---
+```
+
+### 3. Write Content
+
+**No H1 headers** - Title comes from front matter. Use H2 (`##`) for sections.
+
+```markdown
+Brief introduction paragraph.
+
+## Section Heading
+
+Content here...
+
+## Next Steps
+
+- [Related topic](/docs/section/page/)
+```
+
+### 4. Test Locally
+
+```bash
+cd docs
+hugo server
+```
+
+View at: `http://localhost:1313/docs/`
+
+## Front Matter Fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `title` | Yes | Page title (appears in navigation and header) |
+| `description` | Yes | Brief description (shows in next/prev cards) |
+| `icon` | No | Material Symbol icon name |
+| `weight` | Yes | Controls sort order (lower = higher in list) |
+
+## Icons
+
+Uses [Material Symbols](https://fonts.google.com/icons). Search for icon, copy name, add to front matter: `icon: "settings"`
+
+## Content Guidelines
+
+- **Clear and concise**: Get to the point quickly
+- **Actionable**: Provide steps users can follow
+- **Examples**: Include code examples and configurations
+- **Accurate**: Only document actual features (no speculation)
+
+### Code Blocks
+
+Use language-specific syntax highlighting:
+
+````markdown
+```yaml
+server:
+  port: 80
+```
+
+```bash
+./filebrowser -c config.yaml
+```
+````
+
+### Links
+
+**Internal links**: Use absolute paths from `/docs/`
+```markdown
+[Configuration](/docs/configuration/)
+```
+
+**External links**: Use full URLs
+```markdown
+[GitHub Repository](https://github.com/gtsteffaniak/filebrowser)
+```
+
+## Documentation Best Practices
+
+- **Keep descriptions brief**: 40-60 characters for navigation cards
+- **Use consistent icons**: Related pages should use related icons
+- **Maintain weight order**: Lower numbers appear higher in lists
+- **Cross-reference**: Add "Next Steps" section at the end
+
+## Local Preview
+
+Always preview changes locally before submitting:
+
+```bash
+cd docs
+hugo server -D
+```
+
+Access at: `http://localhost:1313/docs/`
+
+## Next Steps
+
+- [Feature development](/docs/contributing/features/)
+- [Translation guide](/docs/contributing/translations/)

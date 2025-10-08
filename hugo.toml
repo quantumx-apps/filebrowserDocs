@@ -1,0 +1,84 @@
+baseURL = 'https://filebrowserquantum.com/'
+languageCode = 'en-us'
+title = 'FileBrowser Quantum Documentation'
+defaultContentLanguage = 'en'
+enableMissingTranslationPlaceholders = true
+defaultContentLanguageInSubdir = false
+googleAnalytics = ""
+
+[languages]
+  [languages.en]
+    contentDir = 'content/en'
+    languageName = 'English'
+    weight = 1
+    languageCode = 'en-us'
+
+  [languages.de]
+    contentDir = 'content/de'
+    languageName = 'Deutsch'
+    weight = 2
+    languageCode = 'de'
+
+  [languages.es]
+    contentDir = 'content/es'
+    languageName = 'Español'
+    weight = 3
+    languageCode = 'es'
+
+  [languages.fr]
+    contentDir = 'content/fr'
+    languageName = 'Français'
+    weight = 4
+    languageCode = 'fr'
+
+  [languages.zh-cn]
+    contentDir = 'content/zh-cn'
+    languageName = '中文 (简体)'
+    weight = 5
+    languageCode = 'zh-cn'
+
+[params]
+    # Google Fonts - FileBrowser Quantum uses Roboto
+    google_fonts = [
+        ["Roboto", "300, 400, 500, 600, 700"],
+        ["Material Symbols Outlined", "100..700"]
+    ]
+
+    # Logo configuration (uses Material Icons by default)
+    [params.logo]
+        icon = "folder"  # Material icon name (defaults to "folder")
+        iconSize = "40px"  # Icon size
+        iconColor = "#2196F3"  # Blue color for folder icon
+        # path = "images/logos/mark.svg"  # Uncomment to use a custom image instead
+
+    [params.docs]
+        darkMode = true
+        sidebarIcons = true
+        titleIcon = true
+        navDesc = true
+        prism = true
+        prismTheme = "lotusdocs"
+
+    [params.docsearch]
+        appID = "" # Algolia Application ID (get from DocSearch application)
+        apiKey = "" # Algolia Search-Only API Key (get from DocSearch application)
+        indexName = "" # Index Name (get from DocSearch application)
+
+# Suppress raw HTML warnings
+ignoreLogs = ['warning-goldmark-raw-html']
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.shortcode]
+        enable = true
+
+[module]
+    [[module.imports]]
+        path = "github.com/gtsteffaniak/filebrowserDocsTheme"
+        disable = false
+    [[module.imports]]
+        path = "github.com/gohugoio/hugo-mod-bootstrap-scss/v5"
+        disable = false
