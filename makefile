@@ -1,6 +1,6 @@
 # Development server
 dev:
-	hugo server -D --baseURL "http://localhost:1313/filebrowserDocs/"
+	hugo server -D --baseURL "http://localhost:1313/"
 
 # Build for production
 build:

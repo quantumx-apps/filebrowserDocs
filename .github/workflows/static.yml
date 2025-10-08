@@ -47,7 +47,7 @@ jobs:
       - name: Build Hugo site
         run: |
           echo "Building Hugo site for GitHub Pages"
-          hugo --minify --baseURL "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          hugo --minify --baseURL "https://${{ github.repository_owner }}.github.io/"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

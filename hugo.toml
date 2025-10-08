@@ -1,5 +1,5 @@
 # Base URL - can be overridden with environment variable HUGO_BASE_URL
-baseURL = '/filebrowserDocs/'
+baseURL = '/'
 publishDir = 'dist'
 languageCode = 'en-us'
 title = 'FileBrowser Quantum Documentation'
