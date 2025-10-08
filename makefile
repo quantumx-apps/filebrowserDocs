@@ -1,6 +1,6 @@
 # Development server
 dev:
-	hugo server -D
+	hugo server -D --baseURL "http://localhost:1313/filebrowserDocs/"
 
 # Build for production
 build:
@@ -8,11 +8,11 @@ build:
 
 # Build for GitHub Pages
 build-github:
-	hugo --minify --baseURL "https://quantumx-apps.github.io/filebrowserDocs"
+	hugo --minify
 
 # Clean build artifacts
 clean:
-	rm -rf public/
+	rm -rf dist/
 
 sync-translations:
 	echo translating... not working yet
