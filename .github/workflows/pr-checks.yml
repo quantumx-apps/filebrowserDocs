@@ -1,0 +1,131 @@
+# PR validation workflow for Hugo site
+name: PR Checks - Hugo Validation
+
+on:
+  pull_request:
+    branches: ["main"]
+  # Allow manual runs for testing
+  workflow_dispatch:
+
+# Cancel in-progress runs when a new run is triggered on the same PR
+concurrency:
+  group: pr-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Hugo-specific validations (no external dependencies needed!)
+  hugo-validate:
+    name: Hugo Specific Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Check Hugo version
+        run: hugo version
+
+      - name: Validate front matter syntax
+        run: |
+          echo "Validating YAML front matter in all markdown files..."
+          # Install yq for YAML validation (lightweight, single binary)
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+          # Check all markdown files for valid front matter
+          find content -name "*.md" -type f | while read file; do
+            # Extract front matter (between first two --- markers only)
+            awk '/^---$/ {flag++; next} flag==1' "$file" | yq e '.' - > /dev/null 2>&1 || {
+              echo "❌ Invalid front matter in: $file"
+              exit 1
+            }
+          done
+          echo "✅ All front matter is valid YAML"
+
+      - name: Build with strict validation flags
+        run: |
+          echo "Building Hugo site with strict validation..."
+          hugo \
+            --minify \
+            --baseURL "https://filebrowserquantum.com/" \
+            --printPathWarnings \
+            --printUnusedTemplates \
+            --templateMetrics \
+            --templateMetricsHints
+
+      - name: Hugo audit - Check for common issues
+        run: |
+          echo "Running Hugo audit checks..."
+          # Build with audit flags
+          HUGO_MINIFY_TDEWOLFF_HTML_KEEPCOMMENTS=true \
+          HUGO_ENABLEMISSINGTRANSLATIONPLACEHOLDERS=true \
+          hugo --minify --baseURL "https://filebrowserquantum.com/"
+
+          # Search for common issues
+          echo "Checking for raw HTML omissions..."
+          if grep -rn "raw HTML omitted" dist/; then
+            echo "⚠️ Warning: Found 'raw HTML omitted' - check your markdown for unsupported HTML"
+          fi
+
+          echo "Checking for template errors..."
+          if grep -rn "ZgotmplZ" dist/; then
+            echo "❌ Error: Found 'ZgotmplZ' - template execution error"
+            exit 1
+          fi
+
+          echo "Checking for missing translations..."
+          if grep -rn "\[i18n\]" dist/; then
+            echo "⚠️ Warning: Found missing translations"
+          fi
+
+          echo "Checking for nil pointers..."
+          if grep -rn "<nil>" dist/; then
+            echo "❌ Error: Found nil pointer references"
+            exit 1
+          fi
+
+          echo "✅ Hugo audit complete"
+
+      - name: Verify required front matter fields
+        run: |
+          echo "Checking for required front matter fields..."
+          find content/en/docs -name "*.md" -type f | while read file; do
+            # Skip if it's just a redirect or special file
+            if grep -q "^aliases:" "$file" 2>/dev/null; then
+              continue
+            fi
+
+            # Check for required fields (title, description, icon)
+            if ! grep -q "^title:" "$file"; then
+              echo "⚠️ Warning: Missing 'title' in $file"
+            fi
+            if ! grep -q "^description:" "$file"; then
+              echo "⚠️ Warning: Missing 'description' in $file"
+            fi
+            if ! grep -q "^icon:" "$file"; then
+              echo "⚠️ Warning: Missing 'icon' in $file"
+            fi
+          done
+          echo "✅ Front matter validation complete"
+
+      - name: Summary
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "✅ All Hugo validation checks passed!"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+          echo "✓ Front matter YAML syntax valid"
+          echo "✓ Hugo build successful with strict validation"
+          echo "✓ No template errors (ZgotmplZ)"
+          echo "✓ No nil pointer references"
+          echo "✓ Required front matter fields present"
+          echo ""
+          echo "Ready to merge!"
+

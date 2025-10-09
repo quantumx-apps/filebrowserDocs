@@ -4,13 +4,13 @@
   "description": "FileBrowser Quantum Documentation",
   "type": "module",
   "scripts": {
-    "i18n:sync": "node ./scripts/sync-translations.js",
-    "i18n:check": "node ./scripts/sync-translations.js --check",
-    "content:sync": "node ./scripts/translate-content-smart.js",
-    "content:check": "node ./scripts/translate-content-smart.js --check",
-    "docs:dev": "hugo server",
-    "docs:build": "hugo",
-    "docs:serve": "hugo server --bind 0.0.0.0 --port 1313"
+    "translate": "node ./scripts/translations.js",
+    "translate:check": "node ./scripts/translations.js --check",
+    "translate:content": "node ./scripts/translations.js --mode=content",
+    "translate:i18n": "node ./scripts/translations.js --mode=i18n",
+    "doclinks:convert": "node ./scripts/doclinks.js",
+    "doclinks:check": "node ./scripts/doclinks.js --check",
+    "doclinks:revert": "node ./scripts/doclinks.js --mode=revert"
   },
   "dependencies": {
     "deepl-node": "^1.12.0",
