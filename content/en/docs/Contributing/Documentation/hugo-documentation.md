@@ -248,6 +248,14 @@ Every documentation page must include front matter with these attributes:
 - `date` - Publication date (required)
 - `lastmod` - Last modification date (required)
 
+### Optional Front Matter
+
+These fields are optional but can enhance your documentation:
+- `order` - Manual ordering override within the same directory (optional, default: 0)
+- `draft` - Mark page as draft to exclude from build (optional, default: false)
+- `toc` - Enable/disable table of contents (optional, default: true)
+- `katex` - Enable KaTeX math rendering (optional, default: false)
+
 ## Required Attributes
 
 ### Title
@@ -292,6 +300,30 @@ Every documentation page must include front matter with these attributes:
   - `"2024-12-01T09:15:00-08:00"` - December 1, 2024 at 9:15 AM PST
 - **Usage**: Used for showing "last updated" information, sitemaps, and cache invalidation
 - **Note**: Update this every time you make changes to the content
+
+### Order
+- **Required**: No (defaults to 0)
+- **Purpose**: Manual override for page ordering within the same directory level
+- **Format**: Integer (positive, zero, or negative)
+- **How It Works**:
+  - **Positive integers** (1, 2, 3...): Pages appear first, second, third, etc. at their peer level
+  - **Zero or unset**: Pages use default alphabetical sorting by path
+  - **Negative integers** (-1, -2, -3...): Pages appear last, second to last, third to last, etc.
+- **Examples**:
+  ```yaml
+  order: 1      # This page appears first in its directory
+  order: 0      # Default alphabetical ordering (same as unset)
+  order: -1     # This page appears last in its directory
+  ```
+- **Usage**: 
+  - Use when you need specific ordering within a folder
+  - Applies to sidebar navigation, list pages, and next/previous navigation
+  - Only affects pages at the same directory level (peers)
+- **Notes**: 
+  - The automatic ordering system still uses file paths as the primary sort
+  - The `order` field only overrides ordering within the same directory
+  - If multiple pages have the same order value, they're sorted alphabetically by path
+  - Works seamlessly with the automatic ordering system (`autoOrdering = true` in `hugo.toml`)
 
 ### Draft
 - **Required**: No (defaults to false)
@@ -408,6 +440,79 @@ lastmod: "2024-10-08T18:30:00-05:00"  # EST
 # Date only (Hugo will assume midnight UTC)
 date: "2024-01-15"
 lastmod: "2024-10-08"
+```
+
+### Custom Ordering with `order` Field
+
+**When to use `order`:**
+- You need a specific page to appear first in its directory
+- You want a troubleshooting guide to appear last
+- You need to override alphabetical ordering for better UX
+
+**Example Scenario:**
+In a directory with multiple pages, you want:
+1. Overview page first
+2. Other pages in alphabetical order
+3. Troubleshooting page last
+
+**Front Matter Examples:**
+```yaml
+# overview.md - Appears FIRST
+---
+title: "Overview"
+order: 1
+---
+
+# installation.md - Appears in middle (alphabetical)
+---
+title: "Installation"
+# No order field = default alphabetical sorting
+---
+
+# configuration.md - Appears in middle (alphabetical)
+---
+title: "Configuration"
+order: 0  # Same as unset
+---
+
+# troubleshooting.md - Appears LAST
+---
+title: "Troubleshooting"
+order: -1
+---
+```
+
+**Multiple Ordered Pages:**
+```yaml
+# getting-started.md - First
+---
+title: "Getting Started"
+order: 1
+---
+
+# basic-usage.md - Second
+---
+title: "Basic Usage"
+order: 2
+---
+
+# advanced-usage.md - Third
+---
+title: "Advanced Usage"
+order: 3
+---
+
+# faq.md - Second to last
+---
+title: "FAQ"
+order: -2
+---
+
+# troubleshooting.md - Last
+---
+title: "Troubleshooting"
+order: -1
+---
 ```
 
 ## Best Practices
