@@ -2,7 +2,6 @@
 title: "Indexing"
 description: "How FileBrowser Quantum indexing works"
 icon: "search"
-weight: 2
 ---
 
 # About Indexing on FileBrowser Quantum

@@ -2,7 +2,6 @@
 title: "Roadmap"
 description: "Current development roadmap and planned features"
 icon: "timeline"
-weight: 2
 ---
 
 # Github Roadmap

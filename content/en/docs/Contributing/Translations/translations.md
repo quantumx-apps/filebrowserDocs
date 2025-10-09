@@ -2,7 +2,6 @@
 title: "Translations"
 description: "Update and improve language translations"
 icon: "translate"
-weight: 2
 ---
 
 Contribute translations to make FileBrowser accessible in more languages.
@@ -77,7 +76,9 @@ To add a new language to our supported set:
 5. Update documentation to reflect the new language
 6. Open pull request
 
-**Note**: We maintain a focused set of languages to ensure translation quality and maintenance efficiency.
+{{% alert context="info" %}}
+We maintain a focused set of languages to ensure translation quality and maintenance efficiency.
+{{% /alert %}}
 
 ## Next Steps
 

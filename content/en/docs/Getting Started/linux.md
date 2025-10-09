@@ -2,7 +2,6 @@
 title: "Linux"
 description: "Install FileBrowser on Linux"
 icon: "terminal"
-weight: 4
 ---
 
 Run FileBrowser Quantum natively on Linux.

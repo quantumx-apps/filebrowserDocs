@@ -1,199 +1,467 @@
 ---
 title: "Troubleshooting"
-description: "Common office integration issues"
+description: "Common OnlyOffice integration issues and solutions"
 icon: "troubleshoot"
-weight: 4
 ---
 
-Solutions for common office integration problems.
+Solutions for common OnlyOffice integration problems including connectivity, authentication, and document opening issues.
 
-## Office Server Not Found
+## Debug Mode (Recommended First Step)
 
-**Symptoms**: Documents don't open, error messages about connection refused.
+The easiest way to troubleshoot OnlyOffice issues is to use the built-in debug mode:
 
-**Solutions**:
+**Enable Debug Mode:**
+1. Navigate to **Profile Settings** → **File Viewer Options**
+2. Toggle **"Debug OnlyOffice Editor"** to ON
+3. Open any document with OnlyOffice
+4. View the debug tooltip that appears automatically
 
-1. **Verify office server is running**:
+![Debug Mode Tooltip](https://github.com/user-attachments/assets/5c26b33d-1483-462f-8ad1-529cbbeac21d)
+
+### What Debug Mode Shows
+
+The debug tooltip provides:
+- **Real-time trace** of the integration process
+- **Network flow analysis** between components
+- **Configuration details** including URLs and domains
+- **Specific error detection** with troubleshooting advice
+- **Connectivity testing** to OnlyOffice server
+
+### Network Flow Diagram
+
+![Office Integration Diagram](https://github.com/user-attachments/assets/dd22561d-c26e-4b20-9a84-18310596d625)
+
+The diagram shows the communication flow:
+1. **Browser** ↔ **OnlyOffice Server**: Editor interface
+2. **OnlyOffice** → **FileBrowser** (download URL): Fetches document
+3. **OnlyOffice** → **FileBrowser** (callback URL): Saves changes
+
+## Quick Diagnostics
+
+### Verify OnlyOffice is Running
+
 ```bash
-# Check Collabora
-curl http://localhost:9980/hosting/discovery
+# Check health endpoint
+curl http://localhost/healthcheck
 
-# Check OnlyOffice
+# Expected response:
+{"status":"ok"}
+
+# Check welcome page
+curl http://localhost/welcome
+```
+
+### Test Network Connectivity
+
+From FileBrowser container:
+
+```bash
+# Test connection to OnlyOffice
+docker exec filebrowser curl http://onlyoffice/healthcheck
+
+# Check DNS resolution
+docker exec filebrowser nslookup onlyoffice
+```
+
+### Check Browser Console
+
+Open browser developer tools (F12) and look for:
+
+**Successful Config:**
+```
+OnlyOffice config request: source=downloads, path=/doc.docx, isShare=false
+OnlyOffice: built download URL=http://localhost:8080/api/raw?...
+OnlyOffice: successfully generated config for file=doc.docx
+```
+
+**Successful Save:**
+```
+OnlyOffice callback: source=downloads, path=/doc.docx, status=2
+OnlyOffice: successfully saved updated document
+```
+
+## Common Issues
+
+### OnlyOffice Server Not Found
+
+{{% alert context="danger" %}}
+**Problem:** Documents don't open, connection refused errors
+
+**Symptoms:**
+- Error messages about connection refused
+- Can't reach OnlyOffice server
+- Documents fail to load
+- Empty preview screen when opening documents
+{{% /alert %}}
+
+**Solutions:**
+
+{{< tabs tabTotal="3" >}}
+
+{{< tab tabName="Check Service Status" >}}
+Verify OnlyOffice is running:
+
+```bash
+# Check Docker container status
+docker ps | grep onlyoffice
+
+# Check service health
 curl http://localhost:80/healthcheck
 ```
 
-2. **Check URL configuration**:
+Expected response:
+```json
+{"status":"ok"}
+```
+
+If not running, start OnlyOffice:
+```bash
+docker-compose up -d onlyoffice
+```
+{{< /tab >}}
+
+{{< tab tabName="Verify URL Configuration" >}}
+FileBrowser needs correct URLs:
+
 ```yaml
 integrations:
   office:
-    url: "http://collabora:9980"  # Correct hostname and port
+    url: "http://onlyoffice"       # Must be accessible from browser
+    internalUrl: "http://onlyoffice" # Must be accessible from FileBrowser container
+    secret: "your-jwt-secret"
 ```
 
-3. **Test network connectivity**:
-```bash
-# From FileBrowser container
-docker exec filebrowser curl http://collabora:9980/hosting/discovery
-```
+{{% alert context="warning" %}}
+`localhost` will NOT work if services are in separate containers. Use Docker service name or IP address.
+{{% /alert %}}
 
-4. **Check Docker network**:
+Test the URL from your browser: Navigate to the OnlyOffice URL - you should see a welcome page.
+{{< /tab >}}
+
+{{< tab tabName="Check Docker Network" >}}
+Ensure containers are on the same network:
+
 ```bash
+# List networks
 docker network ls
+
+# Inspect network
 docker network inspect <network-name>
 ```
 
-## CORS Errors
-
-**Symptoms**: "Cross-Origin Request Blocked" errors in browser console.
-
-**Solutions**:
-
-1. **Configure Collabora domain**:
+Example `docker-compose.yml`:
 ```yaml
-environment:
-  - domain=filebrowser\\.localhost|files\\.yourdomain\\.com
+services:
+  filebrowser:
+    networks:
+      - office-network
+  
+  onlyoffice:
+    networks:
+      - office-network
+
+networks:
+  office-network:
+    driver: bridge
+```
+{{< /tab >}}
+
+{{< /tabs >}}
+
+### JWT Authentication Errors
+
+{{% alert context="danger" %}}
+**Problem:** "JWT verification failed" or "Invalid token" errors
+
+**Symptoms:**
+- Documents won't open
+- Authentication errors in logs
+- Token validation failures
+{{% /alert %}}
+
+**Step 1: Generate JWT Secret**
+
+Create a strong random secret:
+
+```bash
+# Generate 32-byte base64 secret
+openssl rand -base64 32
+
+# Or use uuidgen
+uuidgen
 ```
 
-Use pipe `|` to separate multiple domains.
+**Step 2: Configure FileBrowser**
 
-2. **Configure OnlyOffice CORS**:
-```yaml
-environment:
-  - WOPI_ENABLED=true
-  - ALLOW_CORS=true
-```
-
-3. **Check reverse proxy headers**:
-```nginx
-proxy_set_header Host $host;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header X-Forwarded-Proto $scheme;
-```
-
-## JWT Errors
-
-**Symptoms**: "JWT verification failed", "Invalid token" errors.
-
-**Solutions**:
-
-1. **Verify JWT secret matches**:
-
-FileBrowser:
 ```yaml
 integrations:
   office:
-    jwtSecret: "exact-same-secret"
+    url: "http://onlyoffice"
+    secret: "your-generated-secret"  # Use the secret from Step 1
 ```
 
-Office server:
+**Step 3: Configure OnlyOffice**
+
 ```yaml
-environment:
-  - JWT_SECRET=exact-same-secret
+onlyoffice:
+  environment:
+    - JWT_ENABLED=true
+    - JWT_SECRET=your-generated-secret  # MUST match FileBrowser exactly
+    - JWT_HEADER=Authorization
 ```
 
-2. **Ensure JWT is enabled on both sides**:
+{{% alert context="warning" %}}
+The JWT secret must be **identical** in both configurations, including capitalization and special characters. Any mismatch will cause authentication failures.
+{{% /alert %}}
 
-Collabora:
-```yaml
-environment:
-  - extra_params=--o:jwt.enabled=true --o:jwt.secret=your-secret
-```
+### Documents Won't Open
 
-OnlyOffice:
-```yaml
-environment:
-  - JWT_ENABLED=true
-  - JWT_SECRET=your-secret
-```
+{{% alert context="danger" %}}
+**Problem:** Clicking document shows error or nothing happens
 
-3. **Generate strong JWT secret**:
+**Symptoms:**
+- No response when clicking document
+- Blank screen or error message
+- Document viewer doesn't load
+{{% /alert %}}
+
+**Solutions:**
+
+**1. Check File Format Support**
+
+OnlyOffice supports these formats:
+
+| Document Type | Supported Formats |
+|--------------|-------------------|
+| Documents | `.doc`, `.docm`, `.docx`, `.dot`, `.dotm`, `.dotx`, `.epub`, `.fb2`, `.fodt`, `.htm`, `.html`, `.mht`, `.odt`, `.ott`, `.rtf`, `.txt`, `.xml` |
+| Spreadsheets | `.csv`, `.et`, `.ett`, `.fods`, `.ods`, `.ots`, `.sxc`, `.xls`, `.xlsb`, `.xlsm`, `.xlsx`, `.xlt`, `.xltm`, `.xltx` |
+| Presentations | `.dps`, `.dpt`, `.fodp`, `.odp`, `.otp`, `.pot`, `.potm`, `.potx`, `.pps`, `.ppsm`, `.ppsx`, `.ppt`, `.pptm`, `.pptx`, `.sxi` |
+| Other | `.djvu`, `.docxf`, `.oform`, `.oxps`, `.pdf`, `.xps` |
+
+{{% alert context="info" %}}
+Use `disableOnlyOfficeExt` in user defaults to exclude specific extensions from opening in OnlyOffice.
+{{% /alert %}}
+
+**2. Verify File Permissions**
+
 ```bash
-openssl rand -base64 32
-```
-
-## Documents Won't Open
-
-**Symptoms**: Clicking document does nothing or shows error.
-
-**Solutions**:
-
-1. **Check file format is supported**:
-
-Supported formats:
-- Documents: `.doc`, `.docx`, `.odt`, `.rtf`, `.txt`
-- Spreadsheets: `.xls`, `.xlsx`, `.ods`, `.csv`
-- Presentations: `.ppt`, `.pptx`, `.odp`
-
-2. **Verify file permissions**:
-```bash
+# Check file permissions
 ls -l /path/to/document.docx
+
+# FileBrowser user must have read access
+-rw-r--r-- 1 user group 12345 date document.docx
 ```
 
-FileBrowser user must have read access.
+**3. Check File Size Limits**
 
-3. **Check file size**:
-
-Large files may timeout. Increase timeouts:
+Large files may timeout. Increase limits:
 
 ```yaml
-# In office server config
-environment:
-  - MAX_FILE_SIZE=100  # MB
+onlyoffice:
+  environment:
+    - MAX_FILE_SIZE=100  # MB
 ```
 
-4. **Review logs**:
+**4. Review Logs**
+
 ```bash
 # FileBrowser logs
-docker-compose logs filebrowser
-
-# Collabora logs
-docker-compose logs collabora
+docker logs filebrowser --tail 100
 
 # OnlyOffice logs
-docker-compose logs onlyoffice
+docker logs onlyoffice --tail 100
+
+# Follow logs in real-time
+docker-compose logs -f
 ```
 
-## SSL/TLS Errors
+### HTTPS and SSL/TLS Issues
 
-**Symptoms**: "SSL handshake failed", "Certificate verification failed".
+{{% alert context="danger" %}}
+**Problem:** Mixed content errors, SSL handshake failures
 
-**Solutions**:
+**Symptoms:**
+- "Mixed content" warnings in browser
+- Documents load partially then fail
+- SSL certificate errors
+- CORS errors with HTTPS
+{{% /alert %}}
 
-1. **For development, disable SSL verification** (not for production):
+OnlyOffice does not work with HTTPS out of the box when behind a reverse proxy. You need proper SSL configuration.
 
-Collabora:
-```yaml
-environment:
-  - extra_params=--o:ssl.enable=false
-```
+{{< tabs tabTotal="3" >}}
 
-2. **For production, use valid certificates**:
+{{< tab tabName="Development (HTTP)" >}}
+For local development without SSL:
 
 ```yaml
 integrations:
   office:
-    url: "https://collabora.yourdomain.com"
+    url: "http://localhost:8080"
+
+onlyoffice:
+  environment:
+    - JWT_ENABLED=true
+    - JWT_SECRET=your-secret
 ```
 
-Ensure certificates are:
-- Valid and not expired
-- Trusted by system CA store
-- Include full certificate chain
+{{% alert context="warning" %}}
+HTTP is **not secure** for production. Only use for local testing. Never expose HTTP OnlyOffice to the internet.
+{{% /alert %}}
+{{< /tab >}}
 
-3. **Configure SSL termination at reverse proxy**:
+{{< tab tabName="Production (Traefik)" >}}
+Community-contributed Traefik configuration with automatic SSL:
+
+**FileBrowser Service:**
+```yaml
+filebrowser:
+  image: gtstef/filebrowser
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.filebrowser.rule=Host(`files.yourdomain.com`)"
+    - "traefik.http.routers.filebrowser.entrypoints=websecure"
+    - "traefik.http.routers.filebrowser.tls.certresolver=letsencrypt"
+    - "traefik.http.services.filebrowser.loadbalancer.server.port=80"
+  networks:
+    - proxy
+
+onlyoffice:
+  image: onlyoffice/documentserver
+  environment:
+    - JWT_ENABLED=true
+    - JWT_SECRET=your-secret
+    - JWT_HEADER=Authorization
+    - ONLYOFFICE_HTTPS_HSTS_ENABLED=false
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.onlyoffice.rule=Host(`office.yourdomain.com`)"
+    - "traefik.http.routers.onlyoffice.entrypoints=websecure"
+    - "traefik.http.routers.onlyoffice.tls.certresolver=letsencrypt"
+    - "traefik.http.services.onlyoffice.loadbalancer.server.port=80"
+    # Required headers for OnlyOffice
+    - "traefik.http.routers.onlyoffice.middlewares=onlyoffice-headers"
+    - "traefik.http.middlewares.onlyoffice-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+    - "traefik.http.middlewares.onlyoffice-headers.headers.accesscontrolalloworiginlist=*"
+  networks:
+    - proxy
+
+networks:
+  proxy:
+    external: true
+```
+
+**FileBrowser Config:**
+```yaml
+server:
+  externalUrl: "https://files.yourdomain.com"
+  internalUrl: "http://filebrowser:80"
+
+integrations:
+  office:
+    url: "https://office.yourdomain.com"
+    internalUrl: "https://files.yourdomain.com"
+    secret: "your-secret"
+```
+
+{{% alert context="info" %}}
+Key points:
+- Both services behind Traefik with automatic Let's Encrypt certificates
+- Custom headers required for OnlyOffice CORS
+- `internalUrl` set for server-to-server communication
+{{% /alert %}}
+{{< /tab >}}
+
+{{< tab tabName="Production (nginx)" >}}
+nginx reverse proxy configuration:
+
+```nginx
+# OnlyOffice upstream
+upstream onlyoffice {
+    server onlyoffice:80;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name office.yourdomain.com;
+
+    ssl_certificate /path/to/cert.pem;
+    ssl_certificate_key /path/to/key.pem;
+
+    location / {
+        proxy_pass http://onlyoffice;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        # WebSocket support
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        
+        # Timeouts
+        proxy_connect_timeout 300s;
+        proxy_send_timeout 300s;
+        proxy_read_timeout 300s;
+    }
+}
+```
+
+**FileBrowser Config:**
+```yaml
+integrations:
+  office:
+    url: "https://office.yourdomain.com"
+    internalUrl: "http://onlyoffice:80"
+    secret: "your-secret"
+```
+{{< /tab >}}
+
+{{< /tabs >}}
+
+## Advanced Configuration
+
+### External and Internal URLs
+
+{{% alert context="info" %}}
+**Required for v0.8.4+**: Both `externalUrl` and `internalUrl` must be set in server configuration for OnlyOffice to work properly.
+{{% /alert %}}
 
 ```yaml
-environment:
-  - extra_params=--o:ssl.enable=true --o:ssl.termination=true
+server:
+  externalUrl: "https://files.yourdomain.com"  # Accessible from browser
+  internalUrl: "http://filebrowser:80"         # Accessible from OnlyOffice container
+
+integrations:
+  office:
+    url: "https://office.yourdomain.com"       # Accessible from browser
+    internalUrl: "https://files.yourdomain.com" # For OnlyOffice → FileBrowser callbacks
+    secret: "your-jwt-secret"
 ```
+
+**Why two URLs?**
+
+- **Browser** → OnlyOffice: Uses `integrations.office.url`
+- **OnlyOffice** → FileBrowser: Uses `internalUrl` for downloading/saving files
+- Internal URLs can use Docker service names for better performance
 
 ## Performance Issues
 
-**Symptoms**: Slow document loading, timeouts.
+### Slow Document Loading
 
-**Solutions**:
+{{% alert context="warning" %}}
+**Problem:** Documents take long time to open or edit
 
-1. **Increase office server resources**:
+**Symptoms:**
+- Long delays before document loads
+- Laggy editing experience
+- Frequent timeouts
+{{% /alert %}}
+
+**Solutions:**
+
+**1. Increase OnlyOffice Resources**
 
 ```yaml
 onlyoffice:
@@ -201,129 +469,154 @@ onlyoffice:
     resources:
       limits:
         memory: 4G
-        cpus: '2'
+        cpus: '2.0'
+      reservations:
+        memory: 2G
+        cpus: '1.0'
 ```
 
-2. **Configure document cache**:
+**2. Use Persistent Storage**
 
-OnlyOffice:
 ```yaml
+onlyoffice:
+  volumes:
+    - onlyoffice_data:/var/www/onlyoffice/Data
+    - onlyoffice_logs:/var/log/onlyoffice
+
 volumes:
-  - onlyoffice_data:/var/www/onlyoffice/Data
+  onlyoffice_data:
+  onlyoffice_logs:
 ```
 
-3. **Use faster storage**:
+**3. Optimize Timeouts**
 
-Mount cache volumes on SSD.
+```yaml
+# Traefik
+serversTransport:
+  forwardingTimeouts:
+    dialTimeout: "60s"
+    responseHeaderTimeout: "75s"
+    idleConnTimeout: "90s"
 
-4. **Enable compression**:
-
-```nginx
-gzip on;
-gzip_types text/plain application/json application/javascript;
-```
-
-## Connection Timeouts
-
-**Symptoms**: "Gateway timeout", "Connection timeout" errors.
-
-**Solutions**:
-
-1. **Increase proxy timeouts**:
-
-nginx:
-```nginx
+# nginx
 proxy_connect_timeout 300s;
 proxy_send_timeout 300s;
 proxy_read_timeout 300s;
 ```
 
-2. **Increase office server timeout**:
+### Connection Timeouts
 
+{{% alert context="warning" %}}
+**Problem:** Gateway timeout or connection timeout errors
+{{% /alert %}}
+
+Check and increase timeouts at multiple levels:
+
+**Traefik:**
+```yaml
+http:
+  serversTransports:
+    default:
+      forwardingTimeouts:
+        dialTimeout: "30s"
+        responseHeaderTimeout: "60s"
+        idleConnTimeout: "90s"
+```
+
+**OnlyOffice:**
 ```yaml
 environment:
   - TIMEOUT=300
 ```
 
-## Provider-Specific Issues
-
-### Collabora
-
-**Discovery endpoint fails**:
+**Test Network Latency:**
 ```bash
-# Test discovery
-curl -v http://localhost:9980/hosting/discovery
+# Test response time
+time curl http://onlyoffice/healthcheck
 
-# Should return XML with capabilities
+# Check network path
+docker exec filebrowser ping onlyoffice
 ```
 
-**Font rendering issues**:
-```yaml
-volumes:
-  - /usr/share/fonts:/usr/share/fonts:ro
-```
+## Troubleshooting Checklist
 
-### OnlyOffice
+Use this checklist when debugging OnlyOffice issues:
 
-**Database connection errors**:
-
-OnlyOffice requires PostgreSQL for multi-server setups:
-```yaml
-onlyoffice:
-  environment:
-    - DB_TYPE=postgres
-    - DB_HOST=postgres
-    - DB_NAME=onlyoffice
-    - DB_USER=onlyoffice
-    - DB_PWD=password
-```
-
-**License errors**:
-
-For commercial use, ensure valid license is configured.
-
-## Docker-Specific Issues
-
-**Container can't resolve hostname**:
-
-Use IP address or ensure containers are on same network:
-```yaml
-networks:
-  - filebrowser-network
-
-networks:
-  filebrowser-network:
-    driver: bridge
-```
-
-**Port conflicts**:
-
-Change ports if 80 or 9980 are in use:
-```yaml
-ports:
-  - "9981:9980"  # Use 9981 externally
-```
-
-Update URL in config:
-```yaml
-integrations:
-  office:
-    url: "http://collabora:9981"
-```
+- [ ] **Enable debug mode** in FileBrowser profile settings
+- [ ] **Check OnlyOffice is running**: `docker ps | grep onlyoffice`
+- [ ] **Verify health endpoint**: `curl http://onlyoffice/healthcheck`
+- [ ] **Test from browser**: Navigate to OnlyOffice URL, see welcome page
+- [ ] **Check JWT secrets match** in both configurations
+- [ ] **Verify network connectivity** between containers
+- [ ] **Check browser console** for JavaScript errors
+- [ ] **Review logs** from both FileBrowser and OnlyOffice
+- [ ] **Verify file format** is supported
+- [ ] **Check file permissions** and size limits
+- [ ] **Test with HTTPS disabled** (if using SSL)
+- [ ] **Verify externalUrl and internalUrl** are set correctly
 
 ## Getting Help
 
-If you continue experiencing issues:
+### Gather Information
 
-1. Enable debug logging in office server
-2. Check both FileBrowser and office server logs
-3. Test office server independently
-4. Review [GitHub Issues](https://github.com/gtsteffaniak/filebrowser/issues)
-5. Ask in [GitHub Discussions](https://github.com/gtsteffaniak/filebrowser/discussions)
+When asking for help, provide:
+
+1. **FileBrowser version:**
+```bash
+docker exec filebrowser ./filebrowser version
+```
+
+2. **OnlyOffice version:**
+```bash
+docker exec onlyoffice /var/www/onlyoffice/documentserver/npm/json -f /var/www/onlyoffice/documentserver/package.json version
+```
+
+3. **Configuration** (sanitized - remove secrets):
+```yaml
+integrations:
+  office:
+    url: "https://office.example.com"
+    secret: "REDACTED"
+```
+
+4. **Logs:**
+```bash
+docker logs onlyoffice --tail 100
+docker logs filebrowser --tail 100
+```
+
+5. **Debug mode output** (screenshot from browser)
+
+6. **Browser console errors** (F12 → Console tab)
+
+### Test OnlyOffice Independently
+
+Verify OnlyOffice works standalone:
+
+```bash
+# Visit welcome page
+curl http://localhost/welcome
+
+# Should return HTML with OnlyOffice welcome page
+```
+
+### Enable Verbose Logging
+
+```yaml
+onlyoffice:
+  environment:
+    - LOG_LEVEL=DEBUG
+```
+
+### Community Resources
+
+- [GitHub Issues](https://github.com/gtsteffaniak/filebrowser/issues) - Report bugs
+- [GitHub Discussions](https://github.com/gtsteffaniak/filebrowser/discussions) - Ask questions
+- [OnlyOffice Documentation](https://helpcenter.onlyoffice.com/) - Official OnlyOffice docs
+- [Community Configurations](https://github.com/gtsteffaniak/filebrowser/discussions/1237) - Working examples
 
 ## Next Steps
 
-- [Office guides](/docs/integrations/office/guides/)
-- [Configuration](/docs/integrations/office/configuration/)
-- [Help & Support](/docs/help/)
-
+- [Configuration](/docs/integrations/office/configuration/) - Set up OnlyOffice integration
+- [Office guides](/docs/integrations/office/guides/) - Usage examples and best practices
+- [About OnlyOffice](/docs/integrations/office/about/) - Features and capabilities

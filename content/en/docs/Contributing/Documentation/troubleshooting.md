@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common documentation issues and solutions"
 icon: "bug_report"
-weight: 4
 ---
 
 Common issues and solutions for documentation development.
@@ -12,12 +11,12 @@ Common issues and solutions for documentation development.
 **Check**:
 - File is `.md` extension
 - Front matter is valid YAML
-- `weight` is set
+- File is in correct directory structure
 - File is in correct folder
 
 ## Navigation Wrong Order
 
-**Fix**: Adjust `weight` values (lower = higher in list)
+**Fix**: Move file to correct directory position (ordering is automatic based on file structure)
 
 ## Icons Not Showing
 

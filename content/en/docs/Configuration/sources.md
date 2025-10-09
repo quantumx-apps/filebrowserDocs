@@ -2,7 +2,6 @@
 title: "Sources"
 description: "Configure file system sources"
 icon: "folder_open"
-weight: 1
 ---
 
 Sources are the core concept in FileBrowser - each source represents a file system location users can access.

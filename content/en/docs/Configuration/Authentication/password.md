@@ -2,7 +2,6 @@
 title: "Password Authentication"
 description: "Configure password authentication"
 icon: "vpn_key"
-weight: 1
 ---
 
 Default authentication method using username and password.

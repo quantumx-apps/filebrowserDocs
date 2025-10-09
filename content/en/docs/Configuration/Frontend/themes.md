@@ -2,7 +2,6 @@
 title: "Themes"
 description: "User-selectable custom themes"
 icon: "color_lens"
-weight: 3
 ---
 
 Create custom themes that users can select in their settings.

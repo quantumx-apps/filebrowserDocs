@@ -2,7 +2,6 @@
 title: "Translations & i18n"
 description: "How to add and manage translations for the documentation"
 icon: "translate"
-weight: 2
 ---
 
 # Translations & i18n
@@ -52,7 +51,6 @@ content/docs/
 title: "Getting Started"
 description: "Quick start guide"
 icon: "rocket_launch"
-weight: 1
 ---
 
 # Getting Started
@@ -66,7 +64,6 @@ Welcome to FileBrowser Quantum!
 title: "Erste Schritte"
 description: "Schnellstart-Anleitung"
 icon: "rocket_launch"
-weight: 1
 ---
 
 # Erste Schritte
@@ -264,7 +261,6 @@ Create translated content files:
 title: "Primeros Pasos"
 description: "Guía de inicio rápido"
 icon: "rocket_launch"
-weight: 1
 ---
 
 # Primeros Pasos
@@ -387,7 +383,6 @@ Here's a complete example of translating a page:
 title: "Docker Installation"
 description: "Install FileBrowser using Docker"
 icon: "docker"
-weight: 1
 ---
 
 # Docker Installation
@@ -407,7 +402,6 @@ docker run -p 8080:8080 gtstef/filebrowser
 title: "Docker-Installation"
 description: "FileBrowser mit Docker installieren"
 icon: "docker"
-weight: 1
 ---
 
 # Docker-Installation
@@ -427,7 +421,6 @@ docker run -p 8080:8080 gtstef/filebrowser
 title: "Installation Docker"
 description: "Installer FileBrowser avec Docker"
 icon: "docker"
-weight: 1
 ---
 
 # Installation Docker

@@ -2,7 +2,6 @@
 title: "About FileBrowser Quantum"
 description: "Learn about FileBrowser Quantum"
 icon: "info"
-weight: 2
 ---
 
 Learn about FileBrowser Quantum - the best free self-hosted web-based file manager.
@@ -76,7 +75,9 @@ FileBrowser Quantum is a massive fork with significant changes:
 
 ## System Requirements
 
-> **Note**: Every file and directory in the source gets indexed by default. This enables powerful features like instant search, but large filesystems increase memory requirements.
+{{% alert context="info" %}}
+Every file and directory in the source gets indexed by default. This enables powerful features like instant search, but large filesystems increase memory requirements.
+{{% /alert %}}
 
 - **Memory**: Depends on source complexity (typically 256MB minimum)
 - **GPU**: Not currently used (planned)
@@ -99,7 +100,9 @@ All other functions are in the action menu or context pop-up menus.
 
 ## Current Status
 
-> **Warning**: There is no stable version yet. Stable release planned for 2025.
+{{% alert context="warning" %}}
+There is no stable version yet. Stable release planned for 2025.
+{{% /alert %}}
 
 Current release status:
 - **Beta**: Frequent releases, latest features

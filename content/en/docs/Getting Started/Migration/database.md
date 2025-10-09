@@ -2,7 +2,6 @@
 title: "Database Migration"
 description: "Migrate your FileBrowser database"
 icon: "storage"
-weight: 1
 ---
 
 Step-by-step guide for migrating your database from original FileBrowser.

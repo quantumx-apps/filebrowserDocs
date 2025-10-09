@@ -2,195 +2,80 @@
 title: "Guides"
 description: "OnlyOffice integration how-to guides"
 icon: "menu_book"
-weight: 3
 ---
 
-Practical guides for setting up and using OnlyOffice integration.
+Step-by-step guides for setting up OnlyOffice integration with FileBrowser Quantum.
 
-> **Note**: OnlyOffice is currently the only supported office integration. Collabora support is planned for the future.
+{{% alert context="info" %}}
+**New!** Complete setup guides with community-contributed configurations are now available in the [User Guides section](/docs/user-guides/office-integration/).
+{{% /alert %}}
 
-## Deploy OnlyOffice with Docker
+## Available Setup Guides
 
-Complete setup for OnlyOffice with Docker:
+We've created comprehensive, community-tested guides for different deployment scenarios:
 
-**1. Create `docker-compose.yml`**:
+### 🚀 [Basic Docker Setup](/docs/user-guides/office-integration/basic-docker-setup/)
 
-```yaml
-version: '3.8'
+**Perfect for:** Local development, testing, and learning
 
-services:
-  filebrowser:
-    image: gtstef/filebrowser:latest
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./config.yaml:/home/filebrowser/config.yaml
-      - ./data:/data
-      - ./database.db:/home/filebrowser/database.db
-    environment:
-      - FILEBROWSER_ONLYOFFICE_SECRET=your_secret_here
+Quick HTTP-based setup to get started with OnlyOffice integration in 15-20 minutes. Ideal for:
+- First-time OnlyOffice users
+- Local testing and development
+- Internal network deployments
 
-  onlyoffice:
-    image: onlyoffice/documentserver:latest
-    ports:
-      - "80:80"
-    environment:
-      - JWT_ENABLED=true
-      - JWT_SECRET=your_secret_here
-    volumes:
-      - onlyoffice_data:/var/www/onlyoffice/Data
-      - onlyoffice_logs:/var/log/onlyoffice
-    restart: unless-stopped
+[View Basic Setup Guide →](/docs/user-guides/office-integration/basic-docker-setup/)
 
-volumes:
-  onlyoffice_data:
-  onlyoffice_logs:
-```
+---
 
-**2. Create `config.yaml`**:
+### ⭐ [Production Setup with Traefik](/docs/user-guides/office-integration/traefik-labels/)
 
-```yaml
-server:
-  port: 8080
-  sources:
-    - name: "files"
-      path: "/data"
+**Perfect for:** Production deployments with automatic HTTPS
 
-integrations:
-  office:
-    enabled: true
-    url: "http://onlyoffice:80"
-```
+Complete production-ready setup with:
+- Automatic Let's Encrypt SSL certificates
+- Automatic certificate renewal
+- Traefik reverse proxy configuration
+- DDNS support
 
-**3. Start services**:
+[View Traefik Guide →](/docs/user-guides/office-integration/traefik-labels/)
 
-```bash
-docker-compose up -d
-docker-compose logs -f
-```
+---
 
-**4. Test**:
-- Navigate to `http://localhost:8080`
-- Upload or open a `.docx` file
-- Click to preview - should open in OnlyOffice
+### 🔒 [Advanced HTTPS Configuration](/docs/user-guides/office-integration/traefik-https/)
 
-## Enable JWT Security
+**Perfect for:** Advanced users with custom security requirements
 
-Secure communication between FileBrowser and OnlyOffice:
+Advanced HTTPS configurations including:
+- Self-signed certificates
+- Custom CA certificates
+- Full certificate verification
+- Multiple security methods
 
-**Generate secret**:
-```bash
-openssl rand -base64 32
-```
+[View Advanced Guide →](/docs/user-guides/office-integration/traefik-https/)
 
-**FileBrowser config**:
-```yaml
-integrations:
-  office:
-    enabled: true
-    url: "http://onlyoffice:80"
-    secret: "your-generated-secret-here"
-```
+---
 
-**OnlyOffice config**:
-```yaml
-environment:
-  - JWT_ENABLED=true
-  - JWT_SECRET=your-generated-secret-here
-```
+## Quick Start
 
-## Production Deployment with HTTPS
+Not sure which guide to follow? Here's a quick decision tree:
 
-**1. Set up reverse proxy** (nginx example):
+| Your Situation | Recommended Guide |
+|----------------|-------------------|
+| Just trying out OnlyOffice | [Basic Docker Setup](/docs/user-guides/office-integration/basic-docker-setup/) |
+| Deploying to production | [Traefik Production](/docs/user-guides/office-integration/traefik-labels/) |
+| Need custom certificates | [Advanced HTTPS](/docs/user-guides/office-integration/traefik-https/) |
+| Internal network only | [Basic Docker Setup](/docs/user-guides/office-integration/basic-docker-setup/) |
 
-```nginx
-# OnlyOffice
-server {
-    listen 443 ssl;
-    server_name office.yourdomain.com;
+## Additional Resources
 
-    ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
+- [Configuration Reference](/docs/integrations/office/configuration/) - Detailed configuration options
+- [Troubleshooting Guide](/docs/integrations/office/troubleshooting/) - Common issues and solutions
+- [About OnlyOffice](/docs/integrations/office/about/) - Features and capabilities
 
-    location / {
-        proxy_pass http://onlyoffice:80;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        
-        # WebSocket support
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-    }
-}
+## Community Contributions
 
-# FileBrowser
-server {
-    listen 443 ssl;
-    server_name files.yourdomain.com;
+These guides are based on real-world configurations shared by the FileBrowser community. Special thanks to:
+- @Kurami32 - Complete Traefik production setup
+- @BaccanoMob - Advanced HTTPS methods and troubleshooting
 
-    ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
-
-    location / {
-        proxy_pass http://filebrowser:8080;
-        proxy_set_header Host $host;
-    }
-}
-```
-
-**2. Update FileBrowser config**:
-
-```yaml
-server:
-  internalUrl: "http://filebrowser:8080"
-
-integrations:
-  office:
-    enabled: true
-    url: "http://onlyoffice:80"
-    externalUrl: "https://office.yourdomain.com"
-    secret: "your-secret"
-```
-
-**3. Update OnlyOffice config**:
-
-```yaml
-environment:
-  - JWT_ENABLED=true
-  - JWT_SECRET=your-secret
-```
-
-## Customize Office Integration
-
-### Disable Office for Specific Users
-
-Configure in user settings or via access rules:
-
-```yaml
-# User without office preview
-permissions:
-  preview:
-    office: false
-```
-
-### Enable Office for Shares
-
-When creating a share, enable OnlyOffice options:
-
-1. Create or edit share
-2. Enable **OnlyOffice** option
-3. Optionally enable **OnlyOffice Editing** for collaborative editing
-4. Save share
-
-## Troubleshoot Common Issues
-
-See [Office Troubleshooting](/docs/integrations/office/troubleshooting/) for detailed solutions.
-
-## Next Steps
-
-- [Troubleshooting](/docs/integrations/office/troubleshooting/)
-- [Configuration reference](/docs/integrations/office/configuration/)
-- [Media integration](/docs/integrations/media/)
+Want to contribute? Share your configuration in [GitHub Discussions](https://github.com/gtsteffaniak/filebrowser/discussions)!

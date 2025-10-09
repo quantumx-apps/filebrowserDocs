@@ -2,7 +2,8 @@
 title: "Understanding Hugo Documentation"
 description: "Guide to understanding Hugo-generated documentation structure and conventions"
 icon: "code"
-weight: 1
+date: "2024-01-15T10:00:00Z"
+lastmod: "2024-10-08T18:30:00Z"
 katex: true
 ---
 
@@ -244,37 +245,8 @@ Every documentation page must include front matter with these attributes:
 - `title` - Page title (required)
 - `description` - Brief description (required)
 - `icon` - Material icon name (required)
-- `weight` - Sort order, lower numbers appear first (required)
-
-## Understanding Weights
-
-Weights control the order of pages in navigation. Lower numbers appear first:
-
-### Section Weights
-- `weight: 1` - Appears first in main navigation
-- `weight: 2` - Appears second
-- `weight: 3` - Appears third
-- etc.
-
-### Page Weights Within Sections
-- `weight: 1` - First page in section
-- `weight: 2` - Second page in section
-- etc.
-
-### Common Weight Patterns
-
-**Main Navigation:**
-- Getting Started: `weight: 1`
-- Configuration: `weight: 2`
-- User Guides: `weight: 3`
-- Reference: `weight: 4`
-- Contributing: `weight: 5`
-
-**Within Sections:**
-- Overview pages: `weight: 1`
-- Specific guides: `weight: 2`
-- Advanced topics: `weight: 3`
-- Troubleshooting: `weight: 4`
+- `date` - Publication date (required)
+- `lastmod` - Last modification date (required)
 
 ## Required Attributes
 
@@ -301,11 +273,32 @@ Weights control the order of pages in navigation. Lower numbers appear first:
   - `"security"` - Access control
   - `"help"` - Help topics
 
-### Weight
+### Date
 - **Required**: Yes
-- **Purpose**: Controls sort order in navigation
-- **Format**: Integer, lower numbers appear first
-- **Range**: 1-999 (typically 1-10 for main sections)
+- **Purpose**: When the article was first published/created
+- **Format**: ISO 8601 date string (RFC 3339)
+- **Examples**: 
+  - `"2024-01-15T10:00:00Z"` - January 15, 2024 at 10:00 AM UTC
+  - `"2024-03-20T14:30:00-05:00"` - March 20, 2024 at 2:30 PM EST
+- **Usage**: Used for sorting, RSS feeds, and showing publication date
+- **Note**: This should remain constant - only change if you're republishing an existing article
+
+### Last Modified (lastmod)
+- **Required**: Yes
+- **Purpose**: When the article was last updated/modified
+- **Format**: ISO 8601 date string (RFC 3339)
+- **Examples**: 
+  - `"2024-10-08T18:30:00Z"` - October 8, 2024 at 6:30 PM UTC
+  - `"2024-12-01T09:15:00-08:00"` - December 1, 2024 at 9:15 AM PST
+- **Usage**: Used for showing "last updated" information, sitemaps, and cache invalidation
+- **Note**: Update this every time you make changes to the content
+
+### Draft
+- **Required**: No (defaults to false)
+- **Purpose**: Controls whether the page is published
+- **Format**: Boolean (true/false)
+- **Usage**: Set to `true` while working on content, `false` when ready to publish
+- **Note**: Draft pages are not included in the built site
 
 ## Extended Hugo Version
 
@@ -368,27 +361,54 @@ The documentation uses a custom theme. If you encounter theme-related issues:
 
 1. **Edit Files**: Modify content in english `content/en/docs`
 2. **Preview Changes**: Run `make dev` to see changes live
-3. **Test Navigation**: Ensure weights and structure work correctly
-4. **Translate**: Export DEEPL_API_KEY and run `make sync-translations` to sync english changes to target languages
-5. **Manually Verify**: adjust target translations as needed.
-6. **Commit Changes**: Submit pull request with your changes
+3. **Translate**: Export DEEPL_API_KEY and run `make sync-translations` to sync english changes to target languages
+4. **Manually Verify**: adjust target translations as needed.
+5. **Commit Changes**: Submit pull request with your changes
 
 ### Adding New Pages
 
 1. **Create File**: Add new `.md` file in appropriate directory
 2. **Add Front Matter**: Include all required attributes
-3. **Set Weight**: Choose appropriate weight for ordering
+3. **File Structure**: Place file in appropriate directory for automatic ordering
 4. **Add to Index**: Update `_index.md` if needed
 5. **Test**: Verify page appears in correct location
 
 ### Updating Existing Pages
 
 1. **Edit Content**: Modify the markdown content
-2. **Update Front Matter**: Adjust title, description, or weight if needed
-3. **Test Changes**: Use `make dev` to preview
-4. **Translate**: Export DEEPL_API_KEY and run `make sync-translations` to sync english changes to target languages
-5. **Manually Verify**: adjust target translations as needed.
-6. **Submit PR**: Create pull request with changes
+2. **Update lastmod**: Always update the `lastmod` field to current date/time
+3. **Update Front Matter**: Adjust title or description if needed
+4. **Test Changes**: Use `make dev` to preview
+5. **Translate**: Export DEEPL_API_KEY and run `make sync-translations` to sync english changes to target languages
+6. **Manually Verify**: adjust target translations as needed.
+7. **Submit PR**: Create pull request with changes
+
+### Managing Dates
+
+**When creating new content:**
+- Set `date` to when you first publish the article
+- Set `lastmod` to the same value initially
+- Use ISO 8601 format: `"2024-01-15T10:00:00Z"`
+
+**When updating existing content:**
+- Keep `date` unchanged (original publication date)
+- Update `lastmod` to current date/time
+- This helps users see when content was last updated
+
+**Date Format Examples:**
+```yaml
+# UTC timezone
+date: "2024-01-15T10:00:00Z"
+lastmod: "2024-10-08T18:30:00Z"
+
+# With timezone offset
+date: "2024-01-15T10:00:00-05:00"  # EST
+lastmod: "2024-10-08T18:30:00-05:00"  # EST
+
+# Date only (Hugo will assume midnight UTC)
+date: "2024-01-15"
+lastmod: "2024-10-08"
+```
 
 ## Best Practices
 
@@ -397,7 +417,6 @@ The documentation uses a custom theme. If you encounter theme-related issues:
 - **Clear Titles**: Use descriptive, concise titles
 - **Good Descriptions**: Write helpful descriptions for navigation
 - **Appropriate Icons**: Choose icons that represent the content
-- **Logical Weights**: Order content logically (overview first, advanced last)
 
 ### File Organization
 

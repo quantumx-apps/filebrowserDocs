@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common issues and solutions for init scripts"
 icon: "bug_report"
-weight: 3
 ---
 
 Common issues and solutions for init scripts.

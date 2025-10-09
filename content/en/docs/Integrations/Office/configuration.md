@@ -2,12 +2,13 @@
 title: "Configuration"
 description: "Configure OnlyOffice integration"
 icon: "settings"
-weight: 2
 ---
 
 Configure OnlyOffice Document Server for document editing.
 
-> **Note**: OnlyOffice is currently the only supported office integration. Collabora support is planned for the future.
+{{% alert context="info" %}}
+OnlyOffice is currently the only supported office integration. Collabora support is planned for the future.
+{{% /alert %}}
 
 ## Basic Configuration
 
@@ -161,7 +162,9 @@ environment:
 
 ### HTTPS Configuration
 
-**Warning**: Never expose OnlyOffice HTTP to internet. Always use HTTPS. See [OnlyOffice HTTPS docs](https://helpcenter.onlyoffice.com/installation/groups-https-docker.aspx).
+{{% alert context="danger" %}}
+Never expose OnlyOffice HTTP to internet. Always use HTTPS. See [OnlyOffice HTTPS docs](https://helpcenter.onlyoffice.com/installation/groups-https-docker.aspx).
+{{% /alert %}}
 
 For production, use HTTPS with reverse proxy (nginx example):
 

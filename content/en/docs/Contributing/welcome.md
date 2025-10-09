@@ -2,7 +2,6 @@
 title: "Welcome Contributors"
 description: "Get started contributing to FileBrowser Quantum"
 icon: "waving_hand"
-weight: 0
 ---
 
 Thank you for your interest in contributing to FileBrowser Quantum! This guide will help you find the right way to contribute.

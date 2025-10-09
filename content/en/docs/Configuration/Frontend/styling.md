@@ -2,7 +2,6 @@
 title: "Styling"
 description: "Custom CSS and background colors"
 icon: "brush"
-weight: 2
 ---
 
 Apply custom CSS and configure background colors for light/dark modes.

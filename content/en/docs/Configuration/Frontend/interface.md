@@ -2,7 +2,6 @@
 title: "Interface Options"
 description: "Toggle UI elements"
 icon: "tune"
-weight: 4
 ---
 
 Show or hide specific UI elements.

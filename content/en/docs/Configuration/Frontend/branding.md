@@ -2,7 +2,6 @@
 title: "Branding"
 description: "Configure name, description, and favicon"
 icon: "branding_watermark"
-weight: 1
 ---
 
 Customize branding elements that appear in the UI and HTML metadata.

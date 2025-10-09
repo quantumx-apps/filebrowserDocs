@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common issues and solutions for CLI and API"
 icon: "bug_report"
-weight: 4
 ---
 
 Common issues and solutions for CLI and API usage.

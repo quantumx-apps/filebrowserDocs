@@ -2,7 +2,6 @@
 title: "User Guides Overview"
 description: "How-to guides and tutorials"
 icon: "school"
-weight: 1
 ---
 
 Step-by-step guides for common tasks and advanced configurations.

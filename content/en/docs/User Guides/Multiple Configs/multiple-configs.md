@@ -2,7 +2,6 @@
 title: "Multiple Config Files"
 description: "Use YAML anchoring for modular configuration"
 icon: "inventory_2"
-weight: 2
 ---
 
 Use YAML anchoring with multi-file configuration for modular, reusable configurations.

@@ -2,7 +2,6 @@
 title: "Environment Variables"
 description: "Optional environment variables for configuration"
 icon: "input"
-weight: 1
 ---
 
 The preferred configuration method is to use config.yaml. However, environment variables are available for **secrets**, **config override**, and **developer purposes**.

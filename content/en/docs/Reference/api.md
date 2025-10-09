@@ -2,7 +2,6 @@
 title: "API Reference"
 description: "REST API documentation"
 icon: "api"
-weight: 3
 ---
 
 FileBrowser provides a comprehensive REST API for programmatic access.

@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common issues and solutions for migration"
 icon: "bug_report"
-weight: 4
 ---
 
 Common issues and solutions for migration.

@@ -2,7 +2,6 @@
 title: "Init Script Setup"
 description: "Automate FileBrowser initialization with scripts"
 icon: "play_circle"
-weight: 1
 ---
 
 Automated initialization scripts for FileBrowser using the API. Works across Docker, Docker Compose, Kubernetes, and bare metal deployments.
@@ -135,15 +134,15 @@ data:
   init.sh: |
     #!/bin/sh
     set -e
-    
+
     until curl -f -s "${FILEBROWSER_URL}/health" > /dev/null 2>&1; do
       echo "Waiting for FileBrowser..."
       sleep 2
     done
-    
+
     TOKEN=$(curl -s -H "X-Password: ${ADMIN_PASSWORD}" \
       "${FILEBROWSER_URL}/api/auth/login?username=${ADMIN_USERNAME}")
-    
+
     echo "Initialization complete!"
 
 ---
@@ -285,7 +284,7 @@ echo "Target URL: ${FILEBROWSER_URL}"
 wait_for_filebrowser() {
     local retries=0
     echo "Waiting for FileBrowser to be ready..."
-    
+
     while [ $retries -lt $MAX_RETRIES ]; do
         if curl -f -s "${FILEBROWSER_URL}/health" > /dev/null 2>&1; then
             echo "FileBrowser is ready!"
@@ -295,7 +294,7 @@ wait_for_filebrowser() {
         echo "Attempt ${retries}/${MAX_RETRIES} - waiting ${RETRY_DELAY}s..."
         sleep $RETRY_DELAY
     done
-    
+
     echo "ERROR: FileBrowser failed to start after ${MAX_RETRIES} attempts"
     return 1
 }
@@ -304,17 +303,17 @@ wait_for_filebrowser() {
 get_auth_token() {
     local username=$1
     local password=$2
-    
+
     echo "Logging in as ${username}..."
-    
+
     local response
     response=$(curl -s -w "\n%{http_code}" \
         -H "X-Password: ${password}" \
         "${FILEBROWSER_URL}/api/auth/login?username=${username}")
-    
+
     local http_code=$(echo "$response" | tail -n1)
     local token=$(echo "$response" | head -n-1)
-    
+
     if [ "$http_code" -eq 200 ] && [ -n "$token" ]; then
         echo "Successfully authenticated!"
         echo "$token"
@@ -331,9 +330,9 @@ create_user() {
     local username=$2
     local password=$3
     local is_admin=${4:-false}
-    
+
     echo "Creating user: ${username}..."
-    
+
     local response
     response=$(curl -s -w "\n%{http_code}" \
         -X POST \
@@ -358,9 +357,9 @@ create_user() {
             }
         }" \
         "${FILEBROWSER_URL}/api/users")
-    
+
     local http_code=$(echo "$response" | tail -n1)
-    
+
     if [ "$http_code" -eq 201 ]; then
         echo "User ${username} created successfully"
         return 0
@@ -380,26 +379,26 @@ main() {
     if ! wait_for_filebrowser; then
         exit 1
     fi
-    
+
     # Get authentication token
     TOKEN=$(get_auth_token "$ADMIN_USERNAME" "$ADMIN_PASSWORD")
     if [ -z "$TOKEN" ]; then
         echo "ERROR: Failed to get authentication token"
         exit 1
     fi
-    
+
     echo ""
     echo "Running initialization tasks..."
     echo "Token: ${TOKEN:0:20}..."
     echo ""
-    
+
     # Example: Create additional users
     create_user "$TOKEN" "demo" "demo123" false
     create_user "$TOKEN" "viewer" "viewer123" false
-    
+
     # Note: Settings cannot be updated via API - they must be configured
     # through the config.yaml file or environment variables before startup
-    
+
     echo ""
     echo "Initialization complete!"
 }
@@ -538,11 +537,11 @@ data:
   init.sh: |
     #!/bin/sh
     set -e
-    
+
     echo "Waiting for FileBrowser to be ready..."
     RETRIES=0
     MAX_RETRIES=30
-    
+
     until curl -f -s "${FILEBROWSER_URL}/health" > /dev/null 2>&1; do
       RETRIES=$((RETRIES + 1))
       if [ $RETRIES -ge $MAX_RETRIES ]; then
@@ -552,21 +551,21 @@ data:
       echo "Waiting... (${RETRIES}/${MAX_RETRIES})"
       sleep 2
     done
-    
+
     echo "FileBrowser is ready!"
     echo "Getting auth token..."
-    
+
     TOKEN=$(curl -s -H "X-Password: ${ADMIN_PASSWORD}" \
       "${FILEBROWSER_URL}/api/auth/login?username=${ADMIN_USERNAME}")
-    
+
     if [ -z "$TOKEN" ]; then
       echo "ERROR: Failed to authenticate"
       exit 1
     fi
-    
+
     echo "Authenticated successfully!"
     echo "Token: ${TOKEN:0:20}..."
-    
+
     # Create demo user
     echo "Creating demo user..."
     HTTP_CODE=$(curl -s -w "%{http_code}" -o /dev/null \
@@ -575,7 +574,7 @@ data:
       -H "Content-Type: application/json" \
       -d '{"which":[],"data":{"username":"demo","password":"demo123","loginMethod":"password","permissions":{"admin":false,"modify":true,"share":true,"create":true,"rename":true,"delete":true,"download":true},"scopes":[]}}' \
       "${FILEBROWSER_URL}/api/users")
-    
+
     if [ "$HTTP_CODE" = "201" ]; then
       echo "Demo user created successfully"
     elif [ "$HTTP_CODE" = "409" ] || [ "$HTTP_CODE" = "500" ]; then
@@ -583,7 +582,7 @@ data:
     else
       echo "WARNING: Failed to create demo user (HTTP ${HTTP_CODE})"
     fi
-    
+
     echo "Initialization complete!"
 
 ---
@@ -745,7 +744,9 @@ curl -X POST \
 
 #### Get Settings (Read-Only)
 
-**Note:** Settings cannot be updated via API. They must be configured in `config.yaml` before starting FileBrowser.
+{{% alert context="info" %}}
+Settings cannot be updated via API. They must be configured in `config.yaml` before starting FileBrowser.
+{{% /alert %}}
 
 ```bash
 # Get all settings

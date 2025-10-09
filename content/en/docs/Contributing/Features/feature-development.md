@@ -2,7 +2,6 @@
 title: "Feature Development"
 description: "Developer guide for adding features and fixing bugs"
 icon: "construction"
-weight: 1
 ---
 
 Contribute code to FileBrowser Quantum by adding features or fixing bugs.
@@ -74,7 +73,9 @@ FileBrowser uses a structured release workflow:
 3. When ready, `dev/vX.X.X` promoted to `beta/vX.X.X`
 4. Beta tested, then promoted to `stable/vX.X.X`
 
-**Note**: Bug fixes for beta/stable must go through the dev → beta → stable promotion process. Only non-functional changes (README, config, workflows) can go directly to beta/stable via PR.
+{{% alert context="info" %}}
+Bug fixes for beta/stable must go through the dev → beta → stable promotion process. Only non-functional changes (README, config, workflows) can go directly to beta/stable via PR.
+{{% /alert %}}
 
 ### Release Cadence
 
@@ -115,7 +116,9 @@ If you don't have write access:
 - ✅ Passes unit and integration tests
 - ✅ Additional details for functionality not covered by tests
 
-**Tip**: Test changes in your fork first, or open as draft PR if not ready.
+{{% alert context="success" %}}
+**Tip:** Test changes in your fork first, or open as draft PR if not ready.
+{{% /alert %}}
 
 ## Project Architecture
 

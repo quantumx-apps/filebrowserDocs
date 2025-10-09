@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common development issues and solutions"
 icon: "bug_report"
-weight: 4
 ---
 
 Common issues and solutions for FileBrowser development.

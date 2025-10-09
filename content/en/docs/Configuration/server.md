@@ -2,7 +2,6 @@
 title: "Server Settings"
 description: "Configure server options"
 icon: "dns"
-weight: 3
 ---
 
 Configure server settings including port, address, database, and caching.

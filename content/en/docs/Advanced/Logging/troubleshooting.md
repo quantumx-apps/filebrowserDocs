@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common issues and solutions for debug logging"
 icon: "bug_report"
-weight: 2
 ---
 
 Common issues and solutions for debug logging.

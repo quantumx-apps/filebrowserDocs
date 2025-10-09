@@ -2,7 +2,6 @@
 title: "Proxy Authentication"
 description: "Header-based authentication"
 icon: "security"
-weight: 3
 ---
 
 Authenticate based on HTTP headers from reverse proxy.

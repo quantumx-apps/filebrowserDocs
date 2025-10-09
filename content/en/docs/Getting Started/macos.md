@@ -2,7 +2,6 @@
 title: "macOS"
 description: "Install FileBrowser on macOS"
 icon: "laptop_mac"
-weight: 3
 ---
 
 Run FileBrowser Quantum natively on macOS.

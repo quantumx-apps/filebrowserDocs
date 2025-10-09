@@ -2,7 +2,6 @@
 title: "Frontend Customization"
 description: "Customize the user interface"
 icon: "palette"
-weight: 6
 ---
 
 Customize the FileBrowser interface with branding, themes, and styling.

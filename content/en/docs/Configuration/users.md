@@ -2,7 +2,6 @@
 title: "User Management"
 description: "Manage users and permissions"
 icon: "group"
-weight: 4
 ---
 
 Configure users, permissions, and default user settings.

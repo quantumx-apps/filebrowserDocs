@@ -2,7 +2,6 @@
 title: "Reference Overview"
 description: "Complete technical reference documentation"
 icon: "library_books"
-weight: 1
 ---
 
 Complete technical reference for FileBrowser Quantum.

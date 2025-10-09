@@ -2,7 +2,6 @@
 title: "User Migration"
 description: "Preserve user accounts during migration"
 icon: "people"
-weight: 3
 ---
 
 Preserve user accounts and permissions when migrating to FileBrowser Quantum.

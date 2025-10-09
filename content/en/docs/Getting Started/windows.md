@@ -2,7 +2,6 @@
 title: "Windows"
 description: "Install FileBrowser on Windows"
 icon: "desktop_windows"
-weight: 2
 ---
 
 Run FileBrowser Quantum natively on Windows.
@@ -45,15 +44,6 @@ Or generate interactively:
 ```
 
 Access at `http://localhost:8080` with `admin` / `admin`
-
-## Run as Windows Service
-
-Using [NSSM](https://nssm.cc/download):
-
-```cmd
-nssm install FileBrowser "C:\FileBrowser\filebrowser.exe" "-c C:\FileBrowser\config.yaml"
-nssm start FileBrowser
-```
 
 ## Troubleshooting
 

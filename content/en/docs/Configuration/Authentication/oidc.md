@@ -2,7 +2,6 @@
 title: "OIDC Authentication"
 description: "OpenID Connect integration"
 icon: "fingerprint"
-weight: 2
 ---
 
 Integrate with OpenID Connect providers for single sign-on.
