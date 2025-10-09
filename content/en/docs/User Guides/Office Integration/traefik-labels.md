@@ -635,9 +635,9 @@ Ensure all URLs use `https://` in production:
 
 ## Next Steps
 
-- [Advanced HTTPS Configuration](/docs/user-guides/office-integration/traefik-https/) - Self-signed certificates and file providers
-- [Office Troubleshooting](/docs/integrations/office/troubleshooting/) - Detailed troubleshooting guide
-- [Configuration Reference](/docs/integrations/office/configuration/) - All configuration options
+- {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS Configuration" />}} - Self-signed certificates and file providers
+- {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} - Detailed troubleshooting guide
+- {{< doclink path="integrations/office/configuration/" text="Configuration Reference" />}} - All configuration options
 
 ## Credits
 

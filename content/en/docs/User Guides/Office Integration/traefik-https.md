@@ -34,7 +34,7 @@ Three methods to solve this, ordered by complexity (easiest first):
 
 ## Method 0: Traefik Labels (Easiest)
 
-See the complete [Traefik Labels Guide](/docs/user-guides/office-integration/traefik-labels/) for full setup.
+See the complete {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik Labels Guide" />}} for full setup.
 
 **Key points:**
 - Uses Traefik's built-in certificate handling
@@ -532,10 +532,10 @@ serversTransports:
 
 ## Next Steps
 
-- [Basic Docker Setup](/docs/user-guides/office-integration/basic-docker-setup/) - Start here if new to Docker
-- [Traefik Labels Guide](/docs/user-guides/office-integration/traefik-labels/) - Complete Method 0 setup
-- [Office Troubleshooting](/docs/integrations/office/troubleshooting/) - Detailed problem solving
-- [Configuration Reference](/docs/integrations/office/configuration/) - All config options
+- {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} - Start here if new to Docker
+- {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik Labels Guide" />}} - Complete Method 0 setup
+- {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} - Detailed problem solving
+- {{< doclink path="integrations/office/configuration/" text="Configuration Reference" />}} - All config options
 
 ## Credits
 

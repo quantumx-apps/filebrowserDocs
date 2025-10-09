@@ -82,5 +82,5 @@ We maintain a focused set of languages to ensure translation quality and mainten
 
 ## Next Steps
 
-- [Feature development](/docs/contributing/features/)
-- [Documentation guide](/docs/contributing/documentation/)
+- {{< doclink path="contributing/features/" text="Feature development" />}}
+- {{< doclink path="contributing/documentation/" text="Documentation guide" />}}

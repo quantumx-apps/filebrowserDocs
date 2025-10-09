@@ -55,7 +55,7 @@ Content here...
 
 ## Next Steps
 
-- [Related topic](/docs/section/page/)
+- {{< doclink path="section/page/" text="Related topic" />}}
 ```
 
 ### 4. Test Locally
@@ -105,7 +105,7 @@ server:
 
 **Internal links**: Use absolute paths from `/docs/`
 ```markdown
-[Configuration](/docs/configuration/)
+{{< doclink path="configuration/" text="Configuration" />}}
 ```
 
 **External links**: Use full URLs
@@ -133,5 +133,5 @@ Access at: `http://localhost:1313/docs/`
 
 ## Next Steps
 
-- [Feature development](/docs/contributing/features/)
-- [Translation guide](/docs/contributing/translations/)
+- {{< doclink path="contributing/features/" text="Feature development" />}}
+- {{< doclink path="contributing/translations/" text="Translation guide" />}}

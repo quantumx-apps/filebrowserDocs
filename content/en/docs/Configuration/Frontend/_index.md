@@ -57,6 +57,6 @@ frontend:
 
 ## Next Steps
 
-- [Configure branding](/docs/configuration/frontend/branding/)
-- [Set up themes](/docs/configuration/frontend/themes/)
+- {{< doclink path="configuration/frontend/branding/" text="Configure branding" />}}
+- {{< doclink path="configuration/frontend/themes/" text="Set up themes" />}}
 

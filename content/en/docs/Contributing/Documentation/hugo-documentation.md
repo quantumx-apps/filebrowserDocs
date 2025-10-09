@@ -433,11 +433,11 @@ lastmod: "2024-10-08"
 - **Consistent Formatting**: Follow existing formatting patterns
 
 ## Multilingual Support (i18n)
-- [Translations Guide](/docs/contributing/documentation/translations/)
+- {{< doclink path="contributing/documentation/translations/" text="Translations Guide" />}}
 
 ## Next Steps
 
 
-- [Documentation Style Guide](/docs/contributing/documentation/documentation/)
-- [Troubleshooting](/docs/contributing/documentation/troubleshooting/)
-- [Feature Development](/docs/contributing/features/)
+- {{< doclink path="contributing/documentation/documentation/" text="Documentation Style Guide" />}}
+- {{< doclink path="contributing/documentation/troubleshooting/" text="Troubleshooting" />}}
+- {{< doclink path="contributing/features/" text="Feature Development" />}}

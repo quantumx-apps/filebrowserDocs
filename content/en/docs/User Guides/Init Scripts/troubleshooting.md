@@ -20,6 +20,6 @@ Make script executable with `chmod +x`, check file ownership.
 
 ## Next Steps
 
-- [Init Scripts](/docs/user-guides/init-scripts/)
-- [Multiple Configs](/docs/user-guides/multiple-configs/)
-- [Office Integration](/docs/user-guides/office-integration/)
+- {{< doclink path="user-guides/init-scripts/" text="Init Scripts" />}}
+- {{< doclink path="user-guides/multiple-configs/" text="Multiple Configs" />}}
+- {{< doclink path="user-guides/office-integration/" text="Office Integration" />}}

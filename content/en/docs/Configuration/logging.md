@@ -6,7 +6,7 @@ icon: "description"
 
 Configure FileBrowser's logging system.
 
-For troubleshooting and enabling debug logs, see [Debug Logging](/docs/troubleshooting/debug-logging/).
+For troubleshooting and enabling debug logs, see {{< doclink path="troubleshooting/debug-logging/" text="Debug Logging" />}}.
 
 ## Default Logging
 
@@ -97,6 +97,6 @@ Disable colored output (recommended for files)
 
 ## Next Steps
 
-- [Enable debug logging](/docs/troubleshooting/debug-logging/) for troubleshooting
-- [Configure server settings](/docs/configuration/server/)
+- {{< doclink path="troubleshooting/debug-logging/" text="Enable debug logging" />}} for troubleshooting
+- {{< doclink path="configuration/server/" text="Configure server settings" />}}
 

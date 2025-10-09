@@ -644,6 +644,6 @@ When asking for help, provide:
 
 ## Next Steps
 
-- [Configuration](/docs/integrations/media/configuration/) - Set up media integration
-- [Media guides](/docs/integrations/media/guides/) - Usage examples
-- [General troubleshooting](/docs/advanced/logging/troubleshooting/) - Other issues
+- {{< doclink path="integrations/media/configuration/" text="Configuration" />}} - Set up media integration
+- {{< doclink path="integrations/media/guides/" text="Media guides" />}} - Usage examples
+- {{< doclink path="advanced/logging/troubleshooting/" text="General troubleshooting" />}} - Other issues

@@ -499,7 +499,7 @@ hugo --environment de
 
 ## Next Steps
 
-- [Translation Workflow](/docs/contributing/documentation/translations/)
+- {{< doclink path="contributing/documentation/translations/" text="Translation Workflow" />}}
 - [Hugo i18n Documentation](https://gohugo.io/content-management/multilingual/)
 - [Lotus Docs i18n Support](https://lotusdocs.dev/)
-- [DeepL API Setup](/docs/contributing/translations/)
+- {{< doclink path="contributing/translations/" text="DeepL API Setup" />}}

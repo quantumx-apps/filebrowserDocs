@@ -243,11 +243,11 @@ Add or update users.
 
 ## Troubleshooting
 
-For common issues and solutions, see the [Troubleshooting guide](/docs/reference/troubleshooting/).
+For common issues and solutions, see the {{< doclink path="reference/troubleshooting/" text="Troubleshooting guide" />}}.
 
 ## Next Steps
 
-- [Environment variables](/docs/reference/environment-variables/)
-- [API documentation](/docs/reference/api/)
-- [Configuration reference](/docs/reference/configuration/)
+- {{< doclink path="reference/environment-variables/" text="Environment variables" />}}
+- {{< doclink path="reference/api/" text="API documentation" />}}
+- {{< doclink path="reference/configuration/" text="Configuration reference" />}}
 

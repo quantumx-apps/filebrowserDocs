@@ -7,14 +7,14 @@ icon: "menu_book"
 Step-by-step guides for setting up OnlyOffice integration with FileBrowser Quantum.
 
 {{% alert context="info" %}}
-**New!** Complete setup guides with community-contributed configurations are now available in the [User Guides section](/docs/user-guides/office-integration/).
+**New!** Complete setup guides with community-contributed configurations are now available in the {{< doclink path="user-guides/office-integration/" text="User Guides section" />}}.
 {{% /alert %}}
 
 ## Available Setup Guides
 
 We've created comprehensive, community-tested guides for different deployment scenarios:
 
-### 🚀 [Basic Docker Setup](/docs/user-guides/office-integration/basic-docker-setup/)
+### 🚀 {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}}
 
 **Perfect for:** Local development, testing, and learning
 
@@ -23,11 +23,11 @@ Quick HTTP-based setup to get started with OnlyOffice integration in 15-20 minut
 - Local testing and development
 - Internal network deployments
 
-[View Basic Setup Guide →](/docs/user-guides/office-integration/basic-docker-setup/)
+{{< doclink path="user-guides/office-integration/basic-docker-setup/" text="View Basic Setup Guide →" />}}
 
 ---
 
-### ⭐ [Production Setup with Traefik](/docs/user-guides/office-integration/traefik-labels/)
+### ⭐ {{< doclink path="user-guides/office-integration/traefik-labels/" text="Production Setup with Traefik" />}}
 
 **Perfect for:** Production deployments with automatic HTTPS
 
@@ -37,11 +37,11 @@ Complete production-ready setup with:
 - Traefik reverse proxy configuration
 - DDNS support
 
-[View Traefik Guide →](/docs/user-guides/office-integration/traefik-labels/)
+{{< doclink path="user-guides/office-integration/traefik-labels/" text="View Traefik Guide →" />}}
 
 ---
 
-### 🔒 [Advanced HTTPS Configuration](/docs/user-guides/office-integration/traefik-https/)
+### 🔒 {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS Configuration" />}}
 
 **Perfect for:** Advanced users with custom security requirements
 
@@ -51,7 +51,7 @@ Advanced HTTPS configurations including:
 - Full certificate verification
 - Multiple security methods
 
-[View Advanced Guide →](/docs/user-guides/office-integration/traefik-https/)
+{{< doclink path="user-guides/office-integration/traefik-https/" text="View Advanced Guide →" />}}
 
 ---
 
@@ -61,16 +61,16 @@ Not sure which guide to follow? Here's a quick decision tree:
 
 | Your Situation | Recommended Guide |
 |----------------|-------------------|
-| Just trying out OnlyOffice | [Basic Docker Setup](/docs/user-guides/office-integration/basic-docker-setup/) |
-| Deploying to production | [Traefik Production](/docs/user-guides/office-integration/traefik-labels/) |
-| Need custom certificates | [Advanced HTTPS](/docs/user-guides/office-integration/traefik-https/) |
-| Internal network only | [Basic Docker Setup](/docs/user-guides/office-integration/basic-docker-setup/) |
+| Just trying out OnlyOffice | {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} |
+| Deploying to production | {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik Production" />}} |
+| Need custom certificates | {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS" />}} |
+| Internal network only | {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} |
 
 ## Additional Resources
 
-- [Configuration Reference](/docs/integrations/office/configuration/) - Detailed configuration options
-- [Troubleshooting Guide](/docs/integrations/office/troubleshooting/) - Common issues and solutions
-- [About OnlyOffice](/docs/integrations/office/about/) - Features and capabilities
+- {{< doclink path="integrations/office/configuration/" text="Configuration Reference" />}} - Detailed configuration options
+- {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting Guide" />}} - Common issues and solutions
+- {{< doclink path="integrations/office/about/" text="About OnlyOffice" />}} - Features and capabilities
 
 ## Community Contributions
 

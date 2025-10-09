@@ -228,5 +228,5 @@ integrations:
 
 ## Next Steps
 
-- [Media guides](/docs/integrations/media/guides/) - Usage examples and guides
-- [Troubleshooting](/docs/integrations/media/troubleshooting/) - Common issues and solutions
+- {{< doclink path="integrations/media/guides/" text="Media guides" />}} - Usage examples and guides
+- {{< doclink path="integrations/media/troubleshooting/" text="Troubleshooting" />}} - Common issues and solutions

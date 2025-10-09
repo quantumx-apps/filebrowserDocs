@@ -104,6 +104,6 @@ auth:
 
 ## Next Steps
 
-- [Password authentication](/docs/configuration/authentication/password/)
-- [Proxy authentication](/docs/configuration/authentication/proxy/)
+- {{< doclink path="configuration/authentication/password/" text="Password authentication" />}}
+- {{< doclink path="configuration/authentication/proxy/" text="Proxy authentication" />}}
 

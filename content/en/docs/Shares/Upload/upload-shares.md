@@ -34,7 +34,7 @@ Upload shares are perfect for collecting submissions where privacy between uploa
 
 ## Available Options
 
-Upload shares support most [common options](/docs/shares/options/):
+Upload shares support most {{< doclink path="shares/options/" text="common options" />}}:
 
 ### Basic Settings
 
@@ -398,9 +398,9 @@ Users see a clean upload interface with your custom branding but cannot browse, 
 
 ## Next Steps
 
-- [Normal shares](/docs/shares/normal/normal-shares/) - Create viewing/downloading shares
-- [Common options](/docs/shares/options/) - Options available to all share types
-- [Customization](/docs/shares/customization/) - Brand your shares with colors and logos
+- {{< doclink path="shares/normal/normal-shares/" text="Normal shares" />}} - Create viewing/downloading shares
+- {{< doclink path="shares/options/" text="Common options" />}} - Options available to all share types
+- {{< doclink path="shares/customization/" text="Customization" />}} - Brand your shares with colors and logos
 
 <style>
 /* Light mode (default) */

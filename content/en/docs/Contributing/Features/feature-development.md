@@ -231,7 +231,7 @@ To become an official contributor, email info@quantumx-apps.com with your GitHub
 
 ## Troubleshooting
 
-For common development issues, see the [Troubleshooting guide](/docs/contributing/features/troubleshooting/).
+For common development issues, see the {{< doclink path="contributing/features/troubleshooting/" text="Troubleshooting guide" />}}.
 
 ## Code Standards
 
@@ -315,5 +315,5 @@ Includes:
 
 ## Next Steps
 
-- [Translation guide](/docs/contributing/translations/)
-- [Documentation guide](/docs/contributing/documentation/)
+- {{< doclink path="contributing/translations/" text="Translation guide" />}}
+- {{< doclink path="contributing/documentation/" text="Documentation guide" />}}

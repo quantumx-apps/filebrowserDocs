@@ -385,9 +385,9 @@ The token is obtained after entering the correct password on the share page.
 
 ## Next Steps
 
-- [Upload shares](/docs/shares/upload/upload-shares/) - Create upload-only shares
-- [Common options](/docs/shares/options/) - Options available to all share types
-- [Customization](/docs/shares/customization/) - Brand your shares with colors and logos
+- {{< doclink path="shares/upload/upload-shares/" text="Upload shares" />}} - Create upload-only shares
+- {{< doclink path="shares/options/" text="Common options" />}} - Options available to all share types
+- {{< doclink path="shares/customization/" text="Customization" />}} - Brand your shares with colors and logos
 
 <style>
 /* Light mode (default) */

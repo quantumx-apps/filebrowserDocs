@@ -8,7 +8,7 @@ Thank you for your interest in contributing to FileBrowser Quantum! This guide w
 
 ## Ways to Contribute
 
-### 💻 [Code Contributions](/docs/contributing/features/)
+### 💻 {{< doclink path="contributing/features/" text="Code Contributions" />}}
 Add features, fix bugs, and improve the codebase.
 
 **Best for**:
@@ -21,7 +21,7 @@ Add features, fix bugs, and improve the codebase.
 - Node.js 18.0.0+
 - Basic understanding of the codebase
 
-### 🌍 [Translation Contributions](/docs/contributing/translations/)
+### 🌍 {{< doclink path="contributing/translations/" text="Translation Contributions" />}}
 Help make FileBrowser accessible in more languages.
 
 **Best for**:
@@ -34,7 +34,7 @@ Help make FileBrowser accessible in more languages.
 - Basic text editor
 - DeepL API key (for auto-translation)
 
-### 📚 [Documentation Contributions](/docs/contributing/documentation/)
+### 📚 {{< doclink path="contributing/documentation/" text="Documentation Contributions" />}}
 Improve guides, references, and examples.
 
 **Best for**:
@@ -80,9 +80,9 @@ hugo server
 ### 3. Make Your Changes
 
 Follow the specific guide for your contribution type:
-- [Feature development guide](/docs/contributing/features/)
-- [Translation guide](/docs/contributing/translations/)
-- [Documentation guide](/docs/contributing/documentation/)
+- {{< doclink path="contributing/features/" text="Feature development guide" />}}
+- {{< doclink path="contributing/translations/" text="Translation guide" />}}
+- {{< doclink path="contributing/documentation/" text="Documentation guide" />}}
 
 ### 4. Submit Your Work
 
@@ -144,7 +144,7 @@ FileBrowser uses a structured workflow:
 3. **`stable/vX.X.X`** - Production releases
 4. **`main`** - Latest code for `latest` Docker tag
 
-See [Feature Development](/docs/contributing/features/) for details.
+See {{< doclink path="contributing/features/" text="Feature Development" />}} for details.
 
 ## Code Standards
 
@@ -206,9 +206,9 @@ Contributors are recognized in:
 
 Ready to contribute? Choose your path:
 
-- **[Feature Development](/docs/contributing/features/)** - Start coding
-- **[Translations](/docs/contributing/translations/)** - Help with languages
-- **[Documentation](/docs/contributing/documentation/)** - Improve docs
+- **{{< doclink path="contributing/features/" text="Feature Development" />}}** - Start coding
+- **{{< doclink path="contributing/translations/" text="Translations" />}}** - Help with languages
+- **{{< doclink path="contributing/documentation/" text="Documentation" />}}** - Improve docs
 
 Thank you for helping make FileBrowser Quantum better! 🚀
 

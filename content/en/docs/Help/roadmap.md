@@ -20,5 +20,5 @@ Most up-to-date status of features can be found on the [github roadmap](https://
 
 ## Next Steps
 
-- [Q&A](/docs/help/qa/)
-- [About](/docs/help/about/)
+- {{< doclink path="help/qa/" text="Q&A" />}}
+- {{< doclink path="help/about/" text="About" />}}

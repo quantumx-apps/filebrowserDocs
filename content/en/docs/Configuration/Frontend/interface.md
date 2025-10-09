@@ -83,6 +83,6 @@ frontend:
 
 ## Next Steps
 
-- [Configure branding](/docs/configuration/frontend/branding/)
-- [Configure styling](/docs/configuration/frontend/styling/)
+- {{< doclink path="configuration/frontend/branding/" text="Configure branding" />}}
+- {{< doclink path="configuration/frontend/styling/" text="Configure styling" />}}
 

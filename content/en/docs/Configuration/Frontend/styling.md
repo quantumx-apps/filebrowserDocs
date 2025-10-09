@@ -187,7 +187,7 @@ Available CSS variables:
 
 ## Next Steps
 
-- [Set up themes](/docs/configuration/frontend/themes/)
-- [Configure branding](/docs/configuration/frontend/branding/)
-- [Interface options](/docs/configuration/frontend/interface/)
+- {{< doclink path="configuration/frontend/themes/" text="Set up themes" />}}
+- {{< doclink path="configuration/frontend/branding/" text="Configure branding" />}}
+- {{< doclink path="configuration/frontend/interface/" text="Interface options" />}}
 

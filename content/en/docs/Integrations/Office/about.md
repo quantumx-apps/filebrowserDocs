@@ -297,6 +297,6 @@ location /onlyoffice/ {
 
 ## Next Steps
 
-- [Configuration](/docs/integrations/office/configuration/)
-- [Guides](/docs/integrations/office/guides/)
-- [Troubleshooting](/docs/integrations/office/troubleshooting/)
+- {{< doclink path="integrations/office/configuration/" text="Configuration" />}}
+- {{< doclink path="integrations/office/guides/" text="Guides" />}}
+- {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}}

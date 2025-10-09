@@ -225,6 +225,6 @@ Enable OnlyOffice for specific shares:
 
 ## Next Steps
 
-- [Office guides](/docs/integrations/office/guides/)
-- [Troubleshooting](/docs/integrations/office/troubleshooting/)
-- [User setup guide](/docs/user-guides/office-setup/)
+- {{< doclink path="integrations/office/guides/" text="Office guides" />}}
+- {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}}
+- {{< doclink path="user-guides/office-setup/" text="User setup guide" />}}

@@ -8,13 +8,13 @@ Complete configuration guide for all aspects of FileBrowser Quantum.
 
 ## Configuration Topics
 
-- [Server Settings](/docs/configuration/server/) - Port, address, database, caching
-- [Sources](/docs/configuration/sources/) - File system source configuration
-- [Authentication](/docs/configuration/authentication/) - Auth methods (password, OIDC, proxy)
-- [Users](/docs/configuration/users/) - User management and permissions
-- [Logging](/docs/configuration/logging/) - Configure logging output and levels
-- [Frontend](/docs/configuration/frontend/) - Customize UI, branding, themes
-- [Multiple Configs](/docs/configuration/multiple-configs/) - Use multiple configuration files
+- {{< doclink path="configuration/server/" text="Server Settings" />}} - Port, address, database, caching
+- {{< doclink path="configuration/sources/" text="Sources" />}} - File system source configuration
+- {{< doclink path="configuration/authentication/" text="Authentication" />}} - Auth methods (password, OIDC, proxy)
+- {{< doclink path="configuration/users/" text="Users" />}} - User management and permissions
+- {{< doclink path="configuration/logging/" text="Logging" />}} - Configure logging output and levels
+- {{< doclink path="configuration/frontend/" text="Frontend" />}} - Customize UI, branding, themes
+- {{< doclink path="configuration/multiple-configs/" text="Multiple Configs" />}} - Use multiple configuration files
 
 ## Basic Configuration Example
 
@@ -149,7 +149,7 @@ FileBrowser looks for `config.yaml` in:
 
 ## Next Steps
 
-- [Configure sources](/docs/configuration/sources/)
-- [Set up authentication](/docs/configuration/authentication/)
-- [Manage users](/docs/configuration/users/)
-- [View full config reference](/docs/reference/configuration/)
+- {{< doclink path="configuration/sources/" text="Configure sources" />}}
+- {{< doclink path="configuration/authentication/" text="Set up authentication" />}}
+- {{< doclink path="configuration/users/" text="Manage users" />}}
+- {{< doclink path="reference/configuration/" text="View full config reference" />}}

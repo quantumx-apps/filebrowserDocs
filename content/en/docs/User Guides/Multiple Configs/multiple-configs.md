@@ -217,6 +217,6 @@ All configurations must match the structure defined in your schema. The anchor s
 
 ## Next Steps
 
-- [Server configuration](/docs/configuration/server/)
-- [Authentication setup](/docs/configuration/authentication/)
-- [Environment variables](/docs/reference/environment-variables/)
+- {{< doclink path="configuration/server/" text="Server configuration" />}}
+- {{< doclink path="configuration/authentication/" text="Authentication setup" />}}
+- {{< doclink path="reference/environment-variables/" text="Environment variables" />}}

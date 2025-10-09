@@ -24,6 +24,6 @@ Debug OnlyOffice and FFmpeg integration operations.
 
 ## Next Steps
 
-- [Debug Logging](/docs/advanced/debug-logging/)
-- [Configuration](/docs/configuration/)
-- [Help](/docs/help/)
+- {{< doclink path="advanced/debug-logging" text="Debug Logging" />}}
+- {{< doclink path="configuration" text="Configuration" />}}
+- {{< doclink path="help" text="Help" />}}

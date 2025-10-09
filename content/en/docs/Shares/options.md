@@ -226,7 +226,7 @@ If OnlyOffice is configured:
 
 ## Customization
 
-Additional branding options (see [Customization](/docs/shares/customization/) for detailed examples):
+Additional branding options (see {{< doclink path="shares/customization/" text="Customization" />}} for detailed examples):
 
 ### Theme Color
 
@@ -289,9 +289,9 @@ This allows you to:
 
 ## Next Steps
 
-- [Customize appearance](/docs/shares/customization/)
-- [Normal shares](/docs/shares/normal/)
-- [Upload shares](/docs/shares/upload/)
+- {{< doclink path="shares/customization/" text="Customize appearance" />}}
+- {{< doclink path="shares/normal/" text="Normal shares" />}}
+- {{< doclink path="shares/upload/" text="Upload shares" />}}
 
 <style>
 /* Light mode (default) */

@@ -70,6 +70,6 @@ Access rules are configured through the admin interface or API. You can:
 
 ## Next Steps
 
-- [Access Rules](/docs/access-control/rules/)
-- [Troubleshooting](/docs/access-control/troubleshooting/)
-- [User Management](/docs/configuration/users/)
+- {{< doclink path="access-control/rules/" text="Access Rules" />}}
+- {{< doclink path="access-control/troubleshooting/" text="Troubleshooting" />}}
+- {{< doclink path="configuration/users/" text="User Management" />}}

@@ -8,25 +8,25 @@ Extend FileBrowser with powerful integrations for media and documents.
 
 ## Available Integrations
 
-### [Media Integration](/docs/integrations/media/)
+### {{< doclink path="integrations/media/" text="Media Integration" />}}
 FFmpeg-based media processing for video thumbnails and subtitle extraction.
 
-- [About](/docs/integrations/media/about/) - Overview and features
-- [Configuration](/docs/integrations/media/configuration/) - Setup and options
-- [Guides](/docs/integrations/media/guides/) - How-to guides
-- [Troubleshooting](/docs/integrations/media/troubleshooting/) - Common issues
+- {{< doclink path="integrations/media/about/" text="About" />}} - Overview and features
+- {{< doclink path="integrations/media/configuration/" text="Configuration" />}} - Setup and options
+- {{< doclink path="integrations/media/guides/" text="Guides" />}} - How-to guides
+- {{< doclink path="integrations/media/troubleshooting/" text="Troubleshooting" />}} - Common issues
 
-### [Office Integration](/docs/integrations/office/)
+### {{< doclink path="integrations/office/" text="Office Integration" />}}
 OnlyOffice Document Server integration for document preview and editing.
 
 {{% alert context="info" %}}
 OnlyOffice is currently the only supported office integration. Collabora support is planned for the future.
 {{% /alert %}}
 
-- [About](/docs/integrations/office/about/) - Overview and features
-- [Configuration](/docs/integrations/office/configuration/) - Setup and options
-- [Guides](/docs/integrations/office/guides/) - How-to guides
-- [Troubleshooting](/docs/integrations/office/troubleshooting/) - Common issues
+- {{< doclink path="integrations/office/about/" text="About" />}} - Overview and features
+- {{< doclink path="integrations/office/configuration/" text="Configuration" />}} - Setup and options
+- {{< doclink path="integrations/office/guides/" text="Guides" />}} - How-to guides
+- {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}} - Common issues
 
 ## Quick Start
 
@@ -47,6 +47,6 @@ integrations:
 
 ## Next Steps
 
-- [Media integration setup](/docs/integrations/media/)
-- [Office integration setup](/docs/integrations/office/)
-- [User guides](/docs/user-guides/)
+- {{< doclink path="integrations/media/" text="Media integration setup" />}}
+- {{< doclink path="integrations/office/" text="Office integration setup" />}}
+- {{< doclink path="user-guides/" text="User guides" />}}

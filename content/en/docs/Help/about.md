@@ -158,12 +158,12 @@ None of this would be possible without creating this forked repo.
 
 ## Get Started
 
-Ready to try it out? See [Getting Started](/docs/getting-started/).
+Ready to try it out? See {{< doclink path="getting-started/" text="Getting Started" />}}.
 
 ## Next Steps
 
-- [Getting Started](/docs/getting-started/)
-- [Configuration](/docs/configuration/)
-- [Q&A](/docs/help/qa/)
+- {{< doclink path="getting-started/" text="Getting Started" />}}
+- {{< doclink path="configuration/" text="Configuration" />}}
+- {{< doclink path="help/qa/" text="Q&A" />}}
 - [GitHub Repository](https://github.com/gtsteffaniak/filebrowser)
 

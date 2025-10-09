@@ -436,6 +436,6 @@ docker run -p 8080:8080 gtstef/filebrowser
 
 ## Next Steps
 
-- [Hugo Documentation](/docs/contributing/documentation/hugo-documentation/)
-- [Translation Guidelines](/docs/contributing/documentation/documentation/)
-- [DeepL API Setup](/docs/contributing/translations/)
+- {{< doclink path="contributing/documentation/hugo-documentation/" text="Hugo Documentation" />}}
+- {{< doclink path="contributing/documentation/documentation/" text="Translation Guidelines" />}}
+- {{< doclink path="contributing/translations/" text="DeepL API Setup" />}}

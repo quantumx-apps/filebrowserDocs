@@ -22,7 +22,7 @@ Simple HTTP-based setup perfect for:
 - Development environments
 - Internal network deployments
 
-[Start Basic Setup →](/docs/user-guides/office-integration/basic-docker-setup/)
+{{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Start Basic Setup →" />}}
 
 **What you'll learn:**
 - Generate JWT secrets
@@ -44,7 +44,7 @@ Production-ready setup with automatic HTTPS:
 - Secure JWT authentication
 - DDNS support (Dynu, Cloudflare, etc.)
 
-[Start Traefik Setup →](/docs/user-guides/office-integration/traefik-labels/)
+{{< doclink path="user-guides/office-integration/traefik-labels/" text="Start Traefik Setup →" />}}
 
 **What you'll learn:**
 - Configure Traefik reverse proxy
@@ -66,7 +66,7 @@ Advanced HTTPS configurations for special needs:
 - Full certificate verification
 - Multiple verification methods
 
-[Start Advanced Setup →](/docs/user-guides/office-integration/traefik-https/)
+{{< doclink path="user-guides/office-integration/traefik-https/" text="Start Advanced Setup →" />}}
 
 **What you'll learn:**
 - Generate self-signed certificates
@@ -97,12 +97,12 @@ graph TD
 
 | Scenario | Recommended Guide |
 |----------|-------------------|
-| "I want to try OnlyOffice quickly" | [Basic Docker Setup](/docs/user-guides/office-integration/basic-docker-setup/) |
-| "I need production deployment with HTTPS" | [Traefik with Labels](/docs/user-guides/office-integration/traefik-labels/) |
-| "I'm deploying on internal network only" | [Basic Docker Setup](/docs/user-guides/office-integration/basic-docker-setup/) |
-| "I need custom CA certificates" | [Advanced HTTPS](/docs/user-guides/office-integration/traefik-https/) |
-| "I want automatic SSL renewal" | [Traefik with Labels](/docs/user-guides/office-integration/traefik-labels/) |
-| "I have specific security requirements" | [Advanced HTTPS](/docs/user-guides/office-integration/traefik-https/) |
+| "I want to try OnlyOffice quickly" | {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} |
+| "I need production deployment with HTTPS" | {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik with Labels" />}} |
+| "I'm deploying on internal network only" | {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} |
+| "I need custom CA certificates" | {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS" />}} |
+| "I want automatic SSL renewal" | {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik with Labels" />}} |
+| "I have specific security requirements" | {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS" />}} |
 
 ## Prerequisites for All Guides
 
@@ -130,7 +130,7 @@ OnlyOffice is a powerful open-source office suite that provides:
 - **Web-based**: No software installation for end users
 - **Self-hosted**: Full control over your data
 
-[Learn more about OnlyOffice →](/docs/integrations/office/about/)
+{{< doclink path="integrations/office/about/" text="Learn more about OnlyOffice →" />}}
 
 ## Integration Architecture
 
@@ -168,7 +168,7 @@ Here's how FileBrowser Quantum integrates with OnlyOffice:
 4. User edits in OnlyOffice editor
 5. OnlyOffice saves changes back to FileBrowser
 
-[See detailed troubleshooting diagram →](/docs/integrations/office/troubleshooting/#network-flow-diagram)
+{{< doclink path="integrations/office/troubleshooting/#network-flow-diagram" text="See detailed troubleshooting diagram →" />}}
 
 ## After Setup
 
@@ -221,9 +221,9 @@ Want to contribute your configuration? Share it in [GitHub Discussions](https://
 
 ### Documentation
 
-- [Configuration Reference](/docs/integrations/office/configuration/) - All configuration options
-- [Troubleshooting Guide](/docs/integrations/office/troubleshooting/) - Common issues and solutions
-- [OnlyOffice Features](/docs/integrations/office/about/) - What OnlyOffice can do
+- {{< doclink path="integrations/office/configuration/" text="Configuration Reference" />}} - All configuration options
+- {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting Guide" />}} - Common issues and solutions
+- {{< doclink path="integrations/office/about/" text="OnlyOffice Features" />}} - What OnlyOffice can do
 
 ### External Resources
 
@@ -248,7 +248,7 @@ If you encounter issues:
 4. **Search existing issues** on GitHub
 5. **Ask in discussions** with your configuration details
 
-[Go to Troubleshooting →](/docs/integrations/office/troubleshooting/)
+{{< doclink path="integrations/office/troubleshooting/" text="Go to Troubleshooting →" />}}
 
 ## Ready to Start?
 

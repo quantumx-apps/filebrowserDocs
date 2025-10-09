@@ -38,5 +38,5 @@ Look for error messages about:
 
 ## Next Steps
 
-- [Documentation guide](/docs/contributing/documentation/)
-- [Feature development](/docs/contributing/features/)
+- {{< doclink path="contributing/documentation/" text="Documentation guide" />}}
+- {{< doclink path="contributing/features/" text="Feature development" />}}

@@ -7,7 +7,7 @@ icon: "docker"
 Complete setup for running FileBrowser Quantum with OnlyOffice using Docker Compose on your local network.
 
 {{% alert context="warning" %}}
-This guide uses HTTP which is **not secure** for production. Only use for local development or testing. For production deployments with HTTPS, see the [Traefik HTTPS guide](/docs/user-guides/office-integration/traefik-https/).
+This guide uses HTTP which is **not secure** for production. Only use for local development or testing. For production deployments with HTTPS, see the {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik HTTPS guide" />}}.
 {{% /alert %}}
 
 ## Prerequisites
@@ -328,14 +328,14 @@ docker-compose down -v --remove-orphans
 
 ## Next Steps
 
-- **Production Setup**: See [Traefik HTTPS Guide](/docs/user-guides/office-integration/traefik-https/) for secure deployment
-- **Advanced Labels**: See [Traefik Labels Guide](/docs/user-guides/office-integration/traefik-labels/) for complete Traefik configuration
-- **Troubleshooting**: See [Office Troubleshooting](/docs/integrations/office/troubleshooting/) for detailed solutions
-- **Configuration**: See [Office Configuration](/docs/integrations/office/configuration/) for all available options
+- **Production Setup**: See {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik HTTPS Guide" />}} for secure deployment
+- **Advanced Labels**: See {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik Labels Guide" />}} for complete Traefik configuration
+- **Troubleshooting**: See {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} for detailed solutions
+- **Configuration**: See {{< doclink path="integrations/office/configuration/" text="Office Configuration" />}} for all available options
 
 ## Additional Resources
 
 - [OnlyOffice Docker Documentation](https://github.com/ONLYOFFICE/Docker-DocumentServer)
-- [FileBrowser Configuration Reference](/docs/configuration/)
+- {{< doclink path="configuration/" text="FileBrowser Configuration Reference" />}}
 - [Docker Compose Documentation](https://docs.docker.com/compose/)
 

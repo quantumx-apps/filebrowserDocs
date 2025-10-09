@@ -98,7 +98,7 @@ This creates `/home/users/username` for each user.
 
 ## User Groups
 
-See [Groups](/docs/access-control/groups/) for group-based management.
+See {{< doclink path="access-control/groups/" text="Groups" />}} for group-based management.
 
 ## Password Management
 
@@ -134,7 +134,7 @@ Users with API permission can create tokens:
 
 ## Next Steps
 
-- [Configure access rules](/docs/access-control/rules/)
-- [Set up groups](/docs/access-control/groups/)
-- [Configure authentication](/docs/configuration/authentication/)
+- {{< doclink path="access-control/rules/" text="Configure access rules" />}}
+- {{< doclink path="access-control/groups/" text="Set up groups" />}}
+- {{< doclink path="configuration/authentication/" text="Configure authentication" />}}
 

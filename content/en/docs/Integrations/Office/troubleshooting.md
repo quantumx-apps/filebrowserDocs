@@ -617,6 +617,6 @@ onlyoffice:
 
 ## Next Steps
 
-- [Configuration](/docs/integrations/office/configuration/) - Set up OnlyOffice integration
-- [Office guides](/docs/integrations/office/guides/) - Usage examples and best practices
-- [About OnlyOffice](/docs/integrations/office/about/) - Features and capabilities
+- {{< doclink path="integrations/office/configuration/" text="Configuration" />}} - Set up OnlyOffice integration
+- {{< doclink path="integrations/office/guides/" text="Office guides" />}} - Usage examples and best practices
+- {{< doclink path="integrations/office/about/" text="About OnlyOffice" />}} - Features and capabilities

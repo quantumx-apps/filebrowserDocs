@@ -47,11 +47,11 @@ Access at `http://localhost:8080` with `admin` / `admin`
 
 ## Troubleshooting
 
-For common issues and solutions, see the [Troubleshooting guide](/docs/getting-started/troubleshooting/).
+For common issues and solutions, see the {{< doclink path="getting-started/troubleshooting/" text="Troubleshooting guide" />}}.
 
 ## Next Steps
 
-- [Configure sources](/docs/configuration/sources/)
-- [Set up authentication](/docs/configuration/authentication/)
-- [Enable media integration](/docs/integrations/media/)
+- {{< doclink path="configuration/sources/" text="Configure sources" />}}
+- {{< doclink path="configuration/authentication/" text="Set up authentication" />}}
+- {{< doclink path="integrations/media/" text="Enable media integration" />}}
 

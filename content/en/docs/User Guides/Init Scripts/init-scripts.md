@@ -258,7 +258,7 @@ curl -H "Authorization: Bearer ${TOKEN}" \
 
 ## Troubleshooting
 
-For common issues and solutions, see the [Troubleshooting guide](/docs/user-guides/init-scripts/troubleshooting/).
+For common issues and solutions, see the {{< doclink path="user-guides/init-scripts/troubleshooting/" text="Troubleshooting guide" />}}.
 
 ## Complete Examples
 
@@ -922,6 +922,6 @@ frontend:
 
 ## Next Steps
 
-- [API Reference](/docs/reference/api/)
-- [User configuration](/docs/configuration/users/)
-- [Access control](/docs/access-control/)
+- {{< doclink path="reference/api/" text="API Reference" />}}
+- {{< doclink path="configuration/users/" text="User configuration" />}}
+- {{< doclink path="access-control/" text="Access control" />}}

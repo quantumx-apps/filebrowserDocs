@@ -299,9 +299,9 @@ Professional internal sharing:
 
 ## Next Steps
 
-- [Common options](/docs/shares/options/)
-- [Normal shares](/docs/shares/normal/)
-- [Upload shares](/docs/shares/upload/)
+- {{< doclink path="shares/options/" text="Common options" />}}
+- {{< doclink path="shares/normal/" text="Normal shares" />}}
+- {{< doclink path="shares/upload/" text="Upload shares" />}}
 
 <style>
 /* Light mode (default) */

@@ -8,7 +8,7 @@ Complete technical reference for FileBrowser Quantum.
 
 ## Reference Documentation
 
-### [Environment Variables](/docs/reference/environment-variables/)
+### {{< doclink path="reference/environment-variables/" text="Environment Variables" />}}
 Complete list of environment variables for configuration.
 
 - Server configuration
@@ -17,7 +17,7 @@ Complete list of environment variables for configuration.
 - Source definitions
 - Logging options
 
-### [CLI Commands](/docs/reference/cli/)
+### {{< doclink path="reference/cli/" text="CLI Commands" />}}
 Command-line interface reference.
 
 - Server command
@@ -25,7 +25,7 @@ Command-line interface reference.
 - Version information
 - Help command
 
-### [API Documentation](/docs/reference/api/)
+### {{< doclink path="reference/api/" text="API Documentation" />}}
 RESTful API reference and Swagger documentation.
 
 - Authentication endpoints
@@ -154,6 +154,6 @@ integrations:
 
 ## Next Steps
 
-- [Environment variables](/docs/reference/environment-variables/)
-- [CLI commands](/docs/reference/cli/)
-- [API documentation](/docs/reference/api/)
+- {{< doclink path="reference/environment-variables/" text="Environment variables" />}}
+- {{< doclink path="reference/cli/" text="CLI commands" />}}
+- {{< doclink path="reference/api/" text="API documentation" />}}

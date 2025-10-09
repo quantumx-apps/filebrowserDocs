@@ -206,6 +206,6 @@ I'm not sure why you would run it like this, if you have a good reason please op
 
 ## Next Steps
 
-- [Configure sources](/docs/configuration/sources/)
-- [Debug logging](/docs/advanced/debug-logging/)
-- [Performance tuning](/docs/configuration/server/)
+- {{< doclink path="configuration/sources/" text="Configure sources" />}}
+- {{< doclink path="advanced/debug-logging/" text="Debug logging" />}}
+- {{< doclink path="configuration/server/" text="Performance tuning" />}}

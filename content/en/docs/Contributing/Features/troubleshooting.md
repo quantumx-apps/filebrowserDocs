@@ -61,5 +61,5 @@ server:
 
 ## Next Steps
 
-- [Feature development](/docs/contributing/features/)
-- [Translation guide](/docs/contributing/translations/)
+- {{< doclink path="contributing/features/" text="Feature development" />}}
+- {{< doclink path="contributing/translations/" text="Translation guide" />}}

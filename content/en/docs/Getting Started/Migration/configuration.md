@@ -110,7 +110,7 @@ command: ["-c", "/config.yaml"]
 
 ## Next Steps
 
-- [Set up sources](/docs/configuration/sources/)
-- [Configure authentication](/docs/configuration/authentication/)
-- [Customize frontend](/docs/configuration/frontend/)
+- {{< doclink path="configuration/sources/" text="Set up sources" />}}
+- {{< doclink path="configuration/authentication/" text="Configure authentication" />}}
+- {{< doclink path="configuration/frontend/" text="Customize frontend" />}}
 

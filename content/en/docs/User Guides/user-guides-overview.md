@@ -8,7 +8,7 @@ Step-by-step guides for common tasks and advanced configurations.
 
 ## Available Guides
 
-### [Init Scripts](/docs/user-guides/init-scripts/)
+### {{< doclink path="user-guides/init-scripts/" text="Init Scripts" />}}
 Automate FileBrowser initialization with API scripts.
 
 - Docker Compose setup
@@ -16,7 +16,7 @@ Automate FileBrowser initialization with API scripts.
 - Systemd integration
 - User creation automation
 
-### [Multiple Config Files](/docs/user-guides/multiple-configs/)
+### {{< doclink path="user-guides/multiple-configs/" text="Multiple Config Files" />}}
 Use YAML anchoring for modular, reusable configuration.
 
 - One-line environment switching
@@ -24,7 +24,7 @@ Use YAML anchoring for modular, reusable configuration.
 - Server/auth/user templates
 - Production deployment patterns
 
-### [Office Integration](/docs/user-guides/office-integration/)
+### {{< doclink path="user-guides/office-integration/" text="Office Integration" />}}
 Complete setup guide for OnlyOffice integration.
 
 - Docker deployment
@@ -46,10 +46,10 @@ Each guide includes:
 
 Can't find what you're looking for?
 
-- Check the [Reference](/docs/reference/) section for technical details
-- Visit [Help & Support](/docs/help/) for Q&A and community links
+- Check the {{< doclink path="reference/" text="Reference" />}} section for technical details
+- Visit {{< doclink path="help/" text="Help & Support" />}} for Q&A and community links
 - Open a [discussion](https://github.com/gtsteffaniak/filebrowser/discussions) to request new guides
 
 ## Contributing Guides
 
-Have a useful guide to share? See [Documentation Contributing](/docs/contributing/documentation/documentation/) for how to add new guides to the documentation.
+Have a useful guide to share? See {{< doclink path="contributing/documentation/documentation/" text="Documentation Contributing" />}} for how to add new guides to the documentation.

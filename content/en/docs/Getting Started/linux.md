@@ -122,7 +122,7 @@ sudo systemctl status filebrowser
 
 ## Next Steps
 
-- [Configure sources](/docs/configuration/sources/)
-- [Set up users](/docs/configuration/users/)
-- [Enable integrations](/docs/integrations/)
+- {{< doclink path="configuration/sources/" text="Configure sources" />}}
+- {{< doclink path="configuration/users/" text="Set up users" />}}
+- {{< doclink path="integrations/" text="Enable integrations" />}}
 

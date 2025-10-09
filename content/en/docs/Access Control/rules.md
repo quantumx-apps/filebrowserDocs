@@ -199,5 +199,5 @@ Rules:
 
 ## Troubleshooting
 
-For common issues and solutions, see the [Troubleshooting guide](/docs/access-control/troubleshooting/).
+For common issues and solutions, see the {{< doclink path="access-control/troubleshooting/" text="Troubleshooting guide" />}}.
 

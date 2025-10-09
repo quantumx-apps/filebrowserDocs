@@ -48,6 +48,6 @@ auth:
 
 ## Next Steps
 
-- [OIDC authentication](/docs/configuration/authentication/oidc/)
-- [Configure users](/docs/configuration/users/)
+- {{< doclink path="configuration/authentication/oidc/" text="OIDC authentication" />}}
+- {{< doclink path="configuration/users/" text="Configure users" />}}
 

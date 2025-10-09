@@ -116,7 +116,7 @@ server:
 
 ## Next Steps
 
-- [Configure sources](/docs/configuration/sources/)
-- [Set up authentication](/docs/configuration/authentication/)
-- [Configure logging](/docs/configuration/logging/)
+- {{< doclink path="configuration/sources/" text="Configure sources" />}}
+- {{< doclink path="configuration/authentication/" text="Set up authentication" />}}
+- {{< doclink path="configuration/logging/" text="Configure logging" />}}
 

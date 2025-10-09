@@ -114,7 +114,7 @@ server:
 
 ## Next Steps
 
-- [Configure authentication](/docs/configuration/authentication/)
-- [Manage users](/docs/configuration/users/)
-- [Set up access rules](/docs/access-control/rules/)
+- {{< doclink path="configuration/authentication/" text="Configure authentication" />}}
+- {{< doclink path="configuration/users/" text="Manage users" />}}
+- {{< doclink path="access-control/rules/" text="Set up access rules" />}}
 
