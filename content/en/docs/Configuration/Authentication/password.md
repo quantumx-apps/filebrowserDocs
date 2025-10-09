@@ -2,7 +2,6 @@
 title: "Password Authentication"
 description: "Configure password authentication"
 icon: "vpn_key"
-weight: 1
 ---
 
 Default authentication method using username and password.
@@ -61,6 +60,6 @@ export FILEBROWSER_ADMIN_PASSWORD="secure-password"
 
 ## Next Steps
 
-- [OIDC authentication](/docs/configuration/authentication/oidc/)
-- [Manage users](/docs/configuration/users/)
+- {{< doclink path="configuration/authentication/oidc/" text="OIDC authentication" />}}
+- {{< doclink path="configuration/users/" text="Manage users" />}}
 

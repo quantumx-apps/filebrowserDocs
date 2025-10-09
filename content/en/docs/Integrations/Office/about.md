@@ -2,12 +2,13 @@
 title: "About"
 description: "Overview of office integration features"
 icon: "info"
-weight: 1
 ---
 
 Overview of office document preview and editing capabilities.
 
-> **Note**: OnlyOffice is currently the only supported office integration. Collabora support is planned for the future.
+{{% alert context="info" %}}
+OnlyOffice is currently the only supported office integration. Collabora support is planned for the future.
+{{% /alert %}}
 
 ## Overview
 
@@ -91,7 +92,9 @@ server:
   internalUrl: "http://filebrowser:8080"  # Internal URL for OnlyOffice server communication
 ```
 
-**Important**: `internalUrl` should be accessible from the OnlyOffice server. This is typically a Docker network internal address.
+{{% alert context="warning" %}}
+`internalUrl` should be accessible from the OnlyOffice server. This is typically a Docker network internal address.
+{{% /alert %}}
 
 ## Troubleshooting
 
@@ -294,6 +297,6 @@ location /onlyoffice/ {
 
 ## Next Steps
 
-- [Configuration](/docs/integrations/office/configuration/)
-- [Guides](/docs/integrations/office/guides/)
-- [Troubleshooting](/docs/integrations/office/troubleshooting/)
+- {{< doclink path="integrations/office/configuration/" text="Configuration" />}}
+- {{< doclink path="integrations/office/guides/" text="Guides" />}}
+- {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}}

@@ -2,18 +2,19 @@
 title: "Access Control Overview"
 description: "How access control rules work in FileBrowser Quantum"
 icon: "security"
-weight: 1
 ---
 
 # File Browser Access Control Rules
 
-> [!NOTE]
-> Access rules do not apply to shares.
+{{% alert context="info" %}}
+Access rules do not apply to shares.
+{{% /alert %}}
 
 This document explains how access control rules work in FileBrowser Quantum, including how rules are inherited and how they can be overridden.
 
-> [!WARNING]
-> FileBrowser Quantum access rules differ entirely from those in the original FileBrowser, and the rules do not carry over and need to be recreated if migrating from the OG filebrowser.
+{{% alert context="warning" %}}
+FileBrowser Quantum access rules differ entirely from those in the original FileBrowser, and the rules do not carry over and need to be recreated if migrating from the OG filebrowser.
+{{% /alert %}}
 
 ## Source default behavior
 
@@ -69,6 +70,6 @@ Access rules are configured through the admin interface or API. You can:
 
 ## Next Steps
 
-- [Access Rules](/docs/access-control/rules/)
-- [Troubleshooting](/docs/access-control/troubleshooting/)
-- [User Management](/docs/configuration/users/)
+- {{< doclink path="access-control/rules/" text="Access Rules" />}}
+- {{< doclink path="access-control/troubleshooting/" text="Troubleshooting" />}}
+- {{< doclink path="configuration/users/" text="User Management" />}}

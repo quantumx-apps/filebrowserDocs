@@ -2,7 +2,6 @@
 title: "Branding"
 description: "Configure name, description, and favicon"
 icon: "branding_watermark"
-weight: 1
 ---
 
 Customize branding elements that appear in the UI and HTML metadata.
@@ -106,7 +105,7 @@ frontend:
 
 ## Next Steps
 
-- [Configure styling](/docs/configuration/frontend/styling/)
-- [Set up themes](/docs/configuration/frontend/themes/)
-- [Interface options](/docs/configuration/frontend/interface/)
+- {{< doclink path="configuration/frontend/styling/" text="Configure styling" />}}
+- {{< doclink path="configuration/frontend/themes/" text="Set up themes" />}}
+- {{< doclink path="configuration/frontend/interface/" text="Interface options" />}}
 

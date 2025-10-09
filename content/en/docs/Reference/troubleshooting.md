@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common issues and solutions for CLI and API"
 icon: "bug_report"
-weight: 4
 ---
 
 Common issues and solutions for CLI and API usage.
@@ -91,6 +90,6 @@ sudo systemctl start filebrowser
 
 ## Next Steps
 
-- [CLI commands](/docs/reference/cli/)
-- [Environment variables](/docs/reference/environment-variables/)
-- [API documentation](/docs/reference/api/)
+- {{< doclink path="reference/cli/" text="CLI commands" />}}
+- {{< doclink path="reference/environment-variables/" text="Environment variables" />}}
+- {{< doclink path="reference/api/" text="API documentation" />}}

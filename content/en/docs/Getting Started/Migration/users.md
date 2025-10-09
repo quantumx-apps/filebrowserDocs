@@ -2,7 +2,6 @@
 title: "User Migration"
 description: "Preserve user accounts during migration"
 icon: "people"
-weight: 3
 ---
 
 Preserve user accounts and permissions when migrating to FileBrowser Quantum.
@@ -138,11 +137,11 @@ curl -X PUT \
 
 ## Troubleshooting
 
-For common issues and solutions, see the [Troubleshooting guide](/docs/getting-started/migration/troubleshooting/).
+For common issues and solutions, see the {{< doclink path="getting-started/migration/troubleshooting/" text="Troubleshooting guide" />}}.
 
 ## Next Steps
 
-- [Configure user defaults](/docs/configuration/users/)
-- [Set up access control](/docs/access-control/)
-- [Create new shares](/docs/shares/)
+- {{< doclink path="configuration/users/" text="Configure user defaults" />}}
+- {{< doclink path="access-control/" text="Set up access control" />}}
+- {{< doclink path="shares/" text="Create new shares" />}}
 

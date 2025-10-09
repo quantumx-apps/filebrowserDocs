@@ -2,7 +2,6 @@
 title: "Styling"
 description: "Custom CSS and background colors"
 icon: "brush"
-weight: 2
 ---
 
 Apply custom CSS and configure background colors for light/dark modes.
@@ -188,7 +187,7 @@ Available CSS variables:
 
 ## Next Steps
 
-- [Set up themes](/docs/configuration/frontend/themes/)
-- [Configure branding](/docs/configuration/frontend/branding/)
-- [Interface options](/docs/configuration/frontend/interface/)
+- {{< doclink path="configuration/frontend/themes/" text="Set up themes" />}}
+- {{< doclink path="configuration/frontend/branding/" text="Configure branding" />}}
+- {{< doclink path="configuration/frontend/interface/" text="Interface options" />}}
 

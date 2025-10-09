@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common development issues and solutions"
 icon: "bug_report"
-weight: 4
 ---
 
 Common issues and solutions for FileBrowser development.
@@ -62,5 +61,5 @@ server:
 
 ## Next Steps
 
-- [Feature development](/docs/contributing/features/)
-- [Translation guide](/docs/contributing/translations/)
+- {{< doclink path="contributing/features/" text="Feature development" />}}
+- {{< doclink path="contributing/translations/" text="Translation guide" />}}

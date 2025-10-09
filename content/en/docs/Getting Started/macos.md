@@ -2,7 +2,6 @@
 title: "macOS"
 description: "Install FileBrowser on macOS"
 icon: "laptop_mac"
-weight: 3
 ---
 
 Run FileBrowser Quantum natively on macOS.
@@ -95,7 +94,7 @@ sudo launchctl load /Library/LaunchDaemons/com.filebrowser.plist
 
 ## Next Steps
 
-- [Configure sources](/docs/configuration/sources/)
-- [Set up users](/docs/configuration/users/)
-- [Enable integrations](/docs/integrations/)
+- {{< doclink path="configuration/sources/" text="Configure sources" />}}
+- {{< doclink path="configuration/users/" text="Set up users" />}}
+- {{< doclink path="integrations/" text="Enable integrations" />}}
 

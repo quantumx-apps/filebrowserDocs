@@ -2,7 +2,6 @@
 title: "Roadmap"
 description: "Current development roadmap and planned features"
 icon: "timeline"
-weight: 2
 ---
 
 # Github Roadmap
@@ -21,5 +20,5 @@ Most up-to-date status of features can be found on the [github roadmap](https://
 
 ## Next Steps
 
-- [Q&A](/docs/help/qa/)
-- [About](/docs/help/about/)
+- {{< doclink path="help/qa/" text="Q&A" />}}
+- {{< doclink path="help/about/" text="About" />}}

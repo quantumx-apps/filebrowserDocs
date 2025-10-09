@@ -2,7 +2,6 @@
 title: "Setting Up i18n for Documentation"
 description: "Step-by-step guide to enable multilingual support in your local docs"
 icon: "language"
-weight: 3
 ---
 
 # Setting Up i18n for Documentation
@@ -284,7 +283,6 @@ Create `content/en/docs/_index.md`:
 title: "Documentation"
 description: "Complete documentation for FileBrowser Quantum"
 icon: "home"
-weight: 1
 ---
 
 Welcome to FileBrowser Quantum documentation.
@@ -297,7 +295,6 @@ Create `content/de/docs/_index.md`:
 title: "Dokumentation"
 description: "Vollständige Dokumentation für FileBrowser Quantum"
 icon: "home"
-weight: 1
 ---
 
 Willkommen bei der FileBrowser Quantum Dokumentation.
@@ -310,7 +307,6 @@ Create `content/fr/docs/_index.md`:
 title: "Documentation"
 description: "Documentation complète pour FileBrowser Quantum"
 icon: "home"
-weight: 1
 ---
 
 Bienvenue dans la documentation FileBrowser Quantum.
@@ -323,7 +319,6 @@ Create `content/pt/docs/_index.md`:
 title: "Documentação"
 description: "Documentação completa para FileBrowser Quantum"
 icon: "home"
-weight: 1
 ---
 
 Bem-vindo à documentação do FileBrowser Quantum.
@@ -504,7 +499,7 @@ hugo --environment de
 
 ## Next Steps
 
-- [Translation Workflow](/docs/contributing/documentation/translations/)
+- {{< doclink path="contributing/documentation/translations/" text="Translation Workflow" />}}
 - [Hugo i18n Documentation](https://gohugo.io/content-management/multilingual/)
 - [Lotus Docs i18n Support](https://lotusdocs.dev/)
-- [DeepL API Setup](/docs/contributing/translations/)
+- {{< doclink path="contributing/translations/" text="DeepL API Setup" />}}

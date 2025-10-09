@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common issues and solutions for debug logging"
 icon: "bug_report"
-weight: 2
 ---
 
 Common issues and solutions for debug logging.
@@ -25,6 +24,6 @@ Debug OnlyOffice and FFmpeg integration operations.
 
 ## Next Steps
 
-- [Debug Logging](/docs/advanced/debug-logging/)
-- [Configuration](/docs/configuration/)
-- [Help](/docs/help/)
+- {{< doclink path="advanced/debug-logging" text="Debug Logging" />}}
+- {{< doclink path="configuration" text="Configuration" />}}
+- {{< doclink path="help" text="Help" />}}

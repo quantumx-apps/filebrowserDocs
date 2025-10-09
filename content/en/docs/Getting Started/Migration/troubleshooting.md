@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common issues and solutions for migration"
 icon: "bug_report"
-weight: 4
 ---
 
 Common issues and solutions for migration.
@@ -25,6 +24,6 @@ Common issues and solutions for migration.
 
 ## Next Steps
 
-- [Database migration](/docs/getting-started/migration/database/)
-- [User migration](/docs/getting-started/migration/users/)
-- [Configuration migration](/docs/getting-started/migration/configuration/)
+- {{< doclink path="getting-started/migration/database/" text="Database migration" />}}
+- {{< doclink path="getting-started/migration/users/" text="User migration" />}}
+- {{< doclink path="getting-started/migration/configuration/" text="Configuration migration" />}}

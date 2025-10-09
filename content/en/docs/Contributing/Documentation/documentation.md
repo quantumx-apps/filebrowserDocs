@@ -2,16 +2,15 @@
 title: "Documentation"
 description: "Contribute to FileBrowser documentation"
 icon: "article"
-weight: 3
 ---
 
 Help improve FileBrowser documentation using our Hugo-based structure.
 
 ## Documentation Structure
 
-**Static Site Generator**: Hugo  
-**Theme**: Custom FileBrowser Docs Theme  
-**Deployment**: Auto-generated during releases  
+**Static Site Generator**: Hugo
+**Theme**: Custom FileBrowser Docs Theme
+**Deployment**: Auto-generated during releases
 **Format**: Markdown with YAML front matter
 
 ## Repository Structure
@@ -40,7 +39,6 @@ docs/content/docs/Configuration/new-page.md
 title: "Page Title"
 description: "Brief description (40-60 chars)"
 icon: "material_symbol_name"
-weight: 1
 ---
 ```
 
@@ -57,7 +55,7 @@ Content here...
 
 ## Next Steps
 
-- [Related topic](/docs/section/page/)
+- {{< doclink path="section/page/" text="Related topic" />}}
 ```
 
 ### 4. Test Locally
@@ -76,7 +74,6 @@ View at: `http://localhost:1313/docs/`
 | `title` | Yes | Page title (appears in navigation and header) |
 | `description` | Yes | Brief description (shows in next/prev cards) |
 | `icon` | No | Material Symbol icon name |
-| `weight` | Yes | Controls sort order (lower = higher in list) |
 
 ## Icons
 
@@ -108,7 +105,7 @@ server:
 
 **Internal links**: Use absolute paths from `/docs/`
 ```markdown
-[Configuration](/docs/configuration/)
+{{< doclink path="configuration/" text="Configuration" />}}
 ```
 
 **External links**: Use full URLs
@@ -120,7 +117,7 @@ server:
 
 - **Keep descriptions brief**: 40-60 characters for navigation cards
 - **Use consistent icons**: Related pages should use related icons
-- **Maintain weight order**: Lower numbers appear higher in lists
+- **File structure matters**: Order is determined by file system structure
 - **Cross-reference**: Add "Next Steps" section at the end
 
 ## Local Preview
@@ -136,5 +133,5 @@ Access at: `http://localhost:1313/docs/`
 
 ## Next Steps
 
-- [Feature development](/docs/contributing/features/)
-- [Translation guide](/docs/contributing/translations/)
+- {{< doclink path="contributing/features/" text="Feature development" />}}
+- {{< doclink path="contributing/translations/" text="Translation guide" />}}

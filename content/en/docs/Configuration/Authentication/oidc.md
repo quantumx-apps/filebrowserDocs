@@ -2,7 +2,6 @@
 title: "OIDC Authentication"
 description: "OpenID Connect integration"
 icon: "fingerprint"
-weight: 2
 ---
 
 Integrate with OpenID Connect providers for single sign-on.
@@ -105,6 +104,6 @@ auth:
 
 ## Next Steps
 
-- [Password authentication](/docs/configuration/authentication/password/)
-- [Proxy authentication](/docs/configuration/authentication/proxy/)
+- {{< doclink path="configuration/authentication/password/" text="Password authentication" />}}
+- {{< doclink path="configuration/authentication/proxy/" text="Proxy authentication" />}}
 

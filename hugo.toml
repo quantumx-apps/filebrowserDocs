@@ -40,6 +40,9 @@ defaultContentLanguageInSubdir = true
     languageCode = 'zh-cn'
 
 [params]
+    # Enable automatic ordering based purely on file system structure
+    autoOrdering = true
+    
     # Google Fonts - FileBrowser Quantum uses Roboto
     google_fonts = [
         ["Roboto", "300, 400, 500, 600, 700"],
@@ -65,6 +68,9 @@ defaultContentLanguageInSubdir = true
         appID = "" # Algolia Application ID (get from DocSearch application)
         apiKey = "" # Algolia Search-Only API Key (get from DocSearch application)
         indexName = "" # Index Name (get from DocSearch application)
+
+    [params.footer]
+        copyright = "© :YEAR: Built by [**QuantumX-Apps**](https://github.com/quantumx-apps)"
 
 # Suppress raw HTML warnings
 ignoreLogs = ['warning-goldmark-raw-html']

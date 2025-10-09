@@ -2,7 +2,6 @@
 title: "API Reference"
 description: "REST API documentation"
 icon: "api"
-weight: 3
 ---
 
 FileBrowser provides a comprehensive REST API for programmatic access.
@@ -310,7 +309,7 @@ Each request includes:
 
 ## Next Steps
 
-- [CLI commands](/docs/reference/cli/)
-- [Environment variables](/docs/reference/environment-variables/)
-- [Authentication setup](/docs/configuration/authentication/)
+- {{< doclink path="reference/cli/" text="CLI commands" />}}
+- {{< doclink path="reference/environment-variables/" text="Environment variables" />}}
+- {{< doclink path="configuration/authentication/" text="Authentication setup" />}}
 

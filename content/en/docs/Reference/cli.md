@@ -2,7 +2,6 @@
 title: "CLI Commands"
 description: "Command-line interface reference"
 icon: "terminal"
-weight: 2
 ---
 
 FileBrowser provides a minimal CLI for setup and user management.
@@ -128,7 +127,9 @@ docker run -it --rm \
 
 ### Password Reset
 
-**Important**: Password reset also disables 2FA for the user.
+{{% alert context="warning" %}}
+Password reset also disables 2FA for the user.
+{{% /alert %}}
 
 ```bash
 ./filebrowser set -u admin,newpassword -c config.yaml
@@ -140,7 +141,9 @@ docker run -it --rm \
 ./filebrowser set -u joe,password -c config.yaml
 ```
 
-**Note**: Always include config path so user defaults are applied.
+{{% alert context="info" %}}
+Always include config path so user defaults are applied.
+{{% /alert %}}
 
 ### Promote User to Admin
 
@@ -148,7 +151,9 @@ docker run -it --rm \
 ./filebrowser set -u joe,newpassword -a -c config.yaml
 ```
 
-**Note**: Promoting also resets password.
+{{% alert context="info" %}}
+Promoting also resets password.
+{{% /alert %}}
 
 ### Initial Admin Setup
 
@@ -238,11 +243,11 @@ Add or update users.
 
 ## Troubleshooting
 
-For common issues and solutions, see the [Troubleshooting guide](/docs/reference/troubleshooting/).
+For common issues and solutions, see the {{< doclink path="reference/troubleshooting/" text="Troubleshooting guide" />}}.
 
 ## Next Steps
 
-- [Environment variables](/docs/reference/environment-variables/)
-- [API documentation](/docs/reference/api/)
-- [Configuration reference](/docs/reference/configuration/)
+- {{< doclink path="reference/environment-variables/" text="Environment variables" />}}
+- {{< doclink path="reference/api/" text="API documentation" />}}
+- {{< doclink path="reference/configuration/" text="Configuration reference" />}}
 

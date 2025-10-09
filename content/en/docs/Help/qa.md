@@ -2,7 +2,6 @@
 title: "Q&A"
 description: "Frequently asked questions about FileBrowser Quantum"
 icon: "question_answer"
-weight: 1
 ---
 
 Common questions and answers about FileBrowser Quantum.

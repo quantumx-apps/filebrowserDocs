@@ -2,7 +2,6 @@
 title: "Troubleshooting"
 description: "Common issues and solutions for access control"
 icon: "bug_report"
-weight: 2
 ---
 
 Common issues and solutions for access control.
@@ -23,9 +22,3 @@ Check:
 - Check rule specificity
 - Verify user is in expected groups
 - Review rule inheritance chain
-
-## Next Steps
-
-- [Access rules](/docs/access-control/rules/)
-- [Set up user groups](/docs/access-control/groups/)
-- [Configure user scopes](/docs/access-control/scopes/)

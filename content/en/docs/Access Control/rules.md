@@ -2,14 +2,17 @@
 title: "Access Rules"
 description: "Directory-level access control"
 icon: "gavel"
-weight: 1
 ---
 
 Control user access to specific directories with allow/deny rules.
 
-**Note**: Access rules do not apply to shares.
+{{% alert context="info" %}}
+Access rules do not apply to shares.
+{{% /alert %}}
 
-**Warning**: FileBrowser Quantum access rules differ entirely from the original FileBrowser. Rules do not carry over when migrating.
+{{% alert context="warning" %}}
+FileBrowser Quantum access rules differ entirely from the original FileBrowser. Rules do not carry over when migrating.
+{{% /alert %}}
 
 ## How Access Control Works
 
@@ -196,11 +199,5 @@ Rules:
 
 ## Troubleshooting
 
-For common issues and solutions, see the [Troubleshooting guide](/docs/access-control/troubleshooting/).
-
-## Next Steps
-
-- [Set up user groups](/docs/access-control/groups/)
-- [Configure user scopes](/docs/access-control/scopes/)
-- [Manage users](/docs/configuration/users/)
+For common issues and solutions, see the {{< doclink path="access-control/troubleshooting/" text="Troubleshooting guide" />}}.
 

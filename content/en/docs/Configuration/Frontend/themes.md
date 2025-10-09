@@ -2,7 +2,6 @@
 title: "Themes"
 description: "User-selectable custom themes"
 icon: "color_lens"
-weight: 3
 ---
 
 Create custom themes that users can select in their settings.
@@ -206,7 +205,7 @@ frontend:
 
 ## Next Steps
 
-- [Configure styling](/docs/configuration/frontend/styling/)
-- [Configure branding](/docs/configuration/frontend/branding/)
-- [Interface options](/docs/configuration/frontend/interface/)
+- {{< doclink path="configuration/frontend/styling/" text="Configure styling" />}}
+- {{< doclink path="configuration/frontend/branding/" text="Configure branding" />}}
+- {{< doclink path="configuration/frontend/interface/" text="Interface options" />}}
 

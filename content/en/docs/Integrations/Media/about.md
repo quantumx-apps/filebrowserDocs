@@ -2,7 +2,6 @@
 title: "About"
 description: "Overview of media integration features"
 icon: "info"
-weight: 1
 ---
 
 Overview of FFmpeg-based media processing features.
@@ -35,9 +34,3 @@ integrations:
   media:
     ffmpegPath: "/usr/local/bin"
 ```
-
-## Next Steps
-
-- [Configuration](/docs/integrations/media/configuration/)
-- [Troubleshooting](/docs/integrations/media/troubleshooting/)
-- [Office integration](/docs/integrations/office/)

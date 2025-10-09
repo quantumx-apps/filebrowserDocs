@@ -2,12 +2,11 @@
 title: "Logging"
 description: "Configure logging output and levels"
 icon: "description"
-weight: 5
 ---
 
 Configure FileBrowser's logging system.
 
-For troubleshooting and enabling debug logs, see [Debug Logging](/docs/troubleshooting/debug-logging/).
+For troubleshooting and enabling debug logs, see {{< doclink path="troubleshooting/debug-logging/" text="Debug Logging" />}}.
 
 ## Default Logging
 
@@ -17,6 +16,8 @@ Without configuration, logs to stdout with INFO, WARNING, ERROR, and API levels 
 
 ### Enable Debug Logging
 
+Debug logging allows for more granular info-level logs which can be very helpful if you see issues.
+
 ```yaml
 server:
   logging:
@@ -25,6 +26,12 @@ server:
 ```
 
 ### Log to File
+
+You can log to a file instead of stdoiut by choosing a filepath as "output".
+
+{{% alert context="info" %}}
+File logs do not support rotation and will append to the existing file.
+{{% /alert %}}
 
 ```yaml
 server:
@@ -43,17 +50,26 @@ server:
     - output: stdout
       levels: "info|warning|error"
       apiLevels: disabled
-    
     # API logs
     - output: "api-events.log"
       levels: disabled
       noColors: true
-    
     # Errors
     - output: "errors.log"
       levels: "error|warning"
       apiLevels: disabled
       noColors: true
+```
+
+### Json format
+
+FileBrowser Quantum supports json formatted logging for improved indexed logging.
+
+```yaml
+server:
+  logging:
+    - levels: "info|warning|error"
+      json: true
 ```
 
 ## Configuration Options
@@ -81,6 +97,6 @@ Disable colored output (recommended for files)
 
 ## Next Steps
 
-- [Enable debug logging](/docs/troubleshooting/debug-logging/) for troubleshooting
-- [Configure server settings](/docs/configuration/server/)
+- {{< doclink path="troubleshooting/debug-logging/" text="Enable debug logging" />}} for troubleshooting
+- {{< doclink path="configuration/server/" text="Configure server settings" />}}
 

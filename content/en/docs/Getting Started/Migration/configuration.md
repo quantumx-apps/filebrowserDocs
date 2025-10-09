@@ -2,7 +2,6 @@
 title: "Configuration Migration"
 description: "Migrate configuration from original FileBrowser"
 icon: "settings_suggest"
-weight: 2
 ---
 
 Migrate your configuration from the original FileBrowser to Quantum.
@@ -25,6 +24,8 @@ ps aux | grep filebrowser
 # --port, --address, --baseurl, --database, --root
 ```
 
+also reference your `config.json`
+
 ### 2. Create config.yaml
 
 Create a new `config.yaml` file with your settings:
@@ -34,14 +35,11 @@ server:
   port: 8080
   baseURL: "/"
   database: "/database/database.db"
-  cacheDir: "/tmp/filebrowser"  # New requirement
   sources:
     - name: "files"
       path: "/srv"
 
 auth:
-  adminUsername: "admin"
-  adminPassword: "admin"  # Change after first login
   methods:
     passwordAuth:
       enabled: true
@@ -109,21 +107,10 @@ volumes:
 command: ["-c", "/config.yaml"]
 ```
 
-## Verification
-
-Test your new configuration:
-
-```bash
-# Dry run (if supported)
-filebrowser -c config.yaml --help
-
-# Start and check logs
-filebrowser -c config.yaml
-```
 
 ## Next Steps
 
-- [Set up sources](/docs/configuration/sources/)
-- [Configure authentication](/docs/configuration/authentication/)
-- [Customize frontend](/docs/configuration/frontend/)
+- {{< doclink path="configuration/sources/" text="Set up sources" />}}
+- {{< doclink path="configuration/authentication/" text="Configure authentication" />}}
+- {{< doclink path="configuration/frontend/" text="Customize frontend" />}}
 

@@ -1,6 +1,5 @@
 ---
-title: "Office Integration Setup"
-description: "Complete guide for setting up OnlyOffice integration"
+title: "Office Integration"
+description: "Step-by-step guides for OnlyOffice integration"
 icon: "description"
-weight: 3
 ---

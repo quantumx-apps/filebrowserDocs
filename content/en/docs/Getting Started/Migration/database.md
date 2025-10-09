@@ -2,7 +2,6 @@
 title: "Database Migration"
 description: "Migrate your FileBrowser database"
 icon: "storage"
-weight: 1
 ---
 
 Step-by-step guide for migrating your database from original FileBrowser.
@@ -84,7 +83,7 @@ After migration, verify:
 
 ## Troubleshooting
 
-For common issues and solutions, see the [Troubleshooting guide](/docs/getting-started/migration/troubleshooting/).
+For common issues and solutions, see the {{< doclink path="getting-started/migration/troubleshooting/" text="Troubleshooting guide" />}}.
 
 ## Things that won't work on successful migration
 
@@ -104,7 +103,7 @@ You cannot migrate back. Make sure you have a backup.
 
 ## Next Steps
 
-- [Configure cache directory](/docs/configuration/server/)
-- [Recreate shares](/docs/shares/)
-- [Recreate branding](/docs/configuration/frontend/branding/)
+- {{< doclink path="configuration/server/" text="Configure cache directory" />}}
+- {{< doclink path="shares/" text="Recreate shares" />}}
+- {{< doclink path="configuration/frontend/branding/" text="Recreate branding" />}}
 

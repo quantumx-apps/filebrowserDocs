@@ -2,7 +2,6 @@
 title: "Environment Variables"
 description: "Optional environment variables for configuration"
 icon: "input"
-weight: 1
 ---
 
 The preferred configuration method is to use config.yaml. However, environment variables are available for **secrets**, **config override**, and **developer purposes**.
@@ -45,6 +44,6 @@ export FILEBROWSER_JWT_TOKEN_SECRET="jwt-secret"
 
 ## Next Steps
 
-- [CLI commands](/docs/reference/cli/)
-- [Configure authentication](/docs/configuration/authentication/)
+- {{< doclink path="reference/cli/" text="CLI commands" />}}
+- {{< doclink path="configuration/authentication/" text="Configure authentication" />}}
 

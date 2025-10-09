@@ -2,7 +2,6 @@
 title: "Linux"
 description: "Install FileBrowser on Linux"
 icon: "terminal"
-weight: 4
 ---
 
 Run FileBrowser Quantum natively on Linux.
@@ -123,7 +122,7 @@ sudo systemctl status filebrowser
 
 ## Next Steps
 
-- [Configure sources](/docs/configuration/sources/)
-- [Set up users](/docs/configuration/users/)
-- [Enable integrations](/docs/integrations/)
+- {{< doclink path="configuration/sources/" text="Configure sources" />}}
+- {{< doclink path="configuration/users/" text="Set up users" />}}
+- {{< doclink path="integrations/" text="Enable integrations" />}}
 

@@ -2,7 +2,6 @@
 title: "Docker"
 description: "Get started with FileBrowser using Docker"
 icon: "sailing"
-weight: 1
 ---
 
 The fastest way to get started with FileBrowser Quantum.
@@ -102,7 +101,7 @@ server:
 
 ## Next Steps
 
-- [Configure sources](/docs/configuration/sources/)
-- [Set up users](/docs/configuration/users/)
-- [Enable integrations](/docs/integrations/)
+- {{< doclink path="configuration/sources/" text="Configure sources" />}}
+- {{< doclink path="configuration/users/" text="Set up users" />}}
+- {{< doclink path="integrations/" text="Enable integrations" />}}
 
