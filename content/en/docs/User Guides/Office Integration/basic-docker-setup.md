@@ -1,7 +1,7 @@
 ---
 title: "Basic Docker Setup"
 description: "Simple OnlyOffice setup with Docker for local development"
-icon: "docker"
+icon: "square"
 ---
 
 Complete setup for running FileBrowser Quantum with OnlyOffice using Docker Compose on your local network.

@@ -11,4 +11,6 @@ github.com/quantumx-apps/filebrowserDocsTheme v1.2.0 h1:T88wcpAtfbRIBPs2B98Yz1G/
 github.com/quantumx-apps/filebrowserDocsTheme v1.2.0/go.mod h1:RCIyqakuvszQQPdJA4q3vXEuYxrvWhsqKNAaH/Z853Y=
 github.com/quantumx-apps/filebrowserDocsTheme v1.2.1 h1:7Mqz6GfyVQE3g7DyH14udaONAD0jYEd3Vfb/SLua7SY=
 github.com/quantumx-apps/filebrowserDocsTheme v1.2.1/go.mod h1:RCIyqakuvszQQPdJA4q3vXEuYxrvWhsqKNAaH/Z853Y=
+github.com/quantumx-apps/filebrowserDocsTheme v1.2.2 h1:CZ9V5MkMp8/mobAejtiy8hvrQUri3s2OGjiO9d2XjAk=
+github.com/quantumx-apps/filebrowserDocsTheme v1.2.2/go.mod h1:RCIyqakuvszQQPdJA4q3vXEuYxrvWhsqKNAaH/Z853Y=
 github.com/twbs/bootstrap v5.3.3+incompatible/go.mod h1:fZTSrkpSf0/HkL0IIJzvVspTt1r9zuf7XlZau8kpcY0=

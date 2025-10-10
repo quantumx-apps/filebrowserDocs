@@ -130,7 +130,7 @@ features:
       title: "Developer API"
       description: "Long-lived API tokens with comprehensive Swagger documentation. Build integrations and automate workflows."
 
-    - icon: "folder"
+    - icon: "lock"
       title: "Directory Access Control"
       description: "Granular permissions scoped to users or groups. Control access at the directory level with precision."
 

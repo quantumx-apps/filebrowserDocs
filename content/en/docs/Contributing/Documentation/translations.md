@@ -382,7 +382,7 @@ Here's a complete example of translating a page:
 ---
 title: "Docker Installation"
 description: "Install FileBrowser using Docker"
-icon: "docker"
+icon: "square"
 ---
 
 # Docker Installation
@@ -401,7 +401,7 @@ docker run -p 8080:8080 gtstef/filebrowser
 ---
 title: "Docker-Installation"
 description: "FileBrowser mit Docker installieren"
-icon: "docker"
+icon: "square"
 ---
 
 # Docker-Installation
