@@ -1,6 +1,6 @@
 # FileBrowser Quantum Documentation
 
-Modern Hugo-based documentation for FileBrowser Quantum.
+A Hugo-based documentation for FileBrowser Quantum -- Automatically deploys to https://filebrowserquantum.com via github pages.
 
 ## Quick Start
 
