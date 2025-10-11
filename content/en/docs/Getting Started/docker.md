@@ -1,7 +1,7 @@
 ---
 title: "Docker"
 description: "Get started with FileBrowser using Docker"
-icon: "sailing"
+icon: "deployed_code"
 ---
 
 The fastest way to get started with FileBrowser Quantum.

@@ -18,7 +18,13 @@ For video preview support, [install FFmpeg](https://phoenixnap.com/kb/ffmpeg-win
 
 ## Create Configuration
 
-Create `config.yaml` in the same folder:
+Interactive setup:
+
+```bash
+.\filebrowser.exe setup
+```
+
+Or Create `config.yaml` in the same folder:
 
 ```yaml
 server:

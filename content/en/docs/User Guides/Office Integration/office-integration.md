@@ -78,20 +78,6 @@ Advanced HTTPS configurations for special needs:
 
 ---
 
-## Which Guide Should I Follow?
-
-```mermaid
-graph TD
-    A[Start] --> B{First time with<br/>OnlyOffice?}
-    B -->|Yes| C[Basic Docker Setup]
-    B -->|No| D{Production<br/>deployment?}
-    D -->|Yes| E{Have domain<br/>name?}
-    E -->|Yes| F[Traefik with Labels]
-    E -->|No| G[Get domain first]
-    D -->|No| H{Special security<br/>requirements?}
-    H -->|Yes| I[Advanced HTTPS]
-    H -->|No| C
-```
 
 ### Quick Decision Matrix
 

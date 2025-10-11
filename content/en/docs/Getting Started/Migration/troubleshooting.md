@@ -10,13 +10,13 @@ Common issues and solutions for migration.
 
 **Permission denied**: Ensure the database file has correct ownership and permissions.
 
-**Fatal error creating tmp directory**: Configure `server.cacheDir` in your config file.
+**Fatal error creating tmp directory**: Configure `server.cacheDir` in your config file and ensure filesystem permissions match.
 
 **Database locked**: Ensure original FileBrowser instance is stopped.
 
 ## User Migration Issues
 
-**Can't log in with old credentials**: Verify database migration was successful and database file has correct permissions.
+**Can't log in with old credentials**: Verify database migration was successful and database file has correct permissions. You can also {{< doclink path="reference/cli/#password-reset" text="reset via CLI" />}} if needed.
 
 **User permissions not working**: Check `userDefaults` in config.yaml doesn't override individual user settings.
 

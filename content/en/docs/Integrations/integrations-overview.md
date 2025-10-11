@@ -40,7 +40,6 @@ integrations:
   
   # Office integration (OnlyOffice)
   office:
-    enabled: true
     url: "http://onlyoffice:80"
     secret: "your-secret"
 ```

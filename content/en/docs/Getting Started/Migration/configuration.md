@@ -14,7 +14,7 @@ FileBrowser Quantum uses a YAML-based configuration file instead of command-line
 
 ### 1. Export Current Settings
 
-If running original FileBrowser, note your current settings:
+If you are running original FileBrowser, note your current settings:
 
 ```bash
 # Check command-line flags
@@ -61,32 +61,13 @@ userDefaults:
 | `--root` | `server.sources[0].path` |
 | `--log` | `server.logging[0].levels` |
 
-### 4. Environment Variables
-
-Original environment variables need updating:
-
-| Original | Quantum |
-|----------|---------|
-| `FB_PORT` | `FILEBROWSER_SERVER_PORT` |
-| `FB_BASEURL` | `FILEBROWSER_SERVER_BASEURL` |
-| `FB_DATABASE` | `FILEBROWSER_SERVER_DATABASE` |
-
 ## Features Removed
 
 The following features from original FileBrowser are not available in Quantum:
 
 - **Terminal** - Removed for security
-- **Runners** - Removed (replaced with better job system)
+- **Runners** - Removed (to be replaced with better job system)
 - **Command line user management** - Use config file or API
-
-## New Required Settings
-
-FileBrowser Quantum requires:
-
-```yaml
-server:
-  cacheDir: "/tmp/filebrowser"  # Mandatory cache directory
-```
 
 ## Docker Migration
 

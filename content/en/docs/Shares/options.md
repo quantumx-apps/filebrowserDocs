@@ -6,10 +6,6 @@ icon: "checklist"
 
 Configuration options available to both normal and upload shares. These options appear in the share creation dialog when you click the share button.
 
-{{% alert context="info" %}}
-Requires version v0.8.0 or higher
-{{% /alert %}}
-
 ## Basic Settings
 
 ### Share Duration

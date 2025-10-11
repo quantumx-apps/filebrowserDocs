@@ -111,7 +111,8 @@ setup:
 	@echo ""
 	@echo "📦 Installing npm dependencies..."
 	npm install
-	@echo ""
+	@echo "installinng hugo"
+	CGO_ENABLED=1 go install -tags extended github.com/gohugoio/hugo@latest
 	@if command -v yq >/dev/null 2>&1; then \
 		echo "✅ yq is already installed"; \
 		yq --version; \

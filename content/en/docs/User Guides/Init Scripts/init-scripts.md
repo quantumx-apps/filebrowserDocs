@@ -71,8 +71,6 @@ chmod +x init-filebrowser.sh
 `docker-compose.yml`:
 
 ```yaml
-version: '3.8'
-
 services:
   filebrowser:
     image: your-filebrowser:latest

@@ -23,7 +23,7 @@ FileBrowser Quantum uses FFmpeg for media processing capabilities including vide
 - FFmpeg and FFprobe must be installed and accessible
 - Either in system PATH or configured via `integrations.media.ffmpegPath`
 
-**Docker**: FFmpeg is included in the official image.
+**Docker**: FFmpeg is included in the official docker image.
 
 ## Quick Start
 

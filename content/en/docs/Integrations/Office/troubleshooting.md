@@ -58,9 +58,6 @@ From FileBrowser container:
 ```bash
 # Test connection to OnlyOffice
 docker exec filebrowser curl http://onlyoffice/healthcheck
-
-# Check DNS resolution
-docker exec filebrowser nslookup onlyoffice
 ```
 
 ### Check Browser Console
@@ -96,9 +93,6 @@ OnlyOffice: successfully saved updated document
 
 **Solutions:**
 
-{{< tabs tabTotal="3" >}}
-
-{{< tab tabName="Check Service Status" >}}
 Verify OnlyOffice is running:
 
 ```bash
@@ -118,16 +112,13 @@ If not running, start OnlyOffice:
 ```bash
 docker-compose up -d onlyoffice
 ```
-{{< /tab >}}
 
-{{< tab tabName="Verify URL Configuration" >}}
 FileBrowser needs correct URLs:
 
 ```yaml
 integrations:
   office:
-    url: "http://onlyoffice"       # Must be accessible from browser
-    internalUrl: "http://onlyoffice" # Must be accessible from FileBrowser container
+    url: "http://onlyoffice.yourdomain.com"       # Must be accessible from browser
     secret: "your-jwt-secret"
 ```
 
@@ -136,37 +127,6 @@ integrations:
 {{% /alert %}}
 
 Test the URL from your browser: Navigate to the OnlyOffice URL - you should see a welcome page.
-{{< /tab >}}
-
-{{< tab tabName="Check Docker Network" >}}
-Ensure containers are on the same network:
-
-```bash
-# List networks
-docker network ls
-
-# Inspect network
-docker network inspect <network-name>
-```
-
-Example `docker-compose.yml`:
-```yaml
-services:
-  filebrowser:
-    networks:
-      - office-network
-  
-  onlyoffice:
-    networks:
-      - office-network
-
-networks:
-  office-network:
-    driver: bridge
-```
-{{< /tab >}}
-
-{{< /tabs >}}
 
 ### JWT Authentication Errors
 

@@ -57,15 +57,9 @@ Subtitle extraction is IO-intensive and can take 10-30 seconds for large video f
 {{< tabs tabTotal="4" >}}
 
 {{< tab tabName="Docker" >}}
-FFmpeg is included in the official FileBrowser image:
 
-```yaml
-integrations:
-  media:
-    ffmpegPath: "/usr/bin"
-```
+FFmpeg is included in the official FileBrowser image, no installation or configuration needed.
 
-No installation needed - ffmpeg is pre-installed in the Docker image.
 {{< /tab >}}
 
 {{< tab tabName="Ubuntu/Debian" >}}

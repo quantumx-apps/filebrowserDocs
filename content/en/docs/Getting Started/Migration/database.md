@@ -8,7 +8,7 @@ Step-by-step guide for migrating your database from original FileBrowser.
 
 ## Prerequisites
 
-- Backup your original database file
+- Backup your original database file (create copy)
 - Stop the original FileBrowser instance
 - Have FileBrowser Quantum configuration ready
 
@@ -51,19 +51,10 @@ server:
   cacheDir: "/tmp/filebrowser"  # Required in Quantum
 ```
 
-### 5. Set Permissions
-
-Ensure proper permissions:
-
-```bash
-chown filebrowser:filebrowser /path/to/quantum/database/database.db
-chmod 644 /path/to/quantum/database/database.db
-```
-
 ### 6. Start FileBrowser Quantum
 
 ```bash
-filebrowser -c config.yaml
+.\filebrowser -c config.yaml
 ```
 
 Or with Docker:
@@ -81,15 +72,11 @@ After migration, verify:
 3. File permissions work correctly
 4. Sources are accessible
 
-## Troubleshooting
-
-For common issues and solutions, see the {{< doclink path="getting-started/migration/troubleshooting/" text="Troubleshooting guide" />}}.
-
 ## Things that won't work on successful migration
 
-* share links (need to be re-created)
-* branding (needs to be re-created)
-* theme (needs to be re-created)
+* share links
+* branding
+* theme
 * Rules
 * Runners
 
