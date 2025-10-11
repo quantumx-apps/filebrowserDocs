@@ -16,6 +16,10 @@ YAML anchoring allows you to:
 
 ## How It Works
 
+{{% alert context="info" %}}
+reference files must end with base file name like `*-config.yaml`. If your base file is `config.yaml`, your secondary files must be named `server-config.yaml` or `frontend-config.yaml`.
+{{% /alert %}}
+
 The main config file uses YAML merge keys (`<<:`) to include anchored configurations from separate modular files:
 
 - `server-config.yaml` - Server settings (port, sources, logging)
