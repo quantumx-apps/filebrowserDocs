@@ -38,7 +38,13 @@ make help
 
 This displays all available make commands with descriptions.
 
-## Documentation Structure
+## Documentation Standards
+
+### Syntax
+
+See [hugo syntax examples](content/en/docs/Contributing/Documentation/hugo-documentation.md) for formatting in hugo and see the [documentation page](https://filebrowserquantum.com/en/docs/contributing/documentation/hugo-documentation/) to see how it renders.
+
+### Structure
 
 ```
 content/en/docs/
@@ -98,11 +104,11 @@ toc: true                    # Enable table of contents
 
 The documentation uses **automatic ordering** based on file system structure:
 - Pages are automatically ordered by their directory path
-- No manual `weight` values needed
 - Use the optional `order` field only when you need to override automatic ordering within a directory
 
 **Order Field Examples:**
 - `order: 1` - Page appears first in its directory
+- `order: 2` - Page appears second in its directory listing
 - `order: 0` or unset - Default alphabetical ordering
 - `order: -1` - Page appears last in its directory
 
@@ -110,6 +116,7 @@ The documentation uses **automatic ordering** based on file system structure:
 
 - Use clear, concise language
 - Include code examples with syntax highlighting
+- Use doclink for relative links to other pages 
 - Add troubleshooting sections where applicable
 - Link to related pages
 - Update `lastmod` field when making changes
@@ -155,22 +162,17 @@ func main() {
 }
 ```
 
-### Available Shortcodes
-
-The theme provides powerful shortcodes for enhanced content:
-
-**Alerts:**
-```markdown
-{{% alert context="info" %}}
-This is an informational message.
-{{% /alert %}}
-
-{{% alert context="warning" %}}
-Important warning for users.
-{{% /alert %}}
+or with line numbers:
+```
+{{< highlight yaml "linenos=table" >}}
+server:
+  port: 8080
+  sources:
+    - path: "/data"
+{{< /highlight >}}
 ```
 
-Available contexts: `info`, `warning`, `success`, `danger`, `primary`, `default`
+### Available Shortcodes
 
 **Custom Tabs and More:**
 See [Hugo Documentation](content/en/docs/Contributing/Documentation/hugo-documentation.md) for complete shortcode reference.
@@ -291,23 +293,14 @@ make doclinks-revert
 ### Documentation Contributions
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b docs/my-improvement`)
+2. Create a feature branch (`git checkout -b my-improvement`)
 3. Write/update documentation
    - Add new pages in `content/en/docs/`
    - Update `lastmod` field in front matter
    - Follow content guidelines above
 4. Test locally with `make dev`
-5. Run translation sync if you modified English content
+5. (NOT YET, please ignore) Run translation sync if you modified English content
 6. Submit pull request with clear description
-
-### Best Practices
-
-- **Front Matter**: Always include all required fields (`title`, `description`, `icon`, `date`, `lastmod`)
-- **Ordering**: Let automatic ordering work for you; only use `order` field when necessary
-- **Links**: Use relative links for internal documentation pages
-- **Images**: Place in `static/` directory and reference with `/image-name.png`
-- **Code Examples**: Always include working, tested code snippets
-- **Troubleshooting**: Add common issues and solutions to help users
 
 ## Support
 
