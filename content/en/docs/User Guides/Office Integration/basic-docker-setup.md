@@ -2,6 +2,7 @@
 title: "Basic Docker Setup"
 description: "Simple OnlyOffice setup with Docker for local development"
 icon: "square"
+order: 2
 ---
 
 Complete setup for running FileBrowser Quantum with OnlyOffice using Docker Compose on your local network.
@@ -118,8 +119,8 @@ integrations:
 
 ## Next Steps
 
-- **Production Setup**: See {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik HTTPS Guide" />}} for secure deployment
-- **Advanced Labels**: See {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik Labels Guide" />}} for complete Traefik configuration
+- **Production Setup**: See {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik HTTPS Guide" />}} for avanced deployment
+- **Advanced Labels**: See {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik full setup Guide" />}} for complete services configuration
 - **Troubleshooting**: See {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} for detailed solutions
 - **Configuration**: See {{< doclink path="integrations/office/configuration/" text="Office Configuration" />}} for all available options
 

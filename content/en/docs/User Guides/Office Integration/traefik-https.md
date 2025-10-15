@@ -1,20 +1,21 @@
 ---
-title: "Traefik HTTPS Advanced"
-description: "Advanced HTTPS setup with self-signed certificates and file providers"
+title: "Traefik with self-signed certs"
+description: "Advanced HTTPS setup with self-signed certificates and traefik file provider"
 icon: "lock"
+order: 4
 ---
 
-Advanced OnlyOffice HTTPS configuration using Traefik file providers and self-signed certificates for internal OnlyOffice communication.
+Advanced OnlyOffice HTTPS configuration using Traefik with file provider and self-signed certificates for internal OnlyOffice communication.
 
 {{% alert context="info" %}}
-This guide is based on community-contributed configurations. Special thanks to @BaccanoMob for documenting these methods!
+This guide is community-contributed. Special thanks to [@BaccanoMob](https://github.com/gtsteffaniak/filebrowser/discussions/1237) for documenting these methods!
 {{% /alert %}}
 
 ## Problem Statement
 
 OnlyOffice doesn't work with HTTPS out of the box when behind a reverse proxy. When:
-- OnlyOffice runs with HTTP internally
-- But is accessed via HTTPS from the reverse proxy
+- OnlyOffice runs with HTTP internally.
+- But is accessed via HTTPS from the reverse proxy externally.
 
 You'll encounter mixed content or CORS errors, and documents won't open.
 
@@ -24,7 +25,7 @@ Three methods to solve this, ordered by complexity (easiest first):
 
 | Method | Description | Difficulty | Security |
 |--------|-------------|------------|----------|
-| **Method 0** | Traefik labels only | ⭐ Easy | Good |
+| **Method 0** | {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik with labels" />}} | ⭐ Easy | Best |
 | **Method 1** | Self-signed certs + skip verification | ⭐⭐ Medium | Good |
 | **Method 2** | Self-signed certs + full verification | ⭐⭐⭐ Advanced | Best |
 
@@ -34,13 +35,13 @@ Three methods to solve this, ordered by complexity (easiest first):
 
 ## Method 0: Traefik Labels (Easiest)
 
-See the complete {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik Labels Guide" />}} for full setup.
+See the complete {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik Labels Guide" />}} for full setup of FileBrowser + OnlyOffice.
 
 **Key points:**
-- Uses Traefik's built-in certificate handling
-- No manual certificate management
-- Automatic Let's Encrypt SSL
-- Works for most deployments
+- Uses Traefik's built-in cert bot certificate handling.
+- No manual SSL Certificates management, all is handled by traefik automatically.
+- Works for most deployments.
+- Easy to deploy.
 
 This method is covered in detail in the previous guide and is **recommended for 95% of use cases**.
 
@@ -343,52 +344,36 @@ http:
 **Security Improvement:** Now Traefik fully validates OnlyOffice's certificate using the provided CA, ensuring encrypted and authenticated communication.
 {{% /alert %}}
 
-### Step 6: Restart and Verify
+### Step 6: Restart containers
 
 ```bash
 # Restart all services
-docker-compose -f traefik/docker-compose.yaml restart
-docker-compose -f onlyoffice/docker-compose.yaml up -d
-docker-compose -f filebrowser/docker-compose.yaml restart
+docker compose restart traefik 
+docker compose restart onlyoffice
+docker compose restart filebrowser
 
 # Check Traefik can verify certificate
 docker exec traefik wget https://onlyoffice/healthcheck
 # Should succeed without certificate errors
 ```
 
-## Method 3: Certbot / Let's Encrypt for OnlyOffice
-
-{{% alert context="warning" %}}
-**Not Recommended:** This method requires certificate renewal every 90 days and complex setup. Methods 0-2 are preferred.
-{{% /alert %}}
-
-If you still want to use Certbot for OnlyOffice's internal certificate:
-
-**Challenges:**
-- Let's Encrypt certificates expire every 90 days
-- Requires automated renewal process
-- OnlyOffice container needs certificate updates
-- More complex than self-signed for internal use
-
-**Better Alternative:** Use Method 0 (Traefik labels) where Traefik handles Let's Encrypt for external access, and OnlyOffice uses HTTP internally.
-
-## Method 4: Extract Certificates from Traefik
+## Extract Certificates from Traefik for onlyoffice
 
 {{% alert context="info" %}}
-**Experimental:** This method extracts Let's Encrypt certificates from Traefik and provides them to OnlyOffice.
+**Experimental:** This method extracts Let's Encrypt certificates from Traefik and provides them to OnlyOffice for internal communication.
 {{% /alert %}}
 
 **Concept:**
-1. Traefik obtains Let's Encrypt certificates
-2. Extract certificates from `acme.json`
-3. Mount extracted certificates to OnlyOffice
-4. Automate re-extraction on renewal
+1. Traefik obtains Let's Encrypt certificates.
+2. Extract certificates from `acme.json`.
+3. Mount extracted certificates to OnlyOffice.
+4. Automate re-extraction on renewal.
 
 **Challenges:**
-- Certificates renew every 90 days
-- Requires automation script
-- OnlyOffice restart needed after renewal
-- More complexity than needed
+- Certificates renew every 90 days, so you will need to repeat these steps (unless automated).
+- Requires automation script.
+- OnlyOffice restart needed after renewal.
+- More complexity than needed.
 
 **Script Example:**
 
@@ -409,12 +394,12 @@ docker-compose -f onlyoffice/docker-compose.yaml restart
 ```
 
 {{% alert context="danger" %}}
-This method is **not recommended** for production. Use Method 0 (Traefik labels) instead, which handles everything automatically.
+This method is **not recommended** for production. Use {{< doclink path="user-guides/office-integration/traefik-labels/" text="Method 0" />}} instead, which handles everything automatically.
 {{% /alert %}}
 
 ## Comparison Table
 
-| Feature | Method 0 | Method 1 | Method 2 | Method 3/4 |
+| Feature | Method 0 | Method 1 | Method 2 | Method 3 |
 |---------|----------|----------|----------|------------|
 | **Setup Complexity** | ⭐ Easy | ⭐⭐ Medium | ⭐⭐⭐ Advanced | ⭐⭐⭐⭐ Complex |
 | **Security** | Excellent | Good | Excellent | Excellent |
@@ -487,17 +472,16 @@ openssl x509 -in certs/onlyoffice.crt -noout -text | grep -A2 "Subject Alternati
 # OnlyOffice: HTTP internally
 services:
   onlyoffice:
-    # No certificates needed
-    # Access via HTTP from Docker network
+    # No self-signed certificates needed.
+    # Access via HTTP from internal docker container communication.
 
-# Traefik: Handles all HTTPS
-# FileBrowser: Uses HTTPS URLs externally
+# All services uses HTTPS URLs externally, the use of HTTP is only for internal communication via docker network.
 ```
 
 ### Method 1 (Skip Verify)
 
 ```yaml
-# OnlyOffice: HTTPS with self-signed
+# OnlyOffice: HTTPS with self-signed cert.
 volumes:
   - ./certs:/var/www/onlyoffice/Data/certs
 
