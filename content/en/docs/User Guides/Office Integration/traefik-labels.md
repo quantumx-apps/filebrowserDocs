@@ -463,8 +463,9 @@ mkdir -p filebrowser/data
 
 ### FileBrowser Docker Compose
 
-Also see {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="filebrowser docker" />}}
-
+{{% alert context="info" %}}
+Is similar to {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="getting started docker guide" />}} but this one is customized for work with traefik. And also, remember to change the `volumes` with your actual data/folders, the ones below are an example. 
+{{% /alert %}}
 
 Create `filebrowser/docker-compose.yaml`:
 
@@ -515,7 +516,7 @@ TZ=America/New_York # Your Timezone
 
 ### FileBrowser Configuration
 
-See {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="configuration overview" />}}
+Also see {{< doclink path="configuration/configuration-overview/" text="configuration overview" />}} for understand better.
 
 Create `filebrowser/data/config.yaml`:
 
