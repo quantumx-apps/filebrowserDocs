@@ -2,9 +2,6 @@
 title: "Traefik with Labels"
 description: "Complete production setup with Traefik using Docker provider and Let's Encrypt"
 icon: "dns"
-date: "2025-09-24"
-lastmod: "2025-10-14"
-toc: true
 order: 3
 ---
 
@@ -466,7 +463,8 @@ mkdir -p filebrowser/data
 
 ### FileBrowser Docker Compose
 
-Also see [filebrowser docker](https://filebrowserquantum.com/en/docs/getting-started/docker/).
+Also see {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="filebrowser docker" />}}
+
 
 Create `filebrowser/docker-compose.yaml`:
 
@@ -517,7 +515,7 @@ TZ=America/New_York # Your Timezone
 
 ### FileBrowser Configuration
 
-See [configuration overview](https://filebrowserquantum.com/en/docs/configuration/configuration-overview/)
+See {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="configuration overview" />}}
 
 Create `filebrowser/data/config.yaml`:
 
