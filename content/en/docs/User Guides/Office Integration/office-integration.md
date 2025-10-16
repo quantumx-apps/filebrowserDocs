@@ -2,6 +2,7 @@
 title: "Office Integration Guides"
 description: "Step-by-step guides for setting up OnlyOffice integration"
 icon: "menu_book"
+order: 1
 ---
 
 Practical, community-tested guides for deploying FileBrowser Quantum with OnlyOffice document server.
@@ -39,18 +40,19 @@ Simple HTTP-based setup perfect for:
 **Best for:** Production deployments, internet-facing servers
 
 Production-ready setup with automatic HTTPS:
-- Let's Encrypt SSL certificates
-- Automatic certificate renewal
-- Secure JWT authentication
+- Let's Encrypt SSL certificates.
+- Automatic certificate renewal.
+- Secure JWT authentication.
 - DDNS support (Dynu, Cloudflare, etc.)
 
 {{< doclink path="user-guides/office-integration/traefik-labels/" text="Start Traefik Setup →" />}}
 
 **What you'll learn:**
-- Configure Traefik reverse proxy
-- Set up automatic HTTPS
-- Deploy with Docker labels
-- Secure production deployment
+- Configure and setup Traefik reverse proxy for your services.
+- Configure services with docker compose.
+- Deploy services with Traefik Docker labels.
+- Set up static IPs for containers.
+- Secure production deployment.
 
 **Time:** 45-60 minutes
 
@@ -61,25 +63,25 @@ Production-ready setup with automatic HTTPS:
 **Best for:** Advanced users, custom security requirements
 
 Advanced HTTPS configurations for special needs:
-- Self-signed certificates
-- Custom CA certificates
-- Full certificate verification
-- Multiple verification methods
+- Self-signed certificates.
+- Custom CA certificates.
+- Full certificate verification.
+- Multiple verification methods.
+- Onlyoffice with Internal HTTPS communication.
 
 {{< doclink path="user-guides/office-integration/traefik-https/" text="Start Advanced Setup →" />}}
 
 **What you'll learn:**
-- Generate self-signed certificates
-- Configure Traefik file providers
-- Set up static IPs for containers
-- Implement full certificate validation
+- Generate self-signed certificates.
+- Configure Traefik with file provider.
+- Set up static IPs for containers.
+- Implement full certificate validation.
 
 **Time:** 60-90 minutes
 
 ---
 
-
-### Quick Decision Matrix
+## Quick Decision Matrix
 
 | Scenario | Recommended Guide |
 |----------|-------------------|
