@@ -66,7 +66,7 @@ These options **only apply** to normal shares and appear in the share creation d
   <p class="help-text">When enabled, the downloads limit will be applied to each user. Anonymous users will not be able to download any files from this share.</p>
 </div>
 
-**Global limit:** All users share the same download counter.  
+**Global limit:** All users share the same download counter.
 **Per-user limit:** Each authenticated user gets their own counter. Anonymous users are blocked.
 
 ### Bandwidth Control
@@ -157,11 +157,11 @@ Force users to download files instead of viewing them in the browser:
 
 <div class="example-card">
   <h4>Download-only configuration</h4>
-  
+
   <div class="example-field">
     <strong>Share Type:</strong> Normal
   </div>
-  
+
   <div class="example-field">
     <strong>Options:</strong>
     <ul>
@@ -169,7 +169,7 @@ Force users to download files instead of viewing them in the browser:
       <li>☑ Show Quick Download</li>
     </ul>
   </div>
-  
+
   <div class="example-field">
     <strong>Use case:</strong> Security-sensitive files where you don't want browser caching
   </div>
@@ -181,15 +181,15 @@ Limit total downloads across all users:
 
 <div class="example-card">
   <h4>Global download limit</h4>
-  
+
   <div class="example-field">
     <strong>Downloads Limit:</strong> 100
   </div>
-  
+
   <div class="example-field">
     <strong>Per User Limit:</strong> ☐ Disabled
   </div>
-  
+
   <div class="example-field">
     <strong>Behavior:</strong> Once 100 downloads occur (from any combination of users), the share stops allowing downloads
   </div>
@@ -201,15 +201,15 @@ Each authenticated user gets their own download counter:
 
 <div class="example-card">
   <h4>Per-user download limit</h4>
-  
+
   <div class="example-field">
     <strong>Downloads Limit:</strong> 5
   </div>
-  
+
   <div class="example-field">
     <strong>Per User Limit:</strong> ☑ Enabled
   </div>
-  
+
   <div class="example-field">
     <strong>Behavior:</strong> Each authenticated user can download up to 5 times. Anonymous users cannot download.
   </div>
@@ -221,11 +221,11 @@ Limit download bandwidth to prevent server overload:
 
 <div class="example-card">
   <h4>Bandwidth control</h4>
-  
+
   <div class="example-field">
     <strong>Max Bandwidth:</strong> 1024 kbps (1 MB/s)
   </div>
-  
+
   <div class="example-field">
     <strong>Use case:</strong> Prevent a single download from consuming all server bandwidth
   </div>
@@ -237,7 +237,7 @@ Allow viewing and editing of office documents:
 
 <div class="example-card">
   <h4>Office document collaboration</h4>
-  
+
   <div class="example-field">
     <strong>Options:</strong>
     <ul>
@@ -245,7 +245,7 @@ Allow viewing and editing of office documents:
       <li>☑ Enable OnlyOffice editing</li>
     </ul>
   </div>
-  
+
   <div class="example-field">
     <strong>Use case:</strong> Share documents that recipients need to review or edit
   </div>
@@ -257,18 +257,18 @@ Perfect for sharing photo collections:
 
 <div class="example-card">
   <h4>Image gallery configuration</h4>
-  
+
   <div class="example-field">
     <strong>View Mode:</strong> Gallery View
   </div>
-  
+
   <div class="example-field">
     <strong>Options:</strong>
     <ul>
       <li>☐ Disable Thumbnails (keep enabled)</li>
     </ul>
   </div>
-  
+
   <div class="example-field">
     <strong>Result:</strong> Large, beautiful thumbnail grid perfect for browsing images
   </div>
@@ -280,11 +280,11 @@ Password-protected with per-user download tracking:
 
 <div class="example-card">
   <h4>Secure client file delivery</h4>
-  
+
   <div class="example-field">
     <strong>Password:</strong> client2025
   </div>
-  
+
   <div class="example-field">
     <strong>Options:</strong>
     <ul>
@@ -292,15 +292,15 @@ Password-protected with per-user download tracking:
       <li>☑ Show Quick Download</li>
     </ul>
   </div>
-  
+
   <div class="example-field">
     <strong>Downloads Limit:</strong> 1 per user
   </div>
-  
+
   <div class="example-field">
     <strong>Allowed Users:</strong> client-user
   </div>
-  
+
   <div class="example-field">
     <strong>Security features:</strong> Password + user restriction + single download
   </div>
