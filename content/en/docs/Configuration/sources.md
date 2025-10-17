@@ -45,43 +45,6 @@ server:
         denyByDefault: false        # Deny all access unless explicitly allowed
 ```
 
-## Understanding Defaults
-
-### defaultEnabled
-Controls which users get access automatically.
-
-### defaultUserScope  
-Sets the default directory for new users.
-
-### createUserDir
-When `true`, creates `/path/username` directories automatically and scopes users to their directory.
-
-## Exclusion Rules
-
-Exclude specific files and folders:
-
-```yaml
-server:
-  sources:
-    - path: "/mnt/folder"
-      config:
-        exclude:
-          filePaths:
-            - "myfile.txt"
-            - "subfolder/another.txt"
-          folderPaths:
-            - "subfolder/ignoreMe"
-          fileNames:
-            - "ignoreMe.txt"
-          folderNames:
-            - "ignoreAllFolders"
-          fileEndsWith:
-            - ".zip"
-            - ".tar.gz"
-          folderEndsWith:
-            - "-backups"
-```
-
 ## Common Patterns
 
 ### Personal User Directories
@@ -114,6 +77,7 @@ server:
 
 ## Next Steps
 
+- {{< doclink path="advanced/source-configuration/sources" text="Advanced Source Configuration" />}}
 - {{< doclink path="configuration/authentication/" text="Configure authentication" />}}
 - {{< doclink path="configuration/users/" text="Manage users" />}}
 - {{< doclink path="access-control/rules/" text="Set up access rules" />}}
