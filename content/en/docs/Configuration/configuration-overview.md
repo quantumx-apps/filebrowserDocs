@@ -101,30 +101,7 @@ integrations:
 
 ### Advanced Source Configuration
 
-```yaml
-server:
-  sources:
-    - path: "/mnt/folder"
-      name: "mysource" # optional, otherwise the source gets named the folder name
-      config:
-        disableIndexing: false # if set to true, nothing gets indexed but is still viewable in the UI
-        exclude: # these items will be excluded from both the UI and indexing
-          filePaths:
-            - "myfile.txt"            # corresponds to "/mnt/folder/myfile.txt"
-            - "subfolder/another.txt" # corresponds to "/mnt/folder/subfolder/another.txt"
-          folderPaths:
-            - "subfolder/ignoreMe"    # excludes exact folder path (only one folder)
-          fileNames:
-            - "ignoreMe.txt"          # excludes all files named this
-          folderNames:
-            - "ignoreAllFolders"      # excludes all folders named this
-          fileEndsWith:
-            - ".zip"                  # excludes any files that end with ".zip"
-            - ".tar.gz"
-            - "-hidden.jpg"
-          folderEndsWith:
-            - "-backups"              # excludes any folders that end with "-backups"
-```
+See  {{< doclink path="advanced/source-configuration/" text="Advanced Source Configuration" />}} for more info.
 
 ### User Directory Auto-Creation
 
