@@ -4,13 +4,12 @@ description: "Configure password authentication"
 icon: "vpn_key"
 ---
 
-Default authentication method using username and password.
+Password authentication uses the typical `username` and `password` to login a user. Password authentication also supports **Signup**, **recaptcha**, and **Two-Factor Authentication** features.
 
 ## Basic Configuration
 
 ```yaml
 auth:
-  adminUsername: admin
   methods:
     password:
       enabled: true
@@ -52,10 +51,20 @@ auth:
 
 ## Set Admin Password
 
-Best practice - use environment variable:
+If password authentication is enabled, by default filebrowser will create a default `admin` user. This admin user is uniquely able to have the password set by the config. This happens automatically on startup if you specify an admin password via environment variable or config file.
+
+### Best practice - use environment variable:
 
 ```bash
 export FILEBROWSER_ADMIN_PASSWORD="secure-password"
+```
+
+### Config based admin password
+
+```
+auth:
+  adminUsername: admin
+  adminPassword: admin # if set it will get reset on startup.
 ```
 
 ## Next Steps

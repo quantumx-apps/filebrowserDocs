@@ -64,7 +64,7 @@ https://your-domain.com/custom-base/api/auth/oidc/callback
 
 ## Auto-Redirect
 
-When OIDC is the only auth method, users are automatically redirected:
+When OIDC is the only auth method, users are automatically redirected to the OIDC provider.
 
 ```yaml
 auth:
