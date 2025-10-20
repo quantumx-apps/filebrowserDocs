@@ -358,11 +358,6 @@ Follow these steps to migrate your configuration:
 5. **Convert `include.rootFolders` and `include.rootFiles`:**
    - Combine into single `includeRootItem` rules
 
-6. **Test your configuration**
-   ```bash
-   ./filebrowser config check config.yaml
-   ```
-
 ## Next Steps
 
 - {{< doclink path="reference/fullconfig/" text="Full Configuration Reference" />}}

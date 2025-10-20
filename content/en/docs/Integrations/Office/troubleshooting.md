@@ -6,9 +6,15 @@ icon: "troubleshoot"
 
 Solutions for common OnlyOffice integration problems including connectivity, authentication, and document opening issues.
 
-## Debug Mode (Recommended First Step)
+## Enable Debug logging and Debug Mode
 
-The easiest way to troubleshoot OnlyOffice issues is to use the built-in debug mode:
+If you are having persistent issues with OnlyOffice, the first thing should be to enable debug logging on all of the related components:
+
+1. The frontend Debug Mode
+2. The FileBrowser server debug logs
+3. The OnlyOffice server debug logs
+
+### Enable Frontend Debug Mode
 
 **Enable Debug Mode:**
 1. Navigate to **Profile Settings** → **File Viewer Options**
@@ -18,7 +24,7 @@ The easiest way to troubleshoot OnlyOffice issues is to use the built-in debug m
 
 ![Debug Mode Tooltip](https://github.com/user-attachments/assets/5c26b33d-1483-462f-8ad1-529cbbeac21d)
 
-### What Debug Mode Shows
+#### What Debug Mode Shows
 
 The debug tooltip provides:
 - **Real-time trace** of the integration process
@@ -27,7 +33,7 @@ The debug tooltip provides:
 - **Specific error detection** with troubleshooting advice
 - **Connectivity testing** to OnlyOffice server
 
-### Network Flow Diagram
+#### Network Flow Diagram
 
 ![Office Integration Diagram](https://github.com/user-attachments/assets/dd22561d-c26e-4b20-9a84-18310596d625)
 
@@ -36,45 +42,31 @@ The diagram shows the communication flow:
 2. **OnlyOffice** → **FileBrowser** (download URL): Fetches document
 3. **OnlyOffice** → **FileBrowser** (callback URL): Saves changes
 
+### Enable FileBrowser server debug logs
+
+Configure filebrowser to run with {{< doclink path="advanced/logging/debug-logging/" text="debug logging" />}}
+
+### Enable OnlyOffice service debug logs
+
+```yaml
+onlyoffice:
+  environment:
+    - LOG_LEVEL=DEBUG
+```
+
 ## Quick Diagnostics
 
 ### Verify OnlyOffice is Running
 
 ```bash
 # Check health endpoint
-curl http://localhost/healthcheck
+curl http://<onlyoffice-server>/healthcheck
 
 # Expected response:
 {"status":"ok"}
 
 # Check welcome page
-curl http://localhost/welcome
-```
-
-### Test Network Connectivity
-
-From FileBrowser container:
-
-```bash
-# Test connection to OnlyOffice
-docker exec filebrowser curl http://onlyoffice/healthcheck
-```
-
-### Check Browser Console
-
-Open browser developer tools (F12) and look for:
-
-**Successful Config:**
-```
-OnlyOffice config request: source=downloads, path=/doc.docx, isShare=false
-OnlyOffice: built download URL=http://localhost:8080/api/raw?...
-OnlyOffice: successfully generated config for file=doc.docx
-```
-
-**Successful Save:**
-```
-OnlyOffice callback: source=downloads, path=/doc.docx, status=2
-OnlyOffice: successfully saved updated document
+curl http://<onlyoffice-server>/welcome
 ```
 
 ## Common Issues
@@ -100,7 +92,7 @@ Verify OnlyOffice is running:
 docker ps | grep onlyoffice
 
 # Check service health
-curl http://localhost:80/healthcheck
+curl http://<onlyoffice-server>/healthcheck
 ```
 
 Expected response:
@@ -108,17 +100,12 @@ Expected response:
 {"status":"ok"}
 ```
 
-If not running, start OnlyOffice:
-```bash
-docker-compose up -d onlyoffice
-```
-
 FileBrowser needs correct URLs:
 
 ```yaml
 integrations:
   office:
-    url: "http://onlyoffice.yourdomain.com"       # Must be accessible from browser
+    url: "http://<onlyoffice-server>"       # Must be accessible from browser
     secret: "your-jwt-secret"
 ```
 
@@ -173,67 +160,6 @@ onlyoffice:
 {{% alert context="warning" %}}
 The JWT secret must be **identical** in both configurations, including capitalization and special characters. Any mismatch will cause authentication failures.
 {{% /alert %}}
-
-### Documents Won't Open
-
-{{% alert context="danger" %}}
-**Problem:** Clicking document shows error or nothing happens
-
-**Symptoms:**
-- No response when clicking document
-- Blank screen or error message
-- Document viewer doesn't load
-{{% /alert %}}
-
-**Solutions:**
-
-**1. Check File Format Support**
-
-OnlyOffice supports these formats:
-
-| Document Type | Supported Formats |
-|--------------|-------------------|
-| Documents | `.doc`, `.docm`, `.docx`, `.dot`, `.dotm`, `.dotx`, `.epub`, `.fb2`, `.fodt`, `.htm`, `.html`, `.mht`, `.odt`, `.ott`, `.rtf`, `.txt`, `.xml` |
-| Spreadsheets | `.csv`, `.et`, `.ett`, `.fods`, `.ods`, `.ots`, `.sxc`, `.xls`, `.xlsb`, `.xlsm`, `.xlsx`, `.xlt`, `.xltm`, `.xltx` |
-| Presentations | `.dps`, `.dpt`, `.fodp`, `.odp`, `.otp`, `.pot`, `.potm`, `.potx`, `.pps`, `.ppsm`, `.ppsx`, `.ppt`, `.pptm`, `.pptx`, `.sxi` |
-| Other | `.djvu`, `.docxf`, `.oform`, `.oxps`, `.pdf`, `.xps` |
-
-{{% alert context="info" %}}
-Use `disableOnlyOfficeExt` in user defaults to exclude specific extensions from opening in OnlyOffice.
-{{% /alert %}}
-
-**2. Verify File Permissions**
-
-```bash
-# Check file permissions
-ls -l /path/to/document.docx
-
-# FileBrowser user must have read access
--rw-r--r-- 1 user group 12345 date document.docx
-```
-
-**3. Check File Size Limits**
-
-Large files may timeout. Increase limits:
-
-```yaml
-onlyoffice:
-  environment:
-    - MAX_FILE_SIZE=100  # MB
-```
-
-**4. Review Logs**
-
-```bash
-# FileBrowser logs
-docker logs filebrowser --tail 100
-
-# OnlyOffice logs
-docker logs onlyoffice --tail 100
-
-# Follow logs in real-time
-docker-compose logs -f
-```
 
 ### HTTPS and SSL/TLS Issues
 
@@ -354,12 +280,12 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-        
+
         # WebSocket support
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
-        
+
         # Timeouts
         proxy_connect_timeout 300s;
         proxy_send_timeout 300s;
@@ -384,136 +310,28 @@ integrations:
 
 ### External and Internal URLs
 
-{{% alert context="info" %}}
-**Required for v0.8.4+**: Both `externalUrl` and `internalUrl` must be set in server configuration for OnlyOffice to work properly.
-{{% /alert %}}
-
 ```yaml
 server:
   externalUrl: "https://files.yourdomain.com"  # Accessible from browser
-  internalUrl: "http://filebrowser:80"         # Accessible from OnlyOffice container
+  internalUrl: "http://192.168.1.100"         # Either use local network or docker network IP thats accessible from onlyoffice server.
 
 integrations:
   office:
     url: "https://office.yourdomain.com"       # Accessible from browser
-    internalUrl: "https://files.yourdomain.com" # For OnlyOffice → FileBrowser callbacks
     secret: "your-jwt-secret"
 ```
 
 **Why two URLs?**
 
-- **Browser** → OnlyOffice: Uses `integrations.office.url`
-- **OnlyOffice** → FileBrowser: Uses `internalUrl` for downloading/saving files
-- Internal URLs can use Docker service names for better performance
+- **Browser** → The browser always uses `integrations.office.url` to connect from your browser to only office server.
+- **OnlyOffice** → Uses either `server.externalUrl` or `server.internalUrl` for downloading/saving files to FileBrowser server.
+- **FileBrowser** → Uses either `integratons.office.internalUrl` or `integrations.office.url` to connect from the filebrowser server to OnlyOffice server.
 
 ## Performance Issues
 
 ### Slow Document Loading
 
-{{% alert context="warning" %}}
-**Problem:** Documents take long time to open or edit
-
-**Symptoms:**
-- Long delays before document loads
-- Laggy editing experience
-- Frequent timeouts
-{{% /alert %}}
-
-**Solutions:**
-
-**1. Increase OnlyOffice Resources**
-
-```yaml
-onlyoffice:
-  deploy:
-    resources:
-      limits:
-        memory: 4G
-        cpus: '2.0'
-      reservations:
-        memory: 2G
-        cpus: '1.0'
-```
-
-**2. Use Persistent Storage**
-
-```yaml
-onlyoffice:
-  volumes:
-    - onlyoffice_data:/var/www/onlyoffice/Data
-    - onlyoffice_logs:/var/log/onlyoffice
-
-volumes:
-  onlyoffice_data:
-  onlyoffice_logs:
-```
-
-**3. Optimize Timeouts**
-
-```yaml
-# Traefik
-serversTransport:
-  forwardingTimeouts:
-    dialTimeout: "60s"
-    responseHeaderTimeout: "75s"
-    idleConnTimeout: "90s"
-
-# nginx
-proxy_connect_timeout 300s;
-proxy_send_timeout 300s;
-proxy_read_timeout 300s;
-```
-
-### Connection Timeouts
-
-{{% alert context="warning" %}}
-**Problem:** Gateway timeout or connection timeout errors
-{{% /alert %}}
-
-Check and increase timeouts at multiple levels:
-
-**Traefik:**
-```yaml
-http:
-  serversTransports:
-    default:
-      forwardingTimeouts:
-        dialTimeout: "30s"
-        responseHeaderTimeout: "60s"
-        idleConnTimeout: "90s"
-```
-
-**OnlyOffice:**
-```yaml
-environment:
-  - TIMEOUT=300
-```
-
-**Test Network Latency:**
-```bash
-# Test response time
-time curl http://onlyoffice/healthcheck
-
-# Check network path
-docker exec filebrowser ping onlyoffice
-```
-
-## Troubleshooting Checklist
-
-Use this checklist when debugging OnlyOffice issues:
-
-- [ ] **Enable debug mode** in FileBrowser profile settings
-- [ ] **Check OnlyOffice is running**: `docker ps | grep onlyoffice`
-- [ ] **Verify health endpoint**: `curl http://onlyoffice/healthcheck`
-- [ ] **Test from browser**: Navigate to OnlyOffice URL, see welcome page
-- [ ] **Check JWT secrets match** in both configurations
-- [ ] **Verify network connectivity** between containers
-- [ ] **Check browser console** for JavaScript errors
-- [ ] **Review logs** from both FileBrowser and OnlyOffice
-- [ ] **Verify file format** is supported
-- [ ] **Check file permissions** and size limits
-- [ ] **Test with HTTPS disabled** (if using SSL)
-- [ ] **Verify externalUrl and internalUrl** are set correctly
+Document loading can be quite slow because of the many components onlyoffice needs to talk to. The best way to improve document loading times it to set `server.internalUrl` so OnlyOffice can communicate directly with filebrowser (it's possible on same private network).
 
 ## Getting Help
 
@@ -521,52 +339,9 @@ Use this checklist when debugging OnlyOffice issues:
 
 When asking for help, provide:
 
-1. **FileBrowser version:**
-```bash
-docker exec filebrowser ./filebrowser version
-```
-
-2. **OnlyOffice version:**
-```bash
-docker exec onlyoffice /var/www/onlyoffice/documentserver/npm/json -f /var/www/onlyoffice/documentserver/package.json version
-```
-
-3. **Configuration** (sanitized - remove secrets):
-```yaml
-integrations:
-  office:
-    url: "https://office.example.com"
-    secret: "REDACTED"
-```
-
-4. **Logs:**
-```bash
-docker logs onlyoffice --tail 100
-docker logs filebrowser --tail 100
-```
-
-5. **Debug mode output** (screenshot from browser)
-
-6. **Browser console errors** (F12 → Console tab)
-
-### Test OnlyOffice Independently
-
-Verify OnlyOffice works standalone:
-
-```bash
-# Visit welcome page
-curl http://localhost/welcome
-
-# Should return HTML with OnlyOffice welcome page
-```
-
-### Enable Verbose Logging
-
-```yaml
-onlyoffice:
-  environment:
-    - LOG_LEVEL=DEBUG
-```
+1. **Logs:** Most imprtantly relevant debug logs from the server, as well as OnlyOffice server logs.
+1. **Debug mode output** (screenshot from browser)
+2. **Browser console errors** (F12 → Console tab)
 
 ### Community Resources
 
