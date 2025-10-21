@@ -1,7 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#2196F3"/>
-  <rect x="4" y="8" width="24" height="16" fill="none" stroke="white" stroke-width="2" rx="2"/>
-  <rect x="8" y="12" width="16" height="2" fill="white"/>
-  <rect x="8" y="16" width="12" height="2" fill="white"/>
-  <rect x="8" y="20" width="14" height="2" fill="white"/>
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="16" fill="#141D24"/>
+  
+  <!-- Back folder (orange, barely higher and left) -->
+  <path d="M5 8h6l2 2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z" 
+        fill="#FF9800"/>
+  
+  <!-- Front folder (blue, almost same position) -->
+  <path d="M6 9h6l2 2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2z" 
+        fill="#2196F3"/>
 </svg>
