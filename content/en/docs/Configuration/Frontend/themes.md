@@ -64,6 +64,37 @@ This overrides the default styling for all users who haven't selected a differen
 
 ## Creating Themes
 
+### "Reduced Rounded Corners" Theme
+
+You can view the included by default theme [here on github](https://github.com/gtsteffaniak/filebrowser/blob/main/backend/reduce-rounded-corners.css) to see how it works.
+
+You can also override variables provided by filebrowser:
+
+```
+    /* Basic Styles */
+    :root {
+      --background: {{ .htmlVars.lightBackground }};
+      --alt-background: #ddd;
+      --surfacePrimary: gray;
+      --surfaceSecondary: lightgray;
+      --textPrimary: #546e7a;
+      --textSecondary: gray;
+      --iconBackground: #dddddd;
+      --activeWhiteIcon: gray;
+    }
+    .dark-mode {
+      --background: {{ .htmlVars.darkBackground }};
+      --alt-background: #283136;
+      --surfacePrimary: #20292F;
+      --surfaceSecondary: #3A4147;
+      --divider: rgba(255, 255, 255, 0.12);
+      --textPrimary: rgba(255, 255, 255, 0.87);
+      --textSecondary: rgba(255, 255, 255, 0.6);
+      --iconBackground: #1e1f20;
+      --activeWhiteIcon: white;
+    }
+```
+
 ### Minimal Theme
 
 `minimal.css`:
@@ -76,41 +107,6 @@ This overrides the default styling for all users who haven't selected a differen
 
 .btn {
   border-radius: 2px;
-}
-```
-
-### Dark Theme
-
-`dark-theme.css`:
-```css
-/* Force dark colors */
-body {
-  background: #1a1a1a;
-  color: #e0e0e0;
-}
-
-.card {
-  background: #2d2d2d;
-  border-color: #404040;
-}
-```
-
-### Corporate Theme
-
-`corporate.css`:
-```css
-/* Company branding */
-:root {
-  --primary-color: #0066cc;
-  --secondary-color: #ff6600;
-}
-
-header {
-  background: linear-gradient(135deg, #0066cc, #004999);
-}
-
-.btn-primary {
-  background-color: #0066cc;
 }
 ```
 
@@ -150,28 +146,6 @@ CSS is applied in this order (later overrides earlier):
 2. `customCSS` (applies to all users)
 3. Background colors (`lightBackground`, `darkBackground`)
 4. User-selected theme (`userSelectedTheme`)
-
-## Best Practices
-
-**Theme naming**: Use descriptive keys
-```yaml
-# Good
-light-modern:
-  description: "Modern Light"
-
-# Avoid
-theme1:
-  description: "Theme 1"
-```
-
-**Provide variety**: Offer different color schemes and densities
-```yaml
-customThemes:
-  default: ...          # Default for all users
-  compact: ...          # Dense/compact layout
-  high-contrast: ...    # Accessibility
-  dark: ...             # Dark mode variant
-```
 
 **Use CSS variables**: Makes themes more maintainable
 ```css

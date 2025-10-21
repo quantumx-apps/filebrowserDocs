@@ -1,6 +1,6 @@
 ---
 title: "Interface Options"
-description: "Toggle UI elements"
+description: "Change characteristics of the UI"
 icon: "tune"
 ---
 
@@ -10,9 +10,9 @@ Show or hide specific UI elements.
 
 ```yaml
 frontend:
-  disableDefaultLinks: false
-  disableUsedPercentage: false
-  disableNavButtons: false
+  disableDefaultLinks: false   # hides the default filebrowser links on the sidebar
+  disableUsedPercentage: false # hides the used-percentage bar for each source on the sidebar
+  disableNavButtons: false     # disables nav buttons on the header bar for clean minimalistic look
 ```
 
 ## Options
@@ -32,7 +32,9 @@ frontend:
   disableDefaultLinks: true
 ```
 
-Use with `externalLinks` to show only custom links.
+### Default Links
+
+<img src="../images/sidebar-links-default.jpg" width=300px>
 
 ## Disable Used Percentage
 
