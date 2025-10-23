@@ -14,6 +14,8 @@ A configuration file (config file) is a YAML file that defines how FileBrowser Q
 - Frontend customization (themes, branding)
 - Media and office integrations
 
+See an example [config file on github](https://github.com/gtsteffaniak/filebrowser/blob/main/backend/config.yaml).
+
 ## How to Specify a Config File
 
 FileBrowser looks for configuration in the following order of priority:
