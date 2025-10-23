@@ -20,6 +20,8 @@ The preferred configuration method is to use config.yaml. However, environment v
 | `FILEBROWSER_JWT_TOKEN_SECRET` | `auth.key` | JWT signing key |
 | `FILEBROWSER_TOTP_SECRET` | `auth.totpSecret` | TOTP encryption secret |
 | `FILEBROWSER_RECAPTCHA_SECRET` | `auth.methods.password.recaptcha.secret` | reCAPTCHA secret key |
+| `FILEBROWSER_DISABLE_AUTOMATIC_BACKUP` | N/A | Disable automatic backup |
+
 
 ## Usage Example
 
@@ -35,7 +37,7 @@ services:
       - ./config.yaml:/home/filebrowser/config.yaml
 ```
 
-**Binary**:
+**CLI**:
 ```bash
 export FILEBROWSER_ADMIN_PASSWORD="secure-password"
 export FILEBROWSER_JWT_TOKEN_SECRET="jwt-secret"
