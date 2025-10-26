@@ -81,8 +81,8 @@ frontend:
 
 **Fields**:
 - `text` - Link text displayed in sidebar (required)
-- `title` - Tooltip shown on hover (required)
 - `url` - Destination URL (required)
+- `title` - Tooltip shown on hover
 
 ## Complete Example
 

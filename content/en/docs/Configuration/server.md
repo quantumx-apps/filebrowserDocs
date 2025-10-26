@@ -27,7 +27,7 @@ server:
   port: 80
 ```
 
-### address  
+### address
 Bind address (default: 0.0.0.0 for all interfaces)
 
 ```yaml
@@ -52,11 +52,86 @@ server:
 ```
 
 ### cacheDir
-Temporary cache directory
+Temporary cache directory for file operations
+
+{{% alert context="warning" %}}
+**unRAID Users**: If you're using unRAID, you must mount a volume for the cache directory. The default container user (uid 1000) needs write access to this directory.
+{{% /alert %}}
+
+The `cacheDir` is a critical configuration that defines where FileBrowser stores temporary files during various operations. This directory is used for:
+
+- **Chunked file uploads**: Each upload chunk is temporarily stored here before being assembled
+- **Image preview generation**: Thumbnails and processed images are cached
+- **Archive operations**: ZIP extraction and compression temporary files
+- **Document processing**: Temporary files during PDF/image conversion
+- **Video processing**: Some media files during video operations
 
 ```yaml
 server:
-  cacheDir: "/var/cache/filebrowser"
+  cacheDir: "/home/filebrowser/data/temp"
+```
+
+#### Important Considerations
+
+{{% alert context="warning" %}}
+**Permissions**: The FileBrowser process must have read/write/execute permissions on the cache directory. This is especially critical in Docker environments.
+{{% /alert %}}
+
+{{% alert context="warning" %}}
+**Disk Space**: The cache directory can grow significantly during large file operations. Monitor disk usage and ensure adequate space. If you are using docker -- consider mounting a sufficient volume for temp directory if you need more space.
+{{% /alert %}}
+
+#### Docker Examples
+
+**Basic Docker Setup:**
+```yaml
+# docker-compose.yaml
+services:
+  filebrowser:
+    image: gtstef/filebrowser:beta
+    volumes:
+      - '/path/to/your/data:/srv'
+      - '/var/cache/filebrowser:/tmp/filebrowser'  # Mount cache directory
+    environment:
+      FILEBROWSER_CONFIG: "/config/config.yaml"
+```
+
+**Corresponding config.yaml:**
+
+```yaml
+server:
+  cacheDir: /tmp/filebrowser # corrosponds to above
+```
+
+**With Non-Root User (Recommended):**
+```yaml
+# docker-compose.yaml
+services:
+  filebrowser:
+    image: gtstef/filebrowser:beta
+    user: filebrowser  # Run as non-root user
+    volumes:
+      - '/path/to/your/data:/srv'
+      - './cache:/home/filebrowser/cache'  # Mount cache directory
+      - './data:/home/filebrowser/data'     # Mount data directory
+    environment:
+      FILEBROWSER_CONFIG: "/home/filebrowser/data/config.yaml"
+```
+
+**Corresponding config.yaml:**
+```yaml
+server:
+  cacheDir: "/home/filebrowser/cache" # corrosponds to above
+```
+
+#### Troubleshooting
+
+**Permission Issues:**
+
+By default, filebrowser uses uid 1000 for the user (you can change that):
+```bash
+# Fix permissions for cache directory
+sudo chown -R 1000:1000 /var/cache/filebrowser
 ```
 
 ### internalUrl
