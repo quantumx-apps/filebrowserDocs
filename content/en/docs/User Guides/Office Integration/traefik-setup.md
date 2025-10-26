@@ -1,6 +1,6 @@
 ---
-title: "Traefik with Labels"
-description: "Complete production setup with Traefik using Docker provider and Let's Encrypt"
+title: "Traefik Setup"
+description: "Complete production setup with Traefik using Docker and Let's Encrypt"
 icon: "dns"
 order: 3
 ---
@@ -8,38 +8,40 @@ order: 3
 Production-ready setup for FileBrowser Quantum and OnlyOffice behind Traefik reverse proxy with automatic HTTPS certificates from Let's Encrypt.
 
 {{% alert context="info" %}}
-This guide is based on a community-contributed configuration. Special thanks to [@Kurami32](https://github.com/Kurami32) for sharing this working setup!
+This guide is community-contributed. Special thanks to [@Kurami32](https://github.com/Kurami32) for sharing this working setup!
 {{% /alert %}}
 
 ## Overview
 
-In this guide we will setup **Traefik** with **Docker provider** and **Labels** within **FileBrowser Quantum** and **OnlyOffice**. You can use this guide as reference, or if you want you can copy-paste all from here, but remember to change all the fake info here with your own.
+In this guide we'll use Docker (compose) for setup **FileBrowser Quantum** and **OnlyOffice** behind **Traefik** Reverse Proxy for a production-ready deployment. You can use this guide as reference, if you want you can copy-paste all from here, but remember to change all the fake/changed info here with your own.
 
-This configuration will give you:
-- ✅ **Automatic HTTPS and certificate renewal** with Let's Encrypt certificates, all managed automatically by Traefik.
-- ✅ **Secure JWT authentication** between services.
-- ✅ **Docker labels-based** configuration.
+This guide will cover:
+- ✅ **Automatic HTTPS and certificate renewal** with Let's Encrypt certificates, this is managed automatically by Traefik.
+- ✅ **Secure JWT authentication** between services (FileBrowser and OnlyOffice).
+- ✅ **Docker with Traefik labels** configuration for the services.
 - ✅ **Production-ready** with proper security headers.
 
 ## Pre-requisites
 
 - Docker and Docker Compose installed.
-- **Domain name** with a DDNS provider configured.
+- A valid **Domain name** with a DDNS provider configured. Required for Let's Encrypt DNS Challenge.
 - **DDNS provider** ([Dynu](https://www.dynu.com/Resources/Tutorials/DynamicDNS/GettingStarted), Cloudflare, DuckDNS, etc) - [See supported providers](https://doc.traefik.io/traefik/https/acme/#providers)
 - Basic understanding of Traefik, Docker, and Docker compose in general.
 
 {{% alert context="warning" %}}
-You **must** have a valid domain name and have your DDNS provider configured for Let's Encrypt to work. Local IP addresses directly will not work.
+You **must** have a valid domain name, and have your DDNS provider configured pointing to your domain for Let's Encrypt to work. If your use Local IPs directly in Traefik, will not work.
 
-However, if you don't have you own domain, you can bind your local IP or hostname to your DDNS provider, and use one free domain that they offer **but** I'm not sure how will work when exposing services publicly.
+However, if you don't have you own domain, you can bind your local IP or hostname to your DDNS provider and use one of the free domains that they offer **but** I'm not sure if will work when exposing services publicly.
 {{% /alert %}}
 
 ## Directory Structure
 
-This should be your final directory structure if you followed all the steps well:
+This should be your final directory structure if you followed all the steps correctly:
 
 {{% alert context="info" %}}
-**Note:** The `.env` files on each directory of the services are docker environment files, they should go on the root folder of each service that you want to deploy (they are with fake info, so make sure that you replace that info with your own), in this case we are deploying three services **Traefik**, **Filebrowser Quantum** and **OnlyOffice**.
+**Note:** The `.env` files on each directory of the services are environment files used for store sensitive information, they should go on the root folder of each service that you want to deploy, in this case, we are deploying three services **Traefik**, **Filebrowser Quantum** and **OnlyOffice**.
+
+Make sure to replace all the info of the `.env` files with your own.
 {{% /alert %}}
 
 ```
@@ -49,7 +51,7 @@ services/
 │   │   ├── config.yaml        # Your filebrowser configuration
 │   │   └── database.db        # Database of filebrowser
 │   ├── docker-compose.yaml    # Filebrowser compose file
-│   └── .env                   # environment file for filebrowser
+│   └── .env                   # Environment file for filebrowser
 ├── onlyoffice/
 │   ├── docker-compose.yaml    # Onlyoffice compose file
 │   └── .env                   # Environment file for onlyofffice
@@ -58,16 +60,16 @@ services/
     │   └── acme.json          # Should have chmod 600 permissions, all the certificates will be stored on this file.
     ├── config/
     │   ├── dynamic/
-    │   │   └── services.yaml  # Dynamic config of traefik - Unused - Here you can use the file provider of traefik.
+    │   │   └── middlewares.yaml  # Dynamic config (File provider) of traefik, used for the security headers.
     │   └── static/
-    │       └── traefik.yaml   # Static config of traefik - This is what we will use alongside with the labels.
+    │       └── traefik.yaml   # Static config of traefik
     ├── docker-compose.yaml    # Traefik compose file
     └── .env                   # Environment file for Traefik
 ```
 
 ## Step 1: Create Docker Network
 
-All three services must be on the same network:
+All the three services must be on the same network:
 
 ```shell
 docker network create \ 
@@ -83,10 +85,10 @@ docker network create \
 **Network Explanation:**
 - `subnet`: Network range for all the containers.
 - `gateway`: Router IP for the network.
-- `ip-range`: Dynamic IPs for containers without static assignment
-- `label`: Reserved IPs for containers that need them.
+- `ip-range`: Dynamic IPs for containers without static assignment - from 128 to 255.
+- `label`: Reserved IPs for containers that need them - from 2 to 127.
 
-Which this command do is create a virtual docker network with the subnet `192.168.2.0` and reserve half of the IP addresses available (from `192.168.2.2` to `192.168.2.127`) for containers that you don't want to be changing its IP each time that you restart them. For assing static IPs to a container, you will need to specify the IP on the docker compose file of your service, below of the name of your docker network. For example:
+Which this command do is create a virtual docker network with the subnet `192.168.2.0` and reserve half of the IP addresses available (from `192.168.2.2` to `192.168.2.127`) for containers that you don't want to be changing its IP each time that you restart them - For assing static IPs to a container, you will need to specify the IP on the docker compose file of your service, below of the name of your docker network. For example:
 
 ```yaml
 services:
@@ -94,7 +96,7 @@ services:
     image: gtstef/filebrowser:latest
     networks:
       proxy_network:                # Name of the docker network
-        ipv4_address: 192.168.1.5   # IP adress that you want to use with that service
+        ipv4_address: 192.168.1.5   # IP adress that you want to use with that service, the IP will be static, don't will change.
 ```
 
 If you don't want to use this complex command, you can use this simplified version:
@@ -103,7 +105,7 @@ If you don't want to use this complex command, you can use this simplified versi
 docker network create --driver=bridge proxy_network
 ```
 
-Docker will manage **all** the IPs dynamically and assing a subnet automatically. You will not have static or reserved IPs, but is fine, on this guide we will use the containers with dynamic IPs, but if you want to use a static IP, you can add the ipv4 option on the docker compose files.
+Docker will manage **all** the IPs dynamically and assing a available subnet automatically. You will not have static or reserved IPs, but is fine, on this guide we will use the containers with dynamic IPs, but if you want to use a static IP, you can add the ipv4 option on the docker compose files.
 
 {{% /alert %}}
 
@@ -146,14 +148,19 @@ services:
       - "traefik.http.routers.traefik.tls=true"
       - "traefik.http.routers.traefik.entrypoints=websecure"
       - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.traefik.tls.options=default"
       - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.traefik.tls.domains[0].main=${DOMAIN_NAME}"
       - "traefik.http.routers.traefik.tls.domains[0].sans=*.${DOMAIN_NAME}"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
-      # Basic auth for dashboard
+      - "traefik.http.services.traefik.loadbalancer.passhostheader=true"
+      - "traefik.http.routers.traefik.middlewares=security-headers@file,compress@file"
+
+      # Basic auth on dashboard
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
+
     restart: unless-stopped
 
 networks:
@@ -166,9 +173,8 @@ networks:
 Create `traefik/.env`:
 
 ```bash
-DOMAIN_NAME=your-domain.com
-# DDNS API Key (we are using dynu)
-DYNU_API_KEY=your-dynu-api-key-here
+DOMAIN_NAME=your-domain.com         # Your root domain here.
+DYNU_API_KEY=your-dynu-api-key-here # DDNS API Key (we are using dynu - check the traefik documentation about other providers)
 
 # Traefik Dashboard Credentials
 # Generate with: docker run --rm httpd:alpine htpasswd -nb your-username your-password | sed -e 's/\$/\$\$/g'
@@ -177,7 +183,7 @@ TRAEFIK_DASHBOARD_CREDENTIALS=admin:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/
 
 **Generate dashboard credentials:**
 ```bash
-# Replace `your-username` and `your-password` with your own user and password.
+# Replace `your-username` and `your-password` with your own user and password, then paste the output in the `,env` file for the traefik dashboard.
 docker run --rm httpd:alpine htpasswd -nb your-username your-password | sed -e 's/\$/\$\$/g'
 ```
 
@@ -189,7 +195,7 @@ chmod 600 traefik/certs/acme.json
 ```
 
 {{% alert context="danger" %}}
-The `acme.json` file **must** have `600` permissions, this is for **security**. With that permission only the Traefik process (and you user) can access (read an write) the certificates stored on that file. 
+The `acme.json` file **must** have `600` permissions, this is for **security**. With that permissions only the Traefik process (and you user) can access (read an write) the certificates stored on that file. 
 
 Also **BE SURE** that you have a copy of that file, because there is where the certificates will be stored.
 {{% /alert %}}
@@ -200,17 +206,17 @@ Create `traefik/config/static/traefik.yaml`:
 
 ```yaml
 global:
-  checkNewVersion: true
+  checkNewVersion: true      # Check if new version of traefik is available
   sendAnonymousUsage: false
-
-# Log level. You can use DEBUG initially for see if the certificates are being pulled correctly
-log:
-  level: INFO # DEBUG, INFO, WARN, ERROR, FATAL, PANIC
 
 api:
   dashboard: true
   insecure: false
 
+# Log level. You can use DEBUG initially for see if the certificates are being pulled correctly
+log:
+  level: INFO # DEBUG, INFO, WARN, ERROR, FATAL, PANIC
+  
 entryPoints:
   web:
     address: :80
@@ -220,8 +226,6 @@ entryPoints:
           to: websecure
           scheme: https
           permanent: true
-    http2:
-      maxConcurrentStreams: 500
 
   websecure:
     address: :443
@@ -230,13 +234,9 @@ entryPoints:
         certResolver: letsencrypt
     transport:
       respondingTimeouts:
-        readTimeout: "0"
-        writeTimeout: "0"
-        idleTimeout: "300s"
-      lifeCycle:
-        graceTimeOut: "20s"
-      keepAliveMaxTime: "0"
-      keepAliveMaxRequests: "0"
+        readTimeout: "300s"
+        writeTimeout: "300s"
+        idleTimeout: "360s"
     http2:
       maxConcurrentStreams: 500
     asDefault: true
@@ -244,9 +244,37 @@ entryPoints:
 serversTransport:
   insecureSkipVerify: false
   forwardingTimeouts:
-    dialTimeout: "60s" # Time to establish TCP connection
-    responseHeaderTimeout: "75s"
-    idleConnTimeout: "90s"
+    dialTimeout: "60s"           # Time to establish TCP connection
+    responseHeaderTimeout: "60s" # Time for backend to send headers
+    idleConnTimeout: "90s"       
+
+http:
+  serversTransports:
+    default:
+      insecureSkipVerify: false
+      forwardingTimeouts:
+        dialTimeout: "60s"
+        responseHeaderTimeout: "75s"
+        idleConnTimeout: "90s"
+        readIdleTimeout: "360s"
+  timeouts:
+    readTimeout: "300s"
+    writeTimeout: "300s"
+    idleTimeout: "360s"
+
+tls:
+  options:
+    modern:
+      minVersion: 'VersionTLS13'
+    default:
+      minVersion: 'VersionTLS12'
+      cipherSuites:
+        - 'TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256'
+        - 'TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256'
+        - 'TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384'
+        - 'TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384'
+        - 'TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305'
+        - 'TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305'
 
 providers:
   docker:
@@ -254,23 +282,46 @@ providers:
     network: "proxy_network"
     exposedByDefault: false    
   file:
-    directory: "/etc/traefik/config/dynamic"
+    directory: "/etc/traefik/config" # Directory mounted in the compose file, here we will define our security headers for the services.
     watch: true
-    
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: your-email@provider.com  # Replace with your email
+      storage: /var/traefik/certs/acme.json
+      # Use staging first for testing first:
+      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      # Then switch to production:
+      caServer: https://acme-v02.api.letsencrypt.org/directory # certificates for production
+      dnsChallenge:
+        provider: dynu
+        resolvers:
+        - "1.1.1.1:53"
+        - "1.0.0.1:53"
+        # Uncomment if having issues when pulling the certificates.
+        # disablePropagationCheck: true
+        # delayBeforeCheck: "60s"
+```
+
+{{% alert context="warning" %}}
+**Important Configuration Updates:**
+1. Replace `your-email@provider.com` with your actual email.
+2. Change `dynu` with your DDNS provider.
+3. Start with staging `caServer` for testing, then switch to production. Let's encrypt has a rate-limit, so if something goes wrong you are testing first.
+
+The staging `caServer` will not give you valid TLS certificates (you will have a warning saying that the site is not secure), but you can see that they are coming from Let's encrypt on your browser, so that is how you test that is working.
+{{% /alert %}}
+
+#### Define the security middleware headers:
+They will go in the dynamic config directory of traefik (Also called File Provider).
+
+Create `traefik/config/dynamic/middlewares.yaml`:
+
+```yaml
 http:
-  serversTransports:
-    default:
-      insecureSkipVerify: false
-      forwardingTimeouts:
-        dialTimeout: "30s"
-        responseHeaderTimeout: "60s"
-        idleConnTimeout: "90s"
-        readIdleTimeout: "3600s"
-  timeouts:
-    readTimeout: "3600s"
-    writeTimeout: "3600s"
-    idleTimeout: "3600s"
   middlewares:
+    # Global security headers, you'll need to refernce it on each service via labels for use it
     security-headers:
       headers:
         frameDeny: true
@@ -285,60 +336,65 @@ http:
         referrerPolicy: "strict-origin-when-cross-origin"
         customRequestHeaders:
           X-Forwarded-Proto: "https"
+          X-Real-IP: "true"
+          X-Forwarded-For: "true"
 
-certificatesResolvers:
-  letsencrypt:
-    acme:
-      email: your-email@provider.com  # Replace with your email
-      storage: /var/traefik/certs/acme.json
-      # Use staging first for testing
-      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
-      # Then switch to production:
-      caServer: https://acme-v02.api.letsencrypt.org/directory
-      dnsChallenge:
-        provider: dynu  # Change to your DDNS provider
-        resolvers:
-          - "1.1.1.1:53"
-          - "1.0.0.1:53"
-        # Uncomment if having issues with the certificates.
-        # disablePropagationCheck: true
-        # delayBeforeCheck: "60s"
+    # Same as security headers, but letting the site being embedded - Onlyoffice needs that.
+    no-frame-block:
+      headers:
+        sslRedirect: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 15552000
+        referrerPolicy: "strict-origin-when-cross-origin"
+        customRequestHeaders:
+          X-Forwarded-Proto: "https"
+          X-Real-IP: "true"
+          X-Forwarded-For: "true"
+
+    # This is more for internal services, like APIs or databases.
+    security-minimal:
+      headers:
+        sslRedirect: true
+        contentTypeNosniff: true
+        stsPreload: true
+        customRequestHeaders:
+          X-Forwarded-Proto: "https"
+
+    # Compression header for better performance
+    compress:
+      compress: {}
 ```
 
-{{% alert context="warning" %}}
-**Important Configuration Updates:**
-1. Replace `your-email@provider.com` with your actual email.
-2. Change `dynu` to your DDNS provider.
-3. Start with staging `caServer` for testing, then switch to production. Let's encrypt has a rate-limit, so if something goes wrong you are testing first.
-
-The staging `caServer` will not give you valid TLS certificates, but you can see that they are coming from Let's encrypt on your browser, so that is how you test that is working.
-{{% /alert %}}
 
 ### Deploy Traefik
 
 Just like any other docker compose service, you should be on the directory where you `docker-compose.yaml` is and:
 
 ```shell
-docker compose up -d --force-recreate 
+docker compose up -d
 ```
 
 See the logs of traefik to see what is happening (CTRL+C to exit):
 
 ```shell
-docker compose logs traefik
+docker logs -f traefik
 ```
 
 #### Test that traefik is working
 
 For test if traefik is working you can visit the dashboard of traefik at: `https://traefik.your-domain.com` (the domain that you used on the `.env` file), and log in with the credentials that you generated before.
 
-![Traefik dashboard](https://private-user-images.githubusercontent.com/178341547/501216161-662ae0d8-836d-46b9-b762-b66045c1978e.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjA0ODkxOTIsIm5iZiI6MTc2MDQ4ODg5MiwicGF0aCI6Ii8xNzgzNDE1NDcvNTAxMjE2MTYxLTY2MmFlMGQ4LTgzNmQtNDZiOS1iNzYyLWI2NjA0NWMxOTc4ZS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDE1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAxNVQwMDQxMzJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mMjUwMzFhZWVjZDVkZTRjNmQ1MmJlZGNkNDU2OWE5OTYzZDA5ODM0ZmE4NWRmM2MwMWRjNWM4MTc4YWNmYTkyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.cGKuCfd_u6mLf0J5tozzIK2lPW-xN6ApYLtFBfR5JB4)
+![Traefik dashboard](https://private-user-images.githubusercontent.com/178341547/505771423-db82e7fb-083b-467c-8c9f-c4061dbe79b4.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjE1MTg0OTksIm5iZiI6MTc2MTUxODE5OSwicGF0aCI6Ii8xNzgzNDE1NDcvNTA1NzcxNDIzLWRiODJlN2ZiLTA4M2ItNDY3Yy04YzlmLWM0MDYxZGJlNzliNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDI2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAyNlQyMjM2MzlaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mZDJjMjBmNWJhNzM3MzI0Zjc4NzY3MzJjMWJlYWZlNmE1YmJlMDIxMjQ3YzNhNzE4MTljNDEwOTE3NTI3ZGFjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.7hgJEJQgdUffQ_SXn-DgsOo5g9C977sHJEOgTFEGats)
 
 
 Or if you want to test it further, you can deploy the other two services first (filebrowser and onlyoffice), and verify that all is working fine.
 
 {{% alert context="danger" %}}
-Once you tested that all is working on the staging server, before you change to production **MAKE SURE** that you deleted the `acme.json` file first before pulling the new production certificates, otherwise will not work. You can just delete the content inside, or recreate the file again:
+Once you tested that all is working on the staging server, before you change to production **BE SURE** that you deleted the `acme.json` file first before pulling the new production certificates, otherwise will not work. You can just delete the content inside, or recreate the file again:
 
 ```shell
 rm -rf traefik/certs/acme.json
@@ -366,27 +422,25 @@ services:
   onlyoffice:
     container_name: onlyoffice
     image: onlyoffice/documentserver
-    env_file: .env
     environment:
-      TZ: ${TZ}
+      TZ: $TZ
+      JWT_SECRET: $ONLYOFFICE_SECRET
       ONLYOFFICE_HTTPS_HSTS_ENABLED: false
-      JWT_ENABLED: true
-      JWT_SECRET: ${ONLYOFFICE_SECRET}
-      JWT_HEADER: Authorization
-    stdin_open: true
+    #ports:
+     # - '8081:80'  # Commented out because traefik will handle it.
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.tls=true"
       - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.entrypoints=websecure"
       - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.rule=Host(`${DOMAIN_NAME}`)"
+      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.tls.options=default"
+      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.rule=Host(${DOMAIN_NAME})"
       - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.service=${TRAEFIK_SERVICE_NAME}"
       - "traefik.http.services.${TRAEFIK_SERVICE_NAME}.loadbalancer.server.port=${TRAEFIK_SERVICE_PORT}"
       - "traefik.http.services.${TRAEFIK_SERVICE_NAME}.loadbalancer.passhostheader=true"
-      
-      # Required headers for OnlyOffice
-      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.middlewares=${TRAEFIK_SERVICE_NAME}-headers"
-      - "traefik.http.middlewares.${TRAEFIK_SERVICE_NAME}-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.middlewares=no-frame-block@file,compress@file"   # no-frame-block header that we defined in the middlewares.yaml config file.
+
+      # Headers for onlyoffice, see https://github.com/ONLYOFFICE/onlyoffice-nextcloud/issues/151 for details
       - "traefik.http.middlewares.${TRAEFIK_SERVICE_NAME}-headers.headers.accesscontrolalloworiginlist=*"
     networks:
       proxy_network:
@@ -398,10 +452,10 @@ networks:
 ```
 
 {{% alert context="info" %}}
-**Critical OnlyOffice Labels:**
-- `accesscontrolalloworiginlist=*`: Required for CORS with FileBrowser
-- `X-Forwarded-Proto=https`: Tells OnlyOffice it's behind HTTPS proxy
-- `ONLYOFFICE_HTTPS_HSTS_ENABLED: false`: Traefik handles HTTPS, not OnlyOffice
+**Critical for OnlyOffice:**
+- `accesscontrolalloworiginlist=*`: Middleware required for CORS - without this onlyoffice don't will work with filebrowser and you will run into issues.
+- `ONLYOFFICE_HTTPS_HSTS_ENABLED: false`: Traefik handles HTTPS, not OnlyOffice.
+- We should use the `no-frame-block` middleware instead of `security-headers` for onlyoffice to be embedded into FileBrowser. 
 {{% /alert %}}
 
 ### Generate JWT Secret
@@ -415,7 +469,6 @@ openssl rand -base64 32
 Save this secret - you'll need it for both FileBrowser, and OnlyOffice configuration `.env` file.
 {{% /alert %}}
 
-
 ### OnlyOffice Environment File
 
 Create `onlyoffice/.env`:
@@ -423,7 +476,7 @@ Create `onlyoffice/.env`:
 ```bash
 TRAEFIK_SERVICE_NAME=onlyoffice
 TRAEFIK_SERVICE_PORT=80
-DOMAIN_NAME=office.yourdomain.com
+DOMAIN_NAME=`office.yourdomain.com`   # Don't forget the backticks, they are critical
 ONLYOFFICE_SECRET=KDSpcNwKAos2moijgdfi9jf9wr3wek=  # Your output of the openssl command
 TZ=America/New_York  # Your timezone
 ```
@@ -431,20 +484,20 @@ TZ=America/New_York  # Your timezone
 ### Deploy OnlyOffice
 
 ```shell
-docker compose up -d --force-recreate 
+docker compose up -d
 ```
 
 Check the logs to see what is happening (CTRL+C to exit):
 
 ```shell
-docker compose logs onlyoffice
+docker logs onlyoffice
 ```
 
 #### Test that OnlyOffice is working
 
 - Visit your onlyoffice URL on your browser (`https://onlyoffice.yourdomain.com`) 
 
-![OnlyOffice](https://private-user-images.githubusercontent.com/178341547/501219762-f93d5248-df60-4a2b-b5d4-f2a77b6215cf.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjA0ODk3NDAsIm5iZiI6MTc2MDQ4OTQ0MCwicGF0aCI6Ii8xNzgzNDE1NDcvNTAxMjE5NzYyLWY5M2Q1MjQ4LWRmNjAtNGEyYi1iNWQ0LWYyYTc3YjYyMTVjZi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDE1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAxNVQwMDUwNDBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iNjk3OTFiNmRkNWRhZDU3OWJmZGNmZTA1NzJmZGRjYmExMGUzZGQ2YmEyYmJlYWRhZGNjMDA0ZGNjNGNmYjI2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.7pzPnwWtwRytljpD2lUVtrNhcEm8hjR-Xkh9PECZh-c)
+![OnlyOffice](https://private-user-images.githubusercontent.com/178341547/505771448-f4347076-8fe1-4051-947d-3c73476a5084.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjE1MTg1MjAsIm5iZiI6MTc2MTUxODIyMCwicGF0aCI6Ii8xNzgzNDE1NDcvNTA1NzcxNDQ4LWY0MzQ3MDc2LThmZTEtNDA1MS05NDdkLTNjNzM0NzZhNTA4NC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDI2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAyNlQyMjM3MDBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01NzYxZDUyNjdkOTA0YzM2YThlNTk3YTMwNzNjMDU4MDBlOGIyNGVlMGMwNDgwMDZhM2IwNjU1NTQ1OWZjYWU5JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.UIWbsQQDc0aeeHRL-lyEVZ_blctY4Q3XITWeLZmhJGw)
 
 - Or verify with curl. Should return: `{"status":"ok"}`
 
@@ -464,7 +517,7 @@ mkdir -p filebrowser/data
 ### FileBrowser Docker Compose
 
 {{% alert context="info" %}}
-Is similar to {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="getting started docker guide" />}} but this one is customized for work with traefik. And also, remember to change the `volumes` with your actual data/folders, the ones below are an example. 
+Is similar to {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="getting started docker guide" />}} but this one is customized for work with traefik. And also, remember to change the `volumes` block with your actual data/folders, the ones below are an example.
 {{% /alert %}}
 
 Create `filebrowser/docker-compose.yaml`:
@@ -489,10 +542,13 @@ services:
       - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.tls=true"
       - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.entrypoints=websecure"
       - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.rule=Host(`${DOMAIN_NAME}`)"
+      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.tls.options=default"
+      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.rule=Host(${DOMAIN_NAME})"
       - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.service=${TRAEFIK_SERVICE_NAME}"
       - "traefik.http.services.${TRAEFIK_SERVICE_NAME}.loadbalancer.server.port=${TRAEFIK_SERVICE_PORT}"
       - "traefik.http.services.${TRAEFIK_SERVICE_NAME}.loadbalancer.passhostheader=true"
+      - "traefik.http.routers.${TRAEFIK_SERVICE_NAME}.middlewares=security-headers@file,compress@file" # Security headers
+
     networks:
       proxy_network:
     restart: unless-stopped
@@ -559,22 +615,22 @@ integrations:
   office:
     url: "https://office.yourdomain.com"       # The URL to the OnlyOffice Server
     internalUrl: "http://onlyoffice:80"
-    secret: "KDSpcNwKAos2moijgdfi9jf9wr3wek="  # Same as OnlyOffice
+    secret: "KDSpcNwKAos2moijgdfi9jf9wr3wek="  # Same as OnlyOffice secret
     viewOnly: false
 ```
 
 {{% alert context="warning" %}}
 **Critical Configuration:**
 - `server.externalUrl`: Must match your FileBrowser domain configured on the `.env` file.
-- `server.internalUrl`: Uses Docker service name `onlyoffice` and its internal port.
+- `server.internalUrl`: Uses Docker service name `onlyoffice` and its internal port (80).
 - `integrations.office.url`: Must match your OnlyOffice domain configured on the `.env` file of OnlyOffice.
-- `integrations.office.secret`: Must match OnlyOffice `JWT_SECRET` exactly.
+- `integrations.office.secret`: Must match OnlyOffice `JWT_SECRET` exactly (also in the onlyoffice `.env`)
 {{% /alert %}}
 
 ### Deploy FileBrowser
 
 ```shell
-docker compose up -d --force-recreate 
+docker compose up -d --force-recreate
 ```
 
 Check the logs to see what is happening (CTRL+C to exit):
@@ -743,6 +799,11 @@ Ensure all URLs use `https://` in production:
 - `server.externalUrl`
 - `integrations.office.url`
 
+### External Resources
+- [OnlyOffice Documentation](https://helpcenter.onlyoffice.com/docs)
+- [Traefik Documentation](https://doc.traefik.io/traefik/)
+- [Docker Compose Documentation](https://docs.docker.com/compose/)
+
 ## Next Steps
 
 - {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS Configuration" />}} - Self-signed certificates and traefik file provider
@@ -751,4 +812,4 @@ Ensure all URLs use `https://` in production:
 
 ## Credits
 
-This guide is a community-contributed configuration by [@Kurami32](https://github.com/gtsteffaniak/filebrowser/discussions/1237#discussioncomment-14447935). Thank you for sharing your working setup!
+This guide is a community-contributed guide by [@Kurami32](https://github.com/gtsteffaniak/filebrowser/discussions/1237#discussioncomment-14447935). Thank you for sharing your working setup!

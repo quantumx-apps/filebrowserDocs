@@ -2,13 +2,12 @@
 title: "Basic Docker Setup"
 description: "Simple OnlyOffice setup with Docker for local development"
 icon: "square"
-order: 2
 ---
 
 Complete setup for running FileBrowser Quantum with OnlyOffice using Docker Compose on your local network.
 
 {{% alert context="warning" %}}
-This guide uses HTTP which is **not secure** for production. Only use for local development or testing. For production deployments with HTTPS, see the {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik HTTPS guide" />}}.
+This guide uses HTTP which is **not secure** for production. Only use for local development or testing. For production deployments with HTTPS, see {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} or {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik with self-signed certificates" />}}.
 {{% /alert %}}
 
 ## Prerequisites
@@ -119,10 +118,10 @@ integrations:
 
 ## Next Steps
 
-- **Production Setup**: See {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik HTTPS Guide" />}} for avanced deployment
-- **Advanced Labels**: See {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik full setup Guide" />}} for complete services configuration
-- **Troubleshooting**: See {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} for detailed solutions
-- **Configuration**: See {{< doclink path="integrations/office/configuration/" text="Office Configuration" />}} for all available options
+- **Production Setup**: See {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Full Setup Guide" />}} for complete services configuration ready for production.
+- **Advanced Setup**: See {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik HTTPS Guide" />}} for advanced deployment using internal HTTPS for the services.
+- **Troubleshooting**: See {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} for detailed solutions.
+- **Configuration**: See {{< doclink path="integrations/office/configuration/" text="Office Configuration" />}} for all available options.
 
 ## Additional Resources
 

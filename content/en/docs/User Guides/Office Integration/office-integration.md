@@ -15,42 +15,41 @@ These guides are based on real-world configurations contributed by the FileBrows
 
 ### 1. Basic Docker Setup (Recommended for Beginners)
 
-**Best for:** Local development, testing, learning
+**Best for:** Local development, testing, learning.
 
-Simple HTTP-based setup perfect for:
-- Getting started with OnlyOffice
-- Testing on your local machine
-- Development environments
-- Internal network deployments
+Simple HTTP-based setup, perfect for:
+- Getting started with OnlyOffice.
+- Testing on your local machine.
+- Development environments.
+- Internal network deployments.
 
 {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Start Basic Setup →" />}}
 
 **What you'll learn:**
-- Generate JWT secrets
-- Configure Docker Compose
-- Set up FileBrowser and OnlyOffice
-- Test document editing
+- Generate JWT secrets.
+- Configure Docker Compose.
+- Set up FileBrowser and OnlyOffice.
+- Test document editing.
 
 **Time:** 15-20 minutes
 
 ---
 
-### 2. Traefik with Labels (Recommended for Production)
+### 2. Behind Traefik Reverse-proxy (Recommended for Production)
 
-**Best for:** Production deployments, internet-facing servers
+**Best for:** Production deployments, internet-facing servers.
 
 Production-ready setup with automatic HTTPS:
 - Let's Encrypt SSL certificates.
 - Automatic certificate renewal.
 - Secure JWT authentication.
-- DDNS support (Dynu, Cloudflare, etc.)
+- DDNS support (Dynu, Cloudflare, DuckDNS, etc).
 
-{{< doclink path="user-guides/office-integration/traefik-labels/" text="Start Traefik Setup →" />}}
+{{< doclink path="user-guides/office-integration/traefik-setup/" text="Start Traefik Setup →" />}}
 
 **What you'll learn:**
-- Configure and setup Traefik reverse proxy for your services.
-- Configure services with docker compose.
-- Deploy services with Traefik Docker labels.
+- All from the {{< doclink path="user-guides/office-integration/office-integration#1-basic-docker-setup-recommended-for-beginners" text="Basic Docker Setup" />}}.
+- Configure and deploy Traefik for your services and configure them with docker compose.
 - Set up static IPs for containers.
 - Secure production deployment.
 
@@ -63,9 +62,8 @@ Production-ready setup with automatic HTTPS:
 **Best for:** Advanced users, custom security requirements
 
 Advanced HTTPS configurations for special needs:
-- Self-signed certificates.
-- Custom CA certificates.
-- Full certificate verification.
+- Self-signed and custom CA certificates.
+- Full certificate velidation.
 - Multiple verification methods.
 - Onlyoffice with Internal HTTPS communication.
 
@@ -86,28 +84,27 @@ Advanced HTTPS configurations for special needs:
 | Scenario | Recommended Guide |
 |----------|-------------------|
 | "I want to try OnlyOffice quickly" | {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} |
-| "I need production deployment with HTTPS" | {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik with Labels" />}} |
+| "I need production deployment with HTTPS" | {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} |
 | "I'm deploying on internal network only" | {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} |
 | "I need custom CA certificates" | {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS" />}} |
-| "I want automatic SSL renewal" | {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik with Labels" />}} |
+| "I want automatic SSL renewal" | {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} |
 | "I have specific security requirements" | {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS" />}} |
 
 ## Prerequisites for All Guides
 
 Before starting any guide, ensure you have:
 
-- [ ] **Docker** installed (version 20.10+)
-- [ ] **Docker Compose** installed (version 2.0+)
-- [ ] **Basic terminal/command line** knowledge
-- [ ] **Text editor** for configuration files
-- [ ] **At least 4GB RAM** available (2GB for OnlyOffice minimum)
-- [ ] **10GB disk space** for Docker images
+- [ ] **Docker** installed (version 20.10+).
+- [ ] **Docker Compose** installed (version 2.0+).
+- [ ] **Basic terminal/command line** knowledge.
+- [ ] **Text editor** for configuration files.
+- [ ] **At least 4GB RAM** available (2GB for OnlyOffice minimum).
+- [ ] **10GB disk space** for Docker images.
 
 **For production guides, additionally:**
-- [ ] **Domain name** registered
-- [ ] **DDNS provider** account (Dynu, Cloudflare, etc.)
-- [ ] **DNS configured** and propagated
-- [ ] **Email address** for Let's Encrypt notifications
+- [ ] **Domain name** registered.
+- [ ] **DDNS provider** account (Dynu, Cloudflare, DuckDNS, etc).
+- [ ] **Email address** for Let's Encrypt.
 
 ## What is OnlyOffice?
 
@@ -189,8 +186,8 @@ Once you've completed a guide:
 curl https://office.yourdomain.com/healthcheck
 
 # View logs
-docker-compose logs -f onlyoffice
-docker-compose logs -f filebrowser
+docker logs -f onlyoffice
+docker logs -f filebrowser
 
 # Check resource usage
 docker stats
@@ -200,8 +197,8 @@ docker stats
 
 These guides are based on configurations shared by FileBrowser community members:
 
-- [@Kurami32](https://github.com/gtsteffaniak/filebrowser/discussions/1237) - Complete Traefik setup with Let's Encrypt
-- [@BaccanoMob](https://github.com/gtsteffaniak/filebrowser/discussions/1237) - Advanced HTTPS methods and troubleshooting
+- [@Kurami32](https://github.com/gtsteffaniak/filebrowser/discussions/1237) - Complete Traefik setup with Let's Encrypt.
+- [@BaccanoMob](https://github.com/gtsteffaniak/filebrowser/discussions/1237) - Advanced HTTPS methods and troubleshooting.
 
 Want to contribute your configuration? Share it in [GitHub Discussions](https://github.com/gtsteffaniak/filebrowser/discussions)!
 
@@ -209,9 +206,9 @@ Want to contribute your configuration? Share it in [GitHub Discussions](https://
 
 ### Documentation
 
-- {{< doclink path="integrations/office/configuration/" text="Configuration Reference" />}} - All configuration options
-- {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting Guide" />}} - Common issues and solutions
-- {{< doclink path="integrations/office/about/" text="OnlyOffice Features" />}} - What OnlyOffice can do
+- {{< doclink path="integrations/office/configuration/" text="Configuration Reference" />}} - All configuration options.
+- {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting Guide" />}} - Common issues and solutions.
+- {{< doclink path="integrations/office/about/" text="OnlyOffice Features" />}} - What OnlyOffice can do.
 
 ### External Resources
 
@@ -222,19 +219,19 @@ Want to contribute your configuration? Share it in [GitHub Discussions](https://
 
 ### Community
 
-- [GitHub Issues](https://github.com/gtsteffaniak/filebrowser/issues) - Report bugs
-- [GitHub Discussions](https://github.com/gtsteffaniak/filebrowser/discussions) - Ask questions
-- [Wiki](https://github.com/gtsteffaniak/filebrowser/wiki) - Community documentation
+- [GitHub Issues](https://github.com/gtsteffaniak/filebrowser/issues) - Report bugs.
+- [GitHub Discussions](https://github.com/gtsteffaniak/filebrowser/discussions) - Ask questions.
+- [Wiki](https://github.com/gtsteffaniak/filebrowser/wiki) - Community documentation.
 
 ## Getting Help
 
 If you encounter issues:
 
-1. **Enable debug mode** in FileBrowser profile settings
-2. **Check troubleshooting guide** for common solutions
-3. **Review logs** from both FileBrowser and OnlyOffice
-4. **Search existing issues** on GitHub
-5. **Ask in discussions** with your configuration details
+1. **Enable debug mode** in FileBrowser profile settings.
+2. **Check troubleshooting guide** for common solutions.
+3. **Review logs** from both FileBrowser and OnlyOffice.
+4. **Search existing issues** on GitHub.
+5. **Ask in discussions** with your configuration details.
 
 {{< doclink path="integrations/office/troubleshooting/" text="Go to Troubleshooting →" />}}
 
@@ -252,13 +249,13 @@ Choose your guide and begin setting up OnlyOffice integration:
 
 <div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
 <h3 style="margin-top: 0;">⭐ Production Setup</h3>
-<p>Traefik with automatic HTTPS</p>
-<a href="/docs/user-guides/office-integration/traefik-labels/" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; text-decoration: none;">Start Guide →</a>
+<p>Behind Traefik Reverse-proxy</p>
+<a href="/docs/user-guides/office-integration/traefik-setup/" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; text-decoration: none;">Start Guide →</a>
 </div>
 
 <div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
 <h3 style="margin-top: 0;">🔒 Advanced HTTPS</h3>
-<p>Custom certificates and security</p>
+<p>Custom certificates</p>
 <a href="/docs/user-guides/office-integration/traefik-https/" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; text-decoration: none;">Start Guide →</a>
 </div>
 
