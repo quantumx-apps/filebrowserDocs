@@ -9,7 +9,7 @@ Run FileBrowser Quantum natively on macOS.
 ## Download
 
 1. Go to [releases page](https://github.com/gtsteffaniak/filebrowser/releases)
-2. Download `filebrowser-darwin-amd64` (Intel) or `filebrowser-darwin-arm64` (Apple Silicon)
+2. Download either stable or beta `filebrowser-darwin-amd64` (Intel) or `filebrowser-darwin-arm64` (Apple Silicon)
 3. Save to a folder
 
 ## Enable Permissions

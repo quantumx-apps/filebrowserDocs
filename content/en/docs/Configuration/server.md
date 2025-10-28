@@ -11,8 +11,6 @@ Configure server settings including port, address, database, and caching.
 ```yaml
 server:
   port: 80
-  address: 0.0.0.0
-  baseURL: ""
   database: "database.db"
   cacheDir: "tmp"
 ```
@@ -27,16 +25,8 @@ server:
   port: 80
 ```
 
-### address
-Bind address (default: 0.0.0.0 for all interfaces)
-
-```yaml
-server:
-  address: 127.0.0.1  # Localhost only
-```
-
 ### baseURL
-Base URL for reverse proxy setups
+Base URL -- primarily for reverse proxy
 
 ```yaml
 server:
@@ -44,18 +34,18 @@ server:
 ```
 
 ### database
-Database file path (SQLite)
+Database file path
 
 ```yaml
 server:
-  database: "/var/lib/filebrowser/database.db"
+  database: "data/database.db"
 ```
 
 ### cacheDir
 Temporary cache directory for file operations
 
 {{% alert context="warning" %}}
-**unRAID Users**: If you're using unRAID, you must mount a volume for the cache directory. The default container user (uid 1000) needs write access to this directory.
+**unRAID Users**: If you're using unRAID, you must mount a volume for the cache directory. The default container user (if not uid 1000) needs write access to this directory.
 {{% /alert %}}
 
 The `cacheDir` is a critical configuration that defines where FileBrowser stores temporary files during various operations. This directory is used for:
@@ -68,7 +58,7 @@ The `cacheDir` is a critical configuration that defines where FileBrowser stores
 
 ```yaml
 server:
-  cacheDir: "/home/filebrowser/data/temp"
+  cacheDir: "data/temp"
 ```
 
 #### Important Considerations
@@ -114,8 +104,6 @@ services:
       - '/path/to/your/data:/srv'
       - './cache:/home/filebrowser/cache'  # Mount cache directory
       - './data:/home/filebrowser/data'     # Mount data directory
-    environment:
-      FILEBROWSER_CONFIG: "/home/filebrowser/data/config.yaml"
 ```
 
 **Corresponding config.yaml:**
@@ -135,7 +123,7 @@ sudo chown -R 1000:1000 /var/cache/filebrowser
 ```
 
 ### internalUrl
-Internal URL for integrations (OnlyOffice)
+Internal URL for integrations (Currently just OnlyOffice)
 
 ```yaml
 server:
@@ -148,45 +136,6 @@ server:
 server:
   tlsCert: "/path/to/cert.pem"
   tlsKey: "/path/to/key.pem"
-```
-
-### Performance Settings
-
-```yaml
-server:
-  numImageProcessors: 4  # Parallel image processing workers
-```
-
-## Common Configurations
-
-### Default (Development)
-
-```yaml
-server:
-  port: 8080
-  address: 0.0.0.0
-```
-
-### Production
-
-```yaml
-server:
-  port: 443
-  address: 0.0.0.0
-  database: "/var/lib/filebrowser/database.db"
-  cacheDir: "/var/cache/filebrowser"
-  tlsCert: "/etc/ssl/certs/filebrowser.crt"
-  tlsKey: "/etc/ssl/private/filebrowser.key"
-```
-
-### Behind Reverse Proxy
-
-```yaml
-server:
-  port: 8080
-  address: 127.0.0.1
-  baseURL: "/files"
-  internalUrl: "http://localhost:8080"
 ```
 
 ## Next Steps

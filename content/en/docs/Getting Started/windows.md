@@ -9,7 +9,7 @@ Run FileBrowser Quantum natively on Windows.
 ## Download
 
 1. Go to [releases page](https://github.com/gtsteffaniak/filebrowser/releases)
-2. Download `filebrowser-windows-amd64.exe` (or arm64 for ARM processors)
+2. Download either stable or beta `filebrowser-windows-amd64.exe` (or arm64 for ARM processors)
 3. Save to a folder (e.g., `C:\FileBrowser\`)
 
 ## Optional: Install FFmpeg
