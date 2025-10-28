@@ -80,6 +80,8 @@ docker compose up -d
 
 ## Running as Non-Root
 
+FileBrowser Quantum docker images have a non-default  `filebrowser` user built-in. This user has UID:GID of 1000:1000. You can use it by specifying a user in docker compose.
+
 Add to docker-compose.yaml:
 
 ```yaml
@@ -89,14 +91,19 @@ services:
     volumes:
       - /path/to/files:/folder
       - ./data:/home/filebrowser/data
-      - ./tmp:/home/filebrowser/tmp  # Required for non-root
 ```
 
-Update config.yaml:
+You can also specify any user UID:GID, but you will also need to mount a temp directory that the user has filesystem permissions to. ({{< doclink path="configuration/server#cachedir" text="See cacheDir config" />}})
+
 
 ```yaml
-server:
-  cacheDir: /home/filebrowser/tmp
+services:
+  filebrowser:
+    user: "${UID}:${GID}" # Using environment variables for flexibility
+    volumes:
+      - /path/to/files:/folder
+      - ./data:/home/filebrowser/data
+      - ./tmp:/home/filebrowser/tmp  # Required if uid other than 1000
 ```
 
 ## Next Steps

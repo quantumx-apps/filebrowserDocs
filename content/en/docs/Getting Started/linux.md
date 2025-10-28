@@ -9,7 +9,7 @@ Run FileBrowser Quantum natively on Linux.
 ## Download
 
 1. Go to [releases page](https://github.com/gtsteffaniak/filebrowser/releases)
-2. Download the appropriate binary:
+2. Download the appropriate binary (stable or beta):
    - `filebrowser-linux-amd64` (x86_64)
    - `filebrowser-linux-arm64` (ARM64)
    - `filebrowser-linux-arm32` (ARM32)

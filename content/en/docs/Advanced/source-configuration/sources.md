@@ -12,7 +12,7 @@ order: 1
 Sources are the directories that FileBrowser Quantum makes available to users. Each source represents a filesystem path that can be browsed, searched, and managed through the web interface.
 
 {{% alert context="info" %}}
-**Getting Started:** For basic usage, you only need to define the `path` and optionally set `defaultEnabled: true`. Most other configuration options can be left at their defaults.
+**Getting Started:** For basic usage, you only need to define the `path` and optionally set **defaultEnabled** set to `true` to give the source to all new users. Most other configuration options can be left at their defaults.
 {{% /alert %}}
 
 ## Source Basics
@@ -64,7 +64,7 @@ server:
 
 This creates a source that:
 - Is available to all new users
-- Has indexing enabled
+- Has indexing enabled for advanced features
 - Uses all default settings
 
 ## Indexing Overview
@@ -162,7 +162,7 @@ config:
 Automatically create a directory for each new user. Defaults to `false`. When enabled:
 
 - Creates `{defaultUserScope}/{username}` on user creation
-- Updates user scope to their personal directory  
+- Updates user scope to their personal directory
 - Directory persists even if user is deleted
 
 Example:
@@ -227,129 +227,7 @@ How it works: Performs 4 quick scans at the specified interval, then 1 full scan
 
 ### `conditionals`
 
-```yaml
-config:
-  conditionals:
-    ignoreHidden: true
-    ignoreZeroSizeFolders: true
-    rules:
-      - folderPath: "excluded"
-      - fileNames: ".DS_Store"
-```
-
 Control which files and folders are indexed. See {{< doclink path="advanced/source-configuration/conditional-rules/" text="Conditional Rules Guide" />}} for complete documentation.
-
-**`ignoreHidden`** (default: `false`) - Skip all hidden files and folders during indexing. Hidden items won't appear in search or UI.
-
-**`ignoreZeroSizeFolders`** (default: `false`) - Skip folders with zero calculated size. Empty folders or folders containing only empty folders are ignored. You can still create folders via the UI; they must be populated by the next scan to remain visible.
-
-**`rules`** - Array of conditional rules. See the {{< doclink path="advanced/source-configuration/conditional-rules/" text="Conditional Rules Guide" />}} for details.
-
-## Configuration Examples
-
-### Public Shared Source
-
-A source available to all users with basic settings:
-
-```yaml
-sources:
-  - path: "/public"
-    name: "Shared Files"
-    config:
-      defaultEnabled: true
-      conditionals:
-        ignoreHidden: true
-```
-
-### User Home Directories
-
-Automatically create isolated user directories:
-
-```yaml
-sources:
-  - path: "/home"
-    name: "User Files"
-    config:
-      defaultEnabled: true
-      defaultUserScope: "/"
-      createUserDir: true
-      conditionals:
-        ignoreHidden: true
-        ignoreZeroSizeFolders: true
-```
-
-Each user gets `/home/{username}` as their private space.
-
-### High-Security Source
-
-Restrict access with explicit allow rules:
-
-```yaml
-sources:
-  - path: "/confidential"
-    name: "Confidential"
-    config:
-      private: true           # No sharing allowed
-      denyByDefault: true     # Require explicit access rules
-      conditionals:
-        ignoreHidden: true
-```
-
-### Development/Media Source
-
-Exclude common development artifacts and system files:
-
-```yaml
-sources:
-  - path: "/projects"
-    name: "Projects"
-    config:
-      defaultEnabled: true
-      conditionals:
-        ignoreHidden: true
-        ignoreZeroSizeFolders: true
-        rules:
-          - folderNames: "node_modules"
-          - folderNames: "__pycache__"
-          - folderNames: ".git"
-          - folderEndsWith: ".cache"
-          - fileNames: ".DS_Store"
-          - fileNames: "Thumbs.db"
-```
-
-### Archive Source with Minimal Rescanning
-
-A source with large, rarely-changing archives:
-
-```yaml
-sources:
-  - path: "/archives"
-    name: "Archives"
-    config:
-      defaultEnabled: false
-      conditionals:
-        rules:
-          - neverWatchPath: "historical-data"
-          - neverWatchPath: "backups-2020"
-```
-
-The `neverWatchPath` folders are indexed once but never rescanned, saving resources.
-
-### Mixed Visibility Source
-
-Show certain folders in UI but exclude from search:
-
-```yaml
-sources:
-  - path: "/storage"
-    config:
-      conditionals:
-        rules:
-          - folderPath: "working"         # Fully indexed
-          - folderPath: "archive"         # Hidden from UI and search
-          - folderPath: "temp"
-            viewable: true                # Visible in UI but not in search
-```
 
 ## Common Configuration Patterns
 

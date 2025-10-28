@@ -22,7 +22,7 @@ If you are having persistent issues with OnlyOffice, the first thing should be t
 3. Open any document with OnlyOffice
 4. View the debug tooltip that appears automatically
 
-![Debug Mode Tooltip](https://github.com/user-attachments/assets/5c26b33d-1483-462f-8ad1-529cbbeac21d)
+![Debug Mode Tooltip]()
 
 #### What Debug Mode Shows
 
@@ -280,11 +280,6 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-
-        # WebSocket support
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
 
         # Timeouts
         proxy_connect_timeout 300s;

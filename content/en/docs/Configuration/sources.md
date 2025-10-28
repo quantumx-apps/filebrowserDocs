@@ -26,23 +26,12 @@ auth:
 server:
   port: 80
   sources:
-    - path: "/path/to/source1"
-    - path: "/path/to/source2"
-```
-
-## Source Configuration Options
-
-```yaml
-server:
-  sources:
-    - path: "/mnt/folder"
-      name: "mysource"              # Optional display name
+    - path: "/path/to/source1" # enabled for all users
+      name: "My Files"
       config:
-        defaultEnabled: false       # Give to all users by default
-        defaultUserScope: "/"       # Default access scope
-        createUserDir: false        # Auto-create user directories
-        disableIndexing: false      # Disable search indexing
-        denyByDefault: false        # Deny all access unless explicitly allowed
+        defaultEnabled: true
+    - path: "/path/to/source2" # not default enabled!
+      name: "Secured Files"
 ```
 
 ## Common Patterns
