@@ -38,19 +38,19 @@ FileBrowser Quantum integrates with [OnlyOffice Document Server](https://helpcen
 
 ### Word Processing
 ```
-.doc, .docm, .docx, .dot, .dotm, .dotx, .epub, .fb2, .fodt, .htm, .html, 
+.doc, .docm, .docx, .dot, .dotm, .dotx, .epub, .fb2, .fodt, .htm, .html,
 .mht, .mhtml, .odt, .ott, .rtf, .stw, .sxw, .txt, .wps, .wpt, .xml
 ```
 
 ### Spreadsheets
 ```
-.csv, .et, .ett, .fods, .ods, .ots, .sxc, .xls, .xlsb, .xlsm, .xlsx, 
+.csv, .et, .ett, .fods, .ods, .ots, .sxc, .xls, .xlsb, .xlsm, .xlsx,
 .xlt, .xltm, .xltx
 ```
 
 ### Presentations
 ```
-.dps, .dpt, .fodp, .odp, .otp, .pot, .potm, .potx, .pps, .ppsm, .ppsx, 
+.dps, .dpt, .fodp, .odp, .otp, .pot, .potm, .potx, .pps, .ppsm, .ppsx,
 .ppt, .pptm, .pptx, .sxi
 ```
 
@@ -64,7 +64,7 @@ FileBrowser Quantum integrates with [OnlyOffice Document Server](https://helpcen
 Without OnlyOffice, these formats have native preview:
 
 ```
-.pdf, .xps, .epub, .mobi, .fb2, .cbz, .svg, .txt, .docx, .ppt, .pptx, 
+.pdf, .xps, .epub, .mobi, .fb2, .cbz, .svg, .txt, .docx, .ppt, .pptx,
 .xlsx, .hwp, .hwpx
 ```
 
@@ -98,48 +98,7 @@ server:
 
 ## Troubleshooting
 
-
-### Enable OnlyOffice Debug Mode
-
-The easiest way to troubleshoot OnlyOffice issues is to enable the built-in debug mode:
-
-1. **Navigate to Profile Settings** → **File Viewer Options** → **Enable OnlyOffice Debug Mode**
-2. **Toggle "Debug OnlyOffice Editor"** to ON
-3. **Open any document** with OnlyOffice editor
-4. **View the debug tooltip** that appears automatically
-
-#### Debug Information Includes
-
-**Basic Configuration:**
-- OnlyOffice server URL and internal URL usage
-- File source, path, and share information  
-- Base URL and authentication context
-
-**Network Flow:**
-- Browser ↔ OnlyOffice server communication
-- OnlyOffice → FileBrowser download URL (with domain)
-- OnlyOffice → FileBrowser callback URL (with domain)
-
-**Process Steps:**
-- Configuration URL building and validation
-- API request status and config retrieval
-- OnlyOffice server connection status
-- Document download progress  
-- Editor initialization results
-- Real-time error detection and classification
-
-#### Network Testing
-
-Test download URL manually:
-```bash
-curl -H "Authorization: Bearer YOUR_TOKEN" "http://your-server/api/raw?files=source%3A%3Apath"
-```
-
-Test from OnlyOffice server perspective:
-```bash
-# From OnlyOffice server container/machine
-curl "http://filebrowser:8080/api/raw?files=source%3A%3Apath&auth=token"
-```
+see {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}}
 
 ### Common Configuration Issues
 
