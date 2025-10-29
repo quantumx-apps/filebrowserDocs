@@ -8,11 +8,7 @@ Solutions for common OnlyOffice integration problems including connectivity, aut
 
 ## Enable Debug logging and Debug Mode
 
-If you are having persistent issues with OnlyOffice, the first thing should be to enable debug logging on all of the related components:
-
-1. The frontend Debug Mode
-2. The FileBrowser server debug logs
-3. The OnlyOffice server debug logs
+If you are having persistent issues with OnlyOffice, the first thing should be to enable debugger mode.
 
 ### Enable Frontend Debug Mode
 
@@ -22,7 +18,11 @@ If you are having persistent issues with OnlyOffice, the first thing should be t
 3. Open any document with OnlyOffice
 4. View the debug tooltip that appears automatically
 
-![Debug Mode Tooltip]()
+{{% alert context="info" %}}
+You should run the debugger with an admin user to also see backend logs.
+{{% /alert %}}
+
+![Debug Mode Example](https://github.com/user-attachments/assets/d4d88378-8017-4786-98b7-9fdfb72278a0)
 
 #### What Debug Mode Shows
 
