@@ -1,56 +1,36 @@
 ---
-title: "Traefik HTTPS Advanced"
-description: "Advanced HTTPS setup with self-signed certificates and file providers"
+title: "Self-signed certs with Traefik"
+description: "Advanced HTTPS setup with self-signed certificates and traefik file provider"
 icon: "lock"
+order: 4
 ---
 
-Advanced OnlyOffice HTTPS configuration using Traefik file providers and self-signed certificates for internal OnlyOffice communication.
+Advanced OnlyOffice HTTPS configuration using Traefik and self-signed certificates for internal OnlyOffice communication.
 
 {{% alert context="info" %}}
-This guide is based on community-contributed configurations. Special thanks to @BaccanoMob for documenting these methods!
+This guide is community-contributed. Special thanks to [@BaccanoMob](https://github.com/gtsteffaniak/filebrowser/discussions/1237) for documenting these methods!
 {{% /alert %}}
 
-## Problem Statement
+## Overview
 
-OnlyOffice doesn't work with HTTPS out of the box when behind a reverse proxy. When:
-- OnlyOffice runs with HTTP internally
-- But is accessed via HTTPS from the reverse proxy
-
-You'll encounter mixed content or CORS errors, and documents won't open.
-
-## Solution Overview
-
-Three methods to solve this, ordered by complexity (easiest first):
+We have two methods for have self-signed certs, ordered by complexity (easiest first)
 
 | Method | Description | Difficulty | Security |
 |--------|-------------|------------|----------|
-| **Method 0** | Traefik labels only | ⭐ Easy | Good |
 | **Method 1** | Self-signed certs + skip verification | ⭐⭐ Medium | Good |
 | **Method 2** | Self-signed certs + full verification | ⭐⭐⭐ Advanced | Best |
 
 {{% alert context="success" %}}
-**Recommended:** Start with Method 0 (labels). Only use Methods 1-2 if you have specific security requirements.
+**Recommended:** Only use this guide if you have specific security requirements. Otherwise check the {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup Guide" />}} which covers full deployment of all the services, this is the most **easy** and **recommended** way.
 {{% /alert %}}
-
-## Method 0: Traefik Labels (Easiest)
-
-See the complete {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik Labels Guide" />}} for full setup.
-
-**Key points:**
-- Uses Traefik's built-in certificate handling
-- No manual certificate management
-- Automatic Let's Encrypt SSL
-- Works for most deployments
-
-This method is covered in detail in the previous guide and is **recommended for 95% of use cases**.
 
 ## Method 1: Self-Signed Certificates (Skip Verification)
 
 Use this when:
-- You need custom certificates
-- You're not using Let's Encrypt
-- Internal network deployment
-- Corporate CA requirements
+- You need custom certificates.
+- You're not using Let's Encrypt.
+- Internal network deployment.
+- Corporate CA requirements.
 
 ### Step 1: Generate Self-Signed Certificates
 
@@ -88,7 +68,7 @@ openssl req -x509 -nodes -days 20000 -subj "/CN=onlyoffice" \
 
 ### Step 2: Configure OnlyOffice with Certificates
 
-Update `docker-compose.yml`:
+Update `docker-compose.yaml`:
 
 ```yaml
 services:
@@ -113,7 +93,7 @@ The certificates **must** be mounted at `/var/www/onlyoffice/Data/certs` and nam
 
 ### Step 3: Configure Traefik File Provider
 
-Traefik needs to be told to skip certificate verification. This requires **dynamic configuration** which can only be done via file provider, not labels.
+Traefik needs to be told to skip certificate verification. This requires **dynamic configuration** which can be done via file provider.
 
 **Add file provider to `traefik.yaml`:**
 
@@ -124,7 +104,7 @@ providers:
     network: "proxy_network"
     exposedByDefault: false
   file:  # Add this
-    directory: /dynamic
+    directory: /etc/traefik/config
     watch: true
 ```
 
@@ -135,8 +115,8 @@ traefik:
   image: traefik:latest
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
-    - ./config/traefik.yaml:/etc/traefik/traefik.yaml:ro
-    - ./dynamic:/dynamic:ro  # Add this
+    - ./config/static/traefik.yaml:/etc/traefik/traefik.yaml:ro
+    - ./config/dynamic:/etc/traefik/config:ro  # Add this
 ```
 
 ### Step 4: Create OnlyOffice Dynamic Configuration
@@ -149,7 +129,7 @@ http:
     onlyoffice:
       entrypoints:
         - websecure  # or 'https' depending on your config
-      rule: Host(`office.yourdomain.com`)
+      rule: Host(`onlyoffice.yourdomain.com`)
       tls:
         certResolver: letsencrypt  # Your cert resolver name
       service: onlyoffice
@@ -189,8 +169,8 @@ http:
 ```yaml
 integrations:
   office:
-    url: "https://office.yourdomain.com"  # External HTTPS URL
-    internalUrl: "https://onlyoffice"     # Internal HTTPS (Docker service name)
+    url: "https://onlyoffice.yourdomain.com"  # External HTTPS URL
+    internalUrl: "https://onlyoffice:80"     # Internal HTTPS (Docker service name)
     secret: "your-jwt-secret"
 ```
 
@@ -198,13 +178,13 @@ integrations:
 
 ```bash
 # Restart Traefik to load file provider
-docker-compose -f traefik/docker-compose.yaml restart
+docker restart traefik
 
 # Restart OnlyOffice with certificates
-docker-compose -f onlyoffice/docker-compose.yaml restart
+docker restart onlyoffice
 
 # Restart FileBrowser
-docker-compose -f filebrowser/docker-compose.yaml restart
+docker restart filebrowser
 ```
 
 ### Verify Configuration
@@ -297,8 +277,8 @@ traefik:
   image: traefik:latest
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
-    - ./config/traefik.yaml:/etc/traefik/traefik.yaml:ro
-    - ./dynamic:/dynamic:ro
+    - ./config/static/traefik.yaml:/etc/traefik/traefik.yaml:ro
+    - ./config/dynamic:/dynamic:ro
     - /path/to/certs/onlyoffice.crt:/certs/onlyoffice.crt:ro  # Add this
 ```
 
@@ -343,52 +323,36 @@ http:
 **Security Improvement:** Now Traefik fully validates OnlyOffice's certificate using the provided CA, ensuring encrypted and authenticated communication.
 {{% /alert %}}
 
-### Step 6: Restart and Verify
+### Step 6: Restart containers
 
 ```bash
 # Restart all services
-docker-compose -f traefik/docker-compose.yaml restart
-docker-compose -f onlyoffice/docker-compose.yaml up -d
-docker-compose -f filebrowser/docker-compose.yaml restart
+docker compose restart traefik 
+docker compose restart onlyoffice
+docker compose restart filebrowser
 
 # Check Traefik can verify certificate
 docker exec traefik wget https://onlyoffice/healthcheck
 # Should succeed without certificate errors
 ```
 
-## Method 3: Certbot / Let's Encrypt for OnlyOffice
-
-{{% alert context="warning" %}}
-**Not Recommended:** This method requires certificate renewal every 90 days and complex setup. Methods 0-2 are preferred.
-{{% /alert %}}
-
-If you still want to use Certbot for OnlyOffice's internal certificate:
-
-**Challenges:**
-- Let's Encrypt certificates expire every 90 days
-- Requires automated renewal process
-- OnlyOffice container needs certificate updates
-- More complex than self-signed for internal use
-
-**Better Alternative:** Use Method 0 (Traefik labels) where Traefik handles Let's Encrypt for external access, and OnlyOffice uses HTTP internally.
-
-## Method 4: Extract Certificates from Traefik
+## Method 3: Extract Certificates from Traefik for onlyoffice
 
 {{% alert context="info" %}}
-**Experimental:** This method extracts Let's Encrypt certificates from Traefik and provides them to OnlyOffice.
+**Experimental:** This method extracts Let's Encrypt certificates from Traefik and provides them to OnlyOffice for internal communication.
 {{% /alert %}}
 
 **Concept:**
-1. Traefik obtains Let's Encrypt certificates
-2. Extract certificates from `acme.json`
-3. Mount extracted certificates to OnlyOffice
-4. Automate re-extraction on renewal
+1. Traefik obtains Let's Encrypt certificates.
+2. Extract certificates from `acme.json`.
+3. Mount extracted certificates to OnlyOffice.
+4. Automate re-extraction on renewal.
 
 **Challenges:**
-- Certificates renew every 90 days
-- Requires automation script
-- OnlyOffice restart needed after renewal
-- More complexity than needed
+- Certificates renew every 90 days, so you will need to repeat these steps (unless automated).
+- Requires automation script.
+- OnlyOffice restart needed after renewal.
+- More complexity than needed.
 
 **Script Example:**
 
@@ -409,20 +373,20 @@ docker-compose -f onlyoffice/docker-compose.yaml restart
 ```
 
 {{% alert context="danger" %}}
-This method is **not recommended** for production. Use Method 0 (Traefik labels) instead, which handles everything automatically.
+This method is **not recommended** for production. Use {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup Guide" />}} instead, which handles everything automatically.
 {{% /alert %}}
 
 ## Comparison Table
 
-| Feature | Method 0 | Method 1 | Method 2 | Method 3/4 |
+| Feature | Method 1 | Method 2 | Method 3 |
 |---------|----------|----------|----------|------------|
-| **Setup Complexity** | ⭐ Easy | ⭐⭐ Medium | ⭐⭐⭐ Advanced | ⭐⭐⭐⭐ Complex |
-| **Security** | Excellent | Good | Excellent | Excellent |
-| **Maintenance** | None | None | None | High |
-| **Certificate Renewal** | Automatic | Never expires | Never expires | Every 90 days |
-| **Use Case** | Most deployments | Custom CA | Maximum security | Not recommended |
-| **Browser SSL** | Let's Encrypt | Let's Encrypt | Let's Encrypt | Let's Encrypt |
-| **Internal SSL** | HTTP | HTTPS | HTTPS | HTTPS |
+| **Setup Complexity** | ⭐⭐ Medium | ⭐⭐⭐ Advanced | ⭐⭐⭐⭐ Complex |
+| **Security** | Good | Excellent | Excellent |
+| **Maintenance** | None | None | High |
+| **Certificate Renewal** | Never expires | Never expires | Every 90 days |
+| **Use Case** | Custom CA | Maximum security | Not recommended |
+| **Browser SSL** | Let's Encrypt | Let's Encrypt | Let's Encrypt |
+| **Internal SSL** | HTTPS | HTTPS | HTTPS |
 
 ## Troubleshooting
 
@@ -430,7 +394,7 @@ This method is **not recommended** for production. Use Method 0 (Traefik labels)
 
 ```bash
 # Check Traefik logs
-docker-compose -f traefik/docker-compose.yaml logs | grep -i certificate
+docker logs traefik | grep -i certificate
 
 # Common errors:
 # - "x509: certificate signed by unknown authority" → Need rootCAs in transport
@@ -462,8 +426,8 @@ server:
 
 integrations:
   office:
-    url: "https://office.yourdomain.com"
-    internalUrl: "https://onlyoffice"  # Method 1/2 only
+    url: "https://onlyoffice.yourdomain.com"
+    internalUrl: "https://onlyoffice:80"  # Method 1/2 only
 ```
 
 ### Verify Certificate Details
@@ -481,23 +445,10 @@ openssl x509 -in certs/onlyoffice.crt -noout -text | grep -A2 "Subject Alternati
 
 ## Configuration Summary
 
-### Method 0 (Recommended)
-
-```yaml
-# OnlyOffice: HTTP internally
-services:
-  onlyoffice:
-    # No certificates needed
-    # Access via HTTP from Docker network
-
-# Traefik: Handles all HTTPS
-# FileBrowser: Uses HTTPS URLs externally
-```
-
 ### Method 1 (Skip Verify)
 
 ```yaml
-# OnlyOffice: HTTPS with self-signed
+# OnlyOffice: HTTPS with self-signed cert.
 volumes:
   - ./certs:/var/www/onlyoffice/Data/certs
 
@@ -524,18 +475,18 @@ serversTransports:
 
 ## Best Practices
 
-1. **Start Simple**: Use Method 0 unless you have specific requirements
-2. **Test Staging First**: Use Let's Encrypt staging for initial testing
-3. **Monitor Logs**: Watch logs during first deployment
-4. **Backup Certificates**: Keep `acme.json` backed up
-5. **Document Setup**: Note which method you used for future reference
+1. **Start Simple**: Use {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup Guide" />}} unless you have specific requirements.
+2. **Test Staging First**: Use Let's Encrypt staging for initial testing.
+3. **Monitor Logs**: Watch logs during first deployment.
+4. **Backup Certificates**: Keep `acme.json` backed up.
+5. **Document Setup**: Note which method you used for future reference.
 
 ## Next Steps
 
-- {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} - Start here if new to Docker
-- {{< doclink path="user-guides/office-integration/traefik-labels/" text="Traefik Labels Guide" />}} - Complete Method 0 setup
-- {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} - Detailed problem solving
-- {{< doclink path="integrations/office/configuration/" text="Configuration Reference" />}} - All config options
+- {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} - Start here if new to Docker.
+- {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup Guide" />}} - Complete services setup behind Traefik.
+- {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} - Detailed problem solving.
+- {{< doclink path="integrations/office/configuration/" text="Configuration Reference" />}} - All config options.
 
 ## Credits
 
