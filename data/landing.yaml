@@ -7,12 +7,6 @@ hero:
   width: 100%
   template: hero
 
-  badge:
-    text: "v0.8.9"
-    color: success # primary, secondary, success, danger, warning, info, light, dark
-    pill: true # boolean
-    soft: false # boolean
-
   titleLogo:
     icon: "folder"
     iconSize: "80px"
