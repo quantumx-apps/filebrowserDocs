@@ -140,9 +140,9 @@ Advanced settings and enterprise features.
 
 **Code Highlighting:**
 
-The theme supports both **PrismJS fenced code blocks** and **Hugo highlight shortcode with line numbers**:
+The theme uses **Hugo's built-in Chroma syntax highlighting** for code blocks. You can use fenced code blocks or the Hugo highlight shortcode:
 
-**PrismJS Fenced Code Blocks (Recommended for simple highlighting):**
+**Fenced Code Blocks (Recommended for simple highlighting):**
 
 ```yaml
 server:
