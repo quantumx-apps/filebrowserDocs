@@ -1,7 +1,7 @@
 ---
 title: "Basic Docker Setup"
 description: "Simple OnlyOffice setup with Docker for local development"
-icon: "square"
+icon: "deployed_Code"
 ---
 
 Complete setup for running FileBrowser Quantum with OnlyOffice using Docker Compose on your local network.
@@ -46,6 +46,8 @@ services:
       - "8080:80"
     volumes:
       - ./data:/home/filebrowser/data
+      - ./data/config.yaml:/home/filebrowser/config.yaml
+      - ./:/srv # Replace "./" with your file path, but leave ":/srv" on the right side
     restart: unless-stopped
 
   onlyoffice:
@@ -54,42 +56,77 @@ services:
     ports:
       - "80:80"
     environment:
-      - JWT_ENABLED=true
       - JWT_SECRET=TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue  # Replace with your secret
-      - JWT_HEADER=Authorization
     restart: unless-stopped
 ```
 
 ### Step 3: Create FileBrowser Configuration
 
-Create a `config.yaml` file in the same directory:
+Create a `data` directory and add a new `config.yaml` file in the same directory:
+
+```bash
+mkdir data && touch data/config.yaml
+```
+
+Then populate the config
 
 ```yaml
 server:
   port: 80
+  database: data/database.db
+  internalUrl: "http://filebrowser" # corrosponds to the filebrowser container name
   sources:
     - name: "files"
-      path: "/srv"
+      path: "/srv" # corrosponds to the docker volume
       config:
         defaultEnabled: true
+
+auth:
+  adminPassword: yourpassword
 
 integrations:
   office:
     url: "http://localhost"  # OnlyOffice accessible from browser
+    internalUrl: "http://onlyoffice" # corrosponds to the onlyoffice container name
     secret: "TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue"  # Same secret as OnlyOffice
     viewOnly: false
+
+userDefaults:
+  preview:
+    highQuality: true
+    image: true
+    video: true
+    motionVideoPreview: true
+    office: true
+    popup: true
+    folder: true
+  permissions:
+    api: false
+    admin: false
+    modify: false
+    share: false
+    realtime: false
+    delete: false
+    create: false
+    download: true
+  disableOnlyOfficeExt: ".md .txt .pdf"   # list of file extensions to disable onlyoffice editor for
 ```
 
 ### Step 4: Start Services
 
 ```bash
-# Start services in background
 docker-compose up -d
 ```
 
 Wait for OnlyOffice to fully start (takes 30-60 seconds on first run).
 
 ### Step 5: Verify Installation
+
+If you are running docker compose on something like WSL or your local machine, you should be able to access http://localhost and see only office is ready
+
+<img src="../office-welcome.png" alt="office" />
+
+Or check via terminal:
 
 **Check OnlyOffice Health:**
 ```bash
@@ -102,11 +139,15 @@ curl http://localhost/welcome
 
 **Check FileBrowser:**
 1. Open browser and navigate to `http://localhost:8080`
-2. Login with default credentials (admin/admin)
+2. Login with default credentials (admin/yourpassword)
 3. Upload a test document (`.docx`, `.xlsx`, or `.pptx`)
 4. Click on the document to preview - should open in OnlyOffice editor
 
-## Disable Editing for Specific Users
+You should see something like this:
+
+<img src="../office-document-editor.png" alt="office-editor" />
+
+## Disable Editing
 
 In FileBrowser user settings or config:
 

@@ -61,8 +61,6 @@ defaultContentLanguageInSubdir = true
         sidebarIcons = true
         titleIcon = true
         navDesc = true
-        prism = true
-        prismTheme = "lotusdocs"
 
     [params.docsearch]
         appID = "" # Algolia Application ID (get from DocSearch application)
@@ -82,6 +80,15 @@ ignoreLogs = ['warning-goldmark-raw-html']
     [markup.goldmark.extensions]
       [markup.goldmark.extensions.shortcode]
         enable = true
+  [markup.highlight]
+    style = "github-dark"
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = false
+    codeFences = true
+    guessSyntax = true
+    anchorLineNos = true
+    tabWidth = 4
 
 [module]
     [[module.imports]]
