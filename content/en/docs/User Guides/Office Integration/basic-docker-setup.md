@@ -143,7 +143,11 @@ curl http://localhost/welcome
 3. Upload a test document (`.docx`, `.xlsx`, or `.pptx`)
 4. Click on the document to preview - should open in OnlyOffice editor
 
-## Disable Editing for Specific Users
+You should see something like this:
+
+<img src="../office-document-editor.png" alt="office-editor" />
+
+## Disable Editing
 
 In FileBrowser user settings or config:
 
