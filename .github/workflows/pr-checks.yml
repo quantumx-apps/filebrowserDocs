@@ -1,5 +1,6 @@
 # PR validation workflow for Hugo site
-name: PR Checks - Hugo Validation
+# This workflow calls makefile targets to ensure consistency between local and CI/CD validation
+name: PR Checks - Comprehensive Validation
 
 on:
   pull_request:
@@ -13,9 +14,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Hugo-specific validations (no external dependencies needed!)
-  hugo-validate:
-    name: Hugo Specific Validation
+  # Comprehensive validation using makefile targets
+  check:
+    name: Check Hugo Site
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,102 +31,78 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
-      - name: Check Hugo version
-        run: hugo version
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Validate front matter syntax
+      - name: Install dependencies
         run: |
-          echo "Validating YAML front matter in all markdown files..."
-          # Install yq for YAML validation (lightweight, single binary)
+          # Install yq for YAML validation
           sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           sudo chmod +x /usr/local/bin/yq
-          # Check all markdown files for valid front matter
-          find content -name "*.md" -type f | while read file; do
-            # Extract front matter (between first two --- markers only)
-            awk '/^---$/ {flag++; next} flag==1' "$file" | yq e '.' - > /dev/null 2>&1 || {
-              echo "❌ Invalid front matter in: $file"
-              exit 1
-            }
-          done
-          echo "✅ All front matter is valid YAML"
+          # Install npm dependencies (for translation and doclink validation)
+          npm install
 
-      - name: Build with strict validation flags
+      - name: Check versions
         run: |
-          echo "Building Hugo site with strict validation..."
-          hugo \
-            --minify \
-            --baseURL "https://filebrowserquantum.com/" \
-            --printPathWarnings \
-            --printUnusedTemplates \
-            --templateMetrics \
-            --templateMetricsHints
+          echo "Hugo version:"
+          hugo version
+          echo ""
+          echo "Node version:"
+          node --version
+          echo ""
+          echo "npm version:"
+          npm --version
+          echo ""
+          echo "yq version:"
+          yq --version
 
-      - name: Hugo audit - Check for common issues
-        run: |
-          echo "Running Hugo audit checks..."
-          # Build with audit flags
-          HUGO_MINIFY_TDEWOLFF_HTML_KEEPCOMMENTS=true \
-          HUGO_ENABLEMISSINGTRANSLATIONPLACEHOLDERS=true \
-          hugo --minify --baseURL "https://filebrowserquantum.com/"
+      - name: Check YAML front matter
+        run: make check-frontmatter
 
-          # Search for common issues
-          echo "Checking for raw HTML omissions..."
-          if grep -rn "raw HTML omitted" dist/; then
-            echo "⚠️ Warning: Found 'raw HTML omitted' - check your markdown for unsupported HTML"
-          fi
+      - name: Check required front matter fields
+        run: make check-frontmatter-fields
 
-          echo "Checking for template errors..."
-          if grep -rn "ZgotmplZ" dist/; then
-            echo "❌ Error: Found 'ZgotmplZ' - template execution error"
-            exit 1
-          fi
+      - name: Build with strict validation
+        run: make build-strict
 
-          echo "Checking for missing translations..."
-          if grep -rn "\[i18n\]" dist/; then
-            echo "⚠️ Warning: Found missing translations"
-          fi
+      - name: Run Hugo audit
+        run: make hugo-audit
 
-          echo "Checking for nil pointers..."
-          if grep -rn "<nil>" dist/; then
-            echo "❌ Error: Found nil pointer references"
-            exit 1
-          fi
+      # - name: Check translations
+      #   run: make check-translations
 
-          echo "✅ Hugo audit complete"
+      - name: Check doclinks
+        run: make check-doclinks
 
-      - name: Verify required front matter fields
-        run: |
-          echo "Checking for required front matter fields..."
-          find content/en/docs -name "*.md" -type f | while read file; do
-            # Skip if it's just a redirect or special file
-            if grep -q "^aliases:" "$file" 2>/dev/null; then
-              continue
-            fi
+      - name: Check internal links
+        run: make check-internal-links
 
-            # Check for required fields (title, description, icon)
-            if ! grep -q "^title:" "$file"; then
-              echo "⚠️ Warning: Missing 'title' in $file"
-            fi
-            if ! grep -q "^description:" "$file"; then
-              echo "⚠️ Warning: Missing 'description' in $file"
-            fi
-            if ! grep -q "^icon:" "$file"; then
-              echo "⚠️ Warning: Missing 'icon' in $file"
-            fi
-          done
-          echo "✅ Front matter validation complete"
+      - name: Check image references
+        run: make check-images
+
+      - name: Check external links
+        run: make check-external-links
+
+      - name: Check for TODO/FIXME markers
+        run: make check-no-todos
 
       - name: Summary
+        if: success()
         run: |
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "✅ All Hugo validation checks passed!"
+          echo "✅ ALL VALIDATION CHECKS PASSED!"
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo ""
           echo "✓ Front matter YAML syntax valid"
+          echo "✓ Required front matter fields present"
           echo "✓ Hugo build successful with strict validation"
           echo "✓ No template errors (ZgotmplZ)"
           echo "✓ No nil pointer references"
-          echo "✓ Required front matter fields present"
-          echo ""
-          echo "Ready to merge!"
-
+          echo "✓ Doclinks checked"
+          echo "✓ Internal links checked"
+          echo "✓ Image references checked"
+          echo "✓ External links validated"
+          echo "✓ No TODO/FIXME markers"

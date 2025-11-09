@@ -246,7 +246,7 @@ server:
 integrations:
   office:
     url: "https://office.yourdomain.com"
-    internalUrl: "https://files.yourdomain.com"
+    internalUrl: "https://onlyoffice" # (optional) this is the internal url that the filebrowser server can communicate with directly. otherwise url is used
     secret: "your-secret"
 ```
 
@@ -294,7 +294,7 @@ server {
 integrations:
   office:
     url: "https://office.yourdomain.com"
-    internalUrl: "http://onlyoffice:80"
+    internalUrl: "http://onlyoffice:80" # (optional)
     secret: "your-secret"
 ```
 {{< /tab >}}
@@ -313,6 +313,7 @@ server:
 integrations:
   office:
     url: "https://office.yourdomain.com"       # Accessible from browser
+    internalUrl: # optional this should be a local network address that filebrowser can access.
     secret: "your-jwt-secret"
 ```
 

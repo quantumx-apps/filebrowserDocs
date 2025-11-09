@@ -3,3 +3,9 @@ node_modules/
 dist/
 .hugo_build.lock*
 assets/jsconfig.json
+
+# Validation artifacts
+tmp/
+.htmltest/
+htmltest.log
+refcache.json
