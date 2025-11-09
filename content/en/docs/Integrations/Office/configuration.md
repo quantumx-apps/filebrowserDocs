@@ -61,7 +61,7 @@ services:
 ## HTTPS Configuration
 
 {{% alert context="danger" %}}
-Never expose OnlyOffice HTTP to internet. Always use HTTPS. See [OnlyOffice HTTPS docs](https://helpcenter.onlyoffice.com/installation/groups-https-docker.aspx).
+Never expose OnlyOffice HTTP to internet. Always use HTTPS. See [OnlyOffice HTTPS docs](https://helpcenter.onlyoffice.com/docs/installation/docs-community-install-docker.aspx).
 {{% /alert %}}
 
 For production, use HTTPS with reverse proxy (nginx example):

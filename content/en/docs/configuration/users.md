@@ -15,6 +15,10 @@ Users can be managed through:
 
 ## Default User Settings
 
+There's two main areas that user settings are configured.
+
+### User Source configuration
+
 Configure defaults applied to new users:
 
 ```yaml
@@ -26,6 +30,38 @@ server:
         defaultUserScope: "/"         # Default access path
         createUserDir: false          # Auto-create user directories
 ```
+
+### User Defaults
+
+User defaults are configured on the `config.yaml` and are the default initial values for users when they are created.
+
+{{% alert context="info" %}}
+**Note**: userDefaults do NOT update or enforce a user's settings after one has been created. Its more accurately, "user create settings" than user defaults.
+{{% /alert %}}
+
+```yaml
+userDefaults:
+  preview:
+    highQuality: true
+    image: true
+    video: true
+    motionVideoPreview: true
+    office: true
+    popup: true
+    folder: true
+  permissions:
+    api: false
+    admin: false
+    modify: false
+    share: false
+    realtime: false
+    delete: false
+    create: false
+    download: true
+  disableOnlyOfficeExt: ".md .txt .pdf"   # list of file extensions to disable onlyoffice editor for
+```
+
+`permissions` are not editable by the user unless they are admin, but all other settings are modifyable in profile settings in the UI.
 
 ## Creating Users
 

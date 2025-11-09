@@ -94,10 +94,6 @@ The UI has a simple three-component navigation system:
 
 All other functions are in the action menu or context pop-up menus.
 
-<p align="center">
-  <img width="800" src="https://github.com/user-attachments/assets/aa32b05c-f917-47bb-b07f-857edc5e47f7" title="Search">
-</p>
-
 ## Current Status
 
 {{% alert context="warning" %}}

@@ -1,0 +1,66 @@
+# Manual validation workflow - test specific checks
+name: Manual Validation Testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      validation_type:
+        description: 'Which validation to run'
+        required: true
+        type: choice
+        options:
+          - 'check-all'
+          - 'check-quick'
+          - 'check-frontmatter'
+          - 'check-frontmatter-fields'
+          - 'check-translations'
+          - 'check-doclinks'
+          - 'check-internal-links'
+          - 'check-images'
+          - 'check-external-links'
+          - 'check-no-todos'
+          - 'build-strict'
+          - 'hugo-audit'
+        default: 'check-quick'
+
+jobs:
+  check:
+    name: Run ${{ inputs.validation_type }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          # Install yq for YAML validation
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+          # Install npm dependencies
+          npm install
+
+      - name: Run ${{ inputs.validation_type }}
+        run: make ${{ inputs.validation_type }}
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "✅ ${{ inputs.validation_type }} PASSED"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+

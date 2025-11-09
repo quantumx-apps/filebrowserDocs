@@ -170,32 +170,9 @@ Always test after creating rules:
 
 ## Common Patterns
 
-### Multi-Tenant
+### OIDC
 
-```
-Rules:
-- Deny all users access to /tenants
-- Allow user "client-a" access to /tenants/client-a
-- Allow user "client-b" access to /tenants/client-b
-```
-
-### Public + Private
-
-```
-Rules:
-- Allow all users read to /public
-- Deny all users write to /public
-- Allow all users read/write to /private/username
-```
-
-### Hierarchical Organization
-
-```
-Rules:
-- Allow group "executives" access to /
-- Allow group "managers" access to /departments
-- Allow group "staff" access to /departments/staff-files
-```
+OIDC authentication often uses groups to control access. It is common to set a source as {{< doclink path="advanced/source-configuration/sources/#denybydefault" text="denyByDefault" />}} and then configure rules for OIDC groups.
 
 ## Troubleshooting
 
