@@ -14,9 +14,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Comprehensive validation using makefile targets
-  check:
-    name: Check Hugo Site
+  # Setup job - prepare dependencies for all checks
+  setup:
+    name: Setup Environment
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -42,8 +42,16 @@ jobs:
           # Install yq for YAML validation
           sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           sudo chmod +x /usr/local/bin/yq
-          # Install npm dependencies (for translation and doclink validation)
+          # Install npm dependencies
           npm install
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/hugo_cache
+          key: ${{ runner.os }}-deps-${{ hashFiles('**/package-lock.json') }}
 
       - name: Check versions
         run: |
@@ -59,38 +67,153 @@ jobs:
           echo "yq version:"
           yq --version
 
-      - name: Check YAML front matter
+  # Parallel check jobs
+  check-frontmatter:
+    name: Check YAML Front Matter
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+      - name: Run check
         run: make check-frontmatter
 
-      - name: Check required front matter fields
+  check-frontmatter-fields:
+    name: Check Required Fields
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+      - name: Run check
         run: make check-frontmatter-fields
 
-      - name: Build with strict validation
+  check-hugo-build:
+    name: Hugo Build (Strict)
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install npm dependencies
+        run: npm install
+      - name: Run check
         run: make build-strict
 
-      - name: Run Hugo audit
+  check-hugo-audit:
+    name: Hugo Audit
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install npm dependencies
+        run: npm install
+      - name: Run check
         run: make hugo-audit
 
-      # - name: Check translations
-      #   run: make check-translations
-
-      - name: Check doclinks
+  check-doclinks:
+    name: Check Doclinks
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install npm dependencies
+        run: npm install
+      - name: Run check
         run: make check-doclinks
 
-      - name: Check internal links
+  check-internal-links:
+    name: Check Internal Links
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run check
         run: make check-internal-links
 
-      - name: Check image references
+  check-images:
+    name: Check Image References
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run check
         run: make check-images
 
-      - name: Check external links
+  check-external-links:
+    name: Check External Links
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run check
         run: make check-external-links
 
-      - name: Check for TODO/FIXME markers
+  check-no-todos:
+    name: Check TODO/FIXME Markers
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run check
         run: make check-no-todos
 
+  # Summary job - runs after all checks complete
+  summary:
+    name: All Checks Passed
+    runs-on: ubuntu-latest
+    needs:
+      - check-frontmatter
+      - check-frontmatter-fields
+      - check-hugo-build
+      - check-hugo-audit
+      - check-doclinks
+      - check-internal-links
+      - check-images
+      - check-external-links
+      - check-no-todos
+    steps:
       - name: Summary
-        if: success()
         run: |
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo "✅ ALL VALIDATION CHECKS PASSED!"
@@ -99,10 +222,9 @@ jobs:
           echo "✓ Front matter YAML syntax valid"
           echo "✓ Required front matter fields present"
           echo "✓ Hugo build successful with strict validation"
-          echo "✓ No template errors (ZgotmplZ)"
-          echo "✓ No nil pointer references"
-          echo "✓ Doclinks checked"
-          echo "✓ Internal links checked"
-          echo "✓ Image references checked"
+          echo "✓ Hugo audit passed"
+          echo "✓ Doclinks validated"
+          echo "✓ Internal links validated"
+          echo "✓ Image references validated"
           echo "✓ External links validated"
           echo "✓ No TODO/FIXME markers"
