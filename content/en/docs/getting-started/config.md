@@ -108,16 +108,20 @@ auth:
 ```
 
 ### 2. Use Environment Variables for Secrets
-Instead of putting secrets in your config file, use environment variables:
+Instead of putting secrets in your config file, use {{< doclink path="reference/environment-variables" text="environment variables" />}:
 
 ```yaml
-# In config.yaml
 auth:
   methods:
     oidc:
       enabled: true
-      clientId: "${OIDC_CLIENT_ID}"
-      clientSecret: "${OIDC_CLIENT_SECRET}"
+```
+
+And set environment variables:
+```bash
+FILEBROWSER_ADMIN_PASSWORD="mysecurePassword"
+FILEBROWSER_OIDC_CLIENT_ID=exampleID
+FILEBROWSER_OIDC_CLIENT_SECRET=exampleSecret
 ```
 
 ### 3. Restart After Changes
