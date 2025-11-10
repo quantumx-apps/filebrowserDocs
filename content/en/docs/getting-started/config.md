@@ -108,7 +108,7 @@ auth:
 ```
 
 ### 2. Use Environment Variables for Secrets
-Instead of putting secrets in your config file, use {{< doclink path="reference/environment-variables" text="environment variables" />}:
+Instead of putting secrets in your config file, use {{< doclink path="reference/environment-variables" text="environment variables" />}}:
 
 ```yaml
 auth:
