@@ -12,7 +12,8 @@ Images from Docker Hub (`gtstef/filebrowser`) and GitHub Container Registry (`gh
 
 | Tag | Size | Features | Architectures |
 |-----|------|----------|---------------|
-| `latest`, `beta` | 60 MB | FFmpeg + document preview | arm64, amd64 |
+| `latest`, `stable` | 60 MB | FFmpeg + document preview | arm64, amd64 |
+| `beta` | 60 MB | FFmpeg + document preview | arm64, amd64 |
 | `beta-slim` | 15 MB | Core only (no media/office) | arm64, arm32, amd64 |
 | `dev` | 60 MB | Unstable development | arm64, amd64 |
 
@@ -40,19 +41,26 @@ cd filebrowser
 
 ### Step 2: Create Config
 
-Create `data/config.yaml`:
+Create a `data` directory and add a new `config.yaml` file in the same directory:
 
+```bash
+mkdir data && touch data/config.yaml
+```
+
+Then fill out your config as needed, for example:
 ```yaml
 server:
   sources:
     - path: /folder
       config:
         defaultEnabled: true
-auth:
-  adminUsername: admin
 ```
 
 ### Step 3: Create Docker Compose
+
+{{% alert context="info" %}}
+By default the config path is `./config.yaml`, but its recommended to use `FILEBROWSER_CONFIG` on docker to override this so you can mount a single folder as a volume with config and database.
+{{% /alert %}}
 
 Create `docker-compose.yaml`:
 
@@ -61,7 +69,7 @@ services:
   filebrowser:
     image: gtstef/filebrowser:beta
     environment:
-      FILEBROWSER_CONFIG: "data/config.yaml"
+      FILEBROWSER_CONFIG: "data/config.yaml" # overrides the default path which is ./config.yaml
       FILEBROWSER_ADMIN_PASSWORD: "change-me"
       # TZ: "America/New_York"
     volumes:
@@ -87,6 +95,8 @@ Add to docker-compose.yaml:
 ```yaml
 services:
   filebrowser:
+    environment:
+      FILEBROWSER_CONFIG: "data/config.yaml" # overrides the default path which is ./config.yaml
     user: filebrowser
     volumes:
       - /path/to/files:/folder
@@ -99,6 +109,8 @@ You can also specify any user UID:GID, but you will also need to mount a temp di
 ```yaml
 services:
   filebrowser:
+    environment:
+      FILEBROWSER_CONFIG: "data/config.yaml" # overrides the default path which is ./config.yaml
     user: "${UID}:${GID}" # Using environment variables for flexibility
     volumes:
       - /path/to/files:/folder

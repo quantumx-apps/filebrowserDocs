@@ -21,6 +21,10 @@ auth:
       createUser: true
 ```
 
+{{% alert context="info" %}}
+**Note**: Its common to configure a source with {{< doclink path="advanced/source-configuration/sources/#denybydefault" text="denyByDefault" />}} and use {{< doclink path="access-control/rules" text="access rules" />}} to enable group based access for OIDC users.
+{{% /alert %}}
+
 ## Configuration Options
 
 | Option | Description |

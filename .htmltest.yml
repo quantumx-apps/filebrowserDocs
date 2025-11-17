@@ -1,0 +1,46 @@
+# htmltest configuration for validating external links
+# https://github.com/wjdp/htmltest
+
+DirectoryPath: "dist"
+CheckDoctype: true
+CheckExternal: true
+CheckInternal: true
+CheckInternalHash: true
+CheckMailto: false
+EnforceHTTPS: false
+IgnoreDirectoryMissingTrailingSlash: true
+IgnoreAltMissing: false
+IgnoreSSLVerify: false
+
+# Allow retries for flaky external links
+HTTPHeaders:
+  User-Agent: "Mozilla/5.0 (compatible; htmltest)"
+
+# Ignore patterns
+IgnoreURLs:
+  - "^#$"  # Empty anchors
+  - "^javascript:"  # JavaScript links
+  - "localhost"  # Local development
+  - "127.0.0.1"  # Local development
+  - "vdebian"  # Local development host
+  
+# External link timeout (ms)
+ExternalTimeout: 15000
+
+# Cache external link checks (speed up repeated runs)
+CacheExpires: "2w"
+
+# Log level: 0 = debug, 1 = info, 2 = warning, 3 = error
+LogLevel: 2
+
+# Output
+OutputDir: "tmp/.htmltest"
+OutputCacheFile: "refcache.json"
+OutputLogFile: "htmltest.log"
+
+# Ignore certain status codes (e.g., 403 often means they block bots)
+# IgnoreHTTPStatusCodes: [403, 429]
+
+# File extensions to check
+TestFilesConcurrently: true
+

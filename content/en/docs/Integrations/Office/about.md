@@ -89,7 +89,7 @@ integrations:
 ```yaml
 server:
   baseURL: "/filebrowser"                 # Base URL for external access
-  internalUrl: "http://filebrowser:8080"  # (Optional) internal URL for OnlyOffice server communication
+  internalUrl: "http://filebrowser:8080"  # (Optional) internal URL for filebrowser so other services like onlyoffice can communicate directly
 ```
 
 {{% alert context="warning" %}}

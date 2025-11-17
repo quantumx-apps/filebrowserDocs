@@ -20,6 +20,8 @@ auth:
   adminUsername: admin
 ```
 
+When only one source is configured, source paths will be available at `http://your-server/files/path/to/file`.
+
 ### Multiple Sources
 
 ```yaml
@@ -34,9 +36,13 @@ server:
       name: "Secured Files"
 ```
 
+When multiple sources are configured, source paths include the souree name. For example `http://your-server/files/My%20Files/path/to/file`.
+
 ## Common Patterns
 
 ### Personal User Directories
+
+Creating user directories for each user where 
 
 ```yaml
 server:
@@ -45,7 +51,7 @@ server:
       config:
         defaultEnabled: true
         createUserDir: true
-        defaultUserScope: "/"
+        #defaultUserScope: "/" # when createUserDir is false
 ```
 
 ### Shared + Personal
@@ -60,8 +66,7 @@ server:
     - path: "/shared/users"
       name: "My Files"
       config:
-        defaultEnabled: true
-        createUserDir: true
+        private: true
 ```
 
 ## Next Steps
