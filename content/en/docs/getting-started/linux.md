@@ -4,15 +4,16 @@ description: "Install FileBrowser on Linux"
 icon: "terminal"
 ---
 
-Run FileBrowser Quantum natively on Linux.
+Run FileBrowser Quantum natively on Linux using the binary releases.
 
 ## Download
 
 1. Go to [releases page](https://github.com/gtsteffaniak/filebrowser/releases)
 2. Download the appropriate binary (stable or beta):
-   - `filebrowser-linux-amd64` (x86_64)
-   - `filebrowser-linux-arm64` (ARM64)
-   - `filebrowser-linux-arm32` (ARM32)
+   - `linux-amd64-filebrowser` (64-bit)
+   - `linux-arm64-filebrowser` (64-bit)
+   - `linux-armv6-filebrowser` (32-bit)
+   - `linux-armv7-filebrowser` (32-bit)
 
 ## Make Executable
 
@@ -45,7 +46,7 @@ Or create `config.yaml`:
 
 ```yaml
 server:
-  port: 8080
+  port: 80
   sources:
     - path: "/home/user/files"
       config:
@@ -60,7 +61,7 @@ auth:
 ./filebrowser-linux-amd64 -c config.yaml
 ```
 
-Access at `http://localhost:8080`
+Access at `http://localhost:80`
 
 ## Run as Systemd Service
 

@@ -8,7 +8,7 @@ Configure FFmpeg paths, subtitle extraction, and media processing options for vi
 
 ## Basic Configuration
 
-Path to the directory where ffmpeg and ffprobe executables are installed:
+Path to the directory where ffmpeg and ffprobe executables are installed (only needed if not in PATH):
 
 ```yaml
 integrations:
@@ -217,8 +217,9 @@ integrations:
 ### Test in FileBrowser
 
 1. Navigate to a video file in FileBrowser
-2. Check if a thumbnail preview is generated
-3. For subtitle extraction, enable it in share settings and verify subtitles appear in the video player
+2. Ensure user profile settings have "video previews" enabled
+3. Check if a thumbnail preview is generated
+4. For subtitle extraction, enable it in share settings and verify subtitles appear in the video player
 
 ## Next Steps
 

@@ -1,6 +1,6 @@
 # Development server
 dev:
-	hugo server -D --bind 0.0.0.0 --baseURL "http://vdebian:1313/" --port 1313
+	hugo server -D --bind 0.0.0.0 --baseURL "http://localhost:1313/" --port 1313
 
 # Build for production
 build:

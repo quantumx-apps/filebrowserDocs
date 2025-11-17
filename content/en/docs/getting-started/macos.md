@@ -44,7 +44,7 @@ Or create `config.yaml`:
 
 ```yaml
 server:
-  port: 8080
+  port: 80
   sources:
     - path: "/Users/yourname/Documents"
       config:
@@ -59,7 +59,7 @@ auth:
 ./filebrowser-darwin-arm64 -c config.yaml
 ```
 
-Access at `http://localhost:8080`
+Access at `http://localhost:80`
 
 ## Run as Service (launchd)
 

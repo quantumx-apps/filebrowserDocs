@@ -9,9 +9,6 @@ icon: "timeline"
 Most up-to-date status of features can be found on the [github roadmap](https://github.com/users/gtsteffaniak/projects/4).
 
 ## Unplanned feature possibilities:
-  - Add tools to the sidebar
-    - duplicate file detector.
-    - bulk rename https://github.com/filebrowser/filebrowser/issues/2473
   - Activity Log
   - Comments support
   - Trash Support

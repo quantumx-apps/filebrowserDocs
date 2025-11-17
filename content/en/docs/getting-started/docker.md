@@ -13,9 +13,9 @@ Images from Docker Hub (`gtstef/filebrowser`) and GitHub Container Registry (`gh
 | Tag | Size | Features | Architectures |
 |-----|------|----------|---------------|
 | `latest`, `stable` | 60 MB | FFmpeg + document preview | arm64, amd64 |
+| `stable-slim` | 15 MB | Core service only (no media/office) | arm64, arm32, amd64 |
 | `beta` | 60 MB | FFmpeg + document preview | arm64, amd64 |
-| `beta-slim` | 15 MB | Core only (no media/office) | arm64, arm32, amd64 |
-| `dev` | 60 MB | Unstable development | arm64, amd64 |
+| `beta-slim` | 15 MB | Core service only (no media/office) | arm64, arm32, amd64 |
 
 ## Quick Try
 

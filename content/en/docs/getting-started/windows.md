@@ -9,7 +9,7 @@ Run FileBrowser Quantum natively on Windows.
 ## Download
 
 1. Go to [releases page](https://github.com/gtsteffaniak/filebrowser/releases)
-2. Download either stable or beta `filebrowser-windows-amd64.exe` (or arm64 for ARM processors)
+2. Download either stable or beta `filebrowser-windows-amd64.exe`
 3. Save to a folder (e.g., `C:\FileBrowser\`)
 
 ## Optional: Install FFmpeg
@@ -28,7 +28,7 @@ Or Create `config.yaml` in the same folder:
 
 ```yaml
 server:
-  port: 8080
+  port: 80
   sources:
     - path: "C:\\Users\\YourName\\Documents"
       config:
@@ -49,7 +49,7 @@ Or generate interactively:
 .\filebrowser.exe -c config.yaml
 ```
 
-Access at `http://localhost:8080` with `admin` / `admin`
+Access at `http://localhost:80` with `admin` / `admin`
 
 ## Troubleshooting
 
