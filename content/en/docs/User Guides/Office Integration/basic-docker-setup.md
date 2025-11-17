@@ -92,14 +92,6 @@ integrations:
     viewOnly: false
 
 userDefaults:
-  preview:
-    highQuality: true
-    image: true
-    video: true
-    motionVideoPreview: true
-    office: true
-    popup: true
-    folder: true
   permissions:
     api: false
     admin: false
