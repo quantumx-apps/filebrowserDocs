@@ -45,7 +45,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      FILEBROWSER_CONFIG: "data/config.yaml"
+      FILEBROWSER_CONFIG: "/home/filebrowser/data/config.yaml"
     volumes:
       - ./data:/home/filebrowser/data
       - ./:/srv # Replace "./" with your file path, but leave ":/srv" on the right side
@@ -75,10 +75,10 @@ Then populate the config
 server:
   port: 80
   database: data/database.db
-  internalUrl: "http://filebrowser" # this is the dns name for the docker network so communication happens over docker network.
+  internalUrl: "http://filebrowser" # the filebrowser container name
   sources:
     - name: "files"
-      path: "/srv" # corrosponds to the docker volume
+      path: "/srv" # the docker volume for the source info
       config:
         defaultEnabled: true
 
@@ -88,19 +88,11 @@ auth:
 integrations:
   office:
     url: "http://localhost"  # OnlyOffice accessible from browser
-    internalUrl: "http://onlyoffice" # this is the dns name for the docker network so communication happens over docker network.
+    internalUrl: "http://onlyoffice" # this is the container name for only office docker service
     secret: "TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue"  # Same secret as OnlyOffice
     viewOnly: false
 
 userDefaults:
-  preview:
-    highQuality: true
-    image: true
-    video: true
-    motionVideoPreview: true
-    office: true
-    popup: true
-    folder: true
   permissions:
     api: false
     admin: false
