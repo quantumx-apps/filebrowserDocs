@@ -44,10 +44,9 @@ services:
     image: gtstef/filebrowser:latest
     ports:
       - "8080:80"
-    environment:
-      FILEBROWSER_CONFIG: "/home/filebrowser/data/config.yaml"
     volumes:
       - ./data:/home/filebrowser/data
+      - ./data/config.yaml:/home/filebrowser/config.yaml
       - ./:/srv # Replace "./" with your file path, but leave ":/srv" on the right side
     restart: unless-stopped
 
@@ -78,7 +77,7 @@ server:
   internalUrl: "http://filebrowser" # the filebrowser container name
   sources:
     - name: "files"
-      path: "/srv" # the docker volume for the source info
+      path: "/srv" # corrosponds to the docker volume
       config:
         defaultEnabled: true
 
@@ -88,7 +87,7 @@ auth:
 integrations:
   office:
     url: "http://localhost"  # OnlyOffice accessible from browser
-    internalUrl: "http://onlyoffice" # this is the container name for only office docker service
+    internalUrl: "http://onlyoffice" # corrosponds to the onlyoffice container name
     secret: "TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue"  # Same secret as OnlyOffice
     viewOnly: false
 
