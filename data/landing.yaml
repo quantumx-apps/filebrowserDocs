@@ -13,7 +13,7 @@ hero:
     iconColor: "#2196F3"
 
   title: "FileBrowser Quantum"
-  subtitle: The best free self-hosted web-based file manager with **multiple sources**, **OIDC authentication**, and **real-time indexing**.
+  subtitle: The best free self-hosted web-based file manager with **configurable sources**, **OIDC authentication**, **Office file support**, and **real-time indexing**.
 
   image:
     url: "/images/hero-screenshot.png"
@@ -41,27 +41,10 @@ imageCompare:
   weight: 30
   template: image compare
 
-  title: Revolutionary File Management.
-  subtitle: Experience the power of real-time indexing and multi-source browsing.
+  title: A feature-rich and beautiful file manager for the modern web.
+  subtitle: Experience the power of real-time indexing and configurable sources.
 
-  items:
-    - title: Real-Time Search
-      config: {
-        startingPoint: 50,
-        addCircle: true,
-        addCircleBlur: false,
-        showLabels: true,
-        labelOptions: {
-          before: 'Traditional Search',
-          after: 'Real-Time Indexed',
-          onHover: false
-        }
-      }
-      imagePath: "images/screenshots"
-      imageBefore: "filebrowser_traditional_search.webp"
-      imageAfter: "filebrowser_realtime_search.webp"
-
-    - title: Multiple Sources
+    - title: Configurable Sources
       config: {
         controlColor: "#3C4257",
         startingPoint: 25,
@@ -70,7 +53,7 @@ imageCompare:
         showLabels: true,
         labelOptions: {
           before: 'Single Source',
-          after: 'Multiple Sources',
+          after: 'Configurable Sources',
           onHover: false
         }
       }

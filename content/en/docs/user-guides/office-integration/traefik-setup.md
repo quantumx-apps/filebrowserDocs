@@ -388,9 +388,6 @@ docker logs -f traefik
 
 For test if traefik is working you can visit the dashboard of traefik at: `https://traefik.your-domain.com` (the domain that you used on the `.env` file), and log in with the credentials that you generated before.
 
-![Traefik dashboard](https://private-user-images.githubusercontent.com/178341547/505771423-db82e7fb-083b-467c-8c9f-c4061dbe79b4.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjE1MTg0OTksIm5iZiI6MTc2MTUxODE5OSwicGF0aCI6Ii8xNzgzNDE1NDcvNTA1NzcxNDIzLWRiODJlN2ZiLTA4M2ItNDY3Yy04YzlmLWM0MDYxZGJlNzliNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDI2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAyNlQyMjM2MzlaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mZDJjMjBmNWJhNzM3MzI0Zjc4NzY3MzJjMWJlYWZlNmE1YmJlMDIxMjQ3YzNhNzE4MTljNDEwOTE3NTI3ZGFjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.7hgJEJQgdUffQ_SXn-DgsOo5g9C977sHJEOgTFEGats)
-
-
 Or if you want to test it further, you can deploy the other two services first (filebrowser and onlyoffice), and verify that all is working fine.
 
 {{% alert context="danger" %}}
@@ -497,9 +494,7 @@ docker logs onlyoffice
 
 - Visit your onlyoffice URL on your browser (`https://onlyoffice.yourdomain.com`) 
 
-![OnlyOffice](https://private-user-images.githubusercontent.com/178341547/505771448-f4347076-8fe1-4051-947d-3c73476a5084.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjE1MTg1MjAsIm5iZiI6MTc2MTUxODIyMCwicGF0aCI6Ii8xNzgzNDE1NDcvNTA1NzcxNDQ4LWY0MzQ3MDc2LThmZTEtNDA1MS05NDdkLTNjNzM0NzZhNTA4NC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDI2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAyNlQyMjM3MDBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01NzYxZDUyNjdkOTA0YzM2YThlNTk3YTMwNzNjMDU4MDBlOGIyNGVlMGMwNDgwMDZhM2IwNjU1NTQ1OWZjYWU5JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.UIWbsQQDc0aeeHRL-lyEVZ_blctY4Q3XITWeLZmhJGw)
-
-- Or verify with curl. Should return: `{"status":"ok"}`
+- Or verify with curl. Should return 200
 
 ```shell
 curl https://office.yourdomain.com/healthcheck

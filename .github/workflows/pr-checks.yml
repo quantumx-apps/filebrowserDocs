@@ -1,5 +1,6 @@
 # PR validation workflow for Hugo site
-name: PR Checks - Hugo Validation
+# This workflow calls makefile targets to ensure consistency between local and CI/CD validation
+name: PR Checks - Comprehensive Validation
 
 on:
   pull_request:
@@ -13,9 +14,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Hugo-specific validations (no external dependencies needed!)
-  hugo-validate:
-    name: Hugo Specific Validation
+  # Setup job - prepare dependencies for all checks
+  setup:
+    name: Setup Environment
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,102 +31,169 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
-      - name: Check Hugo version
-        run: hugo version
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Validate front matter syntax
+      - name: Install dependencies
         run: |
-          echo "Validating YAML front matter in all markdown files..."
-          # Install yq for YAML validation (lightweight, single binary)
+          # Install yq for YAML validation
           sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           sudo chmod +x /usr/local/bin/yq
-          # Check all markdown files for valid front matter
-          find content -name "*.md" -type f | while read file; do
-            # Extract front matter (between first two --- markers only)
-            awk '/^---$/ {flag++; next} flag==1' "$file" | yq e '.' - > /dev/null 2>&1 || {
-              echo "❌ Invalid front matter in: $file"
-              exit 1
-            }
-          done
-          echo "✅ All front matter is valid YAML"
+          # Install npm dependencies
+          npm install
 
-      - name: Build with strict validation flags
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/hugo_cache
+          key: ${{ runner.os }}-deps-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Check versions
         run: |
-          echo "Building Hugo site with strict validation..."
-          hugo \
-            --minify \
-            --baseURL "https://filebrowserquantum.com/" \
-            --printPathWarnings \
-            --printUnusedTemplates \
-            --templateMetrics \
-            --templateMetricsHints
-
-      - name: Hugo audit - Check for common issues
-        run: |
-          echo "Running Hugo audit checks..."
-          # Build with audit flags
-          HUGO_MINIFY_TDEWOLFF_HTML_KEEPCOMMENTS=true \
-          HUGO_ENABLEMISSINGTRANSLATIONPLACEHOLDERS=true \
-          hugo --minify --baseURL "https://filebrowserquantum.com/"
-
-          # Search for common issues
-          echo "Checking for raw HTML omissions..."
-          if grep -rn "raw HTML omitted" dist/; then
-            echo "⚠️ Warning: Found 'raw HTML omitted' - check your markdown for unsupported HTML"
-          fi
-
-          echo "Checking for template errors..."
-          if grep -rn "ZgotmplZ" dist/; then
-            echo "❌ Error: Found 'ZgotmplZ' - template execution error"
-            exit 1
-          fi
-
-          echo "Checking for missing translations..."
-          if grep -rn "\[i18n\]" dist/; then
-            echo "⚠️ Warning: Found missing translations"
-          fi
-
-          echo "Checking for nil pointers..."
-          if grep -rn "<nil>" dist/; then
-            echo "❌ Error: Found nil pointer references"
-            exit 1
-          fi
-
-          echo "✅ Hugo audit complete"
-
-      - name: Verify required front matter fields
-        run: |
-          echo "Checking for required front matter fields..."
-          find content/en/docs -name "*.md" -type f | while read file; do
-            # Skip if it's just a redirect or special file
-            if grep -q "^aliases:" "$file" 2>/dev/null; then
-              continue
-            fi
-
-            # Check for required fields (title, description, icon)
-            if ! grep -q "^title:" "$file"; then
-              echo "⚠️ Warning: Missing 'title' in $file"
-            fi
-            if ! grep -q "^description:" "$file"; then
-              echo "⚠️ Warning: Missing 'description' in $file"
-            fi
-            if ! grep -q "^icon:" "$file"; then
-              echo "⚠️ Warning: Missing 'icon' in $file"
-            fi
-          done
-          echo "✅ Front matter validation complete"
-
-      - name: Summary
-        run: |
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "✅ All Hugo validation checks passed!"
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Hugo version:"
+          hugo version
           echo ""
-          echo "✓ Front matter YAML syntax valid"
-          echo "✓ Hugo build successful with strict validation"
-          echo "✓ No template errors (ZgotmplZ)"
-          echo "✓ No nil pointer references"
-          echo "✓ Required front matter fields present"
+          echo "Node version:"
+          node --version
           echo ""
-          echo "Ready to merge!"
+          echo "npm version:"
+          npm --version
+          echo ""
+          echo "yq version:"
+          yq --version
 
+  # Parallel check jobs
+  check-frontmatter:
+    name: Check YAML Front Matter
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+      - name: Run check
+        run: make check-frontmatter
+
+  check-frontmatter-fields:
+    name: Check Required Fields
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+      - name: Run check
+        run: make check-frontmatter-fields
+
+  check-hugo-build:
+    name: Hugo Build (Strict)
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install npm dependencies
+        run: npm install
+      - name: Run check
+        run: make build-strict
+
+  check-hugo-audit:
+    name: Hugo Audit
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install npm dependencies
+        run: npm install
+      - name: Run check
+        run: make hugo-audit
+
+  check-doclinks:
+    name: Check Doclinks
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install npm dependencies
+        run: npm install
+      - name: Run check
+        run: make check-doclinks
+
+  check-internal-links:
+    name: Check Internal Links
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run check
+        run: make check-internal-links
+
+  check-images:
+    name: Check Image References
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run check
+        run: make check-images
+
+  check-external-links:
+    name: Check External Links
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run check
+        run: make check-external-links
+
+  check-no-todos:
+    name: Check TODO/FIXME Markers
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run check
+        run: make check-no-todos

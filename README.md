@@ -190,25 +190,51 @@ Custom theme based on [Lotus Docs](https://lotusdocs.dev/):
 
 Documentation is deployed automatically on push to main branch via GitHub Actions.
 
-### PR Validation
+### Comprehensive Validation System
 
-Pull requests against the main branch are automatically validated with the following checks:
+This repository has a comprehensive validation system that runs the **same checks** both locally and in CI/CD. This ensures consistency and catches errors early.
 
-#### Hugo-Specific Validations
-1. **Front Matter Syntax** - Validates YAML syntax in all markdown files
-2. **Build with Strict Flags** - Builds with `--printPathWarnings`, `--printUnusedTemplates`, etc.
-3. **Hugo Audit** - Detects common Hugo issues:
+#### Quick Start - Validation
+
+```bash
+# Run all validation checks (recommended before PR)
+make check-all
+
+# Quick validation (skip slow external link checks)
+make check-quick
+
+# Individual checks
+make check-images           # Check image references
+make check-translations     # Validate translations
+make check-doclinks         # Check internal links
+```
+
+#### What Gets Validated
+
+1. **YAML Front Matter Syntax** - Validates YAML in all markdown files
+2. **Required Front Matter Fields** - Ensures title, description, icon are present
+3. **Hugo Build (Strict)** - Builds with strict validation flags
+4. **Hugo Audit** - Checks for:
    - Template execution errors (ZgotmplZ)
    - Nil pointer references
    - Raw HTML omissions
    - Missing translations
-4. **Required Fields** - Checks for required front matter fields (title, description, icon)
+5. **Translation Validation** - Ensures translations are in sync
+6. **Doclinks Validation** - Validates internal doclink shortcodes
+7. **Internal Links** - Checks for broken relative links
+8. **External Links** - Validates external URLs aren't dead (optional, slow)
+9. **Image References** - Ensures all images exist
+10. **TODO/FIXME Markers** - Warns about unfinished work
 
-All validation uses Hugo's built-in features - **no external dependencies needed** (except `yq` for local YAML validation)!
+#### CI/CD Integration
 
-### Local Quality Checks
+The GitHub Actions workflow calls the **same makefile targets** you use locally, ensuring:
+- ✅ No logic duplication between local and CI validation
+- ✅ Test CI behavior locally before pushing
+- ✅ Consistent results everywhere
+- ✅ Easy to maintain and update
 
-Before submitting a PR, you can run these checks locally:
+### Local Setup
 
 **Install Dependencies:**
 ```bash
@@ -216,30 +242,46 @@ make setup
 ```
 
 This installs:
-- npm packages (deepl-node, fs-extra, glob) for translation scripts
-- Checks for `yq` (YAML validator - install with `brew install yq` on macOS)
+- npm packages for translation/doclink scripts
+- Hugo (extended version)
+- Checks for `yq` (YAML validator)
 
-**Run Hugo Validation Checks:**
+**Run Validation:**
 ```bash
-# Individual checks
-make validate-frontmatter  # Validate YAML front matter syntax (needs yq)
-make build-strict          # Build with strict validation flags
-make hugo-audit            # Check for Hugo-specific issues
+# Before every commit
+make check-quick
 
-# All checks at once
+# Before creating a PR
 make check-all
-```
 
-Hugo validation uses built-in features - no Ruby dependencies required!
+# See all commands
+make help
+```
 
 ### Configuration Files
 
-- `.github/workflows/pr-checks.yml` - PR validation workflow (Hugo-only, no external dependencies)
+- `.github/workflows/pr-checks.yml` - PR validation workflow (calls makefile targets)
+- `.github/workflows/validate-manual.yml` - Manual validation testing workflow
 - `.github/workflows/static.yml` - Production deployment workflow
+- `.htmltest.yml` - External link checker configuration
 
 ### Documentation
 
-- [`HUGO_VALIDATION.md`](HUGO_VALIDATION.md) - Detailed guide on Hugo-specific validation checks and common issues
+- [**`VALIDATION.md`**](VALIDATION.md) - Complete validation system documentation
+- [**`.github/VALIDATION_QUICK_REFERENCE.md`**](.github/VALIDATION_QUICK_REFERENCE.md) - Quick reference card
+- [**`.github/hooks/pre-commit.example`**](.github/hooks/pre-commit.example) - Optional pre-commit hook
+
+### Pre-Commit Hook (Optional)
+
+Automatically validate before every commit:
+
+```bash
+# Install the pre-commit hook
+cp .github/hooks/pre-commit.example .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+This runs `make check-quick` before each commit and prevents committing if validation fails.
 
 ## Translation
 

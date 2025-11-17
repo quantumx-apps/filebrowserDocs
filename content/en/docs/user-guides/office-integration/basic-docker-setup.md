@@ -44,9 +44,10 @@ services:
     image: gtstef/filebrowser:latest
     ports:
       - "8080:80"
+    environment:
+      FILEBROWSER_CONFIG: "/home/filebrowser/data/config.yaml"
     volumes:
       - ./data:/home/filebrowser/data
-      - ./data/config.yaml:/home/filebrowser/config.yaml
       - ./:/srv # Replace "./" with your file path, but leave ":/srv" on the right side
     restart: unless-stopped
 
@@ -87,19 +88,11 @@ auth:
 integrations:
   office:
     url: "http://localhost"  # OnlyOffice accessible from browser
-    internalUrl: "http://onlyoffice" # corrosponds to the onlyoffice container name
+    internalUrl: "http://onlyoffice" # this is the container name for only office docker service
     secret: "TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue"  # Same secret as OnlyOffice
     viewOnly: false
 
 userDefaults:
-  preview:
-    highQuality: true
-    image: true
-    video: true
-    motionVideoPreview: true
-    office: true
-    popup: true
-    folder: true
   permissions:
     api: false
     admin: false
@@ -143,7 +136,11 @@ curl http://localhost/welcome
 3. Upload a test document (`.docx`, `.xlsx`, or `.pptx`)
 4. Click on the document to preview - should open in OnlyOffice editor
 
-## Disable Editing for Specific Users
+You should see something like this:
+
+<img src="../office-document-editor.png" alt="office-editor" />
+
+## Disable Editing
 
 In FileBrowser user settings or config:
 

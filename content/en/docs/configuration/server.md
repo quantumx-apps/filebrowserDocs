@@ -123,7 +123,9 @@ sudo chown -R 1000:1000 /var/cache/filebrowser
 ```
 
 ### internalUrl
-Internal URL for integrations (Currently just OnlyOffice)
+Internal URL for integrations to access filebrowser (Currently just OnlyOffice)
+
+this could be a docker network dns name or a local IP address on the network. This address should allow the integration to communicate directly with the service.
 
 ```yaml
 server:
