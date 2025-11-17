@@ -44,7 +44,7 @@ docker run -d \
   -v /path/to/your/config.yaml:/home/filebrowser/data/config.yaml \
   -v /path/to/your/folder:/folder \
   -p 80:80 \
-  gtstef/filebrowser:beta
+  gtstef/filebrowser
 ```
 
 ### Using Docker Compose
@@ -87,7 +87,7 @@ FileBrowser supports extensive configuration options. You can view the complete 
 
 - **Server Settings**: Port, database, sources, caching
 - **Authentication**: Password, OIDC, proxy authentication
-- **Users**: User management and permissions
+- **UsersDefaults**: New user defualts
 - **Frontend**: UI customization, themes, branding
 - **Integrations**: Media (FFmpeg) and office (OnlyOffice) support
 

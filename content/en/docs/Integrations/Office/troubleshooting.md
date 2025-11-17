@@ -305,17 +305,7 @@ integrations:
 
 ### External and Internal URLs
 
-```yaml
-server:
-  externalUrl: "https://files.yourdomain.com"  # Accessible from browser
-  internalUrl: "http://192.168.1.100"         # Either use local network or docker network IP thats accessible from onlyoffice server.
-
-integrations:
-  office:
-    url: "https://office.yourdomain.com"       # Accessible from browser
-    internalUrl: # optional this should be a local network address that filebrowser can access.
-    secret: "your-jwt-secret"
-```
+See {{< doclink path="integrations/office/configuration#external-and-internal-urls" text="Configuration" />}}
 
 **Why two URLs?**
 

@@ -14,9 +14,11 @@ FileBrowser Quantum uses FFmpeg for media processing capabilities including vide
 
 ## Features
 
-**Video Previews**: Automatic thumbnail generation for video files, cached for performance.
+**Video Thumbnails**: Automatic thumbnail generation for video files, cached for performance.
 
 **Subtitle Extraction**: Extract embedded subtitles from video files (IO-intensive, 10-30 seconds for large files).
+
+**Conversion Support**: Convert support is currently limited, only heic image conversion is supported for non-safari browsers to be able to view images.
 
 ## Requirements
 
@@ -32,5 +34,5 @@ If FFmpeg is in your PATH, media integration works automatically. Otherwise, con
 ```yaml
 integrations:
   media:
-    ffmpegPath: "/usr/local/bin"
+    ffmpegPath: "/home/graham/Downloads/ffmpeg/bin"
 ```

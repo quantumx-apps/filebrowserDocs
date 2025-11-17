@@ -10,6 +10,8 @@ Migrate your configuration from the original FileBrowser to Quantum.
 
 FileBrowser Quantum uses a YAML-based configuration file instead of command-line flags and database settings.
 
+See {{< doclink path="getting-started/config" text="About FileBrowser Quantum config file" />}}
+
 ## Migration Process
 
 ### 1. Export Current Settings
@@ -34,7 +36,7 @@ Create a new `config.yaml` file with your settings:
 server:
   port: 8080
   baseURL: "/"
-  database: "/database/database.db"
+  database: "data/database.db"
   sources:
     - name: "files"
       path: "/srv"
@@ -68,26 +70,6 @@ The following features from original FileBrowser are not available in Quantum:
 - **Terminal** - Removed for security
 - **Runners** - Removed (to be replaced with better job system)
 - **Command line user management** - Use config file or API
-
-## Docker Migration
-
-Update your docker-compose.yml:
-
-**Original:**
-```yaml
-environment:
-  - FB_PORT=8080
-  - FB_BASEURL=/
-  - FB_DATABASE=/database.db
-```
-
-**Quantum:**
-```yaml
-volumes:
-  - ./config.yaml:/config.yaml
-command: ["-c", "/config.yaml"]
-```
-
 
 ## Next Steps
 

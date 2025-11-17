@@ -44,6 +44,7 @@ imageCompare:
   title: A feature-rich and beautiful file manager for the modern web.
   subtitle: Experience the power of real-time indexing and configurable sources.
 
+  items:
     - title: Configurable Sources
       config: {
         controlColor: "#3C4257",
