@@ -136,7 +136,6 @@ Basic Traefik labels for FileBrowser Quantum:
 - "traefik.http.services.filebrowser-public.loadbalancer.server.port=80"
 ```
 
-
 ## Caddy Configuration
 
 Minimal Caddy configuration:
@@ -169,14 +168,14 @@ files.example.com {
 Essential settings for file uploads:
 
 <div class="config-section">
-  <h4>nginx</h4>
+  <h4>Nginx</h4>
   <pre><code>client_max_body_size 10G;
 proxy_buffering off;</code></pre>
 </div>
 
 <div class="config-section">
   <h4>Traefik</h4>
-  <pre><code>- "traefik.http.middlewares.filebrowser-buffering.buffering.maxRequestBodyBytes=10737418240"</code></pre>
+  <pre><code>- "traefik.http.middlewares.filebrowser-buffering.buffering.maxRequestBodyBytes=0"</code></pre>
 </div>
 
 <div class="config-section">
@@ -201,6 +200,8 @@ location /files/ {
 }
 ```
 
+- Traefik should handle most of this automatically if is configured properly.
+
 ### Authorization Header Handling
 
 {{% alert context="info" %}}
@@ -223,31 +224,82 @@ location /files/ {
 
 <div class="troubleshooting-section">
   <h4>Authentication Failures</h4>
-  <p><strong>Symptoms:</strong> Users can't log in, cookies not working</p>
+  <p><strong>Symptoms:</strong> Users can't log in, cookies not working.</p>
   <p><strong>Solution:</strong> Ensure <code>Host</code> header is properly forwarded:</p>
-  <pre><code>proxy_set_header Host $host;</code></pre>
+
+{{< tabs tabTotal="3" >}}
+{{< tab tabName="NGINX" >}}
+```nginx
+proxy_set_header Host $host;
+```
+{{< /tab >}}
+
+{{< tab tabName="Traefik" >}}
+```yaml
+- "traefik.http.services.filebrowser.loadbalancer.passhostheader=true"
+```
+
+{{< /tab >}}
+{{< /tabs >}}
 </div>
 
 <div class="troubleshooting-section">
   <h4>Upload Failures</h4>
   <p><strong>Symptoms:</strong> Large file uploads fail</p>
   <p><strong>Solution:</strong> Increase file size limit and disable buffering:</p>
-  <pre><code>client_max_body_size 10G;
-proxy_buffering off;</code></pre>
+
+{{< tabs tabTotal="2" >}}
+{{< tab tabName="NGINX" >}}
+```nginx
+client_max_body_size 10G;
+proxy_buffering off;
+```
+{{< /tab >}}
+{{< tab tabName="Traefik" >}}
+```yaml
+http:
+  middlewares:
+    limit:
+      buffering:
+        maxRequestBodyBytes: 0
+        maxResponseBodyBytes: 0
+        memRequestBodyBytes: 0
+        memResponseBodyBytes: 0
+```
+{{< /tab >}}
+{{< /tabs >}}
 </div>
 
 <div class="troubleshooting-section">
   <h4>SSE Not Working</h4>
   <p><strong>Symptoms:</strong> Real-time features not updating</p>
-  <p><strong>Solution:</strong> Disable buffering:</p>
-  <pre><code>proxy_buffering off;</code></pre>
+  <p><strong>Solution:</strong> Disable buffering and enable websockets:</p>
+{{< tabs tabTotal="2" >}}
+{{< tab tabName="NGINX" >}}
+```nginx
+proxy_buffering off;
+```
+{{< /tab >}}
+{{< tab tabName="Traefik" >}}
+```yaml
+http:
+  middlewares:
+    limit:
+      buffering:
+        maxRequestBodyBytes: 0
+        maxResponseBodyBytes: 0
+        memRequestBodyBytes: 0
+        memResponseBodyBytes: 0
+```
+{{< /tab >}}
+{{< /tabs >}}
 </div>
 
 ## Next Steps
 
 - {{< doclink path="configuration/authentication/proxy/" text="Proxy Authentication" />}} - Configure header-based authentication
 - {{< doclink path="integrations/office/troubleshooting/" text="Office Integration" />}} - OnlyOffice behind reverse proxy
-- {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik HTTPS Setup" />}} - Advanced HTTPS configuration
+- {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} - Filebrowser + OnlyOffice behind reverse proxy.
 
 <style>
 .config-section {
@@ -296,20 +348,6 @@ proxy_buffering off;</code></pre>
 
 .troubleshooting-section p {
   margin: 0.5em 0;
-}
-
-.troubleshooting-section pre {
-  margin: 0.5em 0 0 0;
-  padding: 0.75em;
-  background: var(--code-block-bg);
-  border-radius: 4px;
-  overflow-x: auto;
-}
-
-.troubleshooting-section pre code {
-  background: none;
-  padding: 0;
-  font-size: 0.85em;
 }
 
 /* Dark mode support */

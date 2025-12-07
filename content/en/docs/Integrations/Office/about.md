@@ -93,7 +93,7 @@ server:
 ```
 
 {{% alert context="warning" %}}
-`internalUrl` should be accessible from the OnlyOffice server. This is typically a Docker network or private address.
+`internalUrl` should be accessible from the OnlyOffice server. This is typically the docker network service name or a private address.
 {{% /alert %}}
 
 ## Troubleshooting
@@ -104,34 +104,51 @@ see {{< doclink path="integrations/office/troubleshooting/" text="Troubleshootin
 
 #### 1. Docker Network Setup
 
-If using Docker, ensure services can communicate:
+If using Docker, ensure services can communicate, they both should be in the same docker network and configured properly.
 
 ```yaml
-# docker-compose.yml
-services:
-  filebrowser:
-    image: filebrowser/filebrowser
-    environment:
-      - INTERNAL_URL=http://filebrowser:8080
+# config.yaml
+server:
+  port: 80
+  internalUrl: "http://filebrowser:80"
 
-  onlyoffice:
-    image: onlyoffice/documentserver
+integrations:
+  office:
+    url: "http://localhost:8081"  # URL reachable by browser -- Use the IP address of your pc if using in other devices beside the pc where you are testing
+    internalUrl: "http://onlyoffice:80" # onlyoffice docker container name + internal port
+    secret: "your-strong-secret"
+    viewOnly: false
 ```
 
 #### 2. Reverse Proxy Configuration
 
 When using a reverse proxy, ensure proper headers:
 
+{{< tabs tabTotal="2" >}}
+{{< tab tabName="NGINX" >}}
 ```nginx
 # nginx.conf
 location /onlyoffice/ {
-    proxy_pass http://onlyoffice:8000/;
+    proxy_pass http://onlyoffice:80/;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
 }
 ```
+{{< /tab >}}
+{{< tab tabName="Traefik" >}}
+```yaml
+# Traefik labels
+labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.traefik.tls=true"
+  - "traefik.http.routers.traefik.service=traefik"
+  - "traefik.http.services.traefik.loadbalancer.server.port=80"
+  - "traefik.http.services.traefik.loadbalancer.passhostheader=true"
+```
+{{< /tab >}}
+{{< /tabs >}}
 
 ## Status Codes Reference
 
@@ -153,5 +170,5 @@ location /onlyoffice/ {
 ## Next Steps
 
 - {{< doclink path="integrations/office/configuration/" text="Configuration" />}}
-- {{< doclink path="integrations/office/guides/" text="Guides" />}}
+- {{< doclink path="user-guides/office-integration/office-integration/" text="Office guides" />}}
 - {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}}
