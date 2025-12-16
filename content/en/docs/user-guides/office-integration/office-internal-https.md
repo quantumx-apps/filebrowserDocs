@@ -4,7 +4,7 @@ description: "Internal HTTPS for onlyoffice using self-signed certificates with 
 icon: "lock"
 order: 4
 date: "2025-09-20"
-lastmod: "2025-12-06"
+lastmod: "2025-12-14"
 ---
 
 Internal HTTPS setup for onlyoffice using self-signed certificates with traefik.
@@ -18,7 +18,7 @@ This guide is mostly from [this discussion](https://github.com/gtsteffaniak/file
 In this guide we will setup OnlyOffice with internal HTTPS using generated self-signed certificates with Traefik.
 
 {{% alert context="warning" %}}
-**Recommended:** Only use this guide if you have specific security requirements. Please, check it out the {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup Guide" />}} first if you are starting, because this guide is intended for advanced users and we will use that guide as base for this one.
+**Recommended:** Only use this guide if you have specific security requirements. Please, check the {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup Guide" />}} first if you are starting, because this guide is intended for advanced users and we will use that guide as base for this one.
 {{% /alert %}}
 
 ## OnlyOffice configuration
@@ -447,9 +447,39 @@ integrations:
     internalUrl: "https://onlyoffice:80"
 ```
 
+### FBQ not trusting OnlyOffice certs
+If for some reason the filebrowser container doesn't trust the certificates (even configured via traefik), you'll need to mount and update the certificates of the filebrowser container in startup.
+
+```yaml
+services:
+  filebrowser:
+    container_name: filebrowser
+    image: gtstef/filebrowser:latest
+    env_file: .env
+    environment:
+    # ... Existent enviroment variables
+    volumes:
+      - './data:/home/filebrowser/data'
+      # ... Other volumes
+      - /path/to/certs/onlyoffice.crt:/usr/local/share/ca-certificates/onlyoffice.crt:ro # Mount the OO certs
+    labels:
+    # ... Existent labels
+    networks:
+      proxy_network:
+    restart: unless-stopped
+
+    # trust certs and launch filebrowser
+    entrypoint: sh -c "update-ca-certificates && ./filebrowser"
+
+networks:
+  proxy_network:
+    external: true
+```
+
+
 ### Other issues
 
-If you have other issues relates with onlyoffice and filebrowser, you should check the {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} guide, which covers some of the most commons issues with some solutions.
+If you have other issues related with onlyoffice and filebrowser, check the {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting guide" />}}, which covers some of the most commons issues with solutions.
 
 ## Next Steps
 

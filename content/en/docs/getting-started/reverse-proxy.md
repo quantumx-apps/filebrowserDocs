@@ -256,6 +256,7 @@ proxy_buffering off;
 ```
 {{< /tab >}}
 {{< tab tabName="Traefik" >}}
+In traefik can be configured via middlewares
 ```yaml
 http:
   middlewares:

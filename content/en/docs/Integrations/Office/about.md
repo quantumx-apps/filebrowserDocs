@@ -80,7 +80,7 @@ To enable these office features, you need:
 ```yaml
 integrations:
   office:
-    url: "http://onlyoffice-server:8000"  # OnlyOffice Document Server URL
+    url: "http://onlyoffice-server:8081"  # OnlyOffice Document Server URL
     secret: "your-secret-key"             # Optional JWT secret for security
 ```
 
@@ -114,7 +114,7 @@ server:
 
 integrations:
   office:
-    url: "http://localhost:8081"  # URL reachable by browser -- Use the IP address of your pc if using in other devices beside the pc where you are testing
+    url: "http://localhost:8081"  # URL reachable by browser -- Use the IP address of your pc if using in other devices besides the pc where you are testing
     internalUrl: "http://onlyoffice:80" # onlyoffice docker container name + internal port
     secret: "your-strong-secret"
     viewOnly: false

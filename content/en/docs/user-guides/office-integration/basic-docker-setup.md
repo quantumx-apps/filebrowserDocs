@@ -71,7 +71,7 @@ Create a `data` directory, and create two new files:
 - `database.db`: The database, used for store settings, users, and more. Is needed for persist them.
 
 ```bash
-mkdir data && touch data/config.yaml && touch database.db
+mkdir data && touch data/config.yaml && touch data/database.db
 ```
 
 Then populate the config, see {{< doclink path="getting-started/config/" text="Getting started" />}}.
