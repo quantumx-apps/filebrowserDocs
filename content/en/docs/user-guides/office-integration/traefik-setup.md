@@ -353,7 +353,7 @@ http:
           X-Real-IP: "true"
           X-Forwarded-For: "true"
 
-    # This middleware is to disable buffering, only use it if you have issues uploading large files to filebrowser
+    # This middleware is to disable buffering, only use it if you have issues with SSE or uploading large files to filebrowser
     limit:
       buffering:
         maxRequestBodyBytes: 0

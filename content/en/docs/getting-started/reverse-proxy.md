@@ -162,7 +162,6 @@ files.example.com {
 }
 ```
 
-
 ## Upload Configuration
 
 Essential settings for file uploads:
@@ -274,7 +273,7 @@ http:
 <div class="troubleshooting-section">
   <h4>SSE Not Working</h4>
   <p><strong>Symptoms:</strong> Real-time features not updating</p>
-  <p><strong>Solution:</strong> Disable buffering and enable websockets:</p>
+  <p><strong>Solution:</strong> Disable buffering</p>
 {{< tabs tabTotal="2" >}}
 {{< tab tabName="NGINX" >}}
 ```nginx
@@ -282,6 +281,9 @@ proxy_buffering off;
 ```
 {{< /tab >}}
 {{< tab tabName="Traefik" >}}
+
+Via traefik middlewares:
+
 ```yaml
 http:
   middlewares:
@@ -300,7 +302,7 @@ http:
 
 - {{< doclink path="configuration/authentication/proxy/" text="Proxy Authentication" />}} - Configure header-based authentication
 - {{< doclink path="integrations/office/troubleshooting/" text="Office Integration" />}} - OnlyOffice behind reverse proxy
-- {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} - Filebrowser + OnlyOffice behind reverse proxy.
+- {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} - Filebrowser + OnlyOffice behind traefik reverse proxy.
 
 <style>
 .config-section {
