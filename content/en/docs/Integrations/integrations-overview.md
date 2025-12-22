@@ -25,7 +25,7 @@ OnlyOffice is currently the only supported office integration. Collabora support
 
 - {{< doclink path="integrations/office/about/" text="About" />}} - Overview and features
 - {{< doclink path="integrations/office/configuration/" text="Configuration" />}} - Setup and options
-- {{< doclink path="integrations/office/guides/" text="Guides" />}} - How-to guides
+- {{< doclink path="user-guides/office-integration/office-integration/" text="Guides" />}} - How-to guides
 - {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}} - Common issues
 
 ## Quick Start
@@ -48,4 +48,4 @@ integrations:
 
 - {{< doclink path="integrations/media/" text="Media integration setup" />}}
 - {{< doclink path="integrations/office/" text="Office integration setup" />}}
-- {{< doclink path="user-guides/" text="User guides" />}}
+- {{< doclink path="user-guides/office-integration/office-integration/" text="Office guides" />}}
