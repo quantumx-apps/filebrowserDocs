@@ -7,7 +7,7 @@ icon: "gavel"
 Control user access to specific directories with allow/deny rules.
 
 {{% alert context="info" %}}
-Access rules do not apply to shares.
+Access rules for shares apply based on the user that created the share.
 {{% /alert %}}
 
 {{% alert context="warning" %}}
