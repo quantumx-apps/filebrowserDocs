@@ -73,7 +73,7 @@ services:
       FILEBROWSER_ADMIN_PASSWORD: "change-me"
       # TZ: "America/New_York"
     volumes:
-      - /path/to/your/files:/folder
+      - /path/to/your/files:/folder # Do not use a root "/" directory or include the "/var" folder
       - ./data:/home/filebrowser/data
     ports:
       - 80:80

@@ -16,6 +16,14 @@ Example: `https://your-domain.com/swagger/`
 
 This swagger page uses a short-live token (2-hour exp) that the UI uses, but allows for quick access to all the API's and their described usage and requirements.
 
+### API authentication
+
+An API request has 3 options for authentication, checked in this order:
+
+1. `filebrowser_quantum_jwt` cookie in the request with the token value
+2. `&auth=<token>` in the query parameter
+3. `Bearer <token>` in the authorization header
+
 ## Next Steps
 
 - {{< doclink path="reference/cli/" text="CLI commands" />}}

@@ -25,6 +25,14 @@ server:
   port: 80
 ```
 
+### listen
+Server listen address (default: 0.0.0.0)
+
+```yaml
+server:
+  listen: "localhost" # override the default 0.0.0.0
+```
+
 ### baseURL
 Base URL -- primarily for reverse proxy
 
@@ -41,14 +49,37 @@ server:
   database: "data/database.db"
 ```
 
+### maxArchiveSize
+
+FileBrowser limits the maxiumum size of archive -- this affects folder downloads. This is limited to 50GB by default, which means the pre-archive combined size of a directory to be downloaded must be 50GB or less. This is necessary because archiving will store temporary files
+and that could exhaust the server if left unlimited. 
+
+Ensure you have enough free space available if you choose to increase this further.
+
+```yaml
+server:
+  maxArchiveSize: 50 # max pre-archive combined size of files/folder that are allowed to be archived (in GB)
+```
+
 ### cacheDir
-Temporary cache directory for file operations
+
+The `cacheDir` is a critical configuration that defines where FileBrowser stores temporary files during various operations. By default, a `tmp` folder is created in the same directory as the program is run, but this may not be ideal. For example unRAID uses a different user by default and that causes permission issues with the default cache directory creation process.
+
+#### Important Considerations
 
 {{% alert context="warning" %}}
+**Permissions**: The user running the FileBrowser process must have read/write permissions on the cache directory. This is especially critical in Docker environments.
+
+**Disk Space**: The cache directory can grow significantly during large file operations. Monitor disk usage and ensure adequate space. If you are using docker -- consider mounting a sufficient volume for temp directory if you need more space.
+
+**Reliable**: Must be available and not tampered with during operation. Make sure its not in a location that could be moved or modified by accident. Do not use network locations!
+
 **unRAID Users**: If you're using unRAID, you must mount a volume for the cache directory. The default container user (if not uid 1000) needs write access to this directory.
+
 {{% /alert %}}
 
-The `cacheDir` is a critical configuration that defines where FileBrowser stores temporary files during various operations. This directory is used for:
+
+The cacheDir is used by:
 
 - **Chunked file uploads**: Each upload chunk is temporarily stored here before being assembled
 - **Image preview generation**: Thumbnails and processed images are cached
@@ -58,18 +89,8 @@ The `cacheDir` is a critical configuration that defines where FileBrowser stores
 
 ```yaml
 server:
-  cacheDir: "data/temp"
+  cacheDir: "tmp" # this is default when not configured.
 ```
-
-#### Important Considerations
-
-{{% alert context="warning" %}}
-**Permissions**: The FileBrowser process must have read/write/execute permissions on the cache directory. This is especially critical in Docker environments.
-{{% /alert %}}
-
-{{% alert context="warning" %}}
-**Disk Space**: The cache directory can grow significantly during large file operations. Monitor disk usage and ensure adequate space. If you are using docker -- consider mounting a sufficient volume for temp directory if you need more space.
-{{% /alert %}}
 
 #### Docker Examples
 

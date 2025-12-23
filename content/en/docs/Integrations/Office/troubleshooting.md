@@ -157,6 +157,7 @@ onlyoffice:
     - JWT_ENABLED=true
     - JWT_SECRET=your-generated-secret  # MUST match FileBrowser exactly
     - JWT_HEADER=Authorization
+    - ALLOW_PRIVATE_IP_ADDRESS=true # This configuration allows private ip address on DNS lookup
 ```
 
 {{% alert context="warning" %}}
@@ -365,6 +366,21 @@ See {{< doclink path="integrations/office/configuration#external-and-internal-ur
 ### Slow Document Loading
 
 Document loading can be quite slow because of the many components onlyoffice needs to talk to. The best way to improve document loading times it to set `server.internalUrl` so OnlyOffice can communicate directly with filebrowser (it's possible on same private network).
+
+## Download Fails
+
+Always look at the only office server logs for clues when you see "Download Failed" for clues that filebrowser itself can't see.
+
+Some have also found the need for `ALLOW_PRIVATE_IP_ADDRESS=true`:
+
+```yaml
+onlyoffice:
+  environment:
+    - JWT_ENABLED=true
+    - JWT_SECRET=your-generated-secret  # MUST match FileBrowser exactly
+    - JWT_HEADER=Authorization
+    - ALLOW_PRIVATE_IP_ADDRESS=true # This configuration allows private ip address on DNS lookup
+```
 
 ## Getting Help
 
