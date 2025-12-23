@@ -107,6 +107,6 @@ integrations:
 
 ## Next Steps
 
-- {{< doclink path="integrations/office/guides/" text="Office guides" />}}
+- {{< doclink path="user-guides/office-integration/office-integration/" text="Office guides" />}}
 - {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}}
-- {{< doclink path="user-guides/office-setup/" text="User setup guide" />}}
+- {{< doclink path="integrations/office/about/" text="About onlyoffice" />}}

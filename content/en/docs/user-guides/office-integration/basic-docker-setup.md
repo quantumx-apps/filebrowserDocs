@@ -7,7 +7,7 @@ icon: "deployed_Code"
 Complete setup for running FileBrowser Quantum with OnlyOffice using Docker Compose on your local network.
 
 {{% alert context="warning" %}}
-This guide uses HTTP which is **not secure** for production. Only use for local development or testing. For production deployments with HTTPS, see {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} or {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik with self-signed certificates" />}}.
+This guide uses HTTP which is **not secure** for production. Only use for local development or testing. For production deployments with HTTPS. See {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}}
 {{% /alert %}}
 
 ## Prerequisites
@@ -18,25 +18,25 @@ This guide uses HTTP which is **not secure** for production. Only use for local 
 
 ## Quick Start
 
-### Step 1: Generate JWT Secret
+### Step 01: Generate JWT Secret
 
 First, generate a strong secret for securing communication between FileBrowser and OnlyOffice:
 
 ```bash
-# Method 1: Using OpenSSL
+# Using OpenSSL
 openssl rand -base64 32
 
 # Example output:
-# TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue
+# TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue=
 ```
 
 {{% alert context="info" %}}
 Save this secret - you'll need it for both FileBrowser and OnlyOffice configuration.
 {{% /alert %}}
 
-### Step 2: Create Docker Compose File
+### Step 02: Create Docker Compose File
 
-Create a `docker-compose.yml` file:
+Create a `docker-compose.yaml` file:
 
 ```yaml
 services:
@@ -45,51 +45,56 @@ services:
     ports:
       - "8080:80"
     environment:
-      FILEBROWSER_CONFIG: "/home/filebrowser/data/config.yaml"
+      FILEBROWSER_CONFIG: "data/config.yaml"
+      FILEBROWSER_DATABASE: "data/database.db"
+    user: filebrowser # non-root user
     volumes:
       - ./data:/home/filebrowser/data
-      - ./:/srv # Replace "./" with your file path, but leave ":/srv" on the right side
+      - /path/to/folder:/srv # Replace "/path/to/folder" with your desired path, you can also change the internal path '/srv' with another path.
     restart: unless-stopped
 
   onlyoffice:
     image: onlyoffice/documentserver:latest
     container_name: onlyoffice
     ports:
-      - "80:80"
+      - "8081:80" # You can do the same with the ports, you can replace "8081" in the left side if is used, but don't change the right side.
     environment:
-      - JWT_SECRET=TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue  # Replace with your secret
+      - JWT_SECRET=TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue=  # Replace with your generated secret
     restart: unless-stopped
 ```
 
-### Step 3: Create FileBrowser Configuration
+### Step 03: Create FileBrowser Configuration
 
-Create a `data` directory and add a new `config.yaml` file in the same directory:
+Create a `data` directory, and create two new files: 
+
+- `config.yaml`: The configuration file that we will modify.  
+- `database.db`: The database, used for store settings, users, and more. Is needed for persist them.
 
 ```bash
-mkdir data && touch data/config.yaml
+mkdir data && touch data/config.yaml && touch data/database.db
 ```
 
-Then populate the config
+Then populate the config, see {{< doclink path="getting-started/config/" text="Getting started" />}}.
 
 ```yaml
 server:
-  port: 80
-  database: data/database.db
-  internalUrl: "http://filebrowser" # the filebrowser container name
+  port: 80 # Should be 80, this is the internal port.
+  externalUrl: "http://localhost:8080" # External filebrowser URL
+  internalUrl: "http://filebrowser:80" # The filebrowser container name with the internal port.
   sources:
-    - name: "files"
-      path: "/srv" # the docker volume for the source info
+    - name: "files" # You can change this name
+      path: "/srv" # The docker volume for your files.
       config:
         defaultEnabled: true
 
 auth:
-  adminPassword: yourpassword
+  adminPassword: yourpassword # Change this with a strong password.
 
 integrations:
   office:
-    url: "http://localhost"  # OnlyOffice accessible from browser
-    internalUrl: "http://onlyoffice" # this is the container name for only office docker service
-    secret: "TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue"  # Same secret as OnlyOffice
+    url: "http://localhost:8081"  # Office URL with the external port which should be accesible from browser -- You can use 'localhost' if you are in the same machine, but if you will use another device, use the IP adress of your machine with port. (eg. 192.168.1.128:8081)
+    internalUrl: "http://onlyoffice:80" # This is the container name for only office docker service + its internal port.
+    secret: "TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue="  # Same secret as OnlyOffice
     viewOnly: false
 
 userDefaults:
@@ -102,7 +107,7 @@ userDefaults:
     delete: false
     create: false
     download: true
-  disableOnlyOfficeExt: ".md .txt .pdf"   # list of file extensions to disable onlyoffice editor for
+  disableOnlyOfficeExt: ".md .txt .pdf"   # List of file extensions to disable onlyoffice editor for - only applied to new users.
 ```
 
 ### Step 4: Start Services
@@ -115,34 +120,34 @@ Wait for OnlyOffice to fully start (takes 30-60 seconds on first run).
 
 ### Step 5: Verify Installation
 
-If you are running docker compose on something like WSL or your local machine, you should be able to access http://localhost and see only office is ready
+If you are running docker compose on something like WSL or your local machine, you should be able to access http://localhost:8081 and see only office is ready.
 
-<img src="../office-welcome.png" alt="office" />
+<img src="../assets/office-welcome.png" alt="office" />
 
 Or check via terminal:
 
 **Check OnlyOffice Health:**
 ```bash
-# Should return {"status":"ok"}
-curl http://localhost/healthcheck
+# Should return {"status":"ok"} or true
+curl http://localhost:8081/healthcheck
 
 # Check welcome page
-curl http://localhost/welcome
+curl http://localhost:8081/welcome
 ```
 
 **Check FileBrowser:**
 1. Open browser and navigate to `http://localhost:8080`
 2. Login with default credentials (admin/yourpassword)
-3. Upload a test document (`.docx`, `.xlsx`, or `.pptx`)
+3. Upload a test document (could be a `.docx`, `.xlsx`, or `.pptx`)
 4. Click on the document to preview - should open in OnlyOffice editor
 
 You should see something like this:
 
-<img src="../office-document-editor.png" alt="office-editor" />
+<img src="../assets/office-document-editor.png" alt="office-editor" />
 
-## Disable Editing
+## Disable Editing - View Only
 
-In FileBrowser user settings or config:
+In FileBrowser config:
 
 ```yaml
 integrations:
@@ -153,7 +158,7 @@ integrations:
 ## Next Steps
 
 - **Production Setup**: See {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Full Setup Guide" />}} for complete services configuration ready for production.
-- **Advanced Setup**: See {{< doclink path="user-guides/office-integration/traefik-https/" text="Traefik HTTPS Guide" />}} for advanced deployment using internal HTTPS for the services.
+- **Internal Office HTTPS**: See {{< doclink path="user-guides/office-integration/office-internal-https/" text="Office Internal HTTPS Guide" />}} for advanced deployment using internal HTTPS for onlyoffice.
 - **Troubleshooting**: See {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} for detailed solutions.
 - **Configuration**: See {{< doclink path="integrations/office/configuration/" text="Office Configuration" />}} for all available options.
 

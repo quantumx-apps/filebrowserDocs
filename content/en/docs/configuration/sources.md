@@ -6,6 +6,11 @@ icon: "folder_open"
 
 Sources are the core concept in FileBrowser - each source represents a file system location users can access.
 
+
+{{% alert context="warning" %}}
+A source should not be a root directory or include "/var" directory on linux.
+{{% /alert %}}
+
 ## Basic Configuration
 
 ### Single Source
@@ -13,7 +18,7 @@ Sources are the core concept in FileBrowser - each source represents a file syst
 ```yaml
 server:
   sources:
-    - path: "/path/to/files"
+    - path: "/path/to/files" # Do not use a root "/" directory or include the "/var" folder
       config:
         defaultEnabled: true
 auth:

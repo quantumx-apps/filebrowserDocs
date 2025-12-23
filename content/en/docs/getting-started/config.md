@@ -67,7 +67,7 @@ Here's a minimal config file to get you started:
 ```yaml
 server:
   sources:
-    - path: "/path/to/your/files" # or '/folder' in above example
+    - path: "/path/to/your/files" # or '/folder' in above example (do not load the full os filesystem, must be sub path)
       config:
         defaultEnabled: true  # Give access to all users by default
 
