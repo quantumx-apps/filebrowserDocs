@@ -4,7 +4,7 @@ description: "Sidebar Link usage and examples"
 icon: "read_more"
 ---
 
-Starting in v1.1.x, the sidebar is fully customizable per user. This means a user can configure their sidebar with their own links, icons, and order it how they want.
+Starting in **v1.1.x**, the sidebar is fully customizable per user. This means a user can configure their sidebar with their own links, icons, and order it how they want.
 
 ## Default configuration
 
@@ -54,3 +54,9 @@ Tool links are a list of direct links to tools. If a user selects `tools` then t
 ### Custom link configuration
 
 Custom links offer name, path, and icon support. This is a general purpose link that can act as a favorite/bookmark in the bar. Supporting external links as well as shares. A relative link is also possible, for example `/public/share/OGHKSEl-Wt4Q006pTvlKeQ`
+
+## Customization example
+
+You can create an unlimited number of custom links and sort them however you like. See this example
+
+<img width="400" src="/images/features/sidebar/share.png">
