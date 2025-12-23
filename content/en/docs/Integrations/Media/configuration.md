@@ -18,6 +18,14 @@ integrations:
 
 ## Subtitle Extraction
 
+{{% alert context="warning" %}}
+Large videos can take 10-30 seconds to process, because the server reads the whole file -- can be i/o intensive.
+{{% /alert %}}
+
+For large videos, you may notice a 20-30 second delay loading a video for the first time if you enable this. Subsequent views within a 24 hour period will load cached subtitles for faster load times.
+
+This feature is very useful -- but can be demanding if many different videos are previewed at once. So, this is also disabled by default for shares and must be configured at the share level if you want share link users to view embedded subtitles as well.
+
 Subtitle extraction requires configuration at **two levels**:
 
 ### Server-Level Configuration
@@ -40,17 +48,6 @@ For **shares**, subtitle extraction must be enabled in both places:
 - ✅ Share level: Enable "Extract embedded subtitles" option when creating the share
 {{% /alert %}}
 
-For **non-share file viewing**, only server-level configuration is needed:
-
-{{% alert context="success" %}}
-**Requirements for regular viewing:**
-- ✅ Server level: `integrations.media.extractEmbeddedSubtitles: true`
-- Share level: Not applicable
-{{% /alert %}}
-
-{{% alert context="warning" %}}
-Subtitle extraction is IO-intensive and can take 10-30 seconds for large video files.
-{{% /alert %}}
 
 ## Installation by Platform
 
@@ -117,12 +114,9 @@ integrations:
   media:
     convert:
       imagePreview:
-        heic: false  # Enable HEIC image preview conversion
+        heic: false  # Enable HEIC image preview conversion (default false)
       videoPreview:
-        mp4: true    # Enable MP4 video thumbnails (default: true)
-        mkv: true    # Enable MKV video thumbnails (default: true)
-        avi: true    # Enable AVI video thumbnails (default: true)
-        # ... more formats available
+        mp4: false    # Disables MP4 video thumbnails (default: true)
 ```
 
 {{% alert context="info" %}}
@@ -150,20 +144,7 @@ Debug mode produces large amounts of FFmpeg stdout output. Only enable for troub
 
 ### Cache Directory
 
-```yaml
-server:
-  cacheDir: "tmp"  # Path to cache directory
-```
-
-**What's stored:**
-- Generated video thumbnails
-- Extracted subtitles from media files
-- Processed image previews
-
-**Requirements:**
-- Must be writable by the FileBrowser process
-- Should have sufficient disk space for thumbnails
-- Can be cleared periodically to free space
+A high perfomrance directory for caching is needed -- see [CacheDir](https://filebrowserquantum.com/en/docs/configuration/server/#cachedir) config for more details. 
 
 ### Processing Workers
 
@@ -181,12 +162,6 @@ Configure via environment variables instead of config file:
 ```bash
 # FFmpeg path
 export FILEBROWSER_FFMPEG_PATH="/usr/local/bin"
-
-# Cache directory
-export FILEBROWSER_CACHE_DIR="/var/cache/filebrowser"
-
-# Enable subtitle extraction
-export FILEBROWSER_EXTRACT_EMBEDDED_SUBTITLES="true"
 ```
 
 ## Complete Configuration Example
@@ -195,7 +170,6 @@ Full media integration configuration:
 
 ```yaml
 server:
-  cacheDir: "/var/cache/filebrowser"
   numImageProcessors: 4
 
 integrations:

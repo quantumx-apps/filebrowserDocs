@@ -48,7 +48,7 @@ Or create `config.yaml`:
 server:
   port: 80
   sources:
-    - path: "/home/user/files"
+    - path: "/home/user/files" # Do not use a root "/" directory or include the "/var" folder
       config:
         defaultEnabled: true
 auth:
