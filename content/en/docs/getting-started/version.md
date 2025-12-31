@@ -81,6 +81,27 @@ Versioning follows [semantic versioning](https://semver.org/) in format and I tr
 Stable and beta versions of the same major or minor version should have the exact same features and functionality. However, small differences may exist in patch version updates.
 {{% /alert %}}
 
+## Docker Version Tags
+
+When using Docker, you have access to multiple tag formats for precise version control:
+
+### Tag Formats
+
+- **Release type tags**: `stable`, `beta`, `latest` - Always point to the latest version of that release type
+- **Full version tags**: `1.2.5-stable`, `1.1.3-beta`, `2.0.0-preview` - Pin to a specific version
+- **Major.minor tags**: `1.2-stable`, `1.1-beta`, `2.0-preview` - Automatically receive patch updates within that minor version
+- **Major tags**: `1-stable`, `2-beta`, `1-preview` - Automatically receive all updates within that major version
+
+### Choosing the Right Tag
+
+- **For production**: Use major.minor tags (e.g., `1.2-stable`) to get bug fixes and security patches while avoiding major version changes
+- **For testing**: Use release type tags (e.g., `beta`) to always get the latest version
+- **For stability**: Use full version tags (e.g., `1.2.5-stable`) when you need to lock to a specific version
+
+{{% alert context="info" %}}
+All version tags are available for both regular and slim images. For example: `1.2-stable-slim`, `1-stable-slim`, etc.
+{{% /alert %}}
+
 ## When to Move to Beta Instead of Stable?
 
 I definitely need and welcome anyone that wants to use beta -- it's the best version! But it's also most likely to see issues.

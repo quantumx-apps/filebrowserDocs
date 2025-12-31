@@ -243,19 +243,19 @@ Choose your guide and begin setting up OnlyOffice integration:
 <div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
 <h3 style="margin-top: 0;">🚀 Basic Setup</h3>
 <p>Quick HTTP setup for local testing</p>
-<a href="/docs/user-guides/office-integration/basic-docker-setup/" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; text-decoration: none;">Start Guide →</a>
+{{< doclink path="user-guides/office-integration/basic-docker-setup" text="Start Guide →" />}}
 </div>
 
 <div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
 <h3 style="margin-top: 0;">⭐ Production Setup</h3>
 <p>Behind Traefik Reverse-proxy</p>
-<a href="/docs/user-guides/office-integration/traefik-setup/" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; text-decoration: none;">Start Guide →</a>
+{{< doclink path="user-guides/office-integration/traefik-setup" text="Start Guide →" />}}
 </div>
 
 <div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
 <h3 style="margin-top: 0;">🔒 Internal office HTTPS</h3>
 <p>Custom certificates</p>
-<a href="/docs/user-guides/office-integration/office-internal-https/" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; text-decoration: none;">Start Guide →</a>
+{{< doclink path="user-guides/office-integration/office-internal-https" text="Start Guide →" />}}
 </div>
 
 </div>

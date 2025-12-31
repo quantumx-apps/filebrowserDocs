@@ -123,6 +123,46 @@ function convertAbsoluteDocsLinks(content) {
   };
 }
 
+// Convert HTML links with /docs/ paths to doclink shortcodes
+function convertHtmlDocsLinks(content) {
+  // Pattern to match HTML links: <a href="/docs/path">text</a>
+  // Also handles links with attributes: <a href="/docs/path" style="...">text</a>
+  // More flexible pattern that handles href anywhere in the tag
+  const htmlLinkPattern = /<a\s+[^>]*href=["']\/docs\/([^"']+)["'][^>]*>([^<]+)<\/a>/gi;
+  
+  let convertedContent = content;
+  let conversions = [];
+  
+  // Find all HTML /docs/ matches
+  let match;
+  while ((match = htmlLinkPattern.exec(content)) !== null) {
+    const [fullMatch, docPath, linkText] = match;
+    // Clean up doc path (remove trailing slash)
+    let cleanPath = docPath.replace(/\/$/, '');
+    // Clean up link text (remove extra whitespace)
+    const cleanText = linkText.trim();
+    const shortcode = `{{< doclink path="${cleanPath}" text="${cleanText}" />}}`;
+    
+    conversions.push({
+      original: fullMatch,
+      converted: shortcode,
+      type: 'html-to-doclink',
+      path: cleanPath,
+      text: cleanText
+    });
+  }
+  
+  // Apply conversions (in reverse order to avoid index issues)
+  conversions.reverse().forEach(conversion => {
+    convertedContent = convertedContent.replace(conversion.original, conversion.converted);
+  });
+  
+  return {
+    content: convertedContent,
+    conversions: conversions.reverse() // Reverse back for reporting
+  };
+}
+
 // Convert relative links to /docs/ links
 function convertRelativeToDocsLinks(content, filePath) {
   // Pattern to match relative markdown links: [text](../path/to/file)
@@ -248,6 +288,11 @@ async function processMarkdownFile(filePath) {
       const absoluteResult = convertAbsoluteDocsLinks(finalContent);
       finalContent = absoluteResult.content;
       allConversions.push(...absoluteResult.conversions);
+      
+      // Convert HTML links with /docs/ paths to doclink shortcodes
+      const htmlResult = convertHtmlDocsLinks(finalContent);
+      finalContent = htmlResult.content;
+      allConversions.push(...htmlResult.conversions);
     } else if (mode === 'docs') {
       // Convert relative links to /docs/ links
       const relativeResult = convertRelativeToDocsLinks(content, filePath);
