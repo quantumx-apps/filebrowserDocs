@@ -4,9 +4,17 @@ description: "How to add and manage translations for the documentation"
 icon: "translate"
 ---
 
+{{% alert context="warning" %}}
+Documentation is currently english-only and this guide may change
+{{% /alert %}}
+
 # Translations & i18n
 
 This guide explains how to add and manage translations for the FileBrowser Quantum documentation using Hugo's multilingual mode.
+
+{{% alert context="info" %}}
+Looking for how to update FileBrowser application translations? See {{< doclink path="contributing/Translations/translations" text="Application Translations" />}}
+{{% /alert %}}
 
 ## Overview
 
