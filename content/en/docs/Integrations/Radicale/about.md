@@ -47,6 +47,20 @@ FileBrowser Quantum can integrate with [Radicale](https://radicale.org/) to prov
 
 For more details on client compatibility and setup: [Radicale Supported Clients](https://radicale.org/v3.html#supported-clients) 🔗
 
+## Supported File Types
+
+### iCalendar format for events and appointments
+
+```
+.ics
+```
+
+### vCard format for contacts
+
+```
+.vcf
+```
+
 ## Configuration
 
 To enable Radicale features, you need:
