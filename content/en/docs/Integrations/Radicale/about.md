@@ -236,7 +236,7 @@ test
 cp -a ./radicale-data/collections/collection-root/test ~/radicale-backups/
 ```
 
-🔥 Delete a user collection (CarlDav & CardDav)
+Delete a user collection (CarlDav & CardDav)
 
 And if, for example, test is deleted from the Quantum file browser, the data in Radicale remains unchanged. This is a security feature.
 However, if Lisa is deleted from the Quantum file browser and you are certain that test's data can and should also be deleted from Radicale, then you can do so with the following command:
