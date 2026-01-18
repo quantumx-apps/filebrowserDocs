@@ -216,3 +216,36 @@ Important Notes:
 <img width="1473" height="1636" alt="gnome-online-settings-carldav" src="https://github.com/user-attachments/assets/4cc070ab-70ba-4e93-8895-52d065caae5e" />
 <img width="1760" height="957" alt="calender-login" src="https://github.com/user-attachments/assets/d09f79c0-9103-43dd-bfb4-c12d7748e8e7" />
 <img width="3806" height="1949" alt="gnome-calendar-with-radicale-sync" src="https://github.com/user-attachments/assets/517fa799-e22c-40ae-a503-1526e1bce56d" />
+
+##### List all users (usernames/nicknames) who have any collection (CarlDav & CardDav)
+
+```
+ls -1 ./radicale-data/collections/collection-root | grep -v '^admin$'
+```
+
+Example output:
+
+```
+steve
+test
+```
+
+##### Backup a user collection (CarlDav & CardDav)
+
+```
+cp -a ./radicale-data/collections/collection-root/test ~/radicale-backups/
+```
+
+🔥 Delete a user collection (CarlDav & CardDav)
+
+And if, for example, test is deleted from the Quantum file browser, the data in Radicale remains unchanged. This is a security feature.
+However, if Lisa is deleted from the Quantum file browser and you are certain that test's data can and should also be deleted from Radicale, then you can do so with the following command:
+
+```
+rm -rf ./radicale-data/collections/collection-root/test
+```
+
+## Further Resources
+
+For more information on setting up a rootless Podman environment, see the [User Guide by cryinkfly](https://github.com/cryinkfly/podman-rootless-quadlets/tree/main/quadlets/filebrowser-quantum)
+
