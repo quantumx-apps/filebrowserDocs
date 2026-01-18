@@ -156,6 +156,8 @@ location /.well-known/carddav {
 }
 ```
 
+---
+
 #### Radicale Key Settings
 
 The following are the key settings required for FileBrowser Quantum and client integration:
@@ -179,6 +181,8 @@ Example command:
 nano /path/to/config
 ```
 
+---
+
 #### Create an API Token for Calendar and Contacts Apps
 
 1. Open FileBrowser Quantum in your browser.
@@ -200,3 +204,15 @@ Important Notes:
 <img width="3806" height="1949" alt="create-user-api-token-radicale" src="https://github.com/user-attachments/assets/e5cf5274-9d47-4338-aa3c-d1d958724868" />
 
 © 2026 by [Steve Zabka](https://github.com/cryinkfly). All rights reserved.
+
+---
+
+#### Example for connecting GNOME Calendar & Contacts to Radicale
+
+<img width="960" height="921" alt="gnome-online-accounts-add" src="https://github.com/user-attachments/assets/d60b54a0-f713-41ac-a756-6f39467159db" />
+<img width="1184" height="1729" alt="gnome-online-add-carldav" src="https://github.com/user-attachments/assets/c4afe06f-3aad-455d-ad3f-a3a4dee69616" />
+<img width="1473" height="1636" alt="gnome-online-settings-carddav" src="https://github.com/user-attachments/assets/54de2dbe-3518-4425-b1a2-3273baeed18c" />
+<img width="1473" height="1636" alt="gnome-online-add-carddav" src="https://github.com/user-attachments/assets/f7aa3884-385a-4212-bd4f-03044a9987fe" />
+<img width="1473" height="1636" alt="gnome-online-settings-carldav" src="https://github.com/user-attachments/assets/4cc070ab-70ba-4e93-8895-52d065caae5e" />
+<img width="1760" height="957" alt="calender-login" src="https://github.com/user-attachments/assets/d09f79c0-9103-43dd-bfb4-c12d7748e8e7" />
+<img width="3806" height="1949" alt="gnome-calendar-with-radicale-sync" src="https://github.com/user-attachments/assets/517fa799-e22c-40ae-a503-1526e1bce56d" />
