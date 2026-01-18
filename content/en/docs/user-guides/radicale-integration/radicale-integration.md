@@ -1,7 +1,8 @@
 ---
-title: "Configuration"
-description: "Configure Radicale integration"
-icon: "settings"
+title: "Radicale Integration Guides"
+description: "Step-by-step guides for setting up Radicale integration"
+icon: "menu_book"
+order: 1
 ---
 
 Configure Radicale for CalDAV and CardDAV access.
