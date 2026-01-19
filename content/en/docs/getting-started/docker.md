@@ -13,9 +13,23 @@ Images from Docker Hub (`gtstef/filebrowser`) and GitHub Container Registry (`gh
 | Tag | Size | Features | Architectures |
 |-----|------|----------|---------------|
 | `latest`, `stable` | 60 MB | FFmpeg + document preview | arm64, amd64 |
+| `stable-slim` | 15 MB | Core service only (no media/office) | arm64, arm32, amd64 |
 | `beta` | 60 MB | FFmpeg + document preview | arm64, amd64 |
-| `beta-slim` | 15 MB | Core only (no media/office) | arm64, arm32, amd64 |
-| `dev` | 60 MB | Unstable development | arm64, amd64 |
+| `beta-slim` | 15 MB | Core service only (no media/office) | arm64, arm32, amd64 |
+
+### Version Tags
+
+In addition to the release type tags above, Docker images are also tagged with version numbers for more precise version control:
+
+- **Full version tags**: `1.2.5-stable`, `1.1.3-beta` - Pin to a specific version
+- **Major.minor tags**: `1.2-stable`, `1.1-beta` - Automatically receive patch updates within that minor version
+- **Major tags**: `1-stable`, `2-beta` - Automatically receive all updates within that major version
+
+The same versioning applies to slim images (e.g., `1.2.5-stable-slim`, `1.2-stable-slim`, `1-stable-slim`).
+
+{{% alert context="info" %}}
+**Recommended**: Use major.minor tags (e.g., `1.2-stable`) for production deployments. This ensures you receive important bug fixes and security patches while avoiding unexpected major version changes.
+{{% /alert %}}
 
 ## Quick Try
 
@@ -73,7 +87,7 @@ services:
       FILEBROWSER_ADMIN_PASSWORD: "change-me"
       # TZ: "America/New_York"
     volumes:
-      - /path/to/your/files:/folder
+      - /path/to/your/files:/folder # Do not use a root "/" directory or include the "/var" folder
       - ./data:/home/filebrowser/data
     ports:
       - 80:80

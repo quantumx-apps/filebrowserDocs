@@ -51,29 +51,28 @@ Production-ready setup with automatic HTTPS:
 - All from the {{< doclink path="user-guides/office-integration/office-integration#1-basic-docker-setup-recommended-for-beginners" text="Basic Docker Setup" />}}.
 - Configure and deploy Traefik for your services and configure them with docker compose.
 - Set up static IPs for containers.
+- How to configure and use traefik for your services.
 - Secure production deployment.
 
 **Time:** 45-60 minutes
 
 ---
 
-### 3. Advanced HTTPS Configuration
+### 3. Internal HTTPS Office configuration 
 
 **Best for:** Advanced users, custom security requirements
 
 Advanced HTTPS configurations for special needs:
-- Self-signed and custom CA certificates.
-- Full certificate velidation.
-- Multiple verification methods.
 - Onlyoffice with Internal HTTPS communication.
+- Self-signed and custom CA certificates.
+- Optional Full office certificate velidation.
 
-{{< doclink path="user-guides/office-integration/traefik-https/" text="Start Advanced Setup →" />}}
+{{< doclink path="user-guides/office-integration/office-internal-https/" text="Start internal office HTTPS Setup →" />}}
 
 **What you'll learn:**
+- All from {{< doclink path="user-guides/office-integration/office-integration/#2-behind-traefik-reverse-proxy-recommended-for-production" text="Traefik Setup Guide" />}}
 - Generate self-signed certificates.
-- Configure Traefik with file provider.
 - Set up static IPs for containers.
-- Implement full certificate validation.
 
 **Time:** 60-90 minutes
 
@@ -86,25 +85,25 @@ Advanced HTTPS configurations for special needs:
 | "I want to try OnlyOffice quickly" | {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} |
 | "I need production deployment with HTTPS" | {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} |
 | "I'm deploying on internal network only" | {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Basic Docker Setup" />}} |
-| "I need custom CA certificates" | {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS" />}} |
+| "I need custom CA certificates" | {{< doclink path="user-guides/office-integration/office-internal-https/" text="Internal office HTTPS" />}} |
 | "I want automatic SSL renewal" | {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} |
-| "I have specific security requirements" | {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS" />}} |
+| "I need internal HTTPS communication" | {{< doclink path="user-guides/office-integration/office-internal-https/" text="Internal Office HTTPS" />}} |
 
 ## Prerequisites for All Guides
 
 Before starting any guide, ensure you have:
 
-- [ ] **Docker** installed (version 20.10+).
-- [ ] **Docker Compose** installed (version 2.0+).
-- [ ] **Basic terminal/command line** knowledge.
-- [ ] **Text editor** for configuration files.
-- [ ] **At least 4GB RAM** available (2GB for OnlyOffice minimum).
-- [ ] **10GB disk space** for Docker images.
+- ✅ **Docker** installed (version 20.10+).
+- ✅ **Docker Compose** installed (version 2.0+).
+- ✅ **Basic terminal/command line** knowledge.
+- ✅ **Text editor** for configuration files.
+- ✅ **At least 4GB RAM** available (2GB for OnlyOffice minimum).
+- ✅ **10GB disk space** for Docker images.
 
 **For production guides, additionally:**
-- [ ] **Domain name** registered.
-- [ ] **DDNS provider** account (Dynu, Cloudflare, DuckDNS, etc).
-- [ ] **Email address** for Let's Encrypt.
+- ✅ **Domain name** registered.
+- ✅ **DDNS provider** account (Dynu, Cloudflare, DuckDNS, etc).
+- ✅ **Email address** for Let's Encrypt.
 
 ## What is OnlyOffice?
 
@@ -197,8 +196,8 @@ docker stats
 
 These guides are based on configurations shared by FileBrowser community members:
 
-- [@Kurami32](https://github.com/gtsteffaniak/filebrowser/discussions/1237) - Complete Traefik setup with Let's Encrypt.
-- [@BaccanoMob](https://github.com/gtsteffaniak/filebrowser/discussions/1237) - Advanced HTTPS methods and troubleshooting.
+- [@Kurami32](https://github.com/gtsteffaniak/filebrowser/discussions/1237#discussioncomment-14447935) - Complete Traefik setup guide.
+- [@BaccanoMob](https://github.com/gtsteffaniak/filebrowser/discussions/1237#discussion-8913996) - Office internal HTTPS methods. 
 
 Want to contribute your configuration? Share it in [GitHub Discussions](https://github.com/gtsteffaniak/filebrowser/discussions)!
 
@@ -244,19 +243,19 @@ Choose your guide and begin setting up OnlyOffice integration:
 <div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
 <h3 style="margin-top: 0;">🚀 Basic Setup</h3>
 <p>Quick HTTP setup for local testing</p>
-<a href="/docs/user-guides/office-integration/basic-docker-setup/" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; text-decoration: none;">Start Guide →</a>
+{{< doclink path="user-guides/office-integration/basic-docker-setup" text="Start Guide →" />}}
 </div>
 
 <div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
 <h3 style="margin-top: 0;">⭐ Production Setup</h3>
 <p>Behind Traefik Reverse-proxy</p>
-<a href="/docs/user-guides/office-integration/traefik-setup/" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; text-decoration: none;">Start Guide →</a>
+{{< doclink path="user-guides/office-integration/traefik-setup" text="Start Guide →" />}}
 </div>
 
 <div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
-<h3 style="margin-top: 0;">🔒 Advanced HTTPS</h3>
+<h3 style="margin-top: 0;">🔒 Internal office HTTPS</h3>
 <p>Custom certificates</p>
-<a href="/docs/user-guides/office-integration/traefik-https/" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary); color: white; border-radius: 4px; text-decoration: none;">Start Guide →</a>
+{{< doclink path="user-guides/office-integration/office-internal-https" text="Start Guide →" />}}
 </div>
 
 </div>

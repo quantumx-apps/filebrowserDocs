@@ -14,7 +14,7 @@ If you are having persistent issues with OnlyOffice, the first thing should be t
 
 **Enable Debug Mode:**
 1. Navigate to **Profile Settings** → **File Viewer Options**
-2. Toggle **"Debug OnlyOffice Editor"** to ON
+2. Toggle **"Enable OnlyOffice Debug Mode"** to ON
 3. Open any document with OnlyOffice
 4. View the debug tooltip that appears automatically
 
@@ -47,6 +47,7 @@ The diagram shows the communication flow:
 Configure filebrowser to run with {{< doclink path="advanced/logging/debug-logging/" text="debug logging" />}}
 
 ### Enable OnlyOffice service debug logs
+In the `docker-compose.yaml` file of onlyoffice:
 
 ```yaml
 onlyoffice:
@@ -105,12 +106,13 @@ FileBrowser needs correct URLs:
 ```yaml
 integrations:
   office:
-    url: "http://<onlyoffice-server>"       # Must be accessible from browser
+    url: "http://<onlyoffice-server>"       # Must be accessible from your browser
     secret: "your-jwt-secret"
 ```
 
 {{% alert context="warning" %}}
-`localhost` will NOT work if services are in separate containers. Use Docker service name or IP address.
+- If using docker, `localhost` will NOT work if services are in separate containers. Use Docker service name or IP address.
+- If you have the services in different physical devices, `localhost` also will not work, you will need to use the local IP address and ports of the respective devices in your local network. If you use a firewall make sure that's not interferring.
 {{% /alert %}}
 
 Test the URL from your browser: Navigate to the OnlyOffice URL - you should see a welcome page.
@@ -155,6 +157,7 @@ onlyoffice:
     - JWT_ENABLED=true
     - JWT_SECRET=your-generated-secret  # MUST match FileBrowser exactly
     - JWT_HEADER=Authorization
+    - ALLOW_PRIVATE_IP_ADDRESS=true # This configuration allows private ip address on DNS lookup
 ```
 
 {{% alert context="warning" %}}
@@ -301,21 +304,56 @@ integrations:
 
 {{< /tabs >}}
 
+### API Connection Errors
+{{% alert context="danger" %}}
+**Problem:** OnlyOffice API can't communicate with the browser.
+
+**Symptoms:**
+- Documents don't load.
+- Blank pages.
+- Office is accesible from browser, but not the API.
+{{% /alert %}}
+
+This is most common for users running behind a reverse proxy. If you have all correctly configured but you can't open any document, make sure that the API of onlyoffice is reachable, you can check this by visiting this URL in the browser or using the  `curl` command:
+
+```shell
+http://<office-server>/web-apps/apps/api/documents/api.js # http or https with domain name if behind reverse proxy
+```
+
+Possible causes:
+- **Wrong reverse proxy configuration:** Make sure that you reverse proxy is properly configured.
+- **CORS Issues:** If accessing from a different domain, ensure CORS is configured in you reverse proxy.
+- **Firewall issues:** Make sure that you don't have firewalls that can be interferring.
+- Connection errors.
+
+If using docker, make sure that you are using the official onlyoffice image, since some from third parties have some custom configurations that might be conflicting.
+
+### Private IP addresses
+{{% alert context="danger" %}}
+**Problem:** Issues when using private IP addresses.
+**Symptoms:**
+- Warnings when saving a document.
+- Errors editing documents.
+- You can also have some connection errors due to that.
+{{% /alert %}}
+
+OnlyOffice blocks private IP addresses (like 192.168.x.x) by default for security. This occurs when using internal URLs in your configuration.
+
+To fix this you'll need to add an environment variable to your onlyoffice compose file:
+
+```yaml
+onlyoffice:
+  environment:
+    - JWT_ENABLED=true
+    - JWT_SECRET=your-secret
+    - ALLOW_PRIVATE_IP_ADDRESS=true # Add this
+```
+
 ## Advanced Configuration
 
 ### External and Internal URLs
 
-```yaml
-server:
-  externalUrl: "https://files.yourdomain.com"  # Accessible from browser
-  internalUrl: "http://192.168.1.100"         # Either use local network or docker network IP thats accessible from onlyoffice server.
-
-integrations:
-  office:
-    url: "https://office.yourdomain.com"       # Accessible from browser
-    internalUrl: # optional this should be a local network address that filebrowser can access.
-    secret: "your-jwt-secret"
-```
+See {{< doclink path="integrations/office/configuration#external-and-internal-urls" text="Configuration" />}}
 
 **Why two URLs?**
 
@@ -328,6 +366,21 @@ integrations:
 ### Slow Document Loading
 
 Document loading can be quite slow because of the many components onlyoffice needs to talk to. The best way to improve document loading times it to set `server.internalUrl` so OnlyOffice can communicate directly with filebrowser (it's possible on same private network).
+
+## Download Fails
+
+Always look at the only office server logs for clues when you see "Download Failed" for clues that filebrowser itself can't see.
+
+Some have also found the need for `ALLOW_PRIVATE_IP_ADDRESS=true`:
+
+```yaml
+onlyoffice:
+  environment:
+    - JWT_ENABLED=true
+    - JWT_SECRET=your-generated-secret  # MUST match FileBrowser exactly
+    - JWT_HEADER=Authorization
+    - ALLOW_PRIVATE_IP_ADDRESS=true # This configuration allows private ip address on DNS lookup
+```
 
 ## Getting Help
 
@@ -349,5 +402,5 @@ When asking for help, provide:
 ## Next Steps
 
 - {{< doclink path="integrations/office/configuration/" text="Configuration" />}} - Set up OnlyOffice integration
-- {{< doclink path="integrations/office/guides/" text="Office guides" />}} - Usage examples and best practices
+- {{< doclink path="user-guides/office-integration/office-integration/" text="Office guides" />}} - Usage examples and best practices
 - {{< doclink path="integrations/office/about/" text="About OnlyOffice" />}} - Features and capabilities

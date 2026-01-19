@@ -44,7 +44,7 @@ docker run -d \
   -v /path/to/your/config.yaml:/home/filebrowser/data/config.yaml \
   -v /path/to/your/folder:/folder \
   -p 80:80 \
-  gtstef/filebrowser:beta
+  gtstef/filebrowser
 ```
 
 ### Using Docker Compose
@@ -67,7 +67,7 @@ Here's a minimal config file to get you started:
 ```yaml
 server:
   sources:
-    - path: "/path/to/your/files" # or '/folder' in above example
+    - path: "/path/to/your/files" # or '/folder' in above example (do not load the full os filesystem, must be sub path)
       config:
         defaultEnabled: true  # Give access to all users by default
 
@@ -87,7 +87,7 @@ FileBrowser supports extensive configuration options. You can view the complete 
 
 - **Server Settings**: Port, database, sources, caching
 - **Authentication**: Password, OIDC, proxy authentication
-- **Users**: User management and permissions
+- **UsersDefaults**: New user defualts
 - **Frontend**: UI customization, themes, branding
 - **Integrations**: Media (FFmpeg) and office (OnlyOffice) support
 
@@ -108,7 +108,7 @@ auth:
 ```
 
 ### 2. Use Environment Variables for Secrets
-Instead of putting secrets in your config file, use {{< doclink path="reference/environment-variables" text="environment variables" />}:
+Instead of putting secrets in your config file, use {{< doclink path="reference/environment-variables" text="environment variables" />}}:
 
 ```yaml
 auth:
