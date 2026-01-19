@@ -41,8 +41,6 @@ server:
       name: "Secured Files"
 ```
 
-When multiple sources are configured, source paths include the souree name. For example `http://your-server/files/My%20Files/path/to/file`.
-
 ## Common Patterns
 
 ### Personal User Directories

@@ -80,7 +80,7 @@ auth:
 
 FileBrowser supports extensive configuration options. You can view the complete configuration reference at:
 
-- **Full config example**: {{< doclink path="reference/configuration/" text="Configuration Reference" />}}
+- **Full config example**: {{< doclink path="reference/fullConfig/" text="Full Config Example" />}}
 - **Current config**: In the web UI, Admins can go to Settings > System & Admin > Load Config
 
 ### Key Configuration Sections
