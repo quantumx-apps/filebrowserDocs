@@ -7,7 +7,7 @@ icon: "security"
 # File Browser Access Control Rules
 
 {{% alert context="info" %}}
-Access rules do not apply to shares.
+Access rules for shares apply based on the user that created the share.
 {{% /alert %}}
 
 This document explains how access control rules work in FileBrowser Quantum, including how rules are inherited and how they can be overridden.
