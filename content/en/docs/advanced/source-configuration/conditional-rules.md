@@ -3,54 +3,86 @@ title: "Conditional Rules"
 description: "Control which files and folders are indexed using conditional rules"
 icon: "rule"
 date: "2024-10-17T10:00:00Z"
-lastmod: "2024-10-17T10:00:00Z"
+lastmod: "2025-01-27T10:00:00Z"
 ---
 
 ## Overview
 
 Conditional rules allow you to control which files and folders are indexed by FileBrowser Quantum. Use rules to exclude system files, temporary directories, or large archives while keeping your UI clean and search results relevant.
 
+{{% alert context="info" %}}
+**Version 1.2.0+**: Rules have been simplified. The `conditionals` wrapper has been removed, and `ignoreHidden`, `ignoreZeroSizeFolders`, and `ignoreSymlinks` are moved to rule items.
+{{% /alert %}}
+
 ## Basic Structure
 
-Rules are configured under `conditionals` in your source configuration:
+Rules are configured directly under `rules` in your source configuration:
 
 ```yaml
 sources:
   - path: "/data"
     config:
-      conditionals:
-        ignoreHidden: true
-        ignoreZeroSizeFolders: false
-        rules:
-          - folderPath: "excluded"
-          - fileNames: ".DS_Store"
+      rules:
+        - folderPath: "excluded"
+        - fileName: ".DS_Store"
+          ignoreHidden: true
 ```
 
-## Global Flags
+## Global flags
 
-These flags apply to the entire source:
+Items such as `ignoreHidden`, `ignoreZeroSizeFolders`, and `ignoreSymlinks` can now be used as a global flag by not specifying a rule name like:
+
+
+```yaml
+sources:
+  - path: "/data"
+    config:
+      rules:
+        - FolderPath: "/"             # (global) 
+          ignoreHidden: true          # ignores all hidden
+        - FolderPath: "/"             # (global) 
+          ignoreZeroSizeFolders: true # ignores all zero size folders
+        - FolderPath: "/"             # (global)
+          ignoreSymlinks: true        # ignores all symlinks
+```
+
+## Rule Properties
+
+These properties can be added to any rule to control behavior:
 
 ### `ignoreHidden`
 
 ```yaml
-conditionals:
-  ignoreHidden: true
+rules:
+  - fileName: ".DS_Store"
+    ignoreHidden: true
 ```
 
-Skip all hidden files and folders (those starting with `.`). Hidden items don't appear in UI or search. Defaults to `false`. Useful for automatically excluding system files like `.git` and `.DS_Store`.
+Skip hidden files and folders (those starting with `.` on linux and windows hidden folders) that match this rule. Hidden items don't appear in UI or search. Defaults to `false`.
 
 ### `ignoreZeroSizeFolders`
 
 ```yaml
-conditionals:
-  ignoreZeroSizeFolders: true
+rules:
+  - folderPath: "empty-dirs"
+    ignoreZeroSizeFolders: true
 ```
 
-Skip folders with zero calculated size. Empty folders or folders containing only empty folders are ignored. Defaults to `false`. Cleans up UI by hiding empty directory structures.
+Skip folders with zero calculated size that match this rule. Empty folders or folders containing only empty folders are ignored. Defaults to `false`. Cleans up UI by hiding empty directory structures.
 
 {{% alert context="info" %}}
 You can still create folders via the UI. They must be populated by the next index scan to remain visible.
 {{% /alert %}}
+
+### `ignoreSymlinks`
+
+```yaml
+rules:
+  - folderPath: "symlinks"
+    ignoreSymlinks: true
+```
+
+Skip symbolic links that match this rule. Defaults to `false`. Useful for excluding symlinked directories from indexing.
 
 ## Rule Types
 
@@ -84,27 +116,27 @@ Matches exact file path relative to source root. For example, `filePath: "data.d
 
 These rules apply anywhere within the source.
 
-#### `folderNames`
+#### `folderName`
 
 ```yaml
 rules:
-  - folderNames: "node_modules"
-  - folderNames: "__pycache__"
-  - folderNames: ".git"
+  - folderName: "node_modules"
+  - folderName: "__pycache__"
+  - folderName: ".git"
 ```
 
-Matches any folder with this exact name, anywhere in the source. For example, `folderNames: "node_modules"` excludes all `node_modules` directories. Useful for excluding common folder names like cache or build directories.
+Matches any folder with this exact name, anywhere in the source. For example, `folderName: "node_modules"` excludes all `node_modules` directories. Useful for excluding common folder names like cache or build directories.
 
-#### `fileNames`
+#### `fileName`
 
 ```yaml
 rules:
-  - fileNames: ".DS_Store"
-  - fileNames: "Thumbs.db"
-  - fileNames: "desktop.ini"
+  - fileName: ".DS_Store"
+  - fileName: "Thumbs.db"
+  - fileName: "desktop.ini"
 ```
 
-Matches any file with this exact name, anywhere in the source. For example, `fileNames: ".DS_Store"` excludes all `.DS_Store` files. Useful for excluding system or temporary files by name.
+Matches any file with this exact name, anywhere in the source. For example, `fileName: ".DS_Store"` excludes all `.DS_Store` files. Useful for excluding system or temporary files by name.
 
 ### Pattern-Based Rules (Global)
 
@@ -218,23 +250,22 @@ Exclude common development artifacts:
 sources:
   - path: "/projects"
     config:
-      conditionals:
-        ignoreHidden: true
-        rules:
-          # Node.js
-          - folderNames: "node_modules"
-          - folderNames: "dist"
-          - folderNames: "build"
-          
-          # Python
-          - folderNames: "__pycache__"
-          - folderNames: ".pytest_cache"
-          - folderEndsWith: ".egg-info"
-          
-          # General
-          - folderNames: ".git"
-          - fileNames: ".DS_Store"
-          - fileEndsWith: ".log"
+      rules:
+        # Node.js
+        - folderName: "node_modules"
+        - folderName: "dist"
+        - folderName: "build"
+        
+        # Python
+        - folderName: "__pycache__"
+        - folderName: ".pytest_cache"
+        - folderEndsWith: ".egg-info"
+        
+        # General
+        - folderName: ".git"
+        - fileName: ".DS_Store"
+        - fileEndsWith: ".log"
+          ignoreHidden: true
 ```
 
 ### Media Library with Archives
@@ -245,23 +276,17 @@ Show archive folders but don't index them:
 sources:
   - path: "/media"
     config:
-      conditionals:
-        ignoreHidden: true
-        ignoreZeroSizeFolders: true
-        rules:
-          # System files
-          - fileNames: ".DS_Store"
-          - fileNames: "Thumbs.db"
-          - folderNames: "@eaDir"
-          
-          # Show but don't index archives
-          - folderPath: "2020-archive"
-            viewable: true
-          - folderPath: "2021-archive"
-            viewable: true
-          
-          # Never rescan large stable folders
-          - neverWatchPath: "historical-collection"
+      rules:
+        
+        # Show but don't index archives
+        - folderPath: "2020-archive"
+          viewable: true
+        - folderPath: "2021-archive"
+          viewable: true
+        
+        # Never rescan large stable folders
+        - neverWatchPath: "historical-collection"
+          ignoreZeroSizeFolders: true
 ```
 
 ### Restricted Public Share
@@ -272,140 +297,21 @@ Only expose specific directories:
 sources:
   - path: "/shared"
     config:
-      conditionals:
-        rules:
-          # Only these folders visible at root
-          - includeRootItem: "public"
-          - includeRootItem: "downloads"
-          - includeRootItem: "README.md"
-```
-
-### Enterprise File Server
-
-Comprehensive exclusions for corporate environment:
-
-```yaml
-sources:
-  - path: "/fileserver"
-    config:
-      conditionals:
-        ignoreHidden: true
-        ignoreZeroSizeFolders: true
-        rules:
-          # Windows system files
-          - fileNames: "desktop.ini"
-          - fileNames: "Thumbs.db"
-          - folderNames: "System Volume Information"
-          - folderNames: "$RECYCLE.BIN"
-          
-          # macOS system files
-          - fileNames: ".DS_Store"
-          - fileStartsWith: "._"
-          - folderNames: ".Trashes"
-          
-          # Synology NAS
-          - folderNames: "@eaDir"
-          - folderNames: "#recycle"
-          
-          # Temporary and backup files
-          - fileEndsWith: "~"
-          - fileEndsWith: ".tmp"
-          - fileEndsWith: ".bak"
-          - folderStartsWith: "~"
-          
-          # Archives - visible but not searchable
-          - folderPath: "archives/2020"
-            viewable: true
-          - folderPath: "archives/2021"
-            viewable: true
+      rules:
+        # Only these folders visible at root
+        - includeRootItem: "public"
+        - includeRootItem: "downloads"
+        - includeRootItem: "README.md"
 ```
 
 ## Rule Priority and Behavior
 
 ### How Rules Are Applied
 
-1. **Global flags first:** `ignoreHidden` and `ignoreZeroSizeFolders` are checked first
-2. **Rules are OR-based:** If any rule matches an item, it's excluded
-3. **Path rules are exact:** `folderPath: "temp"` only matches `/temp`, not `/project/temp`
-4. **Name rules are global:** `folderNames: "temp"` matches any `temp` folder anywhere
-5. **Viewable overrides exclusion:** Adding `viewable: true` shows the item in UI
-
-### Common Patterns
-
-<div class="pattern-grid">
-
-<div class="pattern-card">
-<h4>Exclude by Extension</h4>
-
-```yaml
-rules:
-  - fileEndsWith: ".log"
-  - fileEndsWith: ".tmp"
-  - fileEndsWith: ".bak"
-```
-
-Removes temporary and log files.
-
-</div>
-
-<div class="pattern-card">
-<h4>Exclude System Files</h4>
-
-```yaml
-ignoreHidden: true
-rules:
-  - fileNames: ".DS_Store"
-  - fileNames: "Thumbs.db"
-```
-
-Clean UI without system clutter.
-
-</div>
-
-<div class="pattern-card">
-<h4>Show Large Archives</h4>
-
-```yaml
-rules:
-  - folderPath: "archive"
-    viewable: true
-  - neverWatchPath: "archive"
-```
-
-Browsable but not indexed or rescanned.
-
-</div>
-
-<div class="pattern-card">
-<h4>Development Projects</h4>
-
-```yaml
-rules:
-  - folderNames: "node_modules"
-  - folderNames: ".git"
-  - folderEndsWith: ".cache"
-```
-
-Exclude build artifacts and dependencies.
-
-</div>
-
-</div>
-
-## Best Practices
-
-1. **Start with hidden files:** Enable `ignoreHidden: true` for cleaner UI
-2. **Use global rules for common patterns:** `folderNames` and `fileNames` work everywhere
-3. **Path rules for specific exclusions:** Use `folderPath` for known directories
-4. **Consider viewable for archives:** Show large stable folders without indexing overhead
-5. **Test your rules:** Verify excluded items don't appear in search
-
-## Performance Tips
-
-- **Use `neverWatchPath`** for large, stable directories to save resources
-- **Enable `ignoreZeroSizeFolders`** if you have many empty directories
-- **Exclude large development folders** like `node_modules` to speed up scans
-- **Use `viewable` for archives** to show them without search overhead
+1. **Rules are OR-based:** If any rule matches an item, it's excluded
+2. **Name rules are global:** `folderName: "temp"` matches any `temp` folder anywhere
+3. **Rule properties apply per-rule:** `ignoreHidden`, `ignoreZeroSizeFolders`, and `ignoreSymlinks` are evaluated for each matching rule
+4. **Viewable overrides exclusion:** Adding `viewable: true` shows the item in UI
 
 ## Next Steps
 
