@@ -23,7 +23,7 @@ Simple HTTP-based setup, perfect for:
 - Development environments.
 - Internal network deployments.
 
-{{< doclink path="user-guides/radicale-integration/rootles-podman-setup/" text="Start Basic Setup →" />}}
+{{< doclink path="user-guides/radicale-integration/rootles-podman-setup/" text="Start Rootles Podman Setup →" />}}
 
 **What you'll learn:**
 - Generate podman secrets.
@@ -48,32 +48,22 @@ Production-ready setup with automatic HTTPS:
 
 {{< doclink path="user-guides/radicale-integration/npm-setup/" text="Start NPM Setup →" />}}
 
+**What you'll learn:**
+- All from the {{< doclink path="user-guides/radicale-integration/radicale-integration#1-rootles-podman-setup-recommended-for-beginners-and-advanced-users" text="Rootles Podman Setup" />}}.
+- Configure and deploy Nginx Proxy Manager for your services and configure them with podman quadlets.
+- Set up IPs and custom /locations for containers.
+- How to configure and use NPM for your services.
+- Secure production deployment.
 
+**Time:** 45-60 minutes
 
+---
 
+### 3. Radicale configuration
 
+**Best for:** Advanced users, custom security requirements
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-The following are the key settings required for FileBrowser Quantum and client integration:
+Configuration Settings:
 
 ```
 [server]
@@ -85,6 +75,34 @@ type = http_x_remote_user
 [web]
 type = none
 ```
+
+> Note: This is only a partial excerpt. The full Radicale configuration can be viewed inside your container or volume.
+
+{{< doclink path="user-guides/radicale-integration/radicale-setup/" text="Start Radicale Setup →" />}}
+
+**What you'll learn:**
+- Configure Radicale for multi-user calendar and contact access.
+- Understand authentication and server settings.
+- Deploy Radicale securely in a rootless Podman environment.
+- Integrate Radicale with FileBrowser Quantum and other CalDAV/CardDAV clients.
+
+**Time:** 15-20 minutes
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 > Note: This is only an excerpt. The [full Radicale configuration](https://raw.githubusercontent.com/cryinkfly/podman-rootless-quadlets/refs/heads/main/quadlets/filebrowser-quantum/radicale/config) can be viewed in your config file inside the container or volume.
 
