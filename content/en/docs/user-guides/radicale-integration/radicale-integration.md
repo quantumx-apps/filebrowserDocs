@@ -5,116 +5,73 @@ icon: "menu_book"
 order: 1
 ---
 
-Configure Radicale for CalDAV and CardDAV access.
+Practical, community-tested guides for deploying FileBrowser Quantum with Radicale (CarlDav/CardDav) server.
 
 {{% alert context="info" %}}
-Radicale is currently the only supported CalDAV/CardDAV server for FileBrowser Quantum. Other calendar/contact servers may be supported in the future.
+These guides are based on real-world configurations contributed by the FileBrowser community. Choose the guide that matches your deployment scenario.
 {{% /alert %}}
 
-## Basic Configuration
+## Available Guides
 
-### Example for Radicale docker `compose.yaml` with network `fb-network`:
+### 1. Rootles Podman Setup (Recommended for beginners and advanced users)
 
-```
-version: "3.9"
+**Best for:** Local development, testing, learning.
 
-services:
-  filebrowser:
-    image: gtstef/filebrowser:beta
-    container_name: filebrowser-quantum
-    environment:
-      FILEBROWSER_CONFIG: "/home/filebrowser/data/config.yaml"
-      FILEBROWSER_ADMIN_PASSWORD: "change-me"
-      TZ: "Europe/Berlin"
-    volumes:
-      - /path/to/your/files:/folder # User files
-      - ./filebrowser-data:/home/filebrowser/data
-    ports:
-      - "80:80"
-    restart: unless-stopped
-    networks:
-      - fb-network
+Simple HTTP-based setup, perfect for:
+- Getting started with Radicale.
+- Testing on your local machine.
+- Development environments.
+- Internal network deployments.
 
-  radicale:
-    image: ghcr.io/kozea/radicale:latest
-    container_name: radicale
-    environment:
-      RADICALE_CONFIG: /config/config
-    volumes:
-      - ./radicale-data:/data       # Persistent calendar/contact data
-      - ./radicale-config:/config   # Radicale configuration
-    ports:
-      - "5232:5232"
-    restart: unless-stopped
-    mem_limit: 256M
-    pids_limit: 50
-    read_only: true
-    security_opt:
-      - no-new-privileges:true
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:5232"]
-      interval: 30s
-      retries: 3
-    networks:
-      - fb-network
+{{< doclink path="user-guides/radicale-integration/rootles-podman-setup/" text="Start Basic Setup →" />}}
 
-networks:
-  fb-network:
-    driver: bridge
-```
+**What you'll learn:**
+- Generate podman secrets.
+- Generate API-Tokens for serveral CalDav/CardDav clients.
+- Configure a rootles podman pod.
+- Set up FileBrowser and Radicale.
+- Verify CalDAV/CardDAV functionality.
+
+**Time:** 15-30 minutes
 
 ---
 
-### Example for Reverse Proxy (Nginx Proxy Manager)
+### 2. Behind Nginx Proxy Manager Reverse-proxy (Recommended for Production)
 
-When configuring the reverse proxy for FileBrowser Quantum, set the following settings in Nginx Proxy Manager:
+**Best for:** Production deployments, internet-facing servers.
 
-- **Forward Hostname / IP:** localhost (or the container name if internal networking is used)
-- **Forward Port:** 80
+Production-ready setup with automatic HTTPS:
+- Let's Encrypt SSL certificates.
+- Automatic certificate renewal.
+- Secure JWT authentication.
+- DDNS support (Dynu, Cloudflare, DuckDNS, etc).
 
-Under Advanced Settings in Nginx Proxy Manager, forward /caldav/ and /carddav/ requests to Radicale using this configuration:
+{{< doclink path="user-guides/radicale-integration/npm-setup/" text="Start NPM Setup →" />}}
 
-```
-# CalDAV
-location /caldav/ {
-    proxy_pass http://radicale:5232;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header X-Remote-User $remote_user;
-    proxy_set_header X-Script-Name /caldav;
-}
 
-location /.well-known/caldav {
-    proxy_pass http://radicale:5232;
-    proxy_set_header Host $host;
-    proxy_set_header X-Remote-User $remote_user;
-    proxy_set_header X-Script-Name /caldav;
-}
 
-# CardDAV
-location /carddav/ {
-    proxy_pass http://radicale:5232;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header X-Remote-User $remote_user;
-    proxy_set_header X-Script-Name /carddav;
-}
 
-location /.well-known/carddav {
-    proxy_pass http://radicale:5232;
-    proxy_set_header Host $host;
-    proxy_set_header X-Remote-User $remote_user;
-    proxy_set_header X-Script-Name /carddav;
-}
-```
 
----
 
-### Radicale Key Settings
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 The following are the key settings required for FileBrowser Quantum and client integration:
 
