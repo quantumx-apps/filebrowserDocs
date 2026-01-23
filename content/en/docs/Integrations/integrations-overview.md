@@ -1,6 +1,6 @@
 ---
 title: "Integrations Overview"
-description: "Enable media and office document features"
+description: "Enable media, CalDAV/CardDAV and office document features"
 icon: "extension"
 ---
 
