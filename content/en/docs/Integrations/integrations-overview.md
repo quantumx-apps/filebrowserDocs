@@ -56,6 +56,6 @@ integrations:
 
 - {{< doclink path="integrations/media/" text="Media integration setup" />}}
 - {{< doclink path="integrations/office/" text="Office integration setup" />}}
-- {{< doclink path="user-guides/office-integration/office-integration/" text="Radicale guides" />}}
+- {{< doclink path="user-guides/office-integration/office-integration/" text="Office guides" />}}
 - {{< doclink path="integrations/radicale/" text="Radicale integration setup" />}}
 - {{< doclink path="user-guides/radicale-integration/radicale-integration/" text="Radicale guides" />}}
