@@ -90,6 +90,55 @@ type = none
 
 ---
 
+## Quick Decision Matrix
+
+| Scenario | Recommended Guide |
+|----------|-------------------|
+| "I want to try Radicale quickly" | {{< doclink path="user-guides/radicale-integration/rootles-podman-setup/" text="Rootles Podman Setup" />}} |
+| "I need production deployment with HTTPS" | {{< doclink path="user-guides/radicale-integration/npm-setup/" text="NPM Setup" />}} |
+| "I'm deploying on internal network only" | {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Rootles Podman Setup" />}} |
+...
+
+## Prerequisites for All Guides
+
+Before starting any guide, ensure you have:
+
+- ✅ **Podman** installed (version 5.4.2+).
+- ✅ **Rootless Podman setup** for running containers without root.
+- ✅ **Systemd support** for managing rootless pods via quadlets.
+- ✅ **Basic terminal/command line** knowledge.
+- ✅ **Text editor** for configuration files.
+- ✅ **At least 4GB RAM** available (2GB for OnlyOffice minimum).
+- ✅ **10GB disk space** for Docker images.
+
+**For production guides, additionally:**
+- ✅ **Domain name** registered.
+- ✅ **DDNS provider** account (Dynu, Cloudflare, DuckDNS, etc).
+- ✅ **Email address** for Let's Encrypt.
+
+## What is Radicale?
+
+Radicale is a lightweight, open-source CalDAV/CardDAV server that provides:
+- **Multi-user support** with multiple calendars and address books
+- **Easy integration** with FileBrowser Quantum and other CalDAV/CardDAV clients
+
+{{< doclink path="integrations/radicale/about/" text="Learn more about Radicale →" />}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
