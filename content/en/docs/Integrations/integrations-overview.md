@@ -29,7 +29,7 @@ OnlyOffice is currently the only supported office integration. Collabora support
 - {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}} - Common issues
 
 ### {{< doclink path="integrations/radicale/" text="Radicale Integration" />}}
-Lightweight open-source CalDAV/CardDAV server with multi-user support.
+Simple, lightweight CalDAV/CardDAV server with multi-user support.
 
 - {{< doclink path="integrations/radicale/about/" text="About" />}} - Overview and features
 - {{< doclink path="integrations/radicale/configuration/" text="Configuration" />}} - Setup and options
