@@ -96,8 +96,6 @@ type = none
 |----------|-------------------|
 | "I want to try Radicale quickly" | {{< doclink path="user-guides/radicale-integration/rootles-podman-setup/" text="Rootles Podman Setup" />}} |
 | "I need production deployment with HTTPS" | {{< doclink path="user-guides/radicale-integration/npm-setup/" text="NPM Setup" />}} |
-| "I'm deploying on internal network only" | {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="Rootles Podman Setup" />}} |
-...
 
 ## Prerequisites for All Guides
 
