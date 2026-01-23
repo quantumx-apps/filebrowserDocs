@@ -197,88 +197,118 @@ Here's how FileBrowser Quantum integrates with Radicale:
 └──────────────────────────────────────────────────────────────┘
 ```
 
+**Flow:**
+1. User accesses calendar/contact in a client or FileBrowser Quantum.
+2. FileBrowser requests Radicale configuration.
+3. Client syncs calendars and contacts from Radicale.
+4. User creates/edits events or contacts.
+5. Changes are saved back to the Radicale server and synced across devices.
 
+{{< doclink path="integrations/radicale/troubleshooting/#network-flow-diagram" text="See detailed troubleshooting diagram →" />}}
 
+## After Setup
 
+Once Radicale is installed and configured:
 
+### Enable Features
 
+**User Settings:**
 
+- Configure which calendars or contact groups are visible
+- Enable read-only or full access per calendar/contact
+- Set default notifications for events
 
+**Admin Settings:**
 
+- Manage server-wide access and authentication options
+- Configure default permissions for users and groups
+- Customize logging and sync behavior
 
+### Test Integration
 
+- **Create test events and contacts** – Add new entries to verify creation works.
+- **Edit existing entries** – Make changes and check they sync across clients.
+- **Test multi-user access** – Ensure multiple users can access and modify shared calendars/contacts.
+- **Check sync support** – Verify changes propagate to all connected devices/clients.
+- **Enable debug mode** – Troubleshoot authentication, sync, or network issues.
 
-
-
-
-
-
-
----
-
-### Create an API Token for Calendar and Contacts Apps
-
-1. Open FileBrowser Quantum in your browser.
-2. Go to Settings → API Tokens.
-3. Click the “Create New Token” button.
-4. Enter a name or description for the token (e.g., “Mobile Calendar App”).
-5. The system will generate a username and token:
-    - Username: test
-    - Password: the token string
-6. Use the copy-to-clipboard button to copy the token for easy setup on your mobile device or CalDAV/CardDAV client.
-7. Paste the token in your app when asked for username/password.
-
-Important Notes:
-
-- You can create multiple tokens for different devices or users.
-- Each token can have a different lifetime – set an expiration date as needed.
-- Treat the token like a password – it grants full access to your calendars and contacts.
-
-<img width="3806" height="1949" alt="create-user-api-token-radicale" src="https://github.com/user-attachments/assets/e5cf5274-9d47-4338-aa3c-d1d958724868" />
-
-© 2026 by [Steve Zabka](https://github.com/cryinkfly). All rights reserved.
-
----
-
-### Example for connecting GNOME Calendar & Contacts to Radicale
-
-<img width="960" height="921" alt="gnome-online-accounts-add" src="https://github.com/user-attachments/assets/d60b54a0-f713-41ac-a756-6f39467159db" />
-<img width="1184" height="1729" alt="gnome-online-add-carldav" src="https://github.com/user-attachments/assets/c4afe06f-3aad-455d-ad3f-a3a4dee69616" />
-<img width="1473" height="1636" alt="gnome-online-settings-carddav" src="https://github.com/user-attachments/assets/54de2dbe-3518-4425-b1a2-3273baeed18c" />
-<img width="1473" height="1636" alt="gnome-online-add-carddav" src="https://github.com/user-attachments/assets/f7aa3884-385a-4212-bd4f-03044a9987fe" />
-<img width="1473" height="1636" alt="gnome-online-settings-carldav" src="https://github.com/user-attachments/assets/4cc070ab-70ba-4e93-8895-52d065caae5e" />
-<img width="1760" height="957" alt="calender-login" src="https://github.com/user-attachments/assets/d09f79c0-9103-43dd-bfb4-c12d7748e8e7" />
-<img width="3806" height="1949" alt="gnome-calendar-with-radicale-sync" src="https://github.com/user-attachments/assets/517fa799-e22c-40ae-a503-1526e1bce56d" />
-
-#### List all users (usernames/nicknames) who have any collection (CarlDav & CardDav)
+### Monitor Health
 
 ```
-ls -1 ./radicale-data/collections/collection-root | grep -v '^admin$'
+# Run curl inside the Radicale container/pod
+podman exec -it radicale curl -i http://localhost:5232/
+
+# View logs
+podman logs filebrowser-quantum-server
+podman logs filebrowser-quantum-radicale
+
+# Check resource usage for all running pods/containers
+podman stats
 ```
 
-Example output:
+## Community Contributions
 
-```
-steve
-test
-```
+These guides are based on configurations shared by FileBrowser community members:
 
-#### Backup a user collection (CarlDav & CardDav)
+- [@cryinkfly](https://github.com/gtsteffaniak/filebrowser/discussions/1752) - Complete setup guide.
 
-```
-cp -a ./radicale-data/collections/collection-root/test ~/radicale-backups/
-```
+Want to contribute your configuration? Share it in [GitHub Discussions](https://github.com/gtsteffaniak/filebrowser/discussions)!
 
-Delete a user collection (CarlDav & CardDav)
+## Additional Resources
 
-And if, for example, test is deleted from the Quantum file browser, the data in Radicale remains unchanged. This is a security feature.
-However, if Lisa is deleted from the Quantum file browser and you are certain that test's data can and should also be deleted from Radicale, then you can do so with the following command:
+### Documentation
 
-```
-rm -rf ./radicale-data/collections/collection-root/test
-```
+- {{< doclink path="integrations/radicale/configuration/" text="Configuration Reference" />}} - All configuration options.
+- {{< doclink path="integrations/radicale/troubleshooting/" text="Troubleshooting Guide" />}} - Common issues and solutions.
+- {{< doclink path="integrations/radicale/about/" text="Radicale Features" />}} - What Radicale can do.
 
-## Further Resources
+### External Resources
 
-For more information on setting up a rootless Podman environment, see the [User Guide by cryinkfly](https://github.com/cryinkfly/podman-rootless-quadlets/tree/main/quadlets/filebrowser-quantum)
+- [Radicale GitHub](https://github.com/Kozea/Radicale)
+- [Radicale Documentation](https://radicale.org/master.html)
+- [NPM Documentation](https://nginxproxymanager.com/guide/)
+- [Rootles Podman Documentation](https://github.com/cryinkfly/podman-rootless-quadlets)
 
+### Community
+
+- [GitHub Issues](https://github.com/gtsteffaniak/filebrowser/issues) - Report bugs.
+- [GitHub Discussions](https://github.com/gtsteffaniak/filebrowser/discussions) - Ask questions.
+- [Wiki](https://github.com/gtsteffaniak/filebrowser/wiki) - Community documentation.
+
+## Getting Help
+
+If you encounter issues:
+
+1. **Enable debug mode** in FileBrowser profile settings.
+2. **Check troubleshooting guide** for common solutions.
+3. **Review logs** from both FileBrowser and OnlyOffice.
+4. **Search existing issues** on GitHub.
+5. **Ask in discussions** with your configuration details.
+
+{{< doclink path="integrations/radicale/troubleshooting/" text="Go to Troubleshooting →" />}}
+
+## Ready to Start?
+
+Choose your guide and begin setting up Radicale integration:
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+
+<div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
+<h3 style="margin-top: 0;">🚀 Rootles Podman Setup</h3>
+<p>Quick Radicale setup for local testing</p>
+{{< doclink path="user-guides/radicale-integration/rootles-podman-setup/" text="Start Guide →" />}}
+</div>
+
+<div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
+<h3 style="margin-top: 0;">⭐ Production Setup</h3>
+<p>Behind Nginx Proxy Manager Reverse-proxy</p>
+{{< doclink path="user-guides/radicaleintegration/npm-setup" text="Start Guide →" />}}
+</div>
+
+<div style="border: 1px solid var(--gray-400); border-radius: 8px; padding: 1.5rem;">
+<h3 style="margin-top: 0;">📅 Radicale configuration</h3>
+<p>Configure Radicale for calendars and contacts</p>
+{{< doclink path="user-guides/radicale-integration/radicale-setup/" text="Start Guide →" />}}
+</div>
+
+</div>
