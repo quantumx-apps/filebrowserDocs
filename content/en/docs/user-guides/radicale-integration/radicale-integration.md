@@ -76,7 +76,7 @@ type = http_x_remote_user
 type = none
 ```
 
-> Note: This is only a partial excerpt. The full Radicale configuration can be viewed inside your container or volume.
+> Note: This is only a partial excerpt. The full Radicale configuration can be viewed [here](https://raw.githubusercontent.com/cryinkfly/podman-rootless-quadlets/refs/heads/main/quadlets/filebrowser-quantum/radicale/config).
 
 {{< doclink path="user-guides/radicale-integration/radicale-setup/" text="Start Radicale Setup →" />}}
 
@@ -96,21 +96,6 @@ type = none
 
 
 
-
-
-
-
-
-
-
-
-> Note: This is only an excerpt. The [full Radicale configuration](https://raw.githubusercontent.com/cryinkfly/podman-rootless-quadlets/refs/heads/main/quadlets/filebrowser-quantum/radicale/config) can be viewed in your config file inside the container or volume.
-
-Example command:
-
-```
-nano /path/to/config
-```
 
 ---
 
