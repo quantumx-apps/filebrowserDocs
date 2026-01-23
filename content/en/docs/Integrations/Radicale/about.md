@@ -71,4 +71,6 @@ To enable Radicale features, you need:
 
 ## Next Steps
 
-...
+- {{< doclink path="integrations/radicale/configuration/" text="Configuration" />}}
+- {{< doclink path="user-guides/radicale-integration/radicale-integration/" text="Radicale guides" />}}
+- {{< doclink path="integrations/radicale/troubleshooting/" text="Troubleshooting" />}}
