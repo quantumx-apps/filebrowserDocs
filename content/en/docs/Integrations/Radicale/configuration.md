@@ -242,6 +242,6 @@ The client will now authenticate using the API token, and all calendar and conta
 
 ## Next Steps
 
-- {{< doclink path="user-guides/office-integration/office-integration/" text="Office guides" />}}
-- {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}}
-- {{< doclink path="integrations/office/about/" text="About onlyoffice" />}}
+- {{< doclink path="user-guides/radicale-integration/radicale-integration/" text="Radicale guides" />}}
+- {{< doclink path="integrations/radicale/troubleshooting/" text="Troubleshooting" />}}
+- {{< doclink path="integrations/radicale/about/" text="About Radicale" />}}
