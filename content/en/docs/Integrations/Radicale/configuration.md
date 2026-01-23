@@ -24,6 +24,12 @@ FileBrowser itself acts solely as a host application and does not require any ad
 
 ## Docker Setup
 
+For running FileBrowser Quantum and Radicale, you can use Docker or Podman. Using a rootless container runtime improves security by avoiding running containers as root.
+
+If you want to set up a rootless Podman environment, see the official guide: https://github.com/cryinkfly/podman-rootless-quadlets/tree/main/quadlets/filebrowser-quantum/radicale
+
+Below is an example using Docker Compose, but the same principles apply for Podman Compose.
+
 ### Docker Compose Example
 
 ```
