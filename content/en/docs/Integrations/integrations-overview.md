@@ -1,10 +1,10 @@
 ---
 title: "Integrations Overview"
-description: "Enable media, CalDAV/CardDAV and office document features"
+description: "Enable media, calendars, contacts and office document features"
 icon: "extension"
 ---
 
-Extend FileBrowser Quantum with powerful integrations for managing media, calendars, contacts, and office documents.
+Extend FileBrowser Quantum with powerful integrations for managing media, calendars, contacts and office documents.
 
 ## Available Integrations
 
