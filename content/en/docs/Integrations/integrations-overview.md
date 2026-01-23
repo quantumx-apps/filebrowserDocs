@@ -38,7 +38,7 @@ Radicale is a lightweight, free and open-source CalDAV/CardDAV server. It suppor
   
 ## Quick Start
 
-Both integrations can be configured via `config.yaml`:
+The `Media` and `Office` integrations can be configured via `config.yaml`:
 
 ```yaml
 integrations:
