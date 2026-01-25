@@ -144,7 +144,7 @@ Debug mode produces large amounts of FFmpeg stdout output. Only enable for troub
 
 ### Cache Directory
 
-A high perfomrance directory for caching is needed -- see [CacheDir](https://filebrowserquantum.com/en/docs/configuration/server/#cachedir) config for more details. 
+A high performance directory for caching is needed -- see [CacheDir](https://filebrowserquantum.com/en/docs/configuration/server/#cachedir) config for more details.
 
 ### Processing Workers
 
