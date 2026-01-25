@@ -34,6 +34,13 @@ The `beta` release build is ideal for those who:
 Beta builds are frequently updated and may encounter unexpected issues. If you run the beta build, it's encouraged that you participate in beta discussions and open GitHub issues for any new issues found.
 {{% /alert %}}
 
+### Slim Release
+
+`stable` and `beta` have a `slim` variant. Slim images are much smaller than its counterparts. This is because slim version do not include FFmpeg and document preview bundled along with the image. You can still integrate with OnlyOffice for document editing/viewing. This is ideal for those who:
+
+- Don't want preview for files
+- Want to save space in disk
+
 ## Release Cadence
 
 One major difference is the release cadence between the two versions:
@@ -221,7 +228,7 @@ All software has bugs -- and my stable release may have some still. Stable doesn
     flex-direction: column;
     align-items: center;
   }
-  
+
   .release-type {
     min-width: 200px;
   }
