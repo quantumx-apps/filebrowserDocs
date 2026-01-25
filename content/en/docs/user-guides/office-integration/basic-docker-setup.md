@@ -65,9 +65,9 @@ services:
 
 ### Step 03: Create FileBrowser Configuration
 
-Create a `data` directory, and create two new files: 
+Create a `data` directory, and create two new files:
 
-- `config.yaml`: The configuration file that we will modify.  
+- `config.yaml`: The configuration file that we will modify.
 - `database.db`: The database, used for store settings, users, and more. Is needed for persist them.
 
 ```bash
