@@ -16,6 +16,10 @@ integrations:
     ffmpegPath: "/usr/local/bin"  # Directory containing ffmpeg and ffprobe
 ```
 
+{{% alert context="info" %}}
+**Only Docker users:** FFmpeg is already in the PATH for `stable` and `beta` images and no additional configuration is needed. `stable-slim` and `beta-slim` images do not include FFmpeg. You must switch to `stable` or `beta` to enable preview features.
+{{% /alert %}}
+
 ## Subtitle Extraction
 
 {{% alert context="warning" %}}
