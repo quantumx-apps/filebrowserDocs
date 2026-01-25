@@ -116,7 +116,7 @@ userDefaults:
 docker-compose up -d
 ```
 
-Wait for OnlyOffice to fully start (takes 30-60 seconds on first run).
+Wait for OnlyOffice to fully start (usually takes 30-60 seconds if you create or recreate the container).
 
 ### Step 5: Verify Installation
 
