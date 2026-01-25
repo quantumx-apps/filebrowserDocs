@@ -34,6 +34,11 @@ Access at `http://localhost` with `admin` / `admin`
 
 ## Basic Setup with Docker Compose
 
+{{% alert context="warning" %}}
+This set up is just to get the feel of FileBrowser before you get into customization, defining access control, etc. For regular use, Check out the slightly upgraded guide {{< doclink path="user-guides/other/standalone" text="here." />}}
+{{% /alert %}}
+
+
 ### Step 1: Create a base folder for FileBrowser
 
 ```bash
