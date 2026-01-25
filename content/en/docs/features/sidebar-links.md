@@ -29,7 +29,7 @@ Theres currently 4 different link types:
 1. **Source**: This will show the usage bar if configured and link to the source. The subpath is configurable. You can have multiple links to the same source, useful if you set different subpaths within a source.
 2. **Share**: This will be a link to a share path. The subpath is also configurable.
 3. **Tool**: You can link to "tools" which is the main tools page that shows all tools, or select individual tools to link directly.
-4. **Custom**: This supports any URL such as "https://google.com" or any relative path on filebrowser, such as `/settings`
+4. **Custom**: This supports any URL such as "https://google.com" or any relative path on filebrowser, such as `/settings` or add even your favorite folder you frequent.
 
 ### Source link configuration
 
