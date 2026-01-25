@@ -120,7 +120,12 @@ integrations:
     viewOnly: false
 ```
 
-#### 2. Reverse Proxy Configuration
+#### 2. Bare Metal Setup
+
+This is same as previous section except that you will need to use IP address and port of the host system of the respective services. By default, both FileBrowser and OnlyOffice use port `80`. If you have set up in the same system, change `server.port` to `81` and `server.internalUrl` to `"http://<YourLocalIP>:81"`.
+
+
+#### 3. Reverse Proxy Configuration
 
 When using a reverse proxy, ensure proper headers:
 
