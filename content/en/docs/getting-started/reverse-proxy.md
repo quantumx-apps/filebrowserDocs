@@ -2,6 +2,7 @@
 title: "Running behind a reverse proxy"
 description: "Complete guide for configuring FileBrowser Quantum behind reverse proxies"
 icon: "other_houses"
+order: 7
 ---
 
 Complete guide for running FileBrowser Quantum behind reverse proxies including nginx, Traefik, and Caddy with authentication, SSL, and performance optimizations.
@@ -150,7 +151,7 @@ files.example.com {
             header_up X-Forwarded-Proto {scheme}
         }
     }
-    
+
     # Private endpoints (with authentication)
     handle /* {
         reverse_proxy filebrowser:80 {

@@ -2,6 +2,7 @@
 title: "Which version should I use?"
 description: "Understanding the differences between stable and beta releases"
 icon: "numbers"
+order: 5
 ---
 
 FileBrowser Quantum comes with 2 main release flavors. Choosing the right version is an important first step to getting started.
