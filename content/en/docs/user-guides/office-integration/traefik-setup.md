@@ -106,7 +106,7 @@ docker network create \
 
 Which this command do is create a virtual docker network with the subnet `192.168.2.0/24` and reserve half of the IP addresses available (from `192.168.2.2` to `192.168.2.127`). The reserved IPs are for containers that you don't want to be changing its IP each time that you restart them, and how they are reserved, docker will not use them for its auto-allocation.
 
-For assing static IPs to a container, you will need to specify the IP on the docker compose file of your service, below of the name of your docker network. For example:
+To assign static IPs to a container, you will need to specify the IP on the docker compose file of your service, below of the name of your docker network. For example:
 
 ```yaml
 services:
@@ -123,7 +123,7 @@ If you don't want to reserve IPs, you can use this simplified version:
 docker network create --driver=bridge proxy_network
 ```
 
-Docker will manage **all** auto-allocate all the IPs dynamically, and will assing a available network subnet automatically. You will not have static or reserved IPs, but is fine, on this guide we will use the containers with dynamic IPs, but if you want to use a static IP, you can add the ipv4 option on the docker compose files.
+Docker will manage **all** auto-allocate all the IPs dynamically, and will assign an available network subnet automatically. You will not have static or reserved IPs, but is fine, on this guide we will use the containers with dynamic IPs, but if you want to use a static IP, you can add the ipv4 option on the docker compose files.
 
 {{% /alert %}}
 
