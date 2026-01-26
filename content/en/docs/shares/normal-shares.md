@@ -2,6 +2,7 @@
 title: "Normal Shares"
 description: "Standard shares with viewing capabilities"
 icon: "folder_shared"
+order: 3
 ---
 
 Standard shares with full viewing and downloading capabilities for shared files and directories.
@@ -385,7 +386,7 @@ The token is obtained after entering the correct password on the share page.
 
 ## Next Steps
 
-- {{< doclink path="shares/upload/upload-shares/" text="Upload shares" />}} - Create upload-only shares
+- {{< doclink path="shares/upload-shares/" text="Upload shares" />}} - Create upload-only shares
 - {{< doclink path="shares/options/" text="Common options" />}} - Options available to all share types
 - {{< doclink path="shares/customization/" text="Customization" />}} - Brand your shares with colors and logos
 
