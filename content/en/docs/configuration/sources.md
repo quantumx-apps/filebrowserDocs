@@ -2,6 +2,7 @@
 title: "Sources"
 description: "Configure file system sources"
 icon: "folder_open"
+order: 3
 ---
 
 Sources are the core concept in FileBrowser - each source represents a file system location users can access.
@@ -45,7 +46,7 @@ server:
 
 ### Personal User Directories
 
-Creating user directories for each user where 
+Creating user directories for each user where
 
 ```yaml
 server:
