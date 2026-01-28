@@ -4,6 +4,7 @@ description: "Understanding FileBrowser Quantum's SQLite-based indexing system a
 icon: "database"
 date: "2024-01-15T10:00:00Z"
 lastmod: "2026-01-19T12:00:00Z"
+order: 3
 ---
 
 {{% alert context="info" %}}

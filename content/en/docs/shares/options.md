@@ -2,6 +2,7 @@
 title: "Common Options"
 description: "Options available to all share types"
 icon: "checklist"
+order: 2
 ---
 
 Configuration options available to both normal and upload shares. These options appear in the share creation dialog when you click the share button.
@@ -13,7 +14,7 @@ Configuration options available to both normal and upload shares. These options 
 <div class="option-field">
   <label>Share Duration</label>
   <div class="field-group">
-    <input type="number" placeholder="0" /> 
+    <input type="number" placeholder="0" />
     <select>
       <option>minutes</option>
       <option>hours</option>

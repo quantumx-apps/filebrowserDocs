@@ -2,6 +2,7 @@
 title: "Logging"
 description: "Configure logging output and levels"
 icon: "description"
+order: 6
 ---
 
 Configure FileBrowser's logging system.

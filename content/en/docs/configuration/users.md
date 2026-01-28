@@ -2,6 +2,7 @@
 title: "User Management"
 description: "Manage users and permissions"
 icon: "group"
+order: 5
 ---
 
 Configure users, permissions, and default user settings.

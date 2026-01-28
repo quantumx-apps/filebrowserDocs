@@ -285,5 +285,4 @@ FileBrowser doesn't handle log rotation internally. Use external tools like `log
 
 ## Next Steps
 
-- [Troubleshooting" />}}
 - {{< doclink path="reference/configuration/" text="Configuration Reference" />}}

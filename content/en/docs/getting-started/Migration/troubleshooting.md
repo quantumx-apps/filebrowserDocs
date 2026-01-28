@@ -20,5 +20,4 @@ Common issues and solutions for migration.
 
 ## Next Steps
 
-- {{< doclink path="getting-started/migration/users/" text="User migration" />}}
 - {{< doclink path="getting-started/migration/configuration/" text="Configuration migration" />}}

@@ -2,6 +2,7 @@
 title: "Troubleshooting"
 description: "Common issues and solutions for access control"
 icon: "bug_report"
+order: 3
 ---
 
 Common issues and solutions for access control.

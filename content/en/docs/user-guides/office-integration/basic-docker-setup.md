@@ -65,9 +65,9 @@ services:
 
 ### Step 03: Create FileBrowser Configuration
 
-Create a `data` directory, and create two new files: 
+Create a `data` directory, and create two new files:
 
-- `config.yaml`: The configuration file that we will modify.  
+- `config.yaml`: The configuration file that we will modify.
 - `database.db`: The database, used for store settings, users, and more. Is needed for persist them.
 
 ```bash
@@ -116,7 +116,7 @@ userDefaults:
 docker-compose up -d
 ```
 
-Wait for OnlyOffice to fully start (takes 30-60 seconds on first run).
+Wait for OnlyOffice to fully start (usually takes 30-60 seconds if you create or recreate the container).
 
 ### Step 5: Verify Installation
 

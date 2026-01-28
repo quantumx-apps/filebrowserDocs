@@ -8,15 +8,13 @@ Extend FileBrowser with powerful integrations for media and documents.
 
 ## Available Integrations
 
-### {{< doclink path="integrations/media/" text="Media Integration" />}}
+### Media Integration
 FFmpeg-based media processing for video thumbnails and subtitle extraction.
 
 - {{< doclink path="integrations/media/about/" text="About" />}} - Overview and features
 - {{< doclink path="integrations/media/configuration/" text="Configuration" />}} - Setup and options
-- {{< doclink path="integrations/media/guides/" text="Guides" />}} - How-to guides
-- {{< doclink path="integrations/media/troubleshooting/" text="Troubleshooting" />}} - Common issues
 
-### {{< doclink path="integrations/office/" text="Office Integration" />}}
+### Office Integration
 OnlyOffice Document Server integration for document preview and editing.
 
 {{% alert context="info" %}}
@@ -37,7 +35,7 @@ integrations:
   # Media integration (uses FFmpeg from PATH or configured path)
   media:
     ffmpegPath: "/usr/local/bin"  # Optional if FFmpeg is in PATH
-  
+
   # Office integration (OnlyOffice)
   office:
     url: "http://onlyoffice:80"

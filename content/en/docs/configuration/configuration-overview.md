@@ -2,6 +2,7 @@
 title: "Configuration Overview"
 description: "Complete configuration guide for FileBrowser Quantum"
 icon: "settings"
+order: 1
 ---
 
 Complete configuration guide for all aspects of FileBrowser Quantum.

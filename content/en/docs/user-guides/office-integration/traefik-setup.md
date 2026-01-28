@@ -26,15 +26,28 @@ That said, this guide will cover:
 ## Pre-requisites
 
 - Docker and Docker Compose installed, see [how to install docker](https://docs.docker.com/compose/install/) for your respective OS.
-- A valid and working **Domain name** with a **DDNS provider** configured which is required for Let's Encrypt DNS Challenge in traefik.
+- A valid and working **Domain name** and/or a **DDNS provider** configured which is required for Let's Encrypt DNS Challenge in traefik.
 - **DDNS provider** ([Dynu](https://www.dynu.com/Resources/Tutorials/DynamicDNS/GettingStarted), Cloudflare, DuckDNS, etc) - [See supported providers](https://doc.traefik.io/traefik/https/acme/#providers)
 - Basic understanding of Traefik, Docker, and Docker compose in general.
 - Email address for Let's encrypt.
 
-{{% alert context="warning" %}}
-You **must** have a valid domain name and configure your DDNS provider pointing to your domain for Let's Encrypt to work. If your use Local IPs directly in Traefik, will not work.
+### Setting up your domain for HTTPS
 
-However, if you don't have you own domain, you can bind your local IP or hostname to your DDNS provider and use one of the free domains that they offer **but** I'm not sure if will work when exposing services publicly.
+To set up HTTP you need a valid domain and IP address of the server to have a secure connection. You can:
+
+- Purchase a domain ([from this list of providers](https://community.letsencrypt.org/t/dns-providers-who-easily-integrate-with-lets-encrypt-dns-validation/86438)) and configure your DNS to point to your server IP address for Let's Encrypt to work.
+- If the **purchased** domain is not in the list, then the easiest way is to change the DNS nameservers to Cloudflare by following the steps from [Offical Docs](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/).
+- If you don't have a domain purchased, you can use one of the free domains from the DDNS providers and point it to the server IP address for Let's Encrypt to work.
+
+Choosing the server IP changes the location of access. If you choose:
+
+- Local IP address (typically, 192.168.X.Y), then you can only access when connected to that Wifi.
+- Public IP address (you need to port forward), then you can access anywhere from your home or even at some coffee shop. (Not recommended due to high security risk if its from home router)
+- Public IP address (but from a VPS), then you can access anywhere from your home or even at some coffee shop. (Recommended with some firewall and features like fail2ban, crowdsec setup. Out of scope for this guide).
+- IP address of server in a VPN, then devices in the VPN can access to it. Even via the internet as long as the device and the server are connected to the same VPN.
+
+{{% alert context="info" %}}
+For the first few times, you may get a self-signed certificate. But after some time, you will see Let's Encrypt certificates. This is because the ACME challenge may take some time to complete.
 {{% /alert %}}
 
 ## Directory Structure
@@ -75,13 +88,13 @@ services/
 All the three services must be on the same network:
 
 ```shell
-docker network create \ 
-  --driver=bridge \ 
-  --subnet=192.168.2.0/24 \ 
-  --gateway=192.168.2.1 \ 
-  --ip-range=192.168.2.128/25 \ 
-  --label=Reserved_IPs="192.168.2.2-127" \ 
-  proxy_network 
+docker network create \
+  --driver=bridge \
+  --subnet=192.168.2.0/24 \
+  --gateway=192.168.2.1 \
+  --ip-range=192.168.2.128/25 \
+  --label=Reserved_IPs="192.168.2.2-127" \
+  proxy_network
 ```
 
 {{% alert context="info" %}}
@@ -93,7 +106,7 @@ docker network create \
 
 Which this command do is create a virtual docker network with the subnet `192.168.2.0/24` and reserve half of the IP addresses available (from `192.168.2.2` to `192.168.2.127`). The reserved IPs are for containers that you don't want to be changing its IP each time that you restart them, and how they are reserved, docker will not use them for its auto-allocation.
 
-For assing static IPs to a container, you will need to specify the IP on the docker compose file of your service, below of the name of your docker network. For example:
+To assign static IPs to a container, you will need to specify the IP on the docker compose file of your service, below of the name of your docker network. For example:
 
 ```yaml
 services:
@@ -110,7 +123,7 @@ If you don't want to reserve IPs, you can use this simplified version:
 docker network create --driver=bridge proxy_network
 ```
 
-Docker will manage **all** auto-allocate all the IPs dynamically, and will assing a available network subnet automatically. You will not have static or reserved IPs, but is fine, on this guide we will use the containers with dynamic IPs, but if you want to use a static IP, you can add the ipv4 option on the docker compose files.
+Docker will manage **all** auto-allocate all the IPs dynamically, and will assign an available network subnet automatically. You will not have static or reserved IPs, but is fine, on this guide we will use the containers with dynamic IPs, but if you want to use a static IP, you can add the ipv4 option on the docker compose files.
 
 {{% /alert %}}
 
@@ -221,7 +234,7 @@ api:
 # Log level. You can use DEBUG initially for see if the certificates are being pulled correctly
 log:
   level: INFO # DEBUG, INFO, WARN, ERROR, FATAL, PANIC
-  
+
 entryPoints:
   web:
     address: :80
@@ -251,7 +264,7 @@ serversTransport:
   forwardingTimeouts:
     dialTimeout: "60s"           # Time to establish TCP connection
     responseHeaderTimeout: "60s" # Time for backend to send headers
-    idleConnTimeout: "90s"       
+    idleConnTimeout: "90s"
 
 http:
   timeouts:
@@ -277,7 +290,7 @@ providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     network: "proxy_network"
-    exposedByDefault: false    
+    exposedByDefault: false
   file:
     directory: "/etc/traefik/config" # Directory mounted in the compose file, here we will define our security headers for the services - Also called File Provider
     watch: true
@@ -649,7 +662,7 @@ docker logs filebrowser -f
 #### Test that FileBrowser is working
 
 - Open your filebrowser domain on your browser (`https://files.yourdomain.com`), you should see the login page.
-- Login with your credentials that you configured in both: The password in the `.env` file, and the username in `config.yaml`. 
+- Login with your credentials that you configured in both: The password in the `.env` file, and the username in `config.yaml`.
 
 ## Testing the Integration
 

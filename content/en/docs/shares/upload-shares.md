@@ -2,6 +2,7 @@
 title: "Upload Shares"
 description: "Upload-only shares for collecting files"
 icon: "upload"
+order: 4
 ---
 
 Upload-only shares allow users to upload files to a specific location without viewing or accessing existing content.
@@ -41,7 +42,7 @@ Upload shares support most {{< doclink path="shares/options/" text="common optio
 <div class="option-field">
   <label>Share Duration</label>
   <div class="field-group">
-    <input type="number" placeholder="0" /> 
+    <input type="number" placeholder="0" />
     <select>
       <option>minutes</option>
       <option>hours</option>
@@ -128,15 +129,15 @@ Simple upload portal with 7-day expiration:
 
 <div class="example-card">
   <h4>Basic homework submission portal</h4>
-  
+
   <div class="example-field">
     <strong>Destination:</strong> /submissions/homework
   </div>
-  
+
   <div class="example-field">
     <strong>Expiration:</strong> 7 days
   </div>
-  
+
   <div class="example-field">
     <strong>Result:</strong> Students can upload homework for one week
   </div>
@@ -148,14 +149,14 @@ Require users to be logged in:
 
 <div class="example-card">
   <h4>Internal employee upload</h4>
-  
+
   <div class="example-field">
     <strong>Options:</strong>
     <ul>
       <li>☑ Disable anonymous access</li>
     </ul>
   </div>
-  
+
   <div class="example-field">
     <strong>Use case:</strong> Only authenticated employees can upload
   </div>
@@ -167,11 +168,11 @@ Restrict uploads to specific usernames:
 
 <div class="example-card">
   <h4>Student group project submission</h4>
-  
+
   <div class="example-field">
     <strong>Allowed Users:</strong> student1, student2, student3
   </div>
-  
+
   <div class="example-field">
     <strong>Result:</strong> Only these three students can access the upload portal
   </div>
@@ -183,11 +184,11 @@ Require password for upload access:
 
 <div class="example-card">
   <h4>Secure file collection</h4>
-  
+
   <div class="example-field">
     <strong>Password:</strong> upload2025
   </div>
-  
+
   <div class="example-field">
     <strong>Use case:</strong> Share the password separately to control access
   </div>
@@ -199,20 +200,20 @@ Custom branding for professional appearance:
 
 <div class="example-card">
   <h4>Professional submission portal</h4>
-  
+
   <div class="example-field">
     <strong>Title:</strong> Homework Submission Portal
   </div>
-  
+
   <div class="example-field">
     <strong>Description:</strong> Upload your assignment files here
   </div>
-  
+
   <div class="example-field">
     <strong>Banner:</strong>
     <pre><code>&lt;h3&gt;Assignment Due: Friday&lt;/h3&gt;</code></pre>
   </div>
-  
+
   <div class="example-field">
     <strong>Theme Color:</strong> <code>#0066cc</code> <span class="color-preview" style="background:#0066cc;"></span>
   </div>
@@ -224,25 +225,25 @@ Collect photos from event participants:
 
 <div class="example-card">
   <h4>Company event photo upload</h4>
-  
+
   <div class="example-field">
     <strong>Title:</strong> Event Photos Upload
   </div>
-  
+
   <div class="example-field">
     <strong>Description:</strong> Share your photos from the company event
   </div>
-  
+
   <div class="example-field">
     <strong>Banner:</strong>
     <pre><code>&lt;h2&gt;📸 Company Event 2025&lt;/h2&gt;
 &lt;p&gt;Upload your photos here!&lt;/p&gt;</code></pre>
   </div>
-  
+
   <div class="example-field">
     <strong>Theme Color:</strong> <code>#28a745</code> <span class="color-preview" style="background:#28a745;"></span>
   </div>
-  
+
   <div class="example-field">
     <strong>Expiration:</strong> 30 days
   </div>
@@ -254,19 +255,19 @@ Full configuration with all security options:
 
 <div class="example-card">
   <h4>Secure project submission</h4>
-  
+
   <div class="example-field">
     <strong>Destination:</strong> /submissions/project-2025
   </div>
-  
+
   <div class="example-field">
     <strong>Password:</strong> project2025
   </div>
-  
+
   <div class="example-field">
     <strong>Expiration:</strong> 14 days
   </div>
-  
+
   <div class="example-field">
     <strong>Options:</strong>
     <ul>
@@ -274,7 +275,7 @@ Full configuration with all security options:
       <li>☑ Keep after expiration</li>
     </ul>
   </div>
-  
+
   <div class="example-field">
     <strong>Branding:</strong>
     <ul>
@@ -398,7 +399,7 @@ Users see a clean upload interface with your custom branding but cannot browse, 
 
 ## Next Steps
 
-- {{< doclink path="shares/normal/normal-shares/" text="Normal shares" />}} - Create viewing/downloading shares
+- {{< doclink path="shares/normal-shares/" text="Normal shares" />}} - Create viewing/downloading shares
 - {{< doclink path="shares/options/" text="Common options" />}} - Options available to all share types
 - {{< doclink path="shares/customization/" text="Customization" />}} - Brand your shares with colors and logos
 

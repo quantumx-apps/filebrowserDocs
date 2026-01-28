@@ -2,6 +2,7 @@
 title: "Customization"
 description: "Branding and appearance options"
 icon: "auto_awesome"
+order: 1
 ---
 
 Customize share appearance with branding elements, colors, and custom content. These options appear in the **Show More** section of the share creation dialog.
