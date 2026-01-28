@@ -37,7 +37,7 @@ Beta builds are frequently updated and may encounter unexpected issues. If you r
 
 ### Slim Release (for docker only)
 
-`stable` and `beta` images have a `slim` variant. Slim images are much smaller than its counterparts. This is because slim version do not include FFmpeg and document preview bundled along with the image. You can still integrate with OnlyOffice for document editing/viewing. This is ideal for those who:
+`stable` and `beta` images have a `slim` variant. Slim images are much smaller than its counterparts. This is because slim version do not include FFmpeg and document preview bundled along with the image. You can still integrate with OnlyOffice for document editing/viewing. the slim version also supports armv7 platform for devices such as raspberry pi. This is ideal for those who:
 
 - Don't want preview for files
 - Want to save space in disk
