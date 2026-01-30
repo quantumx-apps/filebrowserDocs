@@ -54,6 +54,6 @@ When asking for help, provide:
 
 ## Next Steps
 
-- {{< doclink path="integrations/office/configuration/" text="Configuration" />}} - Set up OnlyOffice integration
-- {{< doclink path="user-guides/office-integration/office-integration/" text="Office guides" />}} - Usage examples and best practices
-- {{< doclink path="integrations/office/about/" text="About OnlyOffice" />}} - Features and capabilities
+- {{< doclink path="integrations/radicale/configuration/" text="Configuration" />}} - Set up OnlyOffice integration
+- {{< doclink path="user-guides/radicale-integration/radicale-integration/" text="Office guides" />}} - Usage examples and best practices
+- {{< doclink path="integrations/radicale/about/" text="About Radicale" />}} - Features and capabilities
