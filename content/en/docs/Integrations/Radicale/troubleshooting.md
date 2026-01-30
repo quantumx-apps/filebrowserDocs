@@ -18,20 +18,20 @@ Even though these custom locations work in the GUI, you may encounter issues aft
 
 ### Cause
 
-- FileBrowser Quantum runs in a Docker container (or Docker Compose service).
-- NPM relies on the internal Docker network hostname (filebrowser-quantum-server) for its custom locations.
+- FileBrowser Quantum runs in a Docker container, Docker Compose service or a Podman container / Podman pod.
+- NPM relies on the internal Docker/Podman network hostname (filebrowser-quantum-server) for its custom locations.
 - If NPM starts before the FileBrowser container is fully running, it cannot resolve the hostname, causing the proxy to fail.
 - This typically happens on system boot or when NPM is restarted independently of the containers.
 
 ### Solution
 
-- Ensure that your FileBrowser container is started automatically by Docker (e.g., via restart: always in Compose).
+- Ensure that your FileBrowser container is started automatically by Docker or Podman (e.g., via restart: always in Compose).
 - NPM does not need to wait for FileBrowser with After= or other systemd dependencies.
-- As long as the FileBrowser container is running in the same Docker network as NPM, its internal hostname (filebrowser-quantum-server) is resolvable, and your Custom Locations in the NPM GUI will work.
+- As long as the FileBrowser container is running in the same Docker or Podman network as NPM, its internal hostname (filebrowser-quantum-server) is resolvable, and your Custom Locations in the NPM GUI will work.
 
 ### Key takeaway:
 
-- Let Docker manage container startup via restart: always (or docker-compose up -d).
+- Let Docker or Podman handle container startup: always (or docker-compose up -d).
 - Avoid trying to create service dependencies between NPM and FileBrowser — this can cause startup conflicts.
 - Once the container is running, NPM can immediately use the internal hostnames for proxying, and the CalDAV/CardDAV locations will work correctly.
 
