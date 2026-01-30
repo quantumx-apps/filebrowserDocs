@@ -2,6 +2,7 @@
 title: "Configuration Files"
 description: "Understanding and using configuration files in FileBrowser Quantum"
 icon: "settings"
+order: 6
 ---
 
 ## What is a Config File?

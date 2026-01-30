@@ -16,6 +16,10 @@ integrations:
     ffmpegPath: "/usr/local/bin"  # Directory containing ffmpeg and ffprobe
 ```
 
+{{% alert context="info" %}}
+**Only Docker users:** FFmpeg is already in the PATH for `stable` and `beta` images and no additional configuration is needed. `stable-slim` and `beta-slim` images do not include FFmpeg. You must switch to `stable` or `beta` to enable preview features.
+{{% /alert %}}
+
 ## Subtitle Extraction
 
 {{% alert context="warning" %}}
@@ -144,7 +148,7 @@ Debug mode produces large amounts of FFmpeg stdout output. Only enable for troub
 
 ### Cache Directory
 
-A high perfomrance directory for caching is needed -- see [CacheDir](https://filebrowserquantum.com/en/docs/configuration/server/#cachedir) config for more details. 
+A high performance directory for caching is needed -- see [CacheDir](https://filebrowserquantum.com/en/docs/configuration/server/#cachedir) config for more details.
 
 ### Processing Workers
 
@@ -198,4 +202,3 @@ integrations:
 ## Next Steps
 
 - {{< doclink path="integrations/media/guides/" text="Media guides" />}} - Usage examples and guides
-- {{< doclink path="integrations/media/troubleshooting/" text="Troubleshooting" />}} - Common issues and solutions

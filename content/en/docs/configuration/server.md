@@ -2,6 +2,7 @@
 title: "Server Settings"
 description: "Configure server options"
 icon: "dns"
+order: 2
 ---
 
 Configure server settings including port, address, database, and caching.
@@ -52,7 +53,7 @@ server:
 ### maxArchiveSize
 
 FileBrowser limits the maxiumum size of archive -- this affects folder downloads. This is limited to 50GB by default, which means the pre-archive combined size of a directory to be downloaded must be 50GB or less. This is necessary because archiving will store temporary files
-and that could exhaust the server if left unlimited. 
+and that could exhaust the server if left unlimited.
 
 Ensure you have enough free space available if you choose to increase this further.
 
