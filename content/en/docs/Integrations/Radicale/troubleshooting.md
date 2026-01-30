@@ -41,7 +41,7 @@ Even though these custom locations work in the GUI, you may encounter issues aft
 
 When asking for help, provide:
 
-1. **Logs:** Most imprtantly relevant debug logs from the server, as well as OnlyOffice server logs.
+1. **Logs:** Most imprtantly relevant debug logs from the server, as well as Radicale server logs.
 1. **Debug mode output** (screenshot from browser)
 2. **Browser console errors** (F12 → Console tab)
 
