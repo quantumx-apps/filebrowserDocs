@@ -93,6 +93,10 @@ volumes:
   filebrowser_quantum_files:
 ```
 
+## Alternative - Rootles Podman Setup
+
+If you prefer using a rootless Podman environment instead of Docker (recommended for improved security), you can find a ready-to-use setup with Quadlets for FileBrowser Quantum and Radicale here: https://github.com/cryinkfly/podman-rootless-quadlets/tree/main/quadlets/filebrowser-quantum/radicale
+
 ## Proxy Configuration for Example with Nginx Proxy Manager
 
 {{% alert context="danger" %}}
