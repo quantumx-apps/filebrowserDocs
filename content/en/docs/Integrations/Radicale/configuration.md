@@ -28,8 +28,6 @@ For running FileBrowser Quantum and Radicale, you can use Docker or Podman. Usin
 
 If you want to set up a rootless Podman environment, see the official guide: https://github.com/cryinkfly/podman-rootless-quadlets/tree/main/quadlets/filebrowser-quantum/radicale
 
-Below is an example using Docker Compose:
-
 ### Docker Compose Example
 
 ```
