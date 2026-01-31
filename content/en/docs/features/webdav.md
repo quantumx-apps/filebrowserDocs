@@ -1,7 +1,7 @@
 ---
 title: "WebDAV"
 description: "Accessing Filebrowser as a WebDAV"
-icon: "cloud"
+icon: "storage"
 order: 4
 ---
 
@@ -50,6 +50,7 @@ The path inside the source, is only a starting point when you open the WebDAV. Y
 - [MixPlorer](https://mixplorer.com/) - Android only
 - [Symfonium](https://www.symfonium.app/) - Android only (for accessing music only)
 - [Material Files](https://github.com/zhanghai/MaterialFiles) - Android only and supports mount via DAVx⁵
+- [ONLYOFFICE Documents apps](https://www.onlyoffice.com/download-desktop) - For desktop and mobile applications (Clouds > Other WebDAV storage)
 - davfs2 - Linux only and requires minimal API key to work
 - Linux and macOS file managers (via `Connect to Server` or similar option)
 
