@@ -26,7 +26,15 @@ For Windows, you will need to download rclone from the releases.
 
 This is optional but recommended, so you can run `rclone` commands in your terminal directly. Otherwise, you will need to run the commands in the folder of rclone.
 
-Create a folder named `rclone` in `C:` or any drive letter and move the rclone executable to that folder. You need to add that folder to the PATH. Follow the steps in this [docs](https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/ee537574(v=office.14)#to-add-a-path-to-the-path-environment-variable) from Microsoft, but use path to rclone instead.
+Create a folder named `rclone` in `C:` or any drive letter and move the rclone executable to that folder.
+
+1. Right-click My Computer (either on the Desktop or the Start menu). Click Properties and then Advanced system settings. In the System Properties dialog box, click the Advanced tab. Alternatively, you can search for `edit environment variable` in start.
+1. Click Environment Variables.
+1. In the top list, scroll down to the PATH variable under user variables, select it, and click Edit.
+1. Click New and paste in the folder that contains `rclone.exe`. For example, `C:\rclone` or `D:\rclone` depending on where you setup.
+1. Click OK to close each dialog box.
+
+If you do not follow the above steps, whenever you want to access rclone, you have to open the folder in explorer and right click `Open in Terminal`. The commands will be `.\rclone` instead of just `rclone`.
 
 ## Configuration
 
