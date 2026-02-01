@@ -14,7 +14,7 @@ You need a working FileBrowser setup and an API Key (`minimal` version) to acces
 
 ## Installing rclone
 
-Download and install the latest rclone from the [official website](https://rclone.org/downloads/#release) for your OS and architecture. For command line install (only for  Linux/macOS/BSD systems), rclone provides an installation script.
+Download and install the latest rclone from the [official website](https://rclone.org/downloads/#release) for your OS and architecture. For command line install (only for Linux/macOS/BSD systems), rclone provides an installation script.
 
 ```bash
 sudo -v ; curl https://rclone.org/install.sh | sudo bash
@@ -82,7 +82,7 @@ rclone mount filebrowser:/ X: --vfs-cache-mode writes
 `filebrowser` in `filebrowser:/` is the name of the remote and `/` means we are mounting `/dav/data/` as a whole. We can also mount a sub folder in `data` like `filebrowser:/sub/folder`. `X:` is the drive letter in the Windows system. The letter must be unused when you mount using rclone.
 
 
-In `--vfs-cache-mode writes` mode files opened for read only are still read directly from the remote, write only and read/write files are buffered to disk first.
+In `--vfs-cache-mode writes` mode files opened for read only are still read directly from the remote, write only and read/write files are buffered to disk first. Another supported option is `--vfs-cache-mode full` which read/write files are buffered to disk always.
 
 For other systems,
 
