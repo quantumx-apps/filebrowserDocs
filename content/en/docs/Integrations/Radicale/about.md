@@ -65,8 +65,8 @@ For more details on client compatibility and setup: [Radicale Supported Clients]
 
 To enable Radicale features, you need:
 
-1. Radicale container is running (Docker or Podman).
-2. FileBrowser Quantum is configured to communicate with Radicale.
+1. Radicale container is running (Docker or Podman) and configured for FileBrowser Quantum.
+2. FileBrowser Quantum is configured to communicate with Radicale via custom network and proxy.
 3. CalDAV/CardDAV clients (mobile apps, GNOME Calendar, Thunderbird, etc.) are connected using the username and API token.
 
 ## Next Steps
