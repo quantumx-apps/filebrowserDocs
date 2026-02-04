@@ -96,6 +96,25 @@ services:
 docker compose up -d
 ```
 
+## Database Location
+
+{{% alert context="info" %}}
+**Default Database Location**: In Docker, the default database location is `/home/filebrowser/data/database.db`. This is different from the standalone default of `./database.db` in the current directory.
+
+To persist your database, mount a volume to `/home/filebrowser/data`:
+
+```yaml
+services:
+  filebrowser:
+    image: gtstef/filebrowser:stable
+    volumes:
+      - ./data:/home/filebrowser/data  # Database and config stored here
+      - /path/to/files:/folder
+```
+
+See {{< doclink path="configuration/server/#database" text="Server configuration" />}} and {{< doclink path="getting-started/config/#how-to-specify-a-config-file" text="configuration file priority" />}} for more information on database paths.
+{{% /alert %}}
+
 ## Running as Non-Root
 
 FileBrowser Quantum docker images have a non-default `filebrowser` user built-in. This user has UID:GID of 1000:1000. You can use it by specifying a user in docker compose.

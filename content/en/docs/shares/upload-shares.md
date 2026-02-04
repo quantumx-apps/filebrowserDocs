@@ -75,6 +75,15 @@ Upload shares support most {{< doclink path="shares/options/" text="common optio
   <input type="text" placeholder="Enter usernames, comma-separated" />
 </div>
 
+### Upload Permissions
+
+<div class="option-field">
+  <label>
+    <input type="checkbox" /> Allow Replacements
+  </label>
+  <p class="help-text">Allow replacing existing files when uploading.</p>
+</div>
+
 ### Branding
 
 <div class="option-field">
@@ -118,6 +127,11 @@ These normal share options **do not apply** to upload shares because there is no
     <li>❌ Enable OnlyOffice (no viewing available)</li>
     <li>❌ Enable OnlyOffice Editing (no viewing available)</li>
     <li>❌ Extract Embedded Subtitles (no media viewing)</li>
+    <li>❌ Disable File Viewer (no viewer exists)</li>
+    <li>❌ Disable Download (no downloads available)</li>
+    <li>❌ Allow Modify (no file editing available)</li>
+    <li>❌ Allow Delete (no file deletion available)</li>
+    <li>❌ Show Hidden Files (no file browsing available)</li>
   </ul>
 </div>
 
