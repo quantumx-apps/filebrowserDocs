@@ -15,6 +15,10 @@ Access rules for shares apply based on the user that created the share.
 FileBrowser Quantum access rules differ entirely from the original FileBrowser. Rules do not carry over when migrating.
 {{% /alert %}}
 
+{{% alert context="warning" %}}
+The `conditionals` structure in source configuration is deprecated. Use only the `rules` key for access control configuration after version 1.2.x
+{{% /alert %}}
+
 ## How Access Control Works
 
 User access to files depends on three factors:

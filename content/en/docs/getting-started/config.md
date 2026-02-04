@@ -36,6 +36,18 @@ export FILEBROWSER_CONFIG="/path/to/config.yaml"
 - Current directory (`./config.yaml`)
 - Docker default: `/home/filebrowser/data/config.yaml`
 
+## Database Path Configuration
+
+The database path is configured in the `server.database` setting. See {{< doclink path="configuration/server/#database" text="Server configuration" />}} for details.
+
+**Default database locations:**
+- Standalone: `./database.db` (current directory)
+- Docker: first checks `/home/filebrowser/data/database.db`, then `./database.db` (current directory)
+
+**Priority for database path:**
+1. Path specified in `config.yaml` via `server.database`
+2. Default location based on deployment type (standalone vs Docker)
+
 ## Docker Configuration
 
 ### Using Docker Run

@@ -73,6 +73,18 @@ server:
       json: true
 ```
 
+### UTC Time
+
+Use UTC time instead of local time in log output:
+
+```yaml
+server:
+  logging:
+    - output: stdout
+      levels: "info|warning|error"
+      utc: true
+```
+
 ## Configuration Options
 
 ### output
@@ -80,13 +92,19 @@ server:
 - `"path/to/file.log"`: Log to file
 
 ### levels
-Specify which levels to log: `"info|warning|error|debug"` or `disabled`
+Specify which levels to log: `"info|warning|error|debug"` or `disabled`. Use pipe, space, or commas to separate multiple levels.
 
 ### apiLevels
-Same format as levels, but for API events
+Same format as levels, but for API events. Use pipe (`|`) to separate multiple levels, or set to `disabled` to disable API logging.
 
 ### noColors
-Disable colored output (recommended for files)
+Disable colored output (recommended for files). Default: `false`.
+
+### json
+Output logs in JSON format for improved indexed logging. Default: `false`.
+
+### utc
+Use UTC time in the output instead of local time. Default: `false`.
 
 ## Log Levels
 
