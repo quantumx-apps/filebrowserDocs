@@ -2,6 +2,7 @@
 title: "Windows"
 description: "Install FileBrowser on Windows"
 icon: "desktop_windows"
+order: 4
 ---
 
 Run FileBrowser Quantum natively on Windows.

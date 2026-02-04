@@ -10,11 +10,17 @@ FileBrowser provides a comprehensive REST API for programmatic access.
 
 **Primary Documentation**: Swagger UI
 
-Access Swagger docs at: `/swagger/` (requires API user perissions)
+Access Swagger docs at: `/swagger/` (requires API user permissions)
 
 Example: `https://your-domain.com/swagger/`
 
 This swagger page uses a short-live token (2-hour exp) that the UI uses, but allows for quick access to all the API's and their described usage and requirements.
+
+{{% alert context="info" %}}
+
+If you frequently use the API docs, you can make a custom link at the sidebar for easy access. ({{< doclink path="features/sidebar-links/#link-types" text="See sidebar features." />}})
+
+{{% /alert %}}
 
 ### API authentication
 

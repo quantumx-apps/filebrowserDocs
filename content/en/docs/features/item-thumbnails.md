@@ -2,6 +2,7 @@
 title: "Thumbnail Previews"
 description: "Explaining how thumbnail perviews are generated and configured"
 icon: "preview"
+order: 2
 ---
 
 This document details the features related to file thumbnails and previews.
@@ -20,10 +21,10 @@ Filebrowser Quantum has 3 sizes for thumbnails:
 
 All view modes display small thumbnails. If **High quality thumbnails** is enabled, then gallery view mode and the pop-up previewer (see below) have large thumbnails.
 
-Thumbnails are generated in various ways depending on the filetype. 
+Thumbnails are generated in various ways depending on the filetype.
 
 1. **Images**:
-    - A limited number of [image types](https://github.com/gtsteffaniak/filebrowser/blob/7e5a579dde05bdacb7381cacc8b2c5663cd6c350/backend/indexing/iteminfo/conditions.go#L49-L60) can be downsized for thumbnails. This includes jpeg, png, gif. 
+    - A limited number of [image types](https://github.com/gtsteffaniak/filebrowser/blob/7e5a579dde05bdacb7381cacc8b2c5663cd6c350/backend/indexing/iteminfo/conditions.go#L49-L60) can be downsized for thumbnails. This includes jpeg, png, gif.
     - Downsizing to thumbnails improves viewing performance significantly, but can be disabled via `server.disablePreviewResize`
 2. **Office Documents**
     - A library called [muPDF](https://github.com/gtsteffaniak/filebrowser/blob/7e5a579dde05bdacb7381cacc8b2c5663cd6c350/backend/indexing/iteminfo/conditions.go#L32-L47) allows generating a limited number of documents without any office integration configuration. This includes pdf, docx, xlsx, pptx, and text files.
@@ -45,7 +46,7 @@ Some settings such as office previews many not show up in settings if the integr
 
 ## Pop-up preview
 
-When the "show pop-up preview" toggle is enabled, a pop-up window will show when hovering the mouse over a thumbnail. 
+When the "show pop-up preview" toggle is enabled, a pop-up window will show when hovering the mouse over a thumbnail.
 
 If the file is a video and "enable motion preview for videos" is enabled, it will also roll through snapshots of the video at different lengths. Notice the **3-circle icon** overlay to indicate that the thumbnail has motion preview support.
 
@@ -53,7 +54,7 @@ If the file is a video and "enable motion preview for videos" is enabled, it wil
 
 ## Viewing HEIC/HEIF files
 
-Safari is the only browser that can nativly support viewing HEIC images (typically from iphones). However, when the media integration is present, its possible to enable non-safari browsers to view the images through conversion. 
+Safari is the only browser that can nativly support viewing HEIC images (typically from iphones). However, when the media integration is present, its possible to enable non-safari browsers to view the images through conversion.
 
 When media integration is configured, there's a possiblity to preview more image types. Currently, only heic images are supported [via conversion](https://filebrowserquantum.com/en/docs/integrations/media/configuration/#hl-2-5). It requires enabling `integrations.media.convert.imagePreview.heic: true`.
 

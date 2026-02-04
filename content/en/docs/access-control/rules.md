@@ -2,6 +2,7 @@
 title: "Access Rules"
 description: "Directory-level access control"
 icon: "gavel"
+order: 2
 ---
 
 Control user access to specific directories with allow/deny rules.

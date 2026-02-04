@@ -2,6 +2,7 @@
 title: "OIDC Authentication"
 description: "OpenID Connect integration"
 icon: "fingerprint"
+order: 3
 ---
 
 Integrate with OpenID Connect providers for single sign-on.

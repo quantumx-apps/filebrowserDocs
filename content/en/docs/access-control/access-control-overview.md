@@ -2,6 +2,7 @@
 title: "Access Control Overview"
 description: "How access control rules work in FileBrowser Quantum"
 icon: "security"
+order: 1
 ---
 
 # File Browser Access Control Rules
