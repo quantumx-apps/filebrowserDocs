@@ -28,7 +28,7 @@ To share files from Android's share button, you need to download another app cal
     - `upload_file_name` => Name of the file (do not worry, it would automatically retrieve from share intent)
 5. On upload, it will upload to the selected source at `/Uploads` folder. If the folder does not exist, FileBrowser will create it if the user of the API has the permission to do so.
 5.  Now to your messaging app or gallery or FileBrowser. Share a file, you may see `Upload to Filebrowser` (name of the shortcut btw) or find `HTTP Shortcuts` the app itself. Now you will be prompted for the remaining variables. Type in the source and path. After a couple of seconds you should see a notification that its successful.
-6. Optional, you can set Filebrowser logo to your shortcut. First, you need to download the [logo](https://raw.githubusercontent.com/gtsteffaniak/filebrowser/refs/heads/main/frontend/public/img/icons/favicon-256x256.png). Then, open the App > Hold on the shortcut > Edit > Click the icon > Custom Icon > Round > Find the icon you download in the file picker.
+6. Optional, you can set Filebrowser logo to your shortcut. First, you need to download the [logo](https://raw.githubusercontent.com/gtsteffaniak/filebrowser/refs/heads/main/frontend/public/img/icons/favicon.png). Then, open the App > Hold on the shortcut > Edit > Click the icon > Custom Icon > Round > Find the icon you download in the file picker.
 
 ## Current drawbacks
 
