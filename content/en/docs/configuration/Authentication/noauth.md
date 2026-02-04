@@ -18,7 +18,7 @@ Enable no authentication mode:
 ```yaml
 auth:
   methods:
-    noauth: true
+    noauth: true  # disables all authentication methods
 ```
 
 When `noauth: true` is set:
@@ -36,16 +36,8 @@ Useful for local development or testing where authentication is not needed:
 ```yaml
 auth:
   methods:
-    noauth: true
+    noauth: true # disables all authentication methods
 ```
-
-### Isolated Networks
-
-Only appropriate in completely isolated networks with no external access:
-
-- Internal development networks
-- Air-gapped systems
-- Local-only deployments with firewall protection
 
 ## Security Considerations
 

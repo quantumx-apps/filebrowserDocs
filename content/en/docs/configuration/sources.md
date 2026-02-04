@@ -106,6 +106,11 @@ server:
 ```
 
 ### config.defaultUserScope
+
+This is the directory path that a user is given access to by default. This is also the parent directory path used if you enable `createUserDir`.
+
+For example if the source is `/`, and you configure `defaultUserScope: /users` and also enable `createUserDir`, then a user named `graham` will have a scope directory created at `/users/graham` and that will be their root directory.
+
 Defaults to root of index `/`. Should match folders under path. Used when `createUserDir` is `false`.
 
 ```yaml
@@ -117,7 +122,7 @@ server:
 ```
 
 ### config.createUserDir
-Create a user directory for each user under `defaultUserScope + username`. Default: `false`.
+Create a user directory for each user under `defaultUserScope` + `/`+ `username`. Default: `false`.
 
 ```yaml
 server:
@@ -129,7 +134,7 @@ server:
         defaultUserScope: "/"
 ```
 
-This creates `/home/users/username` for each user.
+This creates `/home/users/username` for each user. For example, a user `graham` would get a folder created at `/home/users/graham` and that would be their user scope. They wouldn't be able to access `/home/users/` folder.
 
 ### config.denyByDefault
 Deny access unless an "allow" access rule was specifically created. Default: `false`.
