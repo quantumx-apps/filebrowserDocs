@@ -172,22 +172,6 @@ If a user loses access to their authenticator device, administrators can reset t
 Resetting a user's password via CLI also clears their Two-Factor Authentication. The user will need to set up 2FA again after logging in with the new password.
 {{% /alert %}}
 
-### Troubleshooting
-
-**User cannot log in after enabling 2FA:**
-- Verify the time on the server and user's device are synchronized
-- Ensure the user is entering the current 6-digit code (codes refresh every 30 seconds)
-- Check that the authenticator app is properly configured
-
-**User lost their authenticator device:**
-- Admin can reset the user's password via CLI, which also clears 2FA
-- Admin can disable 2FA for the user in User Management settings
-- User can then set up 2FA again with a new device
-
-**Enforced 2FA but user cannot set it up:**
-- Ensure `totpSecret` is configured in the auth section
-- Verify the user has password authentication enabled (not proxy or OIDC)
-- Check that the user has proper permissions
 
 ## Next Steps
 
