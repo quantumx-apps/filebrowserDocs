@@ -160,12 +160,17 @@ docker run -it --rm \
 ### Password Reset
 
 {{% alert context="warning" %}}
-Password reset also disables 2FA for the user.
+**Important**: Resetting a user's password via CLI also clears their Two-Factor Authentication (2FA). The user will need to set up 2FA again after logging in with the new password.
 {{% /alert %}}
 
 ```bash
 ./filebrowser set -u admin,newpassword -c config.yaml
 ```
+
+This is useful if:
+- A user forgot their password
+- A user lost access to their 2FA device and needs both password and 2FA reset
+- You need to reset an account for security reasons
 
 ### Create New User
 
