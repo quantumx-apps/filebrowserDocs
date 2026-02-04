@@ -130,6 +130,47 @@ These options **only apply** to normal shares and appear in the share creation d
 Extracting subtitles is IO-intensive and can take 10-30 seconds for large video files.
 {{% /alert %}}
 
+### File Permissions
+
+Control what actions users can perform on files in the share:
+
+<div class="option-field">
+  <label>
+    <input type="checkbox" /> Allow Modify
+  </label>
+  <p class="help-text">Allow editing and modifying files in the share.</p>
+</div>
+
+<div class="option-field">
+  <label>
+    <input type="checkbox" /> Allow Create
+  </label>
+  <p class="help-text">Allow creating new files and folders, and uploading files to the share.</p>
+</div>
+
+<div class="option-field">
+  <label>
+    <input type="checkbox" /> Allow Delete
+  </label>
+  <p class="help-text">Allow deleting files and folders from the share.</p>
+</div>
+
+<div class="option-field">
+  <label>
+    <input type="checkbox" /> Allow Replacements
+  </label>
+  <p class="help-text">Allow replacing existing files when uploading (only applies when Allow Create is enabled).</p>
+</div>
+
+### File Visibility
+
+<div class="option-field">
+  <label>
+    <input type="checkbox" /> Show Hidden Files
+  </label>
+  <p class="help-text">Show hidden files and folders in the share. On Windows this includes files starting with a dot and Windows hidden files.</p>
+</div>
+
 ### OnlyOffice Integration
 
 If OnlyOffice is configured on your FileBrowser instance:

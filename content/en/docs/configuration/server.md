@@ -42,20 +42,124 @@ server:
   baseURL: "/filebrowser"
 ```
 
+### socket
+Unix socket to listen on (alternative to TCP port). When set, overrides port configuration.
+
+```yaml
+server:
+  socket: "/var/run/filebrowser.sock"
+```
+
+### minSearchLength
+Minimum length of search query to begin searching (default: 3)
+
+```yaml
+server:
+  minSearchLength: 3
+```
+
+### disableUpdateCheck
+Disable backend update check service
+
+```yaml
+server:
+  disableUpdateCheck: false
+```
+
+### numImageProcessors
+Number of concurrent image processing jobs used to create previews. Default is number of CPU cores available.
+
+```yaml
+server:
+  numImageProcessors: 4
+```
+
+### disablePreviews
+Disable all previews and thumbnails. Simple icons will be used instead.
+
+```yaml
+server:
+  disablePreviews: false
+```
+
+### disablePreviewResize
+Disable resizing of previews for faster loading over slow connections.
+
+```yaml
+server:
+  disablePreviewResize: false
+```
+
+### disableTypeDetectionByHeader
+Disable type detection by header. Useful if filesystem is slow.
+
+```yaml
+server:
+  disableTypeDetectionByHeader: false
+```
+
+### externalUrl
+Used by share links if set. This is the base domain that share links will use.
+
+```yaml
+server:
+  externalUrl: "https://mydomain.com"
+```
+
+### cacheDirCleanup
+Whether to automatically cleanup the cache directory. Note: Docker must also mount a persistent volume to persist the cache (default: false).
+
+```yaml
+server:
+  cacheDirCleanup: false
+```
+
+### filesystem
+Filesystem settings for file and directory creation permissions.
+
+```yaml
+server:
+  filesystem:
+    createFilePermission: "644"      # Unix permissions like 644, 755, 2755 (default: 644)
+    createDirectoryPermission: "755" # Unix permissions like 755, 2755, 1777 (default: 755)
+```
+
+### indexSqlConfig
+Index database SQL configuration for performance tuning.
+
+```yaml
+server:
+  indexSqlConfig:
+    batchSize: 1000    # Number of items to batch in a single transaction, typically 500-5000. Higher = faster but could use more memory.
+    cacheSizeMB: 32    # Size of the SQLite cache in MB
+    walMode: false     # Enable the more complex WAL journaling mode. Slower, more memory usage, but better for deployments with constant user activity.
+    disableReuse: false # Enable to always create a new indexing database on startup.
+```
+
+### sources
+Configure file system sources. See {{< doclink path="configuration/sources/" text="Sources configuration" />}} for detailed information.
+
+### logging
+Configure logging output and levels. See {{< doclink path="configuration/logging/" text="Logging configuration" />}} for detailed information.
+
 ### database
-Database file path
+Database file path. See {{< doclink path="getting-started/config/#how-to-specify-a-config-file" text="configuration file priority" />}} for default locations.
 
 ```yaml
 server:
   database: "data/database.db"
 ```
 
+**Default locations:**
+- Current directory: `./database.db`
+- Docker: first checks `/home/filebrowser/data/database.db`, then current directory `./database.db`
+
 ### maxArchiveSize
 
 FileBrowser limits the maxiumum size of archive -- this affects folder downloads. This is limited to 50GB by default, which means the pre-archive combined size of a directory to be downloaded must be 50GB or less. This is necessary because archiving will store temporary files
 and that could exhaust the server if left unlimited.
 
-Ensure you have enough free space available if you choose to increase this further.
+Ensure you have enough free space available in your cacheDir if you choose to increase this further.
 
 ```yaml
 server:

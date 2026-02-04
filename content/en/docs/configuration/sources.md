@@ -73,6 +73,135 @@ server:
         private: true
 ```
 
+## Source Configuration Options
+
+### path
+File system path. Can be relative or absolute. Required.
+
+```yaml
+server:
+  sources:
+    - path: "/data/files"
+```
+
+### name
+Display name for the source. Optional. If not set, uses the base name of the path.
+
+```yaml
+server:
+  sources:
+    - path: "/data/files"
+      name: "My Files"
+```
+
+### config.defaultEnabled
+Should be added as a default source for new users? Default: `false`.
+
+```yaml
+server:
+  sources:
+    - path: "/data/files"
+      config:
+        defaultEnabled: true
+```
+
+### config.defaultUserScope
+Defaults to root of index `/`. Should match folders under path. Used when `createUserDir` is `false`.
+
+```yaml
+server:
+  sources:
+    - path: "/home/users"
+      config:
+        defaultUserScope: "/"
+```
+
+### config.createUserDir
+Create a user directory for each user under `defaultUserScope + username`. Default: `false`.
+
+```yaml
+server:
+  sources:
+    - path: "/home/users"
+      config:
+        defaultEnabled: true
+        createUserDir: true
+        defaultUserScope: "/"
+```
+
+This creates `/home/users/username` for each user.
+
+### config.denyByDefault
+Deny access unless an "allow" access rule was specifically created. Default: `false`.
+
+```yaml
+server:
+  sources:
+    - path: "/data"
+      config:
+        denyByDefault: true
+```
+
+See {{< doclink path="access-control/rules/" text="Access Rules" />}} for more information.
+
+### config.private
+Designate source as private -- currently just means no sharing permitted. Default: `false`.
+
+```yaml
+server:
+  sources:
+    - path: "/private/data"
+      config:
+        private: true
+```
+
+### config.disabled
+Disable the source. Useful so you don't need to remove it from the config file. Default: `false`.
+
+```yaml
+server:
+  sources:
+    - path: "/old/data"
+      config:
+        disabled: true
+```
+
+### config.useLogicalSize
+Calculate sizes based on logical size instead of disk utilization (du -sh). Folders will be 0 bytes when empty. Default: `false`.
+
+```yaml
+server:
+  sources:
+    - path: "/data"
+      config:
+        useLogicalSize: false
+```
+
+### config.rules
+List of item rules to apply to specific paths. See {{< doclink path="advanced/source-configuration/sources" text="Advanced Source Configuration" />}} for detailed information on rule options.
+
+```yaml
+server:
+  sources:
+    - path: "/data"
+      config:
+        rules:
+          - neverWatchPath: ""
+            includeRootItem: ""
+            fileStartsWith: ""
+            folderStartsWith: ""
+            fileEndsWith: ""
+            folderEndsWith: ""
+            folderPath: ""
+            filePath: ""
+            fileName: ""
+            folderName: ""
+            viewable: false
+            ignoreHidden: false
+            ignoreZeroSizeFolders: false
+            ignoreSymlinks: false
+```
+
 ## Next Steps
 
 - {{< doclink path="advanced/source-configuration/sources" text="Advanced Source Configuration" />}}
