@@ -13,7 +13,7 @@ This guide will help you set up your FileBrowser instance alone. This will be he
 filebrowser-quantum/
 ├── .env
 ├── compose.yml
-└── home/
+└── files/
 └── data/
     ├── config.yml
     └── tmp/
@@ -23,19 +23,17 @@ filebrowser-quantum/
 
 - Run below commands in the terminal to initialize folder structure, or manually via desktop.
 
-    ```bash
-    mkdir data
-    touch .env  compose.yml data/config.yaml
-    mkdir data/tmp
+```bash
+mkdir data
+touch .env  compose.yml data/config.yaml
+mkdir data/tmp
+```
 
-    ```
+Volume bindings needed:
 
-- Volume bindings needed:
-
-    - `./data:/home/filebrowser/data` is required to set the config file, database and tmp folder.
-    - (Optional) `./home:/home` is for a separate source to user directory in. Remove the line from compose and config files if you do not need.
-    - Other volume bindings that need to have access via Web.
-
+  - `./data:/home/filebrowser/data` is required to set the config file, database and tmp folder.
+  - Any folder you want to have access to, in this example we use `./files` which will be created in the same directory
+  - Other volume bindings that need to have access via Web.
 
 Update the compose.yml,
 
@@ -53,7 +51,7 @@ services:
       - proxy
     volumes:
       - ./data:/home/filebrowser/data
-      - ./home:/home
+      - ./files:/files
       # - /other/dir:/dir # Add other sources
     environment:
       - "FILEBROWSER_CONFIG=data/config.yaml"
@@ -66,18 +64,17 @@ server:
   database: "data/database.db"
   cacheDir: "data/tmp"
   sources:
-    - path: "/home"
+    - path: "/files"
       name: Home
       config:
-        defaultUserScope: "/users/"
-        defaultEnabled: true
-        createUserDir: true
-    - path: "/home/filebrowser"
+        defaultUserScope: "/users/" # new users will get created in /users/<username>
+        defaultEnabled: true # new users automatically get access to the source
+        createUserDir: true # a user "bill" will see files from /files/users/bill
+    - path: "/home/filebrowser" # mount the docker home folder for convenience
       name: Backend
     # Add your sources here.
-  externalUrl: 'https://<YOUR_IP>:8900'
-  internalUrl: 'http://filebrowser'
-  maxArchiveSize: 50
+  #externalUrl: 'https://<YOUR_IP>:8900' # if you plan to share externally, share links will be generated with this url
+  maxArchiveSize: 50 # maxiumum pre-archive size users are allowed to download at once.
 auth:
   tokenExpirationHours: 2
   methods:
@@ -86,11 +83,11 @@ auth:
       minLength: 5
       signup: true
   adminUsername: admin
-  adminPassword: admin
+  adminPassword: admin # remove this after first startup if you want to change this password manually.
 
 ```
 
-{{% alert context="important" %}}
+{{% alert context="info" %}}
 Remember to update the `externalUrl` with your IP address of your machine. This can be found via `ipconfig` (windows) or `hostname -I` (linux) or `ifconfig` (for macOS).
 {{% /alert %}}
 
