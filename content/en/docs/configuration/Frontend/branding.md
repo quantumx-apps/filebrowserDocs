@@ -66,7 +66,6 @@ Custom favicon supports multiple image formats. Non-PNG raster formats are autom
 - GIF (`.gif`)
 - TIFF (`.tiff`)
 - BMP (`.bmp`)
-- HEIC (`.heic`)
 - PBM (`.pbm`)
 - PGM (`.pgm`)
 - PPM (`.ppm`)
