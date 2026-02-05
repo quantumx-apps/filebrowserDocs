@@ -96,6 +96,42 @@ services:
 docker compose up -d
 ```
 
+### Healthcheck Configuration
+
+The FileBrowser Docker image includes a default healthcheck that uses port 80:
+
+```dockerfile
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:80/health || exit 1
+```
+
+If you configure FileBrowser to use a different port in your `config.yaml`, you must override the healthcheck in your `docker-compose.yaml` to match:
+
+```yaml
+services:
+  filebrowser:
+    image: gtstef/filebrowser:stable
+    volumes:
+      - /path/to/your/folder:/folder
+      - ./config.yaml:/home/filebrowser/config.yaml:ro
+    ports:
+      - 8080:8080  # Using port 8080 instead of 80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      start_period: 10s
+      retries: 3
+    restart: unless-stopped
+```
+
+**Healthcheck options:**
+- `test` - Command to run (must match your configured port)
+- `interval` - Time between health checks (default: 30s)
+- `timeout` - Time to wait for response (default: 3s)
+- `start_period` - Grace period on startup (default: 10s)
+- `retries` - Number of failures before marking unhealthy (default: 3)
+
 ## Database Location
 
 {{% alert context="info" %}}

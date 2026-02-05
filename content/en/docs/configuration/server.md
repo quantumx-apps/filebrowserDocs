@@ -26,6 +26,10 @@ server:
   port: 80
 ```
 
+{{% alert context="info" %}}
+**Docker Healthcheck**: If you change the port from the default (80), you must update the Docker healthcheck in your `docker-compose.yaml` to match the new port. See {{< doclink path="getting-started/docker/#healthcheck-configuration" text="Docker healthcheck configuration" />}} for details.
+{{% /alert %}}
+
 ### listen
 Server listen address (default: 0.0.0.0)
 
