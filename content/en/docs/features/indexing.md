@@ -251,6 +251,89 @@ While automatic scanning keeps the index up-to-date, you can also trigger manual
 - Refreshes the specific directory being accessed
 - Bypasses the scan schedule for immediate updates
 
+## Symbolic Links
+
+FileBrowser Quantum does **not follow symbolic links** during indexing by default. This is a deliberate design decision for security and indexing stability.
+
+### Why Symbolic Links Are Not Followed
+
+**Security Concerns:**
+- Symbolic links can point to locations outside the configured source path, potentially exposing files that should not be accessible
+- This could allow path traversal attacks if symlinks are created through file uploads or other means
+
+**Indexing Complexity:**
+- Symbolic links can create circular references, causing infinite loops during indexing
+- Index paths must be scoped to the source path, and out-of-scope symlinks break this requirement
+- The indexing system needs to track all paths relative to the source root, which becomes impossible with external symlinks
+
+### Current Behavior
+
+**What Happens:**
+- Symbolic links are detected but **not followed** during scanning
+- Symlinks appear in the file listing but are treated as dead links (not traversed)
+- The `ignoreSymlinks` rule option can be used to exclude symlinks from indexing entirely
+
+**Excluding Symbolic Links:**
+
+You can exclude symlinks from indexing using the `ignoreSymlinks` rule option. To exclude **all symlinks globally**, you must use a root-level rule with `folderPath: "/"`:
+
+```yaml
+server:
+  sources:
+    - path: "/data"
+      config:
+        rules:
+          - folderPath: "/"
+            ignoreSymlinks: true  # Exclude all symlinks globally
+```
+
+Or exclude symlinks for specific paths:
+
+```yaml
+server:
+  sources:
+    - path: "/data"
+      config:
+        rules:
+          - folderPath: "/symlinks"
+            ignoreSymlinks: true  # Exclude symlinks in this folder
+```
+
+### Planned Support
+
+Future versions may support:
+
+**In-Scope Symbolic Links:**
+- Symlinks that point to locations within the same source path
+- Example: `/data/folder1/link` → `/data/folder2/target` (both within `/data` source)
+
+**Root Path Symbolic Links:**
+- If the source path itself is a symlink, it will be resolved
+- Example: source path `/symlink` → `/actual/path`
+
+### Not Supported
+
+**Out-of-Scope Symbolic Links:**
+- Symlinks pointing outside the source path will **never** be supported
+- Example: `/data/link` → `/other/path` (outside `/data` source)
+- This restriction is necessary for security and indexing integrity
+
+### Use Cases and Workarounds
+
+**Common Use Cases:**
+- Organizing files with symlinks to avoid duplication
+- Creating shortcuts to frequently accessed directories
+- Managing user home directories with symlinks
+
+**Workarounds:**
+- Use multiple sources instead of symlinks for different directories
+- Configure the source path to include all directories you need (without symlinks)
+- Use `includeRootItem` rules to show only specific subdirectories
+
+{{% alert context="warning" %}}
+**Important:** If you have symlinks in your filesystem, they will appear in FileBrowser but will not be traversed. Files and folders accessed through symlinks will not be indexed or searchable. Consider restructuring your filesystem or using multiple sources instead.
+{{% /alert %}}
+
 ## Multi-Scanner Architecture
 
 Each source creates multiple scanners -- one for each directory in the root of the source path.
