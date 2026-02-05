@@ -87,10 +87,6 @@ auth:
 
 ```
 
-{{% alert context="info" %}}
-Remember to update the `externalUrl` with your IP address of your machine. This can be found via `ipconfig` (windows) or `hostname -I` (linux) or `ifconfig` (for macOS).
-{{% /alert %}}
-
 ## Non Root user
 
 By default, FileBrowser uses root. You can use `filebrowser`, a built in user (with UID=1000 and GID=1000) but specifying in the compose file's `user` in the respective service. If you need a different ID, then Create a `.env` file and fill the contents with,
