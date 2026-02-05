@@ -1,6 +1,6 @@
 ---
 title: "Branding"
-description: "Configure share options and branding"
+description: "Configure the branding, name, and look of the UI"
 icon: "branding_watermark"
 ---
 
