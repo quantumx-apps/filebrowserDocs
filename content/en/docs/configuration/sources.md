@@ -207,7 +207,9 @@ server:
             ignoreSymlinks: false
 ```
 
+{{% alert context="info" %}}
 **Note on `ignoreSymlinks`:** FileBrowser Quantum does not follow symbolic links during indexing by default. The `ignoreSymlinks` option allows you to exclude symlinks from the index entirely. See {{< doclink path="features/indexing/#symbolic-links" text="Symbolic Links documentation" />}} for more information.
+{{% /alert %}}
 
 ## Next Steps
 
