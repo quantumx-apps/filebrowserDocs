@@ -1,10 +1,10 @@
 ---
 title: "Standalone docker guide"
-description: "A basic working example on setting up FileBrowser in Docker with presistent indexing"
+description: "A basic working example on setting up FileBrowser in Docker with persistent indexing"
 icon: "deployed_Code"
 ---
 
-This guide will help you set up your FileBrowser instance alone. This will be helpful for users who just want to access there files over LAN for storage.
+This guide will help you set up your FileBrowser instance alone. This will be helpful for users who just want to access their files over LAN for storage.
 
 
 ## Folder Structure
@@ -12,28 +12,27 @@ This guide will help you set up your FileBrowser instance alone. This will be he
 ```
 filebrowser-quantum/
 ├── .env
-├── compose.yml
+├── compose.yaml
 └── files/
 └── data/
-    ├── config.yml
+    ├── config.yaml
     └── tmp/
 ```
 
 ## Initial Setup
 
-- Run below commands in the terminal to initialize folder structure, or manually via desktop.
+- Run the commands below commands in the terminal to initialize the folder structure, or manually via the desktop.
 
 ```bash
-mkdir data
-touch .env  compose.yml data/config.yaml
-mkdir data/tmp
+mkdir -p data/tmp
+touch .env compose.yaml data/config.yaml
 ```
 
 Volume bindings needed:
 
   - `./data:/home/filebrowser/data` is required to set the config file, database and tmp folder.
-  - Any folder you want to have access to, in this example we use `./files` which will be created in the same directory
-  - Other volume bindings that need to have access via Web.
+  - Any folder you want to have access to. In this example, we use `./files` which will be created in the same directory
+  - Other volume bindings that need to have access via the web.
 
 Update the compose.yml,
 
@@ -54,10 +53,10 @@ services:
       - ./files:/files
       # - /other/dir:/dir # Add other sources
     environment:
-      - "FILEBROWSER_CONFIG=data/config.yaml"
+      - "FILEBROWSER_CONFIG=data/config.yaml" # using our config file at ./data/config.yaml
 ```
 
-Update the config.yml,
+Update the config.yaml,
 
 ```yaml
 server:
@@ -89,7 +88,7 @@ auth:
 
 ## Non Root user
 
-By default, FileBrowser uses root. You can use `filebrowser`, a built in user (with UID=1000 and GID=1000) but specifying in the compose file's `user` in the respective service. If you need a different ID, then Create a `.env` file and fill the contents with,
+By default, FileBrowser uses root. You can use `filebrowser`, a built-in user (with UID=1000 and GID=1000), but specifying in the compose file's `user` in the respective service. If you need a different ID, then create a `.env` file and fill the contents with,
 
 ```
 UID=1001
@@ -98,7 +97,7 @@ GID=1001 # or your required values
 
 This way compose file will take the variables' value when docker compose starts FileBrowser.
 
-Update the compose file with `user: "$UID:$GID"` instead. Lastly update the data folder owner with the same ID as well with,
+Update the compose file with `user: "$UID:$GID"` instead. Lastly, update the data folder owner with the same ID as well with
 
 ```bash
 chown -R 1001:1001 data
@@ -128,7 +127,7 @@ docker compose down   # Shutdown container
 docker compose up -d  # Load new image
 ```
 
-With database and cache set up, your data will persist even with restarts.
+With the database and cache set up, your data will persist even with restarts.
 
 ## Next Steps
 
