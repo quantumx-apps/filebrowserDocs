@@ -6,11 +6,9 @@ icon: "deployed_Code"
 
 Uploading files from Android can be very difficult. You have to use the android file picker to navigate even if you want share a photo that you opened and its in front of you, but you can't because it is a photo from a few years back that is deep buried down, etc. This guide will demonstrate how to use the share button to upload to FileBrowser instead.
 
-{{% alert context="important" %}}
-This only works for a single **FILE** not folders. If you really need to upload a folder or a number of files, you will need to zip them first. While you can choose multiple files and share, this configuration will only accept the first file in the list.
-{{% /alert %}}
-
 {{% alert context="info" %}}
+This only works for a single **FILE** not folders. If you really need to upload a folder or a number of files, you will need to zip them first. While you can choose multiple files and share, this configuration will only accept the first file in the list.
+
 This will work with any share button that opens a popup (in technical terms, `Share Intent`) as long as it's a file.
 {{% /alert %}}
 
