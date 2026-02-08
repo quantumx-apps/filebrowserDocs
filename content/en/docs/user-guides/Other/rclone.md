@@ -5,7 +5,7 @@ icon: "cloud_sync"
 ---
 
 {{% alert context="warning" %}}
-WebDAV is only available as of `v1.2.0-beta` version of FileBrowser. It is enabled by default and no additional configuration is needed. This banner (and the "experimental" status) will be removed once WebDAV is implemented for `stable` version as well.
+WebDAV is only available as of `v1.3.0-beta` version of FileBrowser. It's enabled by default and no additional configuration is needed. This banner (and the "experimental" status) will be removed once WebDAV is implemented for `stable` version as well.
 {{% /alert %}}
 
 [rclone](https://rclone.org/) is an open-source command-line tool that syncs files to and from over 70 cloud storage providers, including WebDAV. This makes it compactible with FileBrowser. Apart from syncing, it can also be used to mount the cloud storage to a volume or directory enabling users to use their native apps on the file and folders.

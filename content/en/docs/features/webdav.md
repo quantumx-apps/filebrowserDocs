@@ -8,14 +8,14 @@ lastmod: "2026-02-08"
 ---
 
 {{% alert context="warning" %}}
-WebDAV is only available as of `v1.2.0-beta` version of FileBrowser. It is enabled by default and no additional configuration is needed. This banner (and the "experimental" status) will be removed once WebDAV is implemented for `stable` version as well.
+WebDAV is only available as of `v1.3.0-beta` version of FileBrowser. It's enabled by default and no additional configuration is needed. This banner (and the "experimental" status) will be removed once WebDAV is implemented for `stable` version as well.
 {{% /alert %}}
 
 ## What is WebDAV?
 
 [WebDAV](https://en.wikipedia.org/wiki/WebDAV) is a feature in FileBrowser that will let you access and manage **all** your files directly from your devices remotely.
 
-It's also an alternative to the WebUI since you can mount one (or multiples) of your {{< doclink path="/configuration/sources/" text="sources" />}} directly on your Filesystem to manage them. This allows users to use native applications to create/edit/organize files via WebDAV that are not possible via WebUI. For example, you can edit documents using native office suites without {{< doclink path="/integrations/office/about/" text="Office Integration" />}}, or organize folders/files using native apps like Explorer on Windows, Finder on macOS, Thunar/Dolphin in Linux, etc. You can also use third party clients that support WebDAV to access your files as well.
+It's also an alternative to the WebUI since you can mount one (or multiples) of your {{< doclink path="/configuration/sources/" text="sources" />}} directly on your Filesystem and manage the files stored in them. This allows you the use of native applications to create/edit/organize files via WebDAV that are not possible via WebUI. For example, you can edit documents using native office suites without {{< doclink path="/integrations/office/about/" text="Office Integration" />}} enabled, or organize folders/files using native apps like Explorer on Windows (In versions before Nov 2023), Finder on MacOS, Thunar/Dolphin in Linux, etc. You can also use any third party client or app that support WebDAV to access your files!
 
 ## How to use WebDAV
 
@@ -23,7 +23,7 @@ WebDAV is enabled by default and can be accessed from various clients in your de
 
 ### 01. Create API Token
 
-- Login into FileBrowser and go to Settings -> API Tokens:
+- Login into FileBrowser and go to `Settings` -> `API Tokens`:
 
 <img src="/images/features/webdav/create-api-token.png">
 
@@ -49,13 +49,13 @@ When authenticating to WebDAV clients, the `username` field will be completly _i
 
 ### 04. Server URL
 
-The remote path set for WebDAV is basically the starting point when you open the client:
+The remote path set for WebDAV is basically the starting point when you open a client:
 
 - `/dav`: This is required for FileBrowser to know that you are trying to access WebDAV.
 - `/<source_name>`: Required to set the name of the source (case-sensitive).
 
 {{% alert context="info" %}}
-If your user has `user-scopes` configured, FileBrowser will return the path of your user scope automatically based in who created the Token, there's no need to specify the full path including the scope folder.
+If your user has {{< doclink path="/configuration/users/#user-scopes" text="user scopes" />}} configured, FileBrowser will return the path of your user scope automatically based in who created the Token, there's no need to specify the full path including the scope folder.
 {{% /alert %}}
 
 - `/` -- Trailing slash: This is optional though some clients may require `/` at the end.
@@ -80,7 +80,7 @@ You'll only have access to folders and sources that your user have access to -- 
 ## Tested Clients
 
 {{% alert context="warning" %}}
-Windows does not support mounting WebDAV as a drive natively in Windows Explorer. This feature was [deprecated](https://learn.microsoft.com/en-us/windows/whats-new/deprecated-features) since Nov 2023.
+Windows doesn't support mounting WebDAV as a drive natively in Windows Explorer. This feature was [deprecated](https://learn.microsoft.com/en-us/windows/whats-new/deprecated-features) since Nov 2023. Will only work in older windows version before that date.
 {{% /alert %}}
 
 Some clients working with FileBrowser are:
@@ -93,11 +93,9 @@ Some clients working with FileBrowser are:
 - [ONLYOFFICE Mobile apps](https://helpcenter.onlyoffice.com/mobile) - Mobile devices only. (Clouds > Sign in > Other WebDAV storage)
 - Linux and MacOS file managers such as Finder, Thunar, Dolphin, Nemo, Nautilus, etc.
 
-{{% alert context="info" %}}
 You may need to omit `https://` or `http://` when setting the server URL depending on the client you are trying to connect. If you use `https` you will need to use port `443`, or the port number that was used with FileBrowser.
 
 Some clients also may use DAVS or DAV instead of https or http.
-{{% /alert %}}
 
 {{% alert context="info" %}}
 For guides on how to setup clients, you can check our guides {{< doclink path="/user-guides/webdav-clients/" text="here" />}} --
@@ -108,7 +106,7 @@ You can also check [awesome-webdav](https://github.com/fstanis/awesome-webdav?ta
 
 ### Mount as a drive for Windows
 
-WebDAV support was deprecated since November 2023, so this is not currently supported in newer versions of Windows when trying from the File Explorer. You'll need to install [rclone](https://rclone.org/) and [winfsp](https://winfsp.dev/rel/) to mount WebDAV as a drive. You can see {{< doclink path="/user-guides/other/rclone" text="this guide" />}} to set up rclone for WebDAV.
+WebDAV support was [deprecated](https://learn.microsoft.com/en-us/windows/whats-new/deprecated-features) since November 2023, so this is not currently supported in newer versions of Windows when trying from the File Explorer. You'll need to install [rclone](https://rclone.org/) and [winfsp](https://winfsp.dev/rel/) to mount WebDAV as a drive. You can see {{< doclink path="/user-guides/other/rclone" text="this guide" />}} to set up rclone for WebDAV.
 
 Alternatively, you can use [WinSCP](https://winscp.net/eng/download.php) as file manager itself without mapping as a drive. The only downside is that you can't manage files with any other software more than WinSCP interface.
 
@@ -122,5 +120,5 @@ If you get access denied could be for the following reasons:
 
 ## Next Steps
 
-- {{< doclink path="/user-guides/webdav-clients/" text="WebDAV Clients Guides" />}} - Guides for some WebDAV clients.
+- {{< doclink path="/user-guides/webdav-guides/" text="WebDAV Guides" />}} - How-to guides to connect filebrowser with some WebDAV supported software.
 - {{< doclink path="/user-guides/other/rclone/" text="rclone guide" />}} - Full rclone guide for Windows and Linux.
