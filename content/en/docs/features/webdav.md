@@ -3,8 +3,8 @@ title: "WebDAV"
 description: "Access FileBrowser Quantum as WebDAV Storage"
 icon: "storage"
 order: 4
-date: "2026-02-07"
-lastmod: "2026-02-07"
+date: "2026-02-08"
+lastmod: "2026-02-08"
 ---
 
 {{% alert context="warning" %}}
@@ -15,42 +15,39 @@ WebDAV is only available as of `v1.2.0-beta` version of FileBrowser. It is enabl
 
 [WebDAV](https://en.wikipedia.org/wiki/WebDAV) is a feature in FileBrowser that will let you access and manage **all** your files directly from your devices remotely.
 
-It's also an alternative to the WebUI since you can mount one (or multiples) of your {{< doclink path="/en/docs/configuration/sources/" text="sources" />}} directly on your Filesystem to manage them. This allows users to use native applications to create/edit/organize files via WebDAV that are not possible via WebUI. For example, you can edit documents using native office suites without Office integration, or organize folders/files using native apps like Explorer on Windows, Finder on macOS, Thunar/Dolphin in Linux, etc. You can also use third party clients that support WebDAV to access your files as well.
+It's also an alternative to the WebUI since you can mount one (or multiples) of your {{< doclink path="/configuration/sources/" text="sources" />}} directly on your Filesystem to manage them. This allows users to use native applications to create/edit/organize files via WebDAV that are not possible via WebUI. For example, you can edit documents using native office suites without {{< doclink path="/integrations/office/about/" text="Office Integration" />}}, or organize folders/files using native apps like Explorer on Windows, Finder on macOS, Thunar/Dolphin in Linux, etc. You can also use third party clients that support WebDAV to access your files as well.
 
 ## How to use WebDAV
 
-WebDAV is enabled by default and can be accessed from client devices via Basic Auth with an API Key being the password. You'll need to follow these steps:
+WebDAV is enabled by default and can be accessed from various clients in your devices via Basic Auth with an API Token being the password. You'll need to follow these steps:
 
-### Create API Key
+### 01. Create API Token
 
-- Login into FileBrowser and go to Settings -> API Keys:
+- Login into FileBrowser and go to Settings -> API Tokens:
 
-<img src="/images/features/webdav/create-api-key.png">
+<img src="/images/features/webdav/create-api-token.png">
 
-### Use minimal tokens
+### 02. Tokens without customization
 
-Enter a suitable name and set a duration for the expiration of the token, according to your requirements.
+Enter a suitable name and set a duration for the expiration of the token according to your requirements.
 
-When creating an API key for WebDAV you need to _**always**_ turn on the minimal token option.
+When creating an API Token for WebDAV you need to create a Token _without_ customization by disabling the "Customize Token" option. The option is disabled by default, but make sure that you have it disabled.
 
-This option will use your user permissions and is **much shorter** than the regular tokens, this is necessary since not all
-WebDAV clients/apps support larger passwords.
+When creating a Token this way, will inherit the user permissions and is **much shorter** than the regular tokens with customization enabled, this is necessary since not all WebDAV clients/apps support larger passwords for authentication.
 
-<img src="/images/features/webdav/minimal-token.png">
+<img src="/images/features/webdav/customization-disabled.png">
 
-### Copy Token
+### 03. Copy Token
 
-Once you created the API key, copy the token to clipboard and use it as password for you preferred WebDAV client.
+Once you created the Token, copy it to your clipboard and use it as password for you preferred WebDAV client.
 
-<img src="/images/features/webdav/copy-to-clipboard.png">
+<img src="/images/features/webdav/copy-token.png">
 
 {{% alert context="info" %}}
-When authenticating to WebDAV clients, the `username` field will be completly _ignored_ by FileBrowser, you can fill it with anything. Setting your username itself will be ideal. The only required fields are the URL to the server and the password for authentication. Some clients may have extra configurations to add (most of them optional), such as DAV protocol: DAV or DAVS (`http` or `https` in simpler words), ports, etc.
+When authenticating to WebDAV clients, the `username` field will be completly _ignored_ by FileBrowser, you can fill it with anything. Setting your username itself will be ideal, but the only required fields are the URL to the server and the password for authentication. Some clients may have extra configurations to add (most of them optional), such as DAV protocol: DAV or DAVS (`http` or `https` in simpler words), ports, etc.
 {{% /alert %}}
 
-Check [awesome-webdav](https://github.com/fstanis/awesome-webdav?tab=readme-ov-file) for guides on setting up clients for desktop and mobile devices.
-
-### Server URL
+### 04. Server URL
 
 The remote path set for WebDAV is basically the starting point when you open the client:
 
@@ -58,7 +55,7 @@ The remote path set for WebDAV is basically the starting point when you open the
 - `/<source_name>`: Required to set the name of the source (case-sensitive).
 
 {{% alert context="info" %}}
-If the user has `user-scopes` configured, FileBrowser will return the path of your user scope automatically based in the user who created the API Key, there's no need to specify the full path including the scope folder.
+If your user has `user-scopes` configured, FileBrowser will return the path of your user scope automatically based in who created the Token, there's no need to specify the full path including the scope folder.
 {{% /alert %}}
 
 - `/` -- Trailing slash: This is optional though some clients may require `/` at the end.
@@ -77,7 +74,7 @@ An easy way to set the URL is open the WebUI in your browser, navigate to your d
 - `https://files.example.com/files/data/folder` becomes `https://files.example.com/dav/data/folder/`
 
 {{% alert context="warning" %}}
-You'll only have access to all folders and sources that the user have access to -- You can't access a folder/source if your user has no access to it.
+You'll only have access to folders and sources that your user have access to -- You can't access a folder/source if your user has no access to it, or also if you user lacks the neccesary permissions.
 {{% /alert %}}
 
 ## Tested Clients
@@ -97,32 +94,33 @@ Some clients working with FileBrowser are:
 - Linux and MacOS file managers such as Finder, Thunar, Dolphin, Nemo, Nautilus, etc.
 
 {{% alert context="info" %}}
-You may need to omit `https://` or `http://` when setting the server URL depending on the client you are trying to connect. If you use `https` you will need to use port `443` or the port number that was used with FileBrowser.
+You may need to omit `https://` or `http://` when setting the server URL depending on the client you are trying to connect. If you use `https` you will need to use port `443`, or the port number that was used with FileBrowser.
 
 Some clients also may use DAVS or DAV instead of https or http.
 {{% /alert %}}
 
 {{% alert context="info" %}}
-For guides on how to setup some clients, you can check {{< doclink path="/en/docs/user-guides/webdav-clients/" text="WebDAV Clients" />}}
+For guides on how to setup clients, you can check our guides {{< doclink path="/user-guides/webdav-clients/" text="here" />}} --
+You can also check [awesome-webdav](https://github.com/fstanis/awesome-webdav?tab=readme-ov-file).
 {{% /alert %}}
 
 ## Troubleshooting
 
 ### Mount as a drive for Windows
 
-WebDAV support was deprecated since November 2023, so this is not currently supported in newer versions of windows when trying from Windows File Explorer. You need to install [rclone](https://rclone.org/) and [winfsp](https://winfsp.dev/rel/) to mount WebDAV as a drive. You can see {{< doclink path="/en/docs/user-guides/Other/rclone" text="this guide" />}} to set up rclone for WebDAV.
+WebDAV support was deprecated since November 2023, so this is not currently supported in newer versions of Windows when trying from the File Explorer. You'll need to install [rclone](https://rclone.org/) and [winfsp](https://winfsp.dev/rel/) to mount WebDAV as a drive. You can see {{< doclink path="/user-guides/other/rclone" text="this guide" />}} to set up rclone for WebDAV.
 
-Alternatively, you can use [WinSCP](https://winscp.net/eng/download.php) as file manager itself without mapping as a drive.
+Alternatively, you can use [WinSCP](https://winscp.net/eng/download.php) as file manager itself without mapping as a drive. The only downside is that you can't manage files with any other software more than WinSCP interface.
 
 ### Access Denied
 
 If you get access denied could be for the following reasons:
 
-- The API key expired: Try setting a more long duration time for the API key.
+- The API Token expired: Try setting a longer duration time for the API Token.
 - The path that you're trying to access is not valid: Make sure that you access to the path by checking in the WebUI.
-- You don't have enough permissions: Check that the user has the permissions to access WebDAV, you'll need `download` permission to view, and `modify/create/delete` permission to modify the files.
+- You don't have enough permissions: Check that your user has the necessary permissions to access WebDAV, you'll need `download` permission to view (read-only), and `modify/create/delete` permission to modify the files. Also see {{< doclink path="/access-control/access-control-overview/" text="Access control" />}}.
 
 ## Next Steps
 
-- {{< doclink path="/en/docs/user-guides/webdav-clients/" text="WebDAV Clients Guides" />}} - WebDAV clients guides
-- {{< doclink path="/user-guides/other/rclone" text="rclone guide" />}} - Full rclone guide for Windows and Linux
+- {{< doclink path="/user-guides/webdav-clients/" text="WebDAV Clients Guides" />}} - Guides for some WebDAV clients.
+- {{< doclink path="/user-guides/other/rclone/" text="rclone guide" />}} - Full rclone guide for Windows and Linux.
