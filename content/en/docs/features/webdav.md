@@ -102,16 +102,9 @@ You may need to omit `https://` or `http://` when setting the server URL dependi
 Some clients also may use DAVS or DAV instead of https or http.
 {{% /alert %}}
 
-<!--
-
-This is commentend out for now since the guides don't exist yet, they will be available in the path below:
-
 {{% alert context="info" %}}
 For guides on how to setup some clients, you can check {{< doclink path="/en/docs/user-guides/webdav-clients/" text="WebDAV Clients" />}}
 {{% /alert %}}
-
--->
-
 
 ## Troubleshooting
 
@@ -131,5 +124,5 @@ If you get access denied could be for the following reasons:
 
 ## Next Steps
 
-<!-- - {{< doclink path="/en/docs/user-guides/webdav-clients/" text="WebDAV Clients Guides" />}} - WebDAV clients guides -->
+- {{< doclink path="/en/docs/user-guides/webdav-clients/" text="WebDAV Clients Guides" />}} - WebDAV clients guides
 - {{< doclink path="/user-guides/other/rclone" text="rclone guide" />}} - Full rclone guide for Windows and Linux
