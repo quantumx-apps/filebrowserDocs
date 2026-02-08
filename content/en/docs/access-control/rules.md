@@ -2,6 +2,7 @@
 title: "Access Rules"
 description: "Directory-level access control"
 icon: "gavel"
+order: 2
 ---
 
 Control user access to specific directories with allow/deny rules.
@@ -12,6 +13,10 @@ Access rules for shares apply based on the user that created the share.
 
 {{% alert context="warning" %}}
 FileBrowser Quantum access rules differ entirely from the original FileBrowser. Rules do not carry over when migrating.
+{{% /alert %}}
+
+{{% alert context="warning" %}}
+The `conditionals` structure in source configuration is deprecated. Use only the `rules` key for access control configuration after version 1.2.x
 {{% /alert %}}
 
 ## How Access Control Works

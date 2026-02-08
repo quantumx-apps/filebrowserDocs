@@ -2,6 +2,7 @@
 title: "Running behind a reverse proxy"
 description: "Complete guide for configuring FileBrowser Quantum behind reverse proxies"
 icon: "other_houses"
+order: 7
 ---
 
 Complete guide for running FileBrowser Quantum behind reverse proxies including nginx, Traefik, and Caddy with authentication, SSL, and performance optimizations.
@@ -14,9 +15,43 @@ FileBrowser Quantum is designed to work seamlessly behind reverse proxies with p
 
 FileBrowser Quantum separates public and private endpoints to work efficiently with reverse proxies:
 
-- **Public endpoints** (`/public/api`, `/public/share`) - No authentication required
+- **Public endpoints** (`/public`) - Designed for share access without reverse proxy authentication.
 - **Cookie-based authentication** - Requires proper Host header forwarding
 - **Real-time features** - SSE support with proper proxy configuration
+
+### Public Route Structure
+
+FileBrowser Quantum includes a dedicated `/public` route that contains:
+
+- `/public/api/` - Public API endpoints for share access (hash-based authentication)
+- `/public/share/` - Share pages (can work with or without user authentication)
+- `/public/static/` - Static assets (CSS, JavaScript, images)
+
+{{% alert context="info" %}}
+The `/public` routes are designed to allow shares to function fully without requiring authentication at the reverse proxy level. This enables share links to work even when the reverse proxy requires authentication for other routes. Public routes also use stricter logging to prevent sensitive information leakage.
+{{% /alert %}}
+
+### Route Authentication Requirements
+
+```
+Private Routes (Require User Authentication):
+├── /api/*              - Private API endpoints
+├── /dav/*              - WebDAV access  
+└── /swagger/           - API documentation
+
+Public Routes (Hash-based or Optional Auth):
+├── /public/api/*       - Public API (share hash authentication)
+├── /public/share/*     - Share pages (optional user authentication)
+└── /public/static/*   - Static assets (no authentication)
+
+Other Routes:
+├── /                   - Main UI (optional authentication)
+└── /health             - Health check (no authentication)
+```
+
+When configuring your reverse proxy, you can:
+- **Require authentication** for `/api/` and other private routes
+- **Allow public access** to `/public/` routes for share functionality
 
 ## Basic Requirements
 
@@ -54,7 +89,8 @@ server {
     listen 80;
     server_name files.example.com;
 
-    # Public endpoints (no authentication required)
+    # Public endpoints (for shares - no reverse proxy auth required)
+    # These routes use hash-based authentication internally
     location /files/public/ {
         proxy_pass http://filebrowser:8080/files/public/;
         proxy_set_header Host $host;
@@ -74,6 +110,10 @@ server {
     }
 }
 ```
+
+{{% alert context="info" %}}
+The `/public` route allows shares to function without reverse proxy authentication. This means share links (`/public/share/<hash>`) will work even if you require authentication for other routes. The share itself may still require a password or user restrictions as configured in FileBrowser.
+{{% /alert %}}
 
 ### With Authentication Proxy
 
@@ -150,7 +190,7 @@ files.example.com {
             header_up X-Forwarded-Proto {scheme}
         }
     }
-    
+
     # Private endpoints (with authentication)
     handle /* {
         reverse_proxy filebrowser:80 {

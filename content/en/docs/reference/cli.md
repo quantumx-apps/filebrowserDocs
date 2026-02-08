@@ -60,6 +60,38 @@ Create admin user:
 ./filebrowser set -u username,password -a
 ```
 
+### Access Rule Management
+
+Create or update access rules via CLI:
+
+**Allow user access:**
+```bash
+./filebrowser set rule -f /mnt/storage -p /secret -r user -v username -allow -c config.yaml
+```
+
+**Deny user access:**
+```bash
+./filebrowser set rule -f /mnt/storage -p /secret -r user -v username -c config.yaml
+```
+
+**Allow group access:**
+```bash
+./filebrowser set rule -f /mnt/storage -p /departments/sales -r group -v sales -allow -c config.yaml
+```
+
+**Deny all users:**
+```bash
+./filebrowser set rule -f /mnt/storage -p /restricted -r all -c config.yaml
+```
+
+**Rule command options:**
+- `-f` - Real filesystem path (e.g. `/mnt/storage`)
+- `-p` - Index path (e.g. `/secret`)
+- `-r` - Rule category: `user`, `group`, or `all` (for deny only)
+- `-v` - Value: username or groupname (not required if `-r` is `all`)
+- `-allow` - Allow access (default: false, which means deny)
+- `-c` - Config file path
+
 ## Important Notes
 
 **Always shut down the server before CLI operations**
@@ -128,12 +160,17 @@ docker run -it --rm \
 ### Password Reset
 
 {{% alert context="warning" %}}
-Password reset also disables 2FA for the user.
+**Important**: Resetting a user's password via CLI also clears their Two-Factor Authentication (2FA). The user will need to set up 2FA again after logging in with the new password.
 {{% /alert %}}
 
 ```bash
 ./filebrowser set -u admin,newpassword -c config.yaml
 ```
+
+This is useful if:
+- A user forgot their password
+- A user lost access to their 2FA device and needs both password and 2FA reset
+- You need to reset an account for security reasons
 
 ### Create New User
 
@@ -217,19 +254,19 @@ Go version: go1.23
 
 ### filebrowser set
 
-Add or update users.
+Add or update users, or manage access rules.
 
-**Syntax**:
+**User Management Syntax**:
 ```bash
 ./filebrowser set -u username,password [-a] [-c config.yaml]
 ```
 
-**Options**:
+**User Management Options**:
 - `-u` - Username and password (comma-separated)
 - `-a` - Make user admin
 - `-c` - Config file path
 
-**Examples**:
+**User Management Examples**:
 ```bash
 # Create user
 ./filebrowser set -u john,pass123 -c config.yaml
@@ -239,6 +276,31 @@ Add or update users.
 
 # Reset password
 ./filebrowser set -u john,newpass -c config.yaml
+```
+
+**Access Rule Management Syntax**:
+```bash
+./filebrowser set rule -f <fsPath> -p <indexPath> -r <user|group|all> [-v <value>] [-allow] [-c config.yaml]
+```
+
+**Access Rule Options**:
+- `-f` - Real filesystem path (required)
+- `-p` - Index path (required)
+- `-r` - Rule category: `user`, `group`, or `all` (for deny only) (required)
+- `-v` - Value: username or groupname (required when `-r` is `user` or `group`)
+- `-allow` - Allow access (default: false, which means deny)
+- `-c` - Config file path
+
+**Access Rule Examples**:
+```bash
+# Allow user access to a path
+./filebrowser set rule -f /mnt/storage -p /documents -r user -v john -allow -c config.yaml
+
+# Deny group access
+./filebrowser set rule -f /mnt/storage -p /restricted -r group -v guests -c config.yaml
+
+# Deny all users
+./filebrowser set rule -f /mnt/storage -p /private -r all -c config.yaml
 ```
 
 ## Troubleshooting
