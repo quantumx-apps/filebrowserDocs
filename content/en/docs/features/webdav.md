@@ -102,6 +102,17 @@ For guides on how to setup clients, you can check our guides {{< doclink path="/
 You can also check [awesome-webdav](https://github.com/fstanis/awesome-webdav?tab=readme-ov-file).
 {{% /alert %}}
 
+## Disable WebDAV
+
+WebDAV feature in FileBrowser is enabled by default, to disable this feature you'll need to edit a option in your {{< doclink path="/getting-started/config/" text="config file" />}}, the option can be found under the `server` section:
+
+```yaml
+server:
+  disableWebDAV: true # Set it to true to disable WebDAV
+```
+
+After edit the option, restart FileBrowser to take effect.
+
 ## Troubleshooting
 
 ### Mount as a drive for Windows
