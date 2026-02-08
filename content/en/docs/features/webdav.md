@@ -42,7 +42,7 @@ WebDAV clients/apps support larger passwords.
 
 Once you created the API key, copy the token to clipboard and use it as password for you preferred WebDAV client.
 
-<img src="/images/features/webdav/copy-token.png">
+<img src="/images/features/webdav/copy-to-clipboard.png">
 
 {{% alert context="info" %}}
 When authenticating to WebDAV clients, the `username` field will be completly _ignored_ by FileBrowser, you can fill it with anything. Setting your username itself will be ideal. The only required fields are the URL to the server and the password for authentication. Some clients may have extra configurations to add (most of them optional), such as DAV protocol: DAV or DAVS (`http` or `https` in simpler words), ports, etc.
