@@ -115,7 +115,9 @@ For guides on how to setup some clients, you can check {{< doclink path="/en/doc
 
 ### Map as a network Drive for Windows
 
-WebDAV support was deprecated since November 2023, so this is not currently supported in newer versions of windows when trying from Windows File Explorer. You need to install [rclone](https://rclone.org/) and [winfsp](https://winfsp.dev/rel/) to mount WebDAV as a network drive. Alternatively, you can use [WinSCP](https://winscp.net/eng/download.php) as file manager itself without mapping as a network drive.
+WebDAV support was deprecated since November 2023, so this is not currently supported in newer versions of windows when trying from Windows File Explorer. You need to install [rclone](https://rclone.org/) and [winfsp](https://winfsp.dev/rel/) to mount WebDAV as a network drive. You can see {{< doclink path="/en/docs/user-guides/Other/rclone" text="this guide" />}} to setup rclone for WebDAV.
+
+Alternatively, you can use [WinSCP](https://winscp.net/eng/download.php) as file manager itself without mapping as a network drive.
 
 ### Access Denied
 
@@ -127,5 +129,5 @@ If you get access denied could be for the following reasons:
 
 ## Next Steps
 
-<!-- - {{< doclink path="/en/docs/user-guides/webdav-clients/" text="WebDAV Clients Guides" />}} -->
-- {{< doclink path="/en/docs/user-guides/Other/rclone" text="full rclone guide for Windows and Linux" />}}
+<!-- - {{< doclink path="/en/docs/user-guides/webdav-clients/" text="WebDAV Clients Guides" />}} - WebDAV clients guides -->
+- {{< doclink path="/en/docs/user-guides/Other/rclone" text="rclone guide" />}} - Full rclone guide for Windows and Linux
