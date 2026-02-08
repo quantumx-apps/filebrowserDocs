@@ -130,4 +130,4 @@ If you get access denied could be for the following reasons:
 ## Next Steps
 
 <!-- - {{< doclink path="/en/docs/user-guides/webdav-clients/" text="WebDAV Clients Guides" />}} - WebDAV clients guides -->
-- {{< doclink path="/en/docs/user-guides/Other/rclone" text="rclone guide" />}} - Full rclone guide for Windows and Linux
+- {{< doclink path="/user-guides/other/rclone" text="rclone guide" />}} - Full rclone guide for Windows and Linux
