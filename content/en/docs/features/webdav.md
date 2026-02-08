@@ -83,7 +83,7 @@ You'll only have access to all folders and sources that the user have access to 
 ## Tested Clients
 
 {{% alert context="warning" %}}
-Windows does not support mounting WebDAV as a drive natively in Windows Explorer. It may support if your Windows build version is before Nov 2023.
+Windows does not support mounting WebDAV as a drive natively in Windows Explorer. This feature was [deprecated](https://learn.microsoft.com/en-us/windows/whats-new/deprecated-features) since Nov 2023.
 {{% /alert %}}
 
 Some clients working with FileBrowser are:
