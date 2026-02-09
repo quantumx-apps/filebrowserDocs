@@ -12,7 +12,7 @@ WebDAV is only available as of `v1.3.0-beta` version of FileBrowser. It's enable
 
 ## Prerequisites
 
-You need a working FileBrowser setup and an API Key (`minimal` version) to access FileBrowser's WebDAV.
+You need a working FileBrowser setup with WebDAV enabled and an API Token (without any customization) to access it.
 
 ## Installing rclone
 
@@ -35,6 +35,7 @@ First, create a folder named `rclone` in `C:` or any drive letter and move the `
 1. In the top list, scroll down to the PATH variable under user variables, select it, and click Edit.
 1. Click New and paste in the folder that contains `rclone.exe`. For example, `C:\rclone` or `D:\rclone` depending on where you set up.
 1. Click OK to close each dialog box.
+1. Now you can run `rclone` in Windows the same way as any other OS.
 
 If you do not follow the above steps, then whenever you want to access `rclone`, you have to
 
@@ -68,8 +69,8 @@ Send `n` to create a new remote and fill the following details when prompted for
 - URL => `https://files.example.com/dav/data/` (change the URL to your use case)
 - Vendor => `other`'s number
 - User => Fill your username or leave blank
-- Pass => Send `y` (Do not paste the API key here)
-- Pass (contd.) => Paste the API key now. You need to paste again for confirmation, and the text may be hidden so do not paste multiple times by accident.
+- Pass => Send `y` (Do not paste the API Token here)
+- Pass (contd.) => Paste the API Token now. You need to paste again for confirmation, and the text may be hidden so do not paste multiple times by accident.
 - Bearer Token => Leave blank
 - Edit advanced config => Leave blank
 - Keep config => Leave blank
@@ -123,16 +124,16 @@ You can now edit FileBrowser contents with desktop apps via rclone mount!
 
 ## Updating passwords
 
-If the API key is expired or deleted, you can update the remote configuration via `rclone config` command itself.
+If the API Token is expired or deleted, you can update the remote configuration via `rclone config` command itself.
 
 Follow the steps below:
 
-- Make sure you generate another API key first and copy it.
+- Make sure you generate another API Token first and copy it.
 - Run `rclone config` in terminal.
 - You have to select `Edit existing remote` with `e` **NOT** `Set configuration password`.
 - Enter the number corresponding to the remote you need to update.
 - You can leave everything as blank expect when asked for `Pass/Password`.
-- Similar to how you configured, `y` followed by pasting API key twice.
+- Similar to how you configured, `y` followed by pasting API Token twice.
 - Finally, `q` to quit.
 
 ## Next Steps
