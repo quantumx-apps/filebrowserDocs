@@ -139,4 +139,4 @@ Follow the steps below:
 ## Next Steps
 
 - [Official docs for rclone](https://rclone.org/commands/) - Learn about other `rclone` commands like move, sync, etc.
-- {{< doclink path="/en/docs/user-guides/webdav-clients/" text="WebDAV Clients Guides" />}} - Learn about other WebDAV clients
+- {{< doclink path="/en/docs/user-guides/webdav-guides/" text="WebDAV Clients Guides" />}} - Learn about other WebDAV clients

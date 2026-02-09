@@ -98,7 +98,7 @@ You may need to omit `https://` or `http://` when setting the server URL dependi
 Some clients also may use DAVS or DAV instead of https or http.
 
 {{% alert context="info" %}}
-For guides on how to set up clients, you can check our guides {{< doclink path="/user-guides/webdav-clients/" text="here" />}} --
+For guides on how to set up clients, you can check our guides {{< doclink path="/user-guides/webdav-guides/" text="here" />}} --
 You can also check [awesome-webdav](https://github.com/fstanis/awesome-webdav?tab=readme-ov-file).
 {{% /alert %}}
 
