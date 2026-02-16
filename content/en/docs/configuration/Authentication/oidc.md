@@ -44,17 +44,19 @@ auth:
 
 ## Issuer URL Examples
 
-**Authentik/Authelia**:
+**Authentik**:
 ```
 https://domain.com/application/o/filebrowser/
 ```
 
-**Pocket ID**:
+**Pocket ID/Authelia**:
 ```
-https://domain.com/
+https://domain.com
 ```
 
 ## Callback URL
+
+Append `/api/auth/oidc/callback` to the end of your base URL to get FileBrowser's OIDC callback URL.
 
 Configure in your OIDC provider:
 
@@ -62,7 +64,7 @@ Configure in your OIDC provider:
 https://your-domain.com/api/auth/oidc/callback
 ```
 
-With custom baseURL:
+If you a custom baseURL in your `config.yaml`:
 ```
 https://your-domain.com/custom-base/api/auth/oidc/callback
 ```
