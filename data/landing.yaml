@@ -13,7 +13,7 @@ hero:
     iconColor: "#2196F3"
 
   title: "FileBrowser Quantum"
-  subtitle: The best free self-hosted web-based file manager with **configurable sources**, **OIDC authentication**, **Office file support**, and **real-time indexing**.
+  subtitle: The best free self-hosted web-based file manager with **configurable sources**, **Modern Authentication**, **Office support**, and **lightning-fast search**.
 
   image:
     url: "/images/hero-screenshot.png"
@@ -85,31 +85,30 @@ features:
   template: feature grid
 
   title: "Why Choose FileBrowser Quantum?"
-  subtitle: "A massive fork with revolutionary features that set it apart from traditional file managers"
+  subtitle: "It's a no-compromise solution -- it's a quantum leap forward from the original project. It's fully featured with a sleek, modern interface. It's quick to install and has low system requirements. It supports a wide range of files and user controls."
 
   items:
     - icon: "security"
-      title: "Advanced Authentication"
-      description: "Support for OIDC, password + 2FA, and proxy authentication. Enterprise-grade security for your files."
+      title: "Modern Authentication"
+      description: "Support for OIDC, LDAP, Two-Factor, and proxy authentication."
 
     - icon: "edit_document"
-      title: "Office File Support"
-      description: "Edit Office documents directly in the browser with OnlyOffice integration. Support for video and office file previews."
+      title: "Office Support"
+      description: "Edit Office documents directly in the browser with support for document thumbnails."
 
     - icon: "share"
       title: "Configurable Sharing"
-      description: "Create shares with expiration times, user restrictions, styling options, and granular permissions."
+      description: "Share your files the way you want with configurable sharing options like expiration, download limits, password protection, banners, colors, branding and more."
 
     - icon: "search"
-      title: "Real-Time Search"
-      description: "Find files instantly with content-aware search across your entire filesystem. Supports file sizes and advanced filters."
+      title: "Lightning-Fast Search"
+      description: "Find any file instantly across your entire filesystem. Supports advanced search filters and file previews."
 
     - icon: "api"
       title: "Developer API"
-      description: "Long-lived API tokens with comprehensive Swagger documentation. Build integrations and automate workflows."
+      description: "Create API tokens with comprehensive Swagger documentation. Build integrations and automate your workflows."
 
     - icon: "lock"
-      title: "Directory Access Control"
-      description: "Granular permissions scoped to users or groups. Control access at the directory level with precision."
+      title: "Granular Access Control"
+      description: "Control access to your source files with granular permission controls."
 
-# Call to action - removed as theme doesn't support cta template
