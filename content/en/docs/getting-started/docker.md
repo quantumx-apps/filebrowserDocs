@@ -18,7 +18,7 @@ Images from Docker Hub (`gtstef/filebrowser`) and GitHub Container Registry (`gh
 | `beta`             | 60 MB | FFmpeg + document preview           | arm64, amd64        |
 | `beta-slim`        | 15 MB | Core service only (no media/office) | arm64, arm32, amd64 |
 
-({{< doclink path="getting-started/version#docker-version-tags" text="Learn about version tags here." />}})
+Learn more about the versions and tags {{< doclink path="getting-started/version#docker-version-tags" text="here." />}}
 
 ## Quick Try
 
@@ -102,8 +102,8 @@ docker compose up -d
 
 ### Healthcheck Configuration
 
-{{% alert context="info" %}}
-In this example we change the filebrowser config.yaml port to `8080`, this is only needed if you change the port on the config.
+{{% alert context="warning" %}}
+This is only needed if you change the `server.port` in the `config.yaml` -- this is not needed for the above guide where the port remains `80` in the `config.yaml`
 {{% /alert %}}
 
 The FileBrowser Docker image includes a default healthcheck that uses port 80:
