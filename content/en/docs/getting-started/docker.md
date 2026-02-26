@@ -18,7 +18,7 @@ Images from Docker Hub (`gtstef/filebrowser`) and GitHub Container Registry (`gh
 | `beta`             | 60 MB | FFmpeg + document preview           | arm64, amd64        |
 | `beta-slim`        | 15 MB | Core service only (no media/office) | arm64, arm32, amd64 |
 
-({{< doclink path="getting-started/version#docker-version-tags" text="Learn about version tags here." />}})
+Learn more about the versions and tags {{< doclink path="getting-started/version#docker-version-tags" text="here." />}}
 
 ## Quick Try
 
@@ -43,15 +43,19 @@ This set up is just to get the feel of FileBrowser before you get into customiza
 ### Step 1: Create a base folder for FileBrowser
 
 ```bash
-mdkir filebrowser && cd filebrowser
+mdkir -p filebrowser/data && cd filebrowser
 ```
+
+{{% alert context="info" %}}
+**Default Config Location**: In Docker, the default config location is `/home/filebrowser/data/config.yaml`. So we create a `data` directory so we can mount the config, database files, and (optionally) cacheDir in the same volume. If you don't want to follow this process, you can use {{< doclink path="reference/environment-variables" text="environment variables" />}} to set the config path and database path manually.
+{{% /alert %}}
 
 ### Step 2: Create Config
 
-Create a new `config.yaml` file in the same directory:
+Add a `config.yaml` file inside the `data` directory:
 
 ```bash
-touch config.yaml
+touch ./data/config.yaml
 ```
 
 Then fill out your config as needed, for example:
@@ -65,12 +69,12 @@ server:
 ```
 
 {{% alert context="info" %}}
-**Important**: Source path specified in the `config.yaml` are in terms of container point of view.  ({{< doclink path="getting-started/config" text="Check this page for more information on configurations." />}})
+**Important**: Source path specified in the `config.yaml` are in terms of container point of view. ({{< doclink path="getting-started/config" text="Check this page for more information on configurations." />}})
 {{% /alert %}}
 
 ### Step 3: Create Docker Compose
 
-Create `docker-compose.yaml` in the same directory.
+Create `docker-compose.yaml` in the  directory.
 
 ```bash
 touch docker-compose.yaml
@@ -84,9 +88,9 @@ services:
     image: gtstef/filebrowser:stable
     volumes:
       - /path/to/your/folder:/folder # Do not use a root "/" directory or include the "/var" folder
-      - ./config.yaml:/home/filebrowser/config.yaml:ro
+      - ./data:/home/filebrowser/data
     ports:
-      - 80:80
+      - 80:80 # exposes port 80 to host, the left-side number can be changed without config.yaml changes.
     restart: unless-stopped
 ```
 
@@ -97,6 +101,10 @@ docker compose up -d
 ```
 
 ### Healthcheck Configuration
+
+{{% alert context="warning" %}}
+This is only needed if you change the `server.port` in the `config.yaml` -- this is not needed for the above guide where the port remains `80` in the `config.yaml`
+{{% /alert %}}
 
 The FileBrowser Docker image includes a default healthcheck that uses port 80:
 
@@ -115,9 +123,9 @@ services:
       - /path/to/your/folder:/folder
       - ./config.yaml:/home/filebrowser/config.yaml:ro
     ports:
-      - 8080:8080  # Using port 8080 instead of 80
+      - 80:8080  # Filebrowser listens on 8080 inside docker, but here we are exposing the host port as 80 still.
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"] # port should match the internal port 8080 
       interval: 30s
       timeout: 3s
       start_period: 10s
@@ -151,9 +159,14 @@ services:
 See {{< doclink path="configuration/server/#database" text="Server configuration" />}} and {{< doclink path="getting-started/config/#how-to-specify-a-config-file" text="configuration file priority" />}} for more information on database paths.
 {{% /alert %}}
 
-## Running as Non-Root
+## Running container with a different user
 
-FileBrowser Quantum docker images have a non-default `filebrowser` user built-in. This user has UID:GID of 1000:1000. You can use it by specifying a user in docker compose.
+{{% alert context="info" %}}
+On `v1.2.x` and earlier, the default user is `root`.
+On `v1.3.x` and later, the default user is `filebrowser` (1000:1000).
+{{% /alert %}}
+
+FileBrowser Quantum docker images have a non-default `filebrowser` user built-in. This user has UID:GID of 1000:1000. In `v1.2.x` and earlier you need to specify this user manually:
 
 Add to docker-compose.yaml:
 
