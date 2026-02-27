@@ -3,8 +3,8 @@ title: "WebDAV"
 description: "Access FileBrowser Quantum as WebDAV Storage"
 icon: "storage"
 order: 4
-date: "2026-02-08"
-lastmod: "2026-02-08"
+date: "2026-02-27"
+lastmod: "2026-02-27"
 ---
 
 {{% alert context="warning" %}}
@@ -31,11 +31,11 @@ WebDAV is enabled by default and can be accessed from various clients in your de
 
 Enter a suitable name and set a duration for the expiration of the token according to your requirements.
 
-When creating an API Token for WebDAV you need to create a Token _without_ customization by disabling the "Customize Token" option. The option is disabled by default, but make sure that you have it disabled.
+When creating an API Token for WebDAV, you'll need to create a Token _without_ customization by disabling the "Customize Token" option. The option is disabled by default but make sure that you have it disabled.
 
-When creating a Token this way, will inherit the user permissions and is **much shorter** than the regular tokens with customization enabled, this is necessary since not all WebDAV clients/apps support longer passwords for authentication.
+When creating a Token this way, will inherit the permissions of the user who created it. This tokens are **much shorter** than the customized Tokens, this is necessary since not all WebDAV clients/apps support longer passwords for authentication.
 
-<img src="/images/features/webdav/customization-disabled.png">
+<img src="/images/features/webdav/token-customization-disabled.png">
 
 ### 03. Copy Token
 
@@ -44,7 +44,7 @@ Once you created the Token, copy it to your clipboard and use it as password for
 <img src="/images/features/webdav/copy-token.png">
 
 {{% alert context="info" %}}
-When authenticating to WebDAV clients, the `username` field will be completely _ignored_ by FileBrowser, you can fill it with anything. Setting your username itself will be ideal, but the only required fields are the URL to the server and the password for authentication. Some clients may have extra configurations to add (most of them optional), such as DAV protocol: DAV or DAVS (`http` or `https` in simpler words), ports, etc.
+When authenticating to WebDAV clients, the `username` field will be completely **_ignored_** by FileBrowser, you can fill it with anything. Setting your username itself will be ideal, but the only required fields are the URL to the server and the password for authentication. Some clients may have extra configurations to add (most of them optional), such as DAV protocol: DAV or DAVS (`http` or `https` in simpler words), ports, etc.
 {{% /alert %}}
 
 ### 04. Server URL
@@ -74,13 +74,13 @@ An easy way to set the URL is open the WebUI in your browser, navigate to your d
 - `https://files.example.com/files/data/folder` becomes `https://files.example.com/dav/data/folder/`
 
 {{% alert context="warning" %}}
-You'll only have access to folders and sources that your user have access to -- You can't access a folder/source if your user has no access to it, or also if the user lacks the necessary permissions.
+You'll only have access to folders and sources that _your user_ have access to -- You can't access a folder or source if your user has no access to it, or also, you'll be unable to perform certain operations if your user lacks the necessary permissions.
 {{% /alert %}}
 
 ## Tested Clients
 
 {{% alert context="warning" %}}
-Windows doesn't support mounting WebDAV as a drive natively in Windows Explorer. This feature was [deprecated](https://learn.microsoft.com/en-us/windows/whats-new/deprecated-features) since Nov 2023. Will only work in older Windows version before that date.
+Windows Explorer supports mounting WebDAV as a drive natively in Windows Explorer. But this feature was [deprecated](https://learn.microsoft.com/en-us/windows/whats-new/deprecated-features) since Nov 2023. Will only work in older Windows version before that date. We can still mounting WebDAV natively in modern windows versions, but is more tricker and has several limitations. Is recommended to use other methods such as rclone, or WinSCP instead.
 {{% /alert %}}
 
 Some clients working with FileBrowser are:
@@ -91,27 +91,27 @@ Some clients working with FileBrowser are:
 - [Symfonium](https://www.symfonium.app/) - Music Player for Android.
 - [Material Files](https://github.com/zhanghai/MaterialFiles) - File Manager for Android.
 - [ONLYOFFICE Mobile apps](https://helpcenter.onlyoffice.com/mobile) - Mobile devices only. (Clouds > Sign in > Other WebDAV storage)
-- Linux and macOS file managers such as Finder, Thunar, Dolphin, Nemo, Nautilus, etc.
+- Desktop file managers such as Finder in MacOS, Thunar, Dolphin, Nemo, Nautilus... In Linux.
 
 You may need to omit `https://` or `http://` when setting the server URL depending on the client you are trying to connect. If you use `https` you will need to use port `443`, or the port number that was used with FileBrowser.
 
 Some clients also may use DAVS or DAV instead of https or http.
 
 {{% alert context="info" %}}
-For guides on how to set up clients, you can check our guides {{< doclink path="/user-guides/webdav-guides/" text="here" />}} --
+For guides on how to setup some clients, you can check {{< doclink path="/user-guides/webdav-guides/" text="our guides" />}} --
 You can also check [awesome-webdav](https://github.com/fstanis/awesome-webdav?tab=readme-ov-file).
 {{% /alert %}}
 
 ## Disable WebDAV
 
-WebDAV feature in FileBrowser is enabled by default, to disable this feature you'll need to edit an option in your {{< doclink path="/getting-started/config/" text="config file" />}}, the option can be found under the `server` section:
+The WebDAV feature in FileBrowser is enabled by default, if you want to disable it you'll need to edit an option in your {{< doclink path="/getting-started/config/" text="config file" />}}, the option can be found under the `server` section:
 
 ```yaml
 server:
-  disableWebDAV: true # Set it to true to disable WebDAV
+  disableWebDAV: true # Set to true to disable WebDAV
 ```
 
-After edit the option, restart FileBrowser to take effect.
+After edit the config file, remember to restart FileBrowser to take effect.
 
 ## Troubleshooting
 
@@ -127,7 +127,7 @@ If you get access denied could be for the following reasons:
 
 - The API Token expired: Try setting a longer duration time for the API Token.
 - The path that you're trying to access is not valid: Make sure that you access to the path by checking in the WebUI.
-- You don't have enough permissions: Check that your user has the necessary permissions to access WebDAV, you'll need `download` permission to view (read-only), and `modify/create/delete` permission to modify the files. Also see {{< doclink path="/access-control/access-control-overview/" text="Access control" />}}.
+- You don't have enough permissions: Check that your user has the necessary permissions to access WebDAV, you'll need `download` permission to view, and `modify/create/delete` permission to modify files. Also see {{< doclink path="/access-control/access-control-overview/" text="Access control" />}}.
 
 ## Next Steps
 
