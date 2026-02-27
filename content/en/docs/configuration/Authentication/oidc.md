@@ -2,7 +2,6 @@
 title: "OIDC Authentication"
 description: "OpenID Connect integration"
 icon: "fingerprint"
-order: 3
 ---
 
 Integrate with OpenID Connect providers for single sign-on.
@@ -19,7 +18,6 @@ auth:
       issuerUrl: "https://sso.example.com/application/o/filebrowser/"
       scopes: "email openid profile groups"
       userIdentifier: "preferred_username"
-      createUser: true
 ```
 
 {{% alert context="info" %}}
@@ -36,8 +34,8 @@ auth:
 | `issuerUrl` | OIDC provider URL |
 | `scopes` | Requested scopes |
 | `userIdentifier` | User field (`preferred_username`, `email`, `username`, `phone`) |
-| `createUser` | Auto-create users on first login |
 | `adminGroup` | OIDC group name for admin rights |
+| `userGroups` | List of allowed groups (empty = allow all) - requires v1.3.x+ |
 | `groupsClaim` | JSON field for groups (default: `groups`) |
 | `disableVerifyTLS` | Disable TLS verification (testing only!) |
 | `logoutRedirectUrl` | Provider logout URL |
@@ -108,6 +106,44 @@ auth:
       clientSecret: "xxx"
       issuerUrl: "https://auth.example.com"
 ```
+
+## Group-Based Access Control
+
+### Admin Group
+
+Grant admin privileges to users in a specific OIDC group:
+
+```yaml
+auth:
+  methods:
+    oidc:
+      enabled: true
+      clientId: "xxx"
+      clientSecret: "xxx"
+      issuerUrl: "https://auth.example.com"
+      adminGroup: "FileBrowser Admins"
+```
+
+### Restrict login to Specific Groups
+
+{{% alert context="info" %}}
+requires version `1.3.x`+
+{{% /alert %}}
+
+Only allow users in specific OIDC groups to access FileBrowser:
+
+```yaml
+auth:
+  methods:
+    oidc:
+      enabled: true
+      clientId: "xxx"
+      clientSecret: "xxx"
+      issuerUrl: "https://auth.example.com"
+      userGroups: ["FileBrowser Users", "guests"]
+```
+
+Users not in these groups will be denied access even with valid OIDC authentication.
 
 ## Next Steps
 
