@@ -13,10 +13,10 @@ hero:
     iconColor: "#2196F3"
 
   title: "FileBrowser Quantum"
-  subtitle: The best free self-hosted web-based file manager with **configurable sources**, **Modern Authentication**, **Office support**, and **lightning-fast search**.
+  subtitle: The best free self-hosted web-based file manager with **source configuration**, **modern authentication**, **office support**, and **lightning-fast search**.
 
   image:
-    url: "/images/hero-screenshot.png"
+    url: "/images/screenshots/listing/view-mode-normal-dark.jpg"
     alt: "FileBrowser Quantum Screenshot"
     boxShadow: true
     rounded: true
@@ -42,10 +42,10 @@ imageCompare:
   template: image compare
 
   title: A feature-rich and beautiful file manager for the modern web.
-  subtitle: Experience the power of real-time indexing and configurable sources.
+  subtitle: Experience the power of real-time indexing and source configuration.
 
   items:
-    - title: Configurable Sources
+    - title: Source Configuration
       config: {
         controlColor: "#3C4257",
         startingPoint: 25,
@@ -85,24 +85,24 @@ features:
   template: feature grid
 
   title: "Why Choose FileBrowser Quantum?"
-  subtitle: "It's a no-compromise solution -- it's a quantum leap forward from the original project. It's fully featured with a sleek, modern interface. It's quick to install and has low system requirements. It supports a wide range of files and user controls."
+  subtitle: "It's a no-compromise solution that's a quantum leap forward. Not only is it fully featured with a sleek, modern interface, but it's also quick to install and has low system requirements. While there's not yet a live demo available, you can easily test it on any system by following the [quickstart guide](/docs/getting-started/) for your platform."
 
   items:
     - icon: "security"
       title: "Modern Authentication"
-      description: "Support for OIDC, LDAP, Two-Factor, and proxy authentication."
+      description: "Supports OIDC, LDAP, External JWT, Two-Factor, and proxy authentication."
 
     - icon: "edit_document"
       title: "Office Support"
       description: "Edit Office documents directly in the browser with support for document thumbnails."
 
     - icon: "share"
-      title: "Configurable Sharing"
-      description: "Share your files the way you want with configurable sharing options like expiration, download limits, password protection, banners, colors, branding and more."
+      title: "Sharing"
+      description: "Share your files the way you want with sharing options like expiration time, download limits, password protection, banners, colors, branding and more."
 
     - icon: "search"
       title: "Lightning-Fast Search"
-      description: "Find any file instantly across your entire filesystem. Supports advanced search filters and file previews."
+      description: "Find any file instantly across your entire filesystem thats been indexed. Supports advanced search filters and file previews to make finding any file a matter of seconds."
 
     - icon: "api"
       title: "Developer API"

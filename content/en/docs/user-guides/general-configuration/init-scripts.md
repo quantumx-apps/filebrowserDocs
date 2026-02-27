@@ -36,7 +36,7 @@ until curl -f -s "${FILEBROWSER_URL}/health" > /dev/null 2>&1; do
 done
 
 # Get auth token
-TOKEN=$(curl -s -H "X-Password: ${ADMIN_PASSWORD}" \
+TOKEN=$(curl -s -X POST -H "X-Password: ${ADMIN_PASSWORD}" \
   "${FILEBROWSER_URL}/api/auth/login?username=${ADMIN_USERNAME}")
 
 # Create a user
@@ -138,7 +138,7 @@ data:
       sleep 2
     done
 
-    TOKEN=$(curl -s -H "X-Password: ${ADMIN_PASSWORD}" \
+    TOKEN=$(curl -s -X POST -H "X-Password: ${ADMIN_PASSWORD}" \
       "${FILEBROWSER_URL}/api/auth/login?username=${ADMIN_USERNAME}")
 
     echo "Initialization complete!"
@@ -306,6 +306,7 @@ get_auth_token() {
 
     local response
     response=$(curl -s -w "\n%{http_code}" \
+        -X POST \
         -H "X-Password: ${password}" \
         "${FILEBROWSER_URL}/api/auth/login?username=${username}")
 
@@ -553,7 +554,7 @@ data:
     echo "FileBrowser is ready!"
     echo "Getting auth token..."
 
-    TOKEN=$(curl -s -H "X-Password: ${ADMIN_PASSWORD}" \
+    TOKEN=$(curl -s -X POST -H "X-Password: ${ADMIN_PASSWORD}" \
       "${FILEBROWSER_URL}/api/auth/login?username=${ADMIN_USERNAME}")
 
     if [ -z "$TOKEN" ]; then
@@ -805,7 +806,7 @@ echo "Username: ${FILEBROWSER_ADMIN_USERNAME}"
 echo "Password: ${FILEBROWSER_ADMIN_PASSWORD}"
 
 # Test login manually
-curl -v -H "X-Password: admin" \
+curl -v -X POST -H "X-Password: admin" \
   "http://localhost:8080/api/auth/login?username=admin"
 
 # Check logs for authentication errors
@@ -890,33 +891,6 @@ frontend:
   disableExternal: false
   files: []
 ```
-
-### Advantages of This Approach
-
-#### No Code Changes Required
-- Uses existing authentication API
-- No special init mode needed
-- Works with current codebase as-is
-
-#### Security
-- Credentials passed via environment variables
-- No secrets in process list or command history
-- Compatible with secrets management systems
-
-#### Cloud-Native
-- Works with Kubernetes Secrets
-- Supports Docker Compose secrets
-- Compatible with HashiCorp Vault, AWS Secrets Manager, etc.
-
-#### Flexibility
-- Works across all deployment types
-- Easy to extend with additional setup tasks
-- Scripts can be customized per environment
-
-#### Familiar Patterns
-- Similar to database migration scripts
-- Standard init container pattern
-- DevOps teams will recognize the approach
 
 ## Next Steps
 

@@ -223,19 +223,6 @@ server:
   cacheDir: /tmp/filebrowser # corrosponds to above
 ```
 
-**With Non-Root User (Recommended):**
-```yaml
-# docker-compose.yaml
-services:
-  filebrowser:
-    image: gtstef/filebrowser:beta
-    user: filebrowser  # Run as non-root user
-    volumes:
-      - '/path/to/your/data:/srv'
-      - './cache:/home/filebrowser/cache'  # Mount cache directory
-      - './data:/home/filebrowser/data'     # Mount data directory
-```
-
 **Corresponding config.yaml:**
 ```yaml
 server:

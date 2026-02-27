@@ -1,8 +1,7 @@
 ---
 title: "No Authentication"
-description: "Disable all authentication (testing only)"
+description: "Disable all authentication (generally unsafe)"
 icon: "lock_open"
-order: 4
 ---
 
 Disable all authentication methods to allow unrestricted access to FileBrowser.
