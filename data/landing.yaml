@@ -16,7 +16,7 @@ hero:
   subtitle: The best free self-hosted web-based file manager with **source configuration**, **modern authentication**, **office support**, and **lightning-fast search**.
 
   image:
-    url: "/images/screenshots/listing/view-mode-normal-dark.jpg"
+    url: "/images/generated/listing/view-mode-normal-dark.jpg"
     alt: "FileBrowser Quantum Screenshot"
     boxShadow: true
     rounded: true
@@ -90,25 +90,25 @@ features:
   items:
     - icon: "security"
       title: "Modern Authentication"
-      description: "Supports OIDC, LDAP, External JWT, Two-Factor, and proxy authentication."
+      description: "Supports [OIDC](/docs/configuration/authentication/oidc/), [LDAP](/docs/configuration/authentication/ldap/), [External JWT](/docs/configuration/authentication/jwt/), [Two-Factor](/docs/configuration/authentication/password/#two-factor-authentication-2fa), and [proxy](/docs/configuration/authentication/proxy/) authentication."
 
     - icon: "edit_document"
       title: "Office Support"
-      description: "Edit Office documents directly in the browser with support for document thumbnails."
+      description: "[Edit Office documents](/docs/integrations/office/about/) directly in the browser with support for document thumbnails."
 
     - icon: "share"
       title: "Sharing"
-      description: "Share your files the way you want with sharing options like expiration time, download limits, password protection, banners, colors, branding and more."
+      description: "Share your files the way you want with [sharing options](/docs/shares/options/) like expiration time, download limits, password protection, banners, colors, branding and more."
 
     - icon: "search"
       title: "Lightning-Fast Search"
-      description: "Find any file instantly across your entire filesystem thats been indexed. Supports advanced search filters and file previews to make finding any file a matter of seconds."
+      description: "Find [any file instantly](/docs/features/search/) across your entire filesystem thats been indexed. Supports many filters and file previews to make finding any file a matter of seconds."
 
     - icon: "api"
       title: "Developer API"
-      description: "Create API tokens with comprehensive Swagger documentation. Build integrations and automate your workflows."
+      description: "Create API tokens with comprehensive [Swagger documentation](/docs/reference/api/). Build integrations and automate your workflows."
 
     - icon: "lock"
       title: "Granular Access Control"
-      description: "Control access to your source files with granular permission controls."
+      description: "[Access rules](/docs/access-control/rules/) allow you to control access to your source files with granular permission controls."
 
