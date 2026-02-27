@@ -19,7 +19,7 @@ It's also an alternative to the WebUI since you can mount/use one (or multiples)
 
 ## How to use WebDAV
 
-WebDAV is enabled by default and can be accessed from various clients in your devices via Basic Auth with an API Token being the password. You'll need to follow this steps:
+WebDAV is enabled by default and can be accessed from various clients in your devices via Basic Auth with an API Token being the password. You'll need to follow these steps:
 
 ### 01. Create API Token
 
@@ -33,7 +33,7 @@ Enter a suitable name and set a duration for the expiration of the token accordi
 
 When creating an API Token for WebDAV, you'll need to create a Token _without_ customization by disabling the "Customize Token" option. The option is disabled by default but make sure that you have it disabled.
 
-When creating a Token this way, will inherit the permissions of the user who created it. This tokens are **much shorter** than the customized Tokens, this is necessary since not all WebDAV clients/apps support longer passwords for authentication.
+When creating a Token this way, it will inherit the permissions of the user who created it. These type of token are **much shorter** than the customized Tokens, this is necessary since not all WebDAV clients/apps support longer passwords for authentication.
 
 <img src="/images/features/webdav/token-customization-disabled.png">
 
@@ -74,7 +74,7 @@ An easy way to set the URL is open the WebUI in your browser, navigate to your d
 - `https://files.example.com/files/data/folder/` becomes `https://files.example.com/dav/data/folder/`
 
 {{% alert context="warning" %}}
-You'll only have access to folders and sources that _your user_ have access to -- You can't access a folder or source if your user has no access to it, or also, you'll be unable to perform certain operations if your user lacks the necessary permissions.
+You'll only have access to folders and sources that _your user_ has access to -- You can't open a folder or source if your user has no access to it, or also, you'll be unable to perform certain operations if your user lacks the necessary permissions as well. You'll need `download` permission to view, and `modify/create/delete` permission to modify files.
 {{% /alert %}}
 
 ## Tested Clients
@@ -91,7 +91,7 @@ Some clients working with FileBrowser are:
 - [Symfonium](https://www.symfonium.app/) - Music Player for Android.
 - [Material Files](https://github.com/zhanghai/MaterialFiles) - File Manager for Android.
 - [ONLYOFFICE Mobile apps](https://helpcenter.onlyoffice.com/mobile) - Mobile devices only. (Clouds > Sign in > Other WebDAV storage)
-- Desktop file managers such as Finder in MacOS, Thunar, Dolphin, Nemo, Nautilus... In Linux.
+- Desktop file managers such as Finder in MacOS and Thunar, Dolphin, Nemo, Nautilus... in Linux.
 
 You may need to omit `https://` or `http://` when setting the server URL depending on the client you are trying to connect. If you use `https` you will need to use port `443`, or the port number that was used with FileBrowser.
 
@@ -111,7 +111,7 @@ server:
   disableWebDAV: true # Set to true to disable WebDAV
 ```
 
-After edit the config file, remember to restart FileBrowser to take effect.
+After you edit the config file, remember to restart the FileBrowser for the changes to take effect.
 
 ## Troubleshooting
 
