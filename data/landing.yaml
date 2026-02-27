@@ -16,7 +16,7 @@ hero:
   subtitle: The best free self-hosted web-based file manager with **source configuration**, **modern authentication**, **office support**, and **lightning-fast search**.
 
   image:
-    url: "/images/screenshots/listing/view-mode-normal-dark.jpg"
+    url: "/images/generated/listing/view-mode-normal-dark.jpg"
     alt: "FileBrowser Quantum Screenshot"
     boxShadow: true
     rounded: true
