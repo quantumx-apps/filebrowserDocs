@@ -13,13 +13,13 @@ WebDAV is only available as of `v1.3.0-beta` version of FileBrowser. It's enable
 
 ## What is WebDAV?
 
-[WebDAV](https://en.wikipedia.org/wiki/WebDAV) is a feature in FileBrowser that will let you access and manage **all** your files directly from your devices remotely.
+[WebDAV](https://en.wikipedia.org/wiki/WebDAV) is a feature in FileBrowser that will let you access and manage your files directly from your devices remotely.
 
-It's also an alternative to the WebUI since you can mount one (or multiples) of your {{< doclink path="/configuration/sources/" text="sources" />}} directly on your Filesystem and manage the files stored in them. This allows you the use of native applications to create/edit/organize files via WebDAV that are not possible via WebUI. For example, you can edit documents using native office suites without {{< doclink path="/integrations/office/about/" text="Office Integration" />}} enabled, or organize folders/files using native apps like Explorer on Windows (In versions before Nov 2023), Finder on macOS, Thunar/Dolphin in Linux, etc. You can also use any third party client or app that support WebDAV to access your files!
+It's also an alternative to the WebUI since you can mount/use one (or multiples) of your {{< doclink path="/configuration/sources/" text="sources" />}} directly on your devices and manage the files stored in them. This allows the use of native applications to create/edit/organize files via WebDAV that are not possible via WebUI. For example, you can edit documents using native office suites without {{< doclink path="/integrations/office/about/" text="Office Integration" />}} enabled, or organize folders/files using native apps like Explorer on Windows (In versions before Nov 2023), Finder on macOS, Thunar/Dolphin in Linux, etc. You can also use any third party client or app that support WebDAV to access your files!
 
 ## How to use WebDAV
 
-WebDAV is enabled by default and can be accessed from various clients in your devices via Basic Auth with an API Token being the password. You'll need to follow these steps:
+WebDAV is enabled by default and can be accessed from various clients in your devices via Basic Auth with an API Token being the password. You'll need to follow this steps:
 
 ### 01. Create API Token
 
@@ -55,23 +55,23 @@ The remote path set for WebDAV is basically the starting point when you open a c
 - `/<source_name>`: Required to set the name of the source (case-sensitive).
 
 {{% alert context="info" %}}
-If your user has {{< doclink path="/configuration/users/#user-scopes" text="user scopes" />}} configured, FileBrowser will return the path of your user scope automatically based in who created the Token, there's no need to specify the full path including the scope folder.
+If your user has {{< doclink path="/configuration/users/#user-scopes" text="user scopes" />}} configured, FileBrowser will return the path of the scope automatically based in who created the Token, there's no need to specify the full path including the scope folder.
 {{% /alert %}}
 
-- `/` -- Trailing slash: This is optional though some clients may require `/` at the end.
+- `/` -- Trailing slash: Is recommended to add one at the end, but this is optional.
 
-So, the final URL to enter in the server field could be like:
-- `https://files.example.com/dav/<source-name>`
-- `http://192.168.1.210:8080/dav/<source-name>`
-- `http://localhost/dav/<source-name>`
+So, the final URL in the URL field could be like:
+- `https://files.example.com/dav/<source-name>/`
+- `http://192.168.1.210:8080/dav/<source-name>/`
+- `http://localhost/dav/<source-name>/`
 
 If you don't want to use the _whole_ source and just map a specific folder, you can too, for example:
 
-- `https://files.example.com/dav/<source-name>/my-folder`
+- `https://files.example.com/dav/<source-name>/my-folder/`
 
 An easy way to set the URL is open the WebUI in your browser, navigate to your desired folder, copy the URL, and replace `/files/` with `/dav/`. For example:
 
-- `https://files.example.com/files/data/folder` becomes `https://files.example.com/dav/data/folder/`
+- `https://files.example.com/files/data/folder/` becomes `https://files.example.com/dav/data/folder/`
 
 {{% alert context="warning" %}}
 You'll only have access to folders and sources that _your user_ have access to -- You can't access a folder or source if your user has no access to it, or also, you'll be unable to perform certain operations if your user lacks the necessary permissions.
