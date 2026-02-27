@@ -36,7 +36,7 @@ Thumbnails are generated in various ways depending on the filetype.
 
 By default, previews are enabled if available. But they can be configured by each user in settings:
 
-<img src="/images/features/item-thumbnails/preview-configuration.png">
+<img src="/images/generated/settings/profile-thumbnail-options-dark.jpg">
 
 An administrator can create users with defaults by configuring userDefaults. But these defaults do not change existing users.
 

@@ -1,8 +1,7 @@
 ---
 title: "Password Authentication"
 description: "Configure password authentication"
-icon: "vpn_key"
-order: 1
+icon: "text_fields_alt"
 ---
 
 Password authentication uses the typical `username` and `password` to login a user. Password authentication also supports **Signup**, **recaptcha**, and **Two-Factor Authentication** features.

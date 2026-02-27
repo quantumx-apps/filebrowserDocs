@@ -45,7 +45,6 @@ services:
     ports:
       - 8900:80
     restart: unless-stopped
-    # user: filebrowser
     networks:
       - proxy
     volumes:
@@ -86,24 +85,36 @@ auth:
 
 ```
 
-## Non Root user
+## Running container with a different user
 
-By default, FileBrowser uses root. You can use `filebrowser`, a built-in user (with UID=1000 and GID=1000), but specifying in the compose file's `user` in the respective service. If you need a different ID, then create a `.env` file and fill the contents with,
+{{% alert context="info" %}}
+On `v1.2.x` and earlier, the default user is `root`.
+On `v1.3.x` and later, the default user is `filebrowser` (1000:1000).
+{{% /alert %}}
 
+The easist way to update the user is through docker compose. For example to create a new user 1001:1001 "${UID}:${GID}":
+
+```yaml title="compose.yml" linenums="1"
+services:
+  filebrowser:
+    image: gtstef/filebrowser:stable
+    container_name: quantum-prod
+    user: "1001:1001"
+    ports:
+      - 8900:80
+    restart: unless-stopped
+    networks:
+      - proxy
+    volumes:
+      - ./data:/home/filebrowser/data
+      - ./files:/files
 ```
-UID=1001
-GID=1001 # or your required values
-```
 
-This way compose file will take the variables' value when docker compose starts FileBrowser.
-
-Update the compose file with `user: "$UID:$GID"` instead. Lastly, update the data folder owner with the same ID as well with
+You will also want to ensure the `data` folder has the correct permissions with `chown` command:
 
 ```bash
 chown -R 1001:1001 data
 ```
-
-For most cases, `user: filebrowser` will suffice.
 
 ## Using FileBrowser
 

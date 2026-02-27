@@ -19,7 +19,6 @@ auth:
     proxy:
       enabled: true
       header: "X-Forwarded-User"  # or "Remote-User"
-      createUser: true
 ```
 
 ## Use Cases
@@ -71,7 +70,6 @@ auth:
     proxy:
       enabled: true
       header: "X-Forwarded-User"
-      createUser: true
     password:
       enabled: false
 ```
