@@ -22,11 +22,11 @@ Learn more about the versions and tags {{< doclink path="getting-started/version
 
 ## Quick Try
 
-Test without persistence (changes not saved):
+Test without persistence (changes not saved). In this example we run it mounting the local path:
 
 ```bash
 docker run -d \
-  -v /path/to/your/folder:/srv \
+  -v $(pwd):/srv \
   -p 80:80 \
   gtstef/filebrowser:stable
 ```
@@ -43,11 +43,11 @@ This set up is just to get the feel of FileBrowser before you get into customiza
 ### Step 1: Create a base folder for FileBrowser
 
 ```bash
-mdkir -p filebrowser/data && cd filebrowser
+mkdir -p filebrowser/data && cd filebrowser
 ```
 
 {{% alert context="info" %}}
-**Default Config Location**: In Docker, the default config location is `/home/filebrowser/data/config.yaml`. So we create a `data` directory so we can mount the config, database files, and (optionally) cacheDir in the same volume. If you don't want to follow this process, you can use {{< doclink path="reference/environment-variables" text="environment variables" />}} to set the config path and database path manually.
+**Default Config Location**: In Docker, the default config location is `/home/filebrowser/data/config.yaml`. So we create a `data` directory so we can mount the config, database files, and cacheDir in the same volume. If you don't want to follow this process, you can use {{< doclink path="reference/environment-variables" text="environment variables" />}} to set the config path and database path manually.
 {{% /alert %}}
 
 ### Step 2: Create Config
@@ -62,6 +62,7 @@ Then fill out your config as needed, for example:
 
 ```yaml
 server:
+  cacheDir: /home/filebrowser/data/tmp # using the data volume so it can persist across restarts
   sources:
     - path: /folder # Do not use a root "/" directory or include the "/var" folder
       config:
@@ -121,7 +122,7 @@ services:
     image: gtstef/filebrowser:stable
     volumes:
       - /path/to/your/folder:/folder
-      - ./config.yaml:/home/filebrowser/config.yaml:ro
+      - ./data:/home/filebrowser/data
     ports:
       - 80:8080  # Filebrowser listens on 8080 inside docker, but here we are exposing the host port as 80 still.
     healthcheck:
@@ -152,8 +153,8 @@ services:
   filebrowser:
     image: gtstef/filebrowser:stable
     volumes:
-      - ./data:/home/filebrowser/data  # Database and config stored here
       - /path/to/files:/folder
+      - ./data:/home/filebrowser/data  # Database and config stored here
 ```
 
 See {{< doclink path="configuration/server/#database" text="Server configuration" />}} and {{< doclink path="getting-started/config/#how-to-specify-a-config-file" text="configuration file priority" />}} for more information on database paths.
@@ -169,7 +170,6 @@ On `v1.3.x` and later, the default user is `filebrowser` (1000:1000).
 FileBrowser Quantum docker images have a non-default `filebrowser` user built-in. This user has UID:GID of 1000:1000. In `v1.2.x` and earlier you need to specify this user manually:
 
 Add to docker-compose.yaml:
-
 ```yaml
 services:
   filebrowser:
@@ -177,33 +177,17 @@ services:
     user: filebrowser
     volumes:
       - /path/to/files:/folder
-      - ./config.yaml:/home/filebrowser/config.yaml:ro
+      - ./data:/home/filebrowser/data
     ports:
       - 80:80
     restart: unless-stopped
 ```
 
-You can also specify any user UID:GID, but you will also need to mount a temp directory that the user has filesystem permissions to. ({{< doclink path="configuration/server#cachedir" text="See cacheDir config" />}})
+You can also specify any user UID:GID, but if you choose a UID other than 1000, you will need to make sure the mounted `data` directory has the same permissions ({{< doclink path="configuration/server#cachedir" text="See cacheDir config" />}})
 
-
-```yaml
-services:
-  filebrowser:
-    image: gtstef/filebrowser:stable
-    user: "1001:1001"
-    volumes:
-      - /path/to/files:/folder
-      - ./config.yaml:/home/filebrowser/config.yaml:ro
-      - ./tmp:/home/filebrowser/tmp  # Required if uid other than 1000
-    ports:
-      - 80:80
-    restart: unless-stopped
-```
-
-Create `tmp` in your FileBrowser directory and change owner for it to the ID of the user/group as mentioned in docker-compose file.
-
-```
-mkdir tmp && chown -R 1001:1001 tmp
+for example if you wanted to use `1001:1001` user for Unraid installs.
+```bash
+chown -R 1001:1001 ./data
 ```
 
 ## Next Steps
