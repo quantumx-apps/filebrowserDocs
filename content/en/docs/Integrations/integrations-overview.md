@@ -1,10 +1,10 @@
 ---
 title: "Integrations Overview"
-description: "Enable media and office document features"
+description: "Enable media, calendars, contacts and office document features"
 icon: "extension"
 ---
 
-Extend FileBrowser with powerful integrations for media and documents.
+Extend FileBrowser Quantum with powerful integrations for managing media, calendars, contacts and office documents.
 
 ## Available Integrations
 
@@ -26,9 +26,17 @@ OnlyOffice is currently the only supported office integration. Collabora support
 - {{< doclink path="user-guides/office-integration/office-integration/" text="Guides" />}} - How-to guides
 - {{< doclink path="integrations/office/troubleshooting/" text="Troubleshooting" />}} - Common issues
 
+### {{< doclink path="integrations/radicale/" text="Radicale Integration" />}}
+Simple, lightweight CalDAV/CardDAV server with multi-user support.
+
+- {{< doclink path="integrations/radicale/about/" text="About" />}} - Overview and features
+- {{< doclink path="integrations/radicale/configuration/" text="Configuration" />}} - Setup and options
+- {{< doclink path="user-guides/radicale-integration/radicale-integration/" text="Guides" />}} - How-to guides
+- {{< doclink path="integrations/radicale/troubleshooting/" text="Troubleshooting" />}} - Common issues
+  
 ## Quick Start
 
-Both integrations can be configured via `config.yaml`:
+The `Media` and `Office` integrations can be configured via `config.yaml`:
 
 ```yaml
 integrations:
@@ -47,3 +55,5 @@ integrations:
 - {{< doclink path="integrations/media/" text="Media integration setup" />}}
 - {{< doclink path="integrations/office/" text="Office integration setup" />}}
 - {{< doclink path="user-guides/office-integration/office-integration/" text="Office guides" />}}
+- {{< doclink path="integrations/radicale/" text="Radicale integration setup" />}}
+- {{< doclink path="user-guides/radicale-integration/radicale-integration/" text="Radicale guides" />}}
