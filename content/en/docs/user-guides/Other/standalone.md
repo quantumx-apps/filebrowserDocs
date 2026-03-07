@@ -45,8 +45,7 @@ services:
     ports:
       - 8900:80
     restart: unless-stopped
-    networks:
-      - proxy
+    # user: filebrowser
     volumes:
       - ./data:/home/filebrowser/data
       - ./files:/files
