@@ -124,7 +124,7 @@ docker run -it \
   -v $(pwd)/database.db:/home/filebrowser/database.db \
   -v $(pwd)/config.yaml:/home/filebrowser/config.yaml \
   --entrypoint="" \
-  gtstef/filebrowser sh
+  gtstef/filebrowser:stable sh
 ```
 
 Inside container:
@@ -141,7 +141,7 @@ docker run -it --rm \
   -v $(pwd)/database.db:/home/filebrowser/database.db \
   -v $(pwd)/config.yaml:/home/filebrowser/config.yaml \
   --entrypoint="" \
-  gtstef/filebrowser \
+  gtstef/filebrowser:stable \
   ./filebrowser set -u admin,newpassword -c config.yaml
 ```
 
@@ -151,7 +151,7 @@ docker run -it --rm \
   -v $(pwd)/database.db:/home/filebrowser/database.db \
   -v $(pwd)/config.yaml:/home/filebrowser/config.yaml \
   --entrypoint="" \
-  gtstef/filebrowser \
+  gtstef/filebrowser:stable \
   ./filebrowser set -u newuser,password -c config.yaml
 ```
 
@@ -179,7 +179,7 @@ This is useful if:
 ```
 
 {{% alert context="info" %}}
-Always include config path so user defaults are applied.
+Always include config path, so user defaults are applied.
 {{% /alert %}}
 
 ### Promote User to Admin
