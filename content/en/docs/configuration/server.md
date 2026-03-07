@@ -223,11 +223,9 @@ server:
   cacheDir: /tmp/filebrowser # corrosponds to above
 ```
 
-**Corresponding config.yaml:**
-```yaml
-server:
-  cacheDir: "/home/filebrowser/cache" # corrosponds to above
-```
+{{% alert context="info" %}}
+Alternatively, in Docker, we can mount a single directory called `data` that contains the config, database files, and cacheDir. Check the {{< doclink path="user-guides/Other/standalone.md" text="Standalone docker setup guide" />}} to see how it's done.
+{{% /alert %}}
 
 #### Troubleshooting
 
