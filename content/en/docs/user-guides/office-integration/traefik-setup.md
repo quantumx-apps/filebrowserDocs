@@ -18,7 +18,7 @@ This guide is community-contributed. Special thanks to [@Kurami32](https://githu
 In this guide we'll use Docker compose to setup **FileBrowser Quantum** and **OnlyOffice** behind [Traefik Reverse Proxy](https://traefik.io/traefik) for a secure production-ready deployment. You can use this guide as reference. If you want to copy-paste you also can, but remember to change all the fake info here with your own.
 
 That said, this guide will cover:
-- ✅ **Automatic HTTPS and certificate renewal** with Let's Encrypt certificates, this is managed automatically by Traefik (every 60 days aprox).
+- ✅ **Automatic HTTPS and certificate renewal** with Let's Encrypt certificates, this is managed automatically by Traefik (every 60 days approx).
 - ✅ **Secure JWT authentication** between services (FileBrowser and OnlyOffice).
 - ✅ **Docker compose with Traefik labels** configuration for the services.
 - ✅ **A Production-ready setup** with proper security headers.
@@ -41,9 +41,9 @@ To set up HTTP you need a valid domain and IP address of the server to have a se
 
 Choosing the server IP changes the location of access. If you choose:
 
-- Local IP address (typically, 192.168.X.Y), then you can only access when connected to that Wifi.
+- Local IP address (typically, 192.168.X.Y), then you can only access when connected to that Wi-Fi.
 - Public IP address (you need to port forward), then you can access anywhere from your home or even at some coffee shop. (Not recommended due to high security risk if its from home router)
-- Public IP address (but from a VPS), then you can access anywhere from your home or even at some coffee shop. (Recommended with some firewall and features like fail2ban, crowdsec setup. Out of scope for this guide).
+- Public IP address (but from a VPS), then you can access anywhere from your home or even at some coffee shop. (Recommended with some firewall and features like fail2ban, CrowdSec setup. Out of scope for this guide).
 - IP address of server in a VPN, then devices in the VPN can access to it. Even via the internet as long as the device and the server are connected to the same VPN.
 
 {{% alert context="info" %}}
@@ -111,7 +111,7 @@ To assign static IPs to a container, you will need to specify the IP on the dock
 ```yaml
 services:
   filebrowser:
-    image: gtstef/filebrowser:latest
+    image: gtstef/filebrowser:stable
     networks:
       proxy_network:                # Name of the docker network
         ipv4_address: 192.168.2.5   # IP adress that you want to use with the service, the IP will be static, don't will change.
@@ -536,7 +536,7 @@ touch filebrowser/data/database.db
 ### FileBrowser Docker Compose
 
 {{% alert context="info" %}}
-Similar to {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="getting started docker guide" />}} but customized to work with traefik. Remember to change the `volumes` block with your actual data or folders (Sources), the ones here an example.
+Similar to {{< doclink path="user-guides/office-integration/basic-docker-setup/" text="getting started docker guide" />}} but customized to work with Traefik. Remember to change the `volumes` block with your actual data or folders (Sources), the ones here an example.
 {{% /alert %}}
 
 Create `filebrowser/docker-compose.yaml`:
@@ -545,7 +545,7 @@ Create `filebrowser/docker-compose.yaml`:
 services:
   filebrowser:
     container_name: filebrowser
-    image: gtstef/filebrowser:latest
+    image: gtstef/filebrowser:stable
     env_file: .env
     environment:
       FILEBROWSER_CONFIG: "data/config.yaml"
@@ -661,19 +661,19 @@ docker logs filebrowser -f
 
 #### Test that FileBrowser is working
 
-- Open your filebrowser domain on your browser (`https://files.yourdomain.com`), you should see the login page.
+- Open your FileBrowser domain on your browser (`https://files.yourdomain.com`), you should see the login page.
 - Login with your credentials that you configured in both: The password in the `.env` file, and the username in `config.yaml`.
 
 ## Testing the Integration
 
-1. Navigate to your filebrowser domain (`https://files.yourdomain.com`), and login.
+1. Navigate to your FileBrowser domain (`https://files.yourdomain.com`), and login.
 2. Upload a test `.docx` (or any document) file.
 3. Open the file - The file should open in OnlyOffice.
 4. If all loaded fine, try to make edits and then save.
 5. Verify changes persisted (close and open the file again)
 
 ### Enable Debug Mode
-If you have issues with onlyoffice, you should enable the office debug mode in filebrowser. To do that go to `settings -> profile settings -> File Viewer Options` in UI and enable the debug mode.
+If you have issues with OnlyOffice, you should enable the office debug mode in FileBrowser. To do that go to `settings -> profile settings -> File Viewer Options` in UI and enable the debug mode.
 
 <img src="../assets/office-debug-mode.png" alt="office-debug-mode" />
 
@@ -737,7 +737,7 @@ docker logs filebrowser -f # or onlyoffice, traefik (by service name)
 ## Troubleshooting
 
 ### Certificates Not Generating
-If you notice that you certificates are not being generated, the first thing that you should do is check your traefik logs.
+If you notice that you certificates are not being generated, the first thing that you should do is check your Traefik logs.
 
 First enable `DEBUG` logs in the `traefik.yaml` config file:
 
@@ -776,9 +776,9 @@ cat traefik/certs/acme.json | jq
 curl https://office.yourdomain.com/healthcheck
 ```
 
-Or visit your onlyoffice domain on the browser, the page should load.
+Or visit your OnlyOffice domain on the browser, the page should load.
 
-2. Verify JWT secrets match. Should be same on onlyoffice and filebrowser.
+2. Verify JWT secrets match. Should be same on OnlyOffice and FileBrowser.
 3. Check browser console for CORS errors.
 4. Enable office debug mode in FileBrowser.
 
@@ -797,7 +797,7 @@ integrations:
 
 ### Other issues
 
-If you have other issues related with onlyoffice and filebrowser, you should check the {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting guide" />}}, which covers some of the most commons issues with solutions.
+If you have other issues related with OnlyOffice and FileBrowser, you should check the {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting guide" />}}, which covers some of the most commons issues with solutions.
 
 ## External Resources
 - [OnlyOffice Documentation](https://helpcenter.onlyoffice.com/docs)
@@ -806,7 +806,7 @@ If you have other issues related with onlyoffice and filebrowser, you should che
 
 ## Next Steps
 
-- {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS Configuration" />}} - Self-signed certificates and traefik file provider
+- {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS Configuration" />}} - Self-signed certificates and Traefik file provider
 - {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} - Detailed troubleshooting guide
 - {{< doclink path="integrations/office/configuration/" text="Configuration Reference" />}} - All configuration options
 

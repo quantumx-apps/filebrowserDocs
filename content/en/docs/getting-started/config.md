@@ -15,7 +15,7 @@ A configuration file (config file) is a YAML file that defines how FileBrowser Q
 - Frontend customization (themes, branding)
 - Media and office integrations
 
-See an example [config file on github](https://github.com/gtsteffaniak/filebrowser/blob/main/backend/config.yaml).
+See an example [config file on Github](https://github.com/gtsteffaniak/filebrowser/blob/main/backend/config.yaml).
 
 ## How to Specify a Config File
 
@@ -57,7 +57,7 @@ docker run -d \
   -v /path/to/your/config.yaml:/home/filebrowser/data/config.yaml \
   -v /path/to/your/folder:/folder \
   -p 80:80 \
-  gtstef/filebrowser
+  gtstef/filebrowser:stable
 ```
 
 ### Using Docker Compose
@@ -69,7 +69,7 @@ services:
       - './data:/home/filebrowser/data'
     ports:
       - '80:80'
-    image: gtstef/filebrowser
+    image: gtstef/filebrowser:stable
     restart: unless-stopped
 ```
 
@@ -100,7 +100,7 @@ FileBrowser supports extensive configuration options. You can view the complete 
 
 - **Server Settings**: Port, database, sources, caching
 - **Authentication**: Password, OIDC, proxy authentication
-- **UsersDefaults**: New user defualts
+- **UsersDefaults**: New user defaults
 - **Frontend**: UI customization, themes, branding
 - **Integrations**: Media (FFmpeg) and office (OnlyOffice) support
 
