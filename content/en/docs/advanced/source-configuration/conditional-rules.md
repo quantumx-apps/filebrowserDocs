@@ -38,11 +38,11 @@ sources:
   - path: "/data"
     config:
       rules:
-        - FolderPath: "/"             # (global) 
+        - folderPath: "/"             # (global) 
           ignoreHidden: true          # ignores all hidden
-        - FolderPath: "/"             # (global) 
+        - folderPath: "/"             # (global) 
           ignoreZeroSizeFolders: true # ignores all zero size folders
-        - FolderPath: "/"             # (global)
+        - folderPath: "/"             # (global)
           ignoreSymlinks: true        # ignores all symlinks
 ```
 
