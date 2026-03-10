@@ -29,7 +29,7 @@ The preferred configuration method is to use config.yaml. However, environment v
 ```yaml
 services:
   filebrowser:
-    image: gtstef/filebrowser:latest
+    image: gtstef/filebrowser:stable
     environment:
       - FILEBROWSER_ADMIN_PASSWORD=secure-password
       - FILEBROWSER_ONLYOFFICE_SECRET=office-secret

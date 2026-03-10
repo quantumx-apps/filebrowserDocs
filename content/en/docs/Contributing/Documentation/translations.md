@@ -5,7 +5,7 @@ icon: "translate"
 ---
 
 {{% alert context="warning" %}}
-Documentation is currently english-only and this guide may change
+Documentation is currently English only and this guide may change.
 {{% /alert %}}
 
 # Translations & i18n
@@ -24,7 +24,7 @@ The documentation supports multiple languages using Hugo's i18n (internationaliz
 
 - **English (en)** - Default language
 - **German (de)** - Available
-- **French (fr)** - Available  
+- **French (fr)** - Available
 - **Portuguese (pt)** - Available
 
 ## How i18n Works in Hugo
@@ -295,7 +295,7 @@ Add language-specific menu entries:
 1. **Choose a page to translate**
 2. **Create translated version** using one of the methods above
 3. **Update front matter** with translated title and description
-4. **Translate content** while preserving markdown formatting
+4. **Translate content** while preserving Markdown formatting
 5. **Test the translation** using `make dev`
 
 ### For String Translators
@@ -400,7 +400,7 @@ Install FileBrowser Quantum using Docker containers.
 ## Quick Start
 
 ```bash
-docker run -p 8080:8080 gtstef/filebrowser
+docker run -p 8080:8080 gtstef/filebrowser:stable
 ```
 ```
 
@@ -419,7 +419,7 @@ Installieren Sie FileBrowser Quantum mit Docker-Containern.
 ## Schnellstart
 
 ```bash
-docker run -p 8080:8080 gtstef/filebrowser
+docker run -p 8080:8080 gtstef/filebrowser:stable
 ```
 ```
 
@@ -438,7 +438,7 @@ Installez FileBrowser Quantum en utilisant des conteneurs Docker.
 ## Démarrage rapide
 
 ```bash
-docker run -p 8080:8080 gtstef/filebrowser
+docker run -p 8080:8080 gtstef/filebrowser:stable
 ```
 ```
 

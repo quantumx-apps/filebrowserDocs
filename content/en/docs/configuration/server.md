@@ -160,7 +160,7 @@ server:
 
 ### maxArchiveSize
 
-FileBrowser limits the maxiumum size of archive -- this affects folder downloads. This is limited to 50GB by default, which means the pre-archive combined size of a directory to be downloaded must be 50GB or less. This is necessary because archiving will store temporary files
+FileBrowser limits the maximum size of archive -- this affects folder downloads. This is limited to 50GB by default, which means the pre-archive combined size of a directory to be downloaded must be 50GB or less. This is necessary because archiving will store temporary files
 and that could exhaust the server if left unlimited.
 
 Ensure you have enough free space available in your cacheDir if you choose to increase this further.
@@ -208,7 +208,7 @@ server:
 # docker-compose.yaml
 services:
   filebrowser:
-    image: gtstef/filebrowser:beta
+    image: gtstef/filebrowser:stable
     volumes:
       - '/path/to/your/data:/srv'
       - '/var/cache/filebrowser:/tmp/filebrowser'  # Mount cache directory
@@ -223,26 +223,25 @@ server:
   cacheDir: /tmp/filebrowser # corrosponds to above
 ```
 
-**Corresponding config.yaml:**
-```yaml
-server:
-  cacheDir: "/home/filebrowser/cache" # corrosponds to above
-```
+{{% alert context="info" %}}
+Alternatively, in Docker, we can mount a single directory called `data` that contains the config, database files, and cacheDir. Check the {{< doclink path="user-guides/Other/standalone.md" text="Standalone docker setup guide" />}} to see how it's done.
+{{% /alert %}}
 
 #### Troubleshooting
 
 **Permission Issues:**
 
-By default, filebrowser uses uid 1000 for the user (you can change that):
+By default, FileBrowser uses UID 1000 for the user (you can change that):
+
 ```bash
 # Fix permissions for cache directory
 sudo chown -R 1000:1000 /var/cache/filebrowser
 ```
 
 ### internalUrl
-Internal URL for integrations to access filebrowser (Currently just OnlyOffice)
+Internal URL for integrations to access FileBrowser (Currently just OnlyOffice)
 
-this could be a docker network dns name or a local IP address on the network. This address should allow the integration to communicate directly with the service.
+This could be a docker network DNS name or a local IP address on the network. This address should allow the integration to communicate directly with the service.
 
 ```yaml
 server:
