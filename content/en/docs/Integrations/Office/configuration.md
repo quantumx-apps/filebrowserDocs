@@ -23,7 +23,7 @@ integrations:
 
 ### Generate OnlyOffice Secret
 
-Generate a secure secet via OpenSSL
+Generate a secure secret via OpenSSL
 
 ```bash
 openssl rand -base64 32
@@ -39,7 +39,7 @@ TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue
 ```yaml
 services:
   filebrowser:
-    image: gtstef/filebrowser:latest
+    image: gtstef/filebrowser:stable
     ports:
       - "80:80"
     volumes:
@@ -94,7 +94,7 @@ server:
 integrations:
   office:
     url: "https://office.yourdomain.com"       # Accessible from browser
-    internalUrl: # optional this should be a local network address that filebrowser can access.
+    internalUrl: # optional this should be a local network address that FileBrowser can access.
     secret: "your-jwt-secret"
 ```
 
@@ -102,7 +102,7 @@ integrations:
 
 - **Browser** → The browser always uses `integrations.office.url` to connect from your browser to only office server.
 - **OnlyOffice** → Uses either `server.externalUrl` or `server.internalUrl` for downloading/saving files to FileBrowser server.
-- **FileBrowser** → Uses either `integratons.office.internalUrl` or `integrations.office.url` to connect from the filebrowser server to OnlyOffice server.
+- **FileBrowser** → Uses either `integratons.office.internalUrl` or `integrations.office.url` to connect from the FileBrowser server to OnlyOffice server.
 
 
 ## Next Steps

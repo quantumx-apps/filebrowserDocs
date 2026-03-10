@@ -14,7 +14,8 @@ This guide uses HTTP which is **not secure** for production. Only use for local 
 
 - Docker and Docker Compose installed
 - Basic understanding of Docker networking
-- FileBrowser Quantum image: `gtstef/filebrowser`
+- FileBrowser Quantum image: `gtstef/filebrowser` (Docker Hub) or `ghcr.io/gtsteffaniak/filebrowser` (GitHub Container Registry)
+
 
 ## Quick Start
 
@@ -41,7 +42,7 @@ Create a `docker-compose.yaml` file:
 ```yaml
 services:
   filebrowser:
-    image: gtstef/filebrowser:latest
+    image: gtstef/filebrowser:stable
     ports:
       - "8080:80"
     environment:

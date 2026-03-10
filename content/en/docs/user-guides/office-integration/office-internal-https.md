@@ -372,7 +372,7 @@ http:
 
 ```bash
 # Restart all services
-docker compose restart traefik 
+docker compose restart traefik
 docker compose restart onlyoffice
 docker compose restart filebrowser
 
@@ -448,13 +448,13 @@ integrations:
 ```
 
 ### FBQ not trusting OnlyOffice certs
-If for some reason the filebrowser container doesn't trust the certificates (even configured via traefik), you'll need to mount and update the certificates of the filebrowser container in startup.
+If for some reason the filebrowser container doesn't trust the certificates (even configured via Traefik), you'll need to mount and update the certificates of the FileBrowser container in startup.
 
 ```yaml
 services:
   filebrowser:
     container_name: filebrowser
-    image: gtstef/filebrowser:latest
+    image: gtstef/filebrowser:stable
     env_file: .env
     environment:
     # ... Existent enviroment variables
@@ -479,7 +479,7 @@ networks:
 
 ### Other issues
 
-If you have other issues related with onlyoffice and filebrowser, check the {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting guide" />}}, which covers some of the most commons issues with solutions.
+If you have other issues related with OnlyOffice and FileBrowser, check the {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting guide" />}}, which covers some of the most commons issues with solutions.
 
 ## Next Steps
 

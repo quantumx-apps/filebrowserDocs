@@ -205,7 +205,7 @@ Community-contributed Traefik configuration with automatic SSL:
 **FileBrowser Service:**
 ```yaml
 filebrowser:
-  image: gtstef/filebrowser
+  image: gtstef/filebrowser:stable
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.filebrowser.rule=Host(`files.yourdomain.com`)"
