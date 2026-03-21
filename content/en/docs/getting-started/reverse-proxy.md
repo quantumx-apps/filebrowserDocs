@@ -77,7 +77,7 @@ Configure FileBrowser to work with your reverse proxy:
 ```yaml
 server:
   baseURL: "/files"                          # Base path for reverse proxy
-  externalUrl: "https://files.example.com"   # External URL (used when generated public links)
+  externalUrl: "https://files.example.com/files"   # External URL (used when generated public links)
 ```
 
 ## nginx Configuration
