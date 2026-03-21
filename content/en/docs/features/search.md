@@ -70,7 +70,7 @@ Filter your search by specific types of content:
 
 You can combine multiple category filters to search for specific types of files. For example, select both "Photos" and "Videos" to find all your media files.
 
-### Size Filters
+### Size and Date Filters
 
 Find files based on their size using the size constraint inputs:
 
@@ -82,6 +82,11 @@ You can use both filters together to find files within a specific size range. Fo
 - Smaller than: 500 MB
 
 This will show only files between 100-500 MB.
+
+Or by date:
+
+- **Older Than** - Pick a date/time to display only those older than
+- **Newer Than** - ick a date/time to display only those newer than
 
 ### Preview Images
 
