@@ -135,7 +135,7 @@ This creates `/home/users/username` for each user.
 
 ## User Groups
 
-See {{< doclink path="access-control/groups/" text="Groups" />}} for group-based management.
+Groups are currently managed and provided by the LDAP or OIDC provider. Adding groups manually in technically supported via API (see swagger), but not yet implemented as a feature in the UI. Stay tuned.
 
 ## Password Management
 
