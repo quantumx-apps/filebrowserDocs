@@ -31,8 +31,6 @@ The **Text Editor** provides syntax highlighting and editing capabilities for co
 - **Search and replace** within the editor
 - **Keyboard shortcuts** for common operations
 
-<img width="700" src="/images/generated/viewer/editor-bash.sh-dark.jpg">
-
 ### Images
 
 The **Image Viewer** displays photos and graphics with smooth navigation:
@@ -91,6 +89,8 @@ PDFs open in an **embedded viewer** right in your browser using your browser's n
 ### Markdown & HTML
 
 The **Markdown/HTML Viewer** renders formatted documents:
+
+<img width="700" src="/images/generated/viewer/markdown-viewer-dark.jpg">
 
 **Supported formats:**
 - Markdown: `.md`, `.markdown`
