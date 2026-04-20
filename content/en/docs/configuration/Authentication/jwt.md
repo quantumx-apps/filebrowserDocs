@@ -33,6 +33,13 @@ auth:
 | `adminGroup` | `""` | Group name that grants admin privileges |
 | `userGroups` | `[]` | List of allowed groups (empty = allow all) |
 | `logoutRedirectUrl` | `""` | URL to redirect after logout |
+| `disableVerifyTLS` | `false` | Disable TLS verification for outbound HTTP used during JWT validation paths (testing only) |
+
+**Defaults (when omitted):** `header` is `X-JWT-Assertion`, `algorithm` is `HS256`, `groupsClaim` is `groups`, `userIdentifier` is `sub`.
+
+{{% alert context="warning" %}}
+**Deprecated:** `createUser` in this block is deprecated — omit it; users are created on first successful JWT login.
+{{% /alert %}}
 
 ## How It Works
 

@@ -19,7 +19,31 @@ auth:
     proxy:
       enabled: true
       header: "X-Forwarded-User"  # or "Remote-User"
+      # Optional (same shared fields as OIDC / LDAP / JWT):
+      # adminGroup: ""
+      # userGroups: []
+      # groupsClaim: "groups"
+      # userIdentifier: ""
+      # disableVerifyTLS: false   # testing only
+      # logoutRedirectUrl: ""
 ```
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `enabled` | Enable proxy authentication |
+| `header` | **Required.** Header whose value is trusted as the username (must sit behind a trusted proxy) |
+| `adminGroup` | Group name that grants admin (if your proxy/IdP also sends group claims — integration-dependent) |
+| `userGroups` | If set, only users in these groups may log in |
+| `groupsClaim` | JSON field name for groups when reading group data (default: `groups`) |
+| `userIdentifier` | Field to use as username when not using the raw header value in composite setups |
+| `disableVerifyTLS` | Disable TLS verification for any outbound calls (testing only) |
+| `logoutRedirectUrl` | Optional URL to redirect after logout |
+
+{{% alert context="warning" %}}
+**Deprecated:** `createUser` in this block is deprecated and ignored for new configs — user provisioning behavior is always on for supported methods.
+{{% /alert %}}
 
 ## Use Cases
 
