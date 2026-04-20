@@ -32,9 +32,9 @@ auth:
 | `baseDN` | *required* | LDAP search base DN (e.g., dc=example,dc=com) |
 | `userDN` | *required* | Bind DN for service account |
 | `userPassword` | *required* | Password for service account |
-| `userFilter` | `(&(cn=%s)(objectClass=user))` | Search filter for finding users |
-| `userIdentifier` | `""` | LDAP attribute to use as username (e.g., mail, sAMAccountName) |
-| `groupsClaim` | `memberOf` | LDAP attribute containing group memberships |
+| `userFilter` | `(&(cn=%s)(objectClass=user))` | Search filter for finding users (`%s` = login name) |
+| `userIdentifier` | `""` | LDAP attribute to use as username (e.g., mail, sAMAccountName); empty uses login name |
+| `groupsClaim` | `memberOf` | LDAP attribute containing group memberships (if empty in config, the server defaults to `memberOf`) |
 | `adminGroup` | `""` | LDAP group DN or CN that grants admin privileges |
 | `userGroups` | `[]` | List of allowed groups (empty = allow all) |
 | `disableVerifyTLS` | `false` | Disable TLS certificate verification (testing only!) |
@@ -47,6 +47,10 @@ auth:
 3. FileBrowser attempts to bind (authenticate) as the user with provided password
 4. On success, FileBrowser extracts groups from LDAP attributes
 5. User is created automatically if needed and logged in with a FileBrowser session token
+
+{{% alert context="warning" %}}
+**Deprecated:** `createUser` in this block is deprecated — omit it; LDAP users are provisioned automatically on first successful login.
+{{% /alert %}}
 
 ## Server URL Format
 

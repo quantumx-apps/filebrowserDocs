@@ -13,6 +13,9 @@ frontend:
   name: "Company Files"
   description: "Secure file storage"
   favicon: "/path/to/favicon.png"
+  loginIcon: "/path/to/login-icon.png"
+  loginButtonText: "Sign in"
+  oidcLoginButtonText: "Sign in with SSO"
   externalLinks:
     - text: "Support"
       title: "Get support"
@@ -24,8 +27,11 @@ frontend:
 | Option | Default | Description |
 |--------|---------|-------------|
 | `name` | "FileBrowser Quantum" | Display name in header and PWA manifest |
-| `description` | "" | HTML meta description for SEO/link previews |
+| `description` | *(built-in tagline)* | HTML `meta` description for SEO/link previews |
 | `favicon` | Built-in | Path to custom favicon image |
+| `loginIcon` | Built-in | Path to image on the login page |
+| `loginButtonText` | *(empty)* | Label for the password login button |
+| `oidcLoginButtonText` | *(empty)* | Label for the OIDC login button |
 | `externalLinks` | `[]` | Custom links in sidebar |
 
 ## Name
@@ -150,7 +156,7 @@ frontend:
 **Fields**:
 - `text` - Link text displayed in sidebar (required)
 - `url` - Destination URL (required)
-- `title` - Tooltip shown on hover
+- `title` - Tooltip on hover (optional)
 
 ## Complete Example
 

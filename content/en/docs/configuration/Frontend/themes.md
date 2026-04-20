@@ -13,8 +13,8 @@ frontend:
   styling:
     customThemes:
       default:
-        description: "Default Theme"
-        css: "default-theme.css"
+        description: "The default theme"
+        css: ""                    # empty = built-in styling; or path to a CSS file
       dark-blue:
         description: "Dark Blue"
         css: "dark-blue.css"
@@ -40,7 +40,7 @@ frontend:
 Each theme requires:
 - **Key**: Unique theme identifier (used internally)
 - **description**: Display name shown to users
-- **css**: Path to CSS file
+- **css**: Path to CSS file, or `""` for the built-in look (typical for the `default` entry)
 
 ```yaml
 customThemes:

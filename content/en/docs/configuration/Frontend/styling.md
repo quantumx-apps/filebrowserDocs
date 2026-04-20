@@ -11,8 +11,9 @@ Apply custom CSS and configure background colors for light/dark modes.
 ```yaml
 frontend:
   styling:
+    disableEventThemes: false
     customCSS: "custom.css"
-    lightBackground: "white"
+    lightBackground: "#f5f5f5"
     darkBackground: "#141D24"
 ```
 
@@ -20,9 +21,11 @@ frontend:
 
 | Option | Default | Description |
 |--------|---------|-------------|
+| `disableEventThemes` | `false` | When `true`, disables seasonal/event-based theme switching |
 | `customCSS` | "" | Path to CSS file applied to all users |
-| `lightBackground` | Default | Background color for light mode (CSS color value) |
-| `darkBackground` | `#141D24` | Background color for dark mode (CSS color value) |
+| `lightBackground` | `#f5f5f5` | Background color for light mode (any CSS color) |
+| `darkBackground` | `#141D24` | Background color for dark mode (any CSS color) |
+| `customThemes` | `{}` | User-selectable themes; see {{< doclink path="configuration/frontend/themes/" text="Themes" />}} |
 
 ## Custom CSS
 
