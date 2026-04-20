@@ -13,7 +13,7 @@ auth:
   methods:
     password:
       enabled: true
-      minLength: 8
+      minLength: 5
       signup: false
 ```
 
@@ -39,6 +39,8 @@ auth:
 
 ## With reCAPTCHA
 
+reCAPTCHA is only used when `signup: true`. All three fields are required:
+
 ```yaml
 auth:
   methods:
@@ -46,8 +48,9 @@ auth:
       enabled: true
       signup: true
       recaptcha:
+        host: "https://www.google.com/recaptcha/api.js"   # or your provider script URL
         key: "your-site-key"
-        secret: "your-secret"  # Use environment variable
+        secret: "your-secret"   # Use environment variable
 ```
 
 ## Set Admin Password
@@ -81,7 +84,7 @@ Two-Factor Authentication is **only available for password authentication users*
 - **Enhanced Security**: Even if a password is compromised, attackers cannot access the account without the 6-digit code
 - **Protection Against Phishing**: 2FA codes are time-limited and cannot be reused
 - **Compliance**: Meets security requirements for many organizations and regulations
-- **User Control**: Users can enable or disable 2FA from their profile settings unless `enforceOtp` is configured in the server config.
+- **User Control**: Users can enable or disable 2FA from their profile settings unless `enforcedOtp` is set under `auth.methods.password`.
 
 ### How It Works
 

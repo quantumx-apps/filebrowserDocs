@@ -19,7 +19,7 @@ server:
 ## Configuration Options
 
 ### port
-Server port (default: 8080)
+Server port (default: `80`)
 
 ```yaml
 server:
@@ -27,7 +27,7 @@ server:
 ```
 
 {{% alert context="info" %}}
-**Docker Healthcheck**: If you change the port from the default (80), you must update the Docker healthcheck in your `docker-compose.yaml` to match the new port. See {{< doclink path="getting-started/docker/#healthcheck-configuration" text="Docker healthcheck configuration" />}} for details.
+**Docker Healthcheck**: If you change the port from the default (`80`), you must update the Docker healthcheck in your `docker-compose.yaml` to match the new port. See {{< doclink path="getting-started/docker/#healthcheck-configuration" text="Docker healthcheck configuration" />}} for details.
 {{% /alert %}}
 
 ### listen
@@ -134,10 +134,25 @@ Index database SQL configuration for performance tuning.
 ```yaml
 server:
   indexSqlConfig:
-    batchSize: 1000    # Number of items to batch in a single transaction, typically 500-5000. Higher = faster but could use more memory.
-    cacheSizeMB: 32    # Size of the SQLite cache in MB
-    walMode: false     # Enable the more complex WAL journaling mode. Slower, more memory usage, but better for deployments with constant user activity.
-    disableReuse: false # Enable to always create a new indexing database on startup.
+    batchSize: 1000           # Number of items to batch in a single transaction, typically 500-5000. Higher = faster but could use more memory.
+    cacheSizeMB: 32         # Size of the SQLite cache in MB
+    walMode: false          # WAL journaling mode: more memory, better for busy deployments
+    disableReuse: false       # If true, always create a new indexing database on startup
+    startupIntegrityCheck: quickCheck  # quickCheck | probe | off — how thoroughly to verify the index DB at startup (default: quickCheck)
+```
+
+**`startupIntegrityCheck`** (default: `quickCheck`):
+
+- **`quickCheck`** — Runs SQLite `PRAGMA quick_check`. Thorougher on very large databases.
+- **`probe`** — Lightweight check (catalog / sample read); faster for huge indexes.
+- **`off`** — Minimal check beyond opening the DB; fastest boot, least safety.
+
+### disableWebDAV
+Disable WebDAV support (default: `false`).
+
+```yaml
+server:
+  disableWebDAV: true
 ```
 
 ### sources
@@ -160,14 +175,15 @@ server:
 
 ### maxArchiveSize
 
-FileBrowser limits the maximum size of archive -- this affects folder downloads. This is limited to 50GB by default, which means the pre-archive combined size of a directory to be downloaded must be 50GB or less. This is necessary because archiving will store temporary files
-and that could exhaust the server if left unlimited.
+FileBrowser limits the maximum size of archive and unarchive operations (folder downloads, ZIP handling, etc.). The limit is the **combined size of files** involved, in **gigabytes**. Default is **20** GB. Set to **0** for no limit.
 
-Ensure you have enough free space available in your cacheDir if you choose to increase this further.
+This cap exists because archiving uses temporary files under `cacheDir` and an unlimited value could exhaust disk or memory on the server.
+
+Ensure you have enough free space in `cacheDir` if you raise this value.
 
 ```yaml
 server:
-  maxArchiveSize: 50 # max pre-archive combined size of files/folder that are allowed to be archived (in GB)
+  maxArchiveSize: 20   # GB; 0 = no limit (default: 20)
 ```
 
 ### cacheDir

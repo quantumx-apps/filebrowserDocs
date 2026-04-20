@@ -16,9 +16,11 @@ auth:
       clientId: "filebrowser-client"
       clientSecret: "xxx"  # Use environment variable
       issuerUrl: "https://sso.example.com/application/o/filebrowser/"
-      scopes: "email openid profile groups"
+      scopes: "openid email profile"
       userIdentifier: "preferred_username"
 ```
+
+If you need group claims, add them to `scopes` (for example `groups`) per your provider.
 
 {{% alert context="info" %}}
 **Note**: Its common to configure a source with {{< doclink path="advanced/source-configuration/sources/#denybydefault" text="denyByDefault" />}} and use {{< doclink path="access-control/rules" text="access rules" />}} to enable group based access for OIDC users.
@@ -39,6 +41,12 @@ auth:
 | `groupsClaim` | JSON field for groups (default: `groups`) |
 | `disableVerifyTLS` | Disable TLS verification (testing only!) |
 | `logoutRedirectUrl` | Provider logout URL |
+
+**Defaults (when omitted):** `groupsClaim` is `groups`, `userIdentifier` is `preferred_username`, and `scopes` defaults to `openid email profile`.
+
+{{% alert context="warning" %}}
+**Deprecated:** `createUser` in this block is deprecated — omit it; new users are created automatically when OIDC login succeeds.
+{{% /alert %}}
 
 ## Issuer URL Examples
 
@@ -62,7 +70,7 @@ Configure in your OIDC provider:
 https://your-domain.com/api/auth/oidc/callback
 ```
 
-If you a custom baseURL in your `config.yaml`:
+If you use a custom `baseURL` in your `config.yaml`:
 ```
 https://your-domain.com/custom-base/api/auth/oidc/callback
 ```

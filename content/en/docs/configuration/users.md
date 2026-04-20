@@ -28,9 +28,12 @@ server:
     - path: "/data"
       config:
         defaultEnabled: true         # Give to all new users
-        defaultUserScope: "/"         # Default access path
-        createUserDir: false          # Auto-create user directories
+        defaultUserScope: "/"       # Default access path under the source
 ```
+
+{{% alert context="warning" %}}
+**Deprecated:** `createUserDir` on source `config` is deprecated (user directories under `defaultUserScope` are always created for new users when applicable). Prefer setting `defaultUserScope` only; remove `createUserDir` from new configs.
+{{% /alert %}}
 
 ### User Defaults
 
@@ -40,16 +43,41 @@ User defaults are configured on the `config.yaml` and are the default initial va
 **Note**: userDefaults do NOT update or enforce a user's settings after one has been created. Its more accurately, "user create settings" than user defaults.
 {{% /alert %}}
 
+These values match the shape of the generated config reference (`frontend/public/config.generated.yaml` in the main repo). Only a subset is shown; omit keys you want to leave at defaults.
+
 ```yaml
 userDefaults:
+  editorQuickSave: false
+  hideSidebarFileActions: false
+  disableQuickToggles: false
+  disableSearchOptions: false
+  stickySidebar: true
+  hideFilesInTree: false
+  darkMode: true
+  locale: "en"
+  viewMode: "normal"
+  singleClick: false
+  showHidden: false
+  dateFormat: false
+  gallerySize: 3
+  themeColor: "var(--blue)"
+  quickDownload: false
+  disablePreviewExt: ""
+  disableViewingExt: ""
+  lockPassword: false
+  disableSettings: false
   preview:
-    highQuality: true
+    disableHideSidebar: false
     image: true
     video: true
+    audio: true
     motionVideoPreview: true
     office: true
     popup: true
+    autoplayMedia: true
+    defaultMediaPlayer: false
     folder: true
+    models: true
   permissions:
     api: false
     admin: false
@@ -59,8 +87,25 @@ userDefaults:
     delete: false
     create: false
     download: true
-  disableOnlyOfficeExt: ".md .txt .pdf"   # list of file extensions to disable onlyoffice editor for
+  loginMethod: "password"
+  disableUpdateNotifications: false
+  deleteWithoutConfirming: false
+  deleteAfterArchive: true
+  fileLoading:
+    maxConcurrentUpload: 10
+    uploadChunkSizeMb: 10
+    clearAll: false
+    downloadChunkSizeMb: 0
+  disableOnlyOfficeExt: ".md .txt .pdf .html .xml"
+  customTheme: ""
+  showSelectMultiple: false
+  debugOffice: false
+  preferEditorForMarkdown: false
 ```
+
+{{% alert context="info" %}}
+**Deprecated:** `disableOfficePreviewExt` is deprecated; use `disablePreviewExt` (and/or `disableOnlyOfficeExt` for the OnlyOffice editor) instead. **`preview.highQuality`** is deprecated and treated as always on in v1.3.0+.
+{{% /alert %}}
 
 `permissions` are not editable by the user unless they are admin, but all other settings are modifyable in profile settings in the UI.
 
@@ -121,17 +166,18 @@ In User Management:
 
 ### Auto-Create User Directories
 
+Per-user directories are created under each source’s `defaultUserScope` using the username (the old `createUserDir` toggle is deprecated). Example:
+
 ```yaml
 server:
   sources:
     - path: "/home/users"
       config:
         defaultEnabled: true
-        createUserDir: true
         defaultUserScope: "/"
 ```
 
-This creates `/home/users/username` for each user.
+This creates `/home/users/<username>` for each new user and scopes them to that folder.
 
 ## User Groups
 

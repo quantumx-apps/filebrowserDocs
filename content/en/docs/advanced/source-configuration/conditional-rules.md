@@ -138,6 +138,10 @@ rules:
 
 Matches any file with this exact name, anywhere in the source. For example, `fileName: ".DS_Store"` excludes all `.DS_Store` files. Useful for excluding system or temporary files by name.
 
+{{% alert context="warning" %}}
+**Deprecated:** The alternate spellings `fileNames` and `folderNames` on a rule are deprecated in favor of `fileName` and `folderName`. Prefer the singular keys for new configuration.
+{{% /alert %}}
+
 ### Pattern-Based Rules (Global)
 
 Match files and folders based on name patterns.

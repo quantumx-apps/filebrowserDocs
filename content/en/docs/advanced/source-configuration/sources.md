@@ -52,7 +52,7 @@ sources:
 
 ## Minimal Configuration
 
-The simplest source configuration:
+The simplest source configuration (same structure as `server.sources` in the generated reference `config.generated.yaml`):
 
 ```yaml
 server:
@@ -66,6 +66,50 @@ This creates a source that:
 - Is available to all new users
 - Has indexing enabled for advanced features
 - Uses all default settings
+
+### Reference: `config` and `rules`
+
+The generated config lists every supported key. Under `config`, non-deprecated fields are:
+
+| Field | Purpose |
+|-------|---------|
+| `denyByDefault` | Deny access unless an allow rule exists |
+| `private` | No sharing for this source |
+| `disabled` | Temporarily disable the source in config |
+| `rules` | Per-path indexing and visibility rules (see {{< doclink path="advanced/source-configuration/conditional-rules/" text="Conditional Rules" />}}) |
+| `defaultUserScope` | Initial path scope for new users (under `path`) |
+| `defaultEnabled` | Add this source to new users by default |
+| `useLogicalSize` | Use logical file sizes instead of disk usage (`du`-style); empty folders report as 0 bytes |
+
+Example `rules` entry (field names match the generator):
+
+```yaml
+server:
+  sources:
+    - path: "/data"
+      name: "My Files"
+      config:
+        defaultEnabled: true
+        rules:
+          - neverWatchPath: ""
+            includeRootItem: ""
+            fileStartsWith: ""
+            folderStartsWith: ""
+            fileEndsWith: ""
+            folderEndsWith: ""
+            folderPath: ""
+            filePath: ""
+            fileName: ""
+            folderName: ""
+            viewable: false
+            ignoreHidden: false
+            ignoreZeroSizeFolders: false
+            ignoreSymlinks: false
+```
+
+{{% alert context="warning" %}}
+**Deprecated (still accepted for backward compatibility):** In rule objects, prefer `fileName` / `folderName`. The fields `fileNames` and `folderNames` are deprecated names for the same idea. The old `conditionals` block on source `config` is deprecated — use `rules` only. On source `config`, `createUserDir`, `disableIndexing`, `indexingIntervalMinutes`, and `conditionals` are deprecated; see sections below.
+{{% /alert %}}
 
 ## Indexing Overview
 
@@ -130,6 +174,15 @@ config:
 
 Designate source as private, which disables sharing. Defaults to `false`. Use this to prevent users from creating public shares for sensitive data.
 
+### `useLogicalSize`
+
+```yaml
+config:
+  useLogicalSize: true
+```
+
+When `true`, sizes follow **logical** file size instead of on-disk allocation (similar intent to `du`). Empty folders report as **0 bytes**. Default is `false`.
+
 ### `defaultUserScope`
 
 ```yaml
@@ -139,7 +192,7 @@ config:
 
 Default scope path for new users created automatically via API or CLI. Defaults to `"/"` (root of source). This restricts where new users can access within the source. Include the leading slash.
 
-Works with `createUserDir` to place users in specific locations:
+Example placing users under a subfolder of the source:
 
 ```yaml
 sources:
@@ -149,30 +202,20 @@ sources:
       defaultEnabled: true
 ```
 
-New users will only see `/shared/users` and its subdirectories.
+New users are scoped under `/shared/users` (and receive a per-user directory there when applicable).
 
-### `createUserDir`
+### `createUserDir` (deprecated)
+
+{{% alert context="warning" %}}
+**Deprecated:** `createUserDir` is deprecated — user directories under `defaultUserScope` for each username are **always** created for supported authentication flows. Remove this key from new configs; set only `defaultUserScope` (for example `/` or `/home`) to control where user folders are rooted.
+{{% /alert %}}
 
 ```yaml
 config:
-  createUserDir: true
   defaultUserScope: "/home"
 ```
 
-Automatically create a directory for each new user. Defaults to `false`. When enabled:
-
-- Creates `{defaultUserScope}/{username}` on user creation
-- Updates user scope to their personal directory
-- Directory persists even if user is deleted
-
-Example:
-```yaml
-config:
-  createUserDir: true
-  defaultUserScope: "/home"
-```
-
-Creates `/home/john` for user "john" and sets their scope to that directory.
+Creates `/home/john` for user `john` under the source path and scopes the user there.
 
 ### `disabled`
 
@@ -183,51 +226,32 @@ config:
 
 Disable the source without removing it from config. Defaults to `false`. Useful for temporarily disabling a source for maintenance or testing. Users cannot access disabled sources.
 
-### `disableIndexing`
-
-```yaml
-config:
-  disableIndexing: true
-```
-
-Completely disable indexing for this source. Defaults to `false`.
-
-{{% alert context="danger" %}}
-When indexing is disabled, these features **will not work**:
-- Search functionality
-- Folder size calculations
-- Folder preview images
-- Source statistics and health monitoring
-- Many future enhancements
-
-Users can still browse files, but with significantly reduced functionality.
-{{% /alert %}}
-
-Only disable if you have specific performance requirements and don't need search or size information.
-
-### `indexingIntervalMinutes`
-
-```yaml
-config:
-  indexingIntervalMinutes: 30
-```
-
-Force a specific scan interval in minutes. Defaults to `0` which uses smart scanning.
+### `disableIndexing` (deprecated)
 
 {{% alert context="warning" %}}
-**Not Recommended:** The default smart scanning behavior adapts to your filesystem and is optimal for most use cases. Only set this if you have specific requirements.
+**Deprecated:** `disableIndexing` on source `config` is deprecated (it does not appear in the generated reference). Prefer {{< doclink path="advanced/source-configuration/conditional-rules/" text="conditional `rules`" />}} — for example `viewable: true` on paths you want in the UI without full indexing, `neverWatchPath` for stable trees, and global flags with `folderPath: "/"`. If you still set `disableIndexing: true` in YAML for compatibility, indexing and search for that source are effectively off (same caveats as below).
 {{% /alert %}}
 
-When to use:
-- You need guaranteed scan intervals for compliance
-- Your filesystem has predictable, regular update patterns
-- Smart scanning doesn't suit your specific workload
+When indexing is effectively off for a source, these features **do not work**:
 
-How it works: Performs 4 quick scans at the specified interval, then 1 full scan.
+- Search
+- Folder size calculations
+- Folder preview images
+- Source statistics / health
 
-### `conditionals`
+Users may still browse files with reduced functionality.
 
-Control which files and folders are indexed. See {{< doclink path="advanced/source-configuration/conditional-rules/" text="Conditional Rules Guide" />}} for complete documentation.
+### `indexingIntervalMinutes` (deprecated)
+
+{{% alert context="warning" %}}
+**Deprecated:** `indexingIntervalMinutes` on source `config` is deprecated. Prefer adaptive scanning and {{< doclink path="advanced/source-configuration/conditional-rules/" text="`neverWatchPath` rules" />}} for large, rarely changing trees. The legacy field may still be honored if present.
+{{% /alert %}}
+
+### `conditionals` (deprecated)
+
+{{% alert context="warning" %}}
+**Deprecated:** The `conditionals` wrapper is deprecated — use `config.rules` only. See {{< doclink path="advanced/source-configuration/conditional-rules/" text="Conditional Rules Guide" />}}.
+{{% /alert %}}
 
 ## Common Configuration Patterns
 
@@ -257,7 +281,7 @@ sources:
   - path: "/home"
     config:
       defaultEnabled: true
-      createUserDir: true
+      defaultUserScope: "/"
 ```
 
 </div>
