@@ -10,6 +10,7 @@
     "translate:i18n": "node ./scripts/translations.js --mode=i18n",
     "doclinks:convert": "node ./scripts/doclinks.js",
     "doclinks:check": "node ./scripts/doclinks.js --check",
+    "doclinks:validate-paths": "node ./scripts/check-doclink-paths.js",
     "doclinks:revert": "node ./scripts/doclinks.js --mode=revert"
   },
   "dependencies": {

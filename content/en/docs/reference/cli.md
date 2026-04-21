@@ -305,11 +305,11 @@ Add or update users, or manage access rules.
 
 ## Troubleshooting
 
-For common issues and solutions, see the {{< doclink path="reference/troubleshooting/" text="Troubleshooting guide" />}}.
+For common issues and solutions, see the {{< doclink path="access-control/troubleshooting/" text="Troubleshooting guide" />}}.
 
 ## Next Steps
 
 - {{< doclink path="reference/environment-variables/" text="Environment variables" />}}
 - {{< doclink path="reference/api/" text="API documentation" />}}
-- {{< doclink path="reference/configuration/" text="Configuration reference" />}}
+- {{< doclink path="reference/fullconfig/" text="Configuration reference" />}}
 

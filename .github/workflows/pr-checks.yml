@@ -143,7 +143,9 @@ jobs:
         run: make hugo-audit
 
   check-doclinks:
-    name: Check Doclinks
+    # make check-doclinks: (1) doclinks.js --check = relative/hardcoded links that should be shortcodes
+    # (2) check-doclink-paths.js = each {{< doclink path="...">}} resolves to a real page under content/<lang>/docs/
+    name: Check Doclinks (style + targets)
     runs-on: ubuntu-latest
     needs: setup
     steps:
@@ -158,8 +160,9 @@ jobs:
       - name: Run check
         run: make check-doclinks
 
+  # Markdown relative links only: [text](../path). Does NOT parse {{< doclink path="...">}} (see check-doclinks).
   check-internal-links:
-    name: Check Internal Links
+    name: Check Internal Links (markdown relative)
     runs-on: ubuntu-latest
     needs: setup
     steps:

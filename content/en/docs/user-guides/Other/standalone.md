@@ -145,4 +145,4 @@ With the database and cache set up, your data will persist even with restarts.
 - {{< doclink path="access-control/" text="Access Control" />}}
 - {{< doclink path="features/" text="Features" />}}
 - {{< doclink path="user-guides/office-integration/" text="OnlyOffice Integration" />}}
-- {{< doclink path="reference/configuration/" text="View full config reference" />}}
+- {{< doclink path="reference/fullconfig/" text="View full config reference" />}}

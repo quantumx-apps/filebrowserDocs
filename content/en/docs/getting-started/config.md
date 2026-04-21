@@ -150,6 +150,6 @@ Configuration changes require a restart to take effect:
 ## Next Steps
 
 - {{< doclink path="configuration/configuration-overview/" text="Configuration Overview" />}} - Complete configuration guide
-- {{< doclink path="reference/configuration/" text="Full Configuration Reference" />}} - All available options
+- {{< doclink path="reference/fullconfig/" text="Full Configuration Reference" />}} - All available options
 - {{< doclink path="configuration/sources/" text="Source Configuration" />}} - Configure file sources
 - {{< doclink path="configuration/authentication/" text="Authentication Setup" />}} - Set up authentication methods

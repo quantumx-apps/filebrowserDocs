@@ -8,7 +8,7 @@ Step-by-step guides for common tasks and advanced configurations.
 
 ## Available Guides
 
-### {{< doclink path="user-guides/init-scripts/" text="Init Scripts" />}}
+### {{< doclink path="user-guides/general-configuration/init-scripts/" text="Init Scripts" />}}
 Automate FileBrowser initialization with API scripts.
 
 - Docker Compose setup
@@ -16,7 +16,7 @@ Automate FileBrowser initialization with API scripts.
 - Systemd integration
 - User creation automation
 
-### {{< doclink path="user-guides/multiple-configs/" text="Multiple Config Files" />}}
+### {{< doclink path="user-guides/general-configuration/multiple-configs/" text="Multiple Config Files" />}}
 Use YAML anchoring for modular, reusable configuration.
 
 - One-line environment switching

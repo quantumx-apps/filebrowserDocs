@@ -287,8 +287,8 @@ This allows you to:
 ## Next Steps
 
 - {{< doclink path="shares/customization/" text="Customize appearance" />}}
-- {{< doclink path="shares/normal/" text="Normal shares" />}}
-- {{< doclink path="shares/upload/" text="Upload shares" />}}
+- {{< doclink path="shares/normal-shares/" text="Normal shares" />}}
+- {{< doclink path="shares/upload-shares/" text="Upload shares" />}}
 
 <style>
 /* Light mode (default) */

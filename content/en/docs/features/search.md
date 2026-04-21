@@ -107,7 +107,7 @@ Click any search result to navigate directly to that file or folder. You can als
 <img width="600" src="/images/generated/search/right-click-dark.jpg">
 
 - **Right-click** (or long-press on mobile) to open the context menu
-- Access all normal file operations: download, rename, delete, share, etc.
+- Access a limited number of options on right click.
 
 ## Search Performance
 

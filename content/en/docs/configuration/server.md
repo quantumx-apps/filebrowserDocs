@@ -143,6 +143,8 @@ server:
 
 **`startupIntegrityCheck`** (default: `quickCheck`):
 
+If you notice long delays on startup, you could configure this to `probe` (recommended) or `off` to reduce the startup check time.
+
 - **`quickCheck`** — Runs SQLite `PRAGMA quick_check`. Thorougher on very large databases.
 - **`probe`** — Lightweight check (catalog / sample read); faster for huge indexes.
 - **`off`** — Minimal check beyond opening the DB; fastest boot, least safety.

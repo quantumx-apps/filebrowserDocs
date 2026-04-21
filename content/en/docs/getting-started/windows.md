@@ -54,7 +54,7 @@ Access at `http://localhost:80` with `admin` / `admin`
 
 ## Troubleshooting
 
-For common issues and solutions, see the {{< doclink path="getting-started/troubleshooting/" text="Troubleshooting guide" />}}.
+For common issues and solutions, see the {{< doclink path="getting-started/Migration/troubleshooting/" text="Troubleshooting guide" />}}.
 
 ## Next Steps
 
