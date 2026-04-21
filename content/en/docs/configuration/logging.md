@@ -7,7 +7,7 @@ order: 6
 
 Configure FileBrowser's logging system.
 
-For troubleshooting and enabling debug logs, see {{< doclink path="troubleshooting/debug-logging/" text="Debug Logging" />}}.
+For troubleshooting and enabling debug logs, see {{< doclink path="advanced/logging/debug-logging/" text="Debug Logging" />}}.
 
 ## Default Logging
 
@@ -116,6 +116,6 @@ Use UTC time in the output instead of local time. Default: `false`.
 
 ## Next Steps
 
-- {{< doclink path="troubleshooting/debug-logging/" text="Enable debug logging" />}} for troubleshooting
+- {{< doclink path="advanced/logging/debug-logging/" text="Enable debug logging" />}} for troubleshooting
 - {{< doclink path="configuration/server/" text="Configure server settings" />}}
 

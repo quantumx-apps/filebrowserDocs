@@ -362,7 +362,7 @@ Follow these steps to migrate your configuration:
 
 - {{< doclink path="reference/fullconfig/" text="Full Configuration Reference" />}}
 - {{< doclink path="advanced/source-configuration/sources/" text="Source Configuration Guide" />}}
-- {{< doclink path="advanced/indexing/" text="Understanding Indexing" />}}
+- {{< doclink path="features/indexing/" text="Understanding Indexing" />}}
 
 <style>
 /* Comparison Grid */

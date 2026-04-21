@@ -15,7 +15,7 @@ Complete configuration guide for all aspects of FileBrowser Quantum.
 - {{< doclink path="configuration/users/" text="Users" />}} - User management and permissions
 - {{< doclink path="configuration/logging/" text="Logging" />}} - Configure logging output and levels
 - {{< doclink path="configuration/frontend/" text="Frontend" />}} - Customize UI, branding, themes
-- {{< doclink path="configuration/multiple-configs/" text="Multiple Configs" />}} - Use multiple configuration files
+- {{< doclink path="user-guides/general-configuration/multiple-configs/" text="Multiple Configs" />}} - Use multiple configuration files
 
 ## Basic Configuration Example
 
@@ -130,4 +130,4 @@ FileBrowser looks for `config.yaml` in:
 - {{< doclink path="configuration/sources/" text="Configure sources" />}}
 - {{< doclink path="configuration/authentication/" text="Set up authentication" />}}
 - {{< doclink path="configuration/users/" text="Manage users" />}}
-- {{< doclink path="reference/configuration/" text="View full config reference" />}}
+- {{< doclink path="reference/fullconfig/" text="View full config reference" />}}
