@@ -190,6 +190,33 @@ for example if you wanted to use `1001:1001` user for Unraid installs.
 chown -R 1001:1001 ./data
 ```
 
+## Privileged ports and container capabilities
+
+### In-container listen (Linux containers)
+
+Linux treats **ports below 1024** as *privileged*: a non-root user needs the **`NET_BIND_SERVICE`** capability (or a lowered `net.ipv4.ip_unprivileged_port_start`) to bind there.
+
+On **rootful** Docker Engine or Docker Desktop, the container still usually gets **`NET_BIND_SERVICE`** in the default capability set, so that user **can** listen on `80` or `443` without extra flags. **`bind: permission denied` on a low `server.port` shows up more often when:**
+
+- you use a **rootless** container engine (**Docker rootless**, **Podman rootless**), or  
+- the runtime uses a **stricter** capability profile (some **Podman** installs, explicit `--cap-drop`, hardened policies),
+So the v1.3 switch to a non-root default **pairs with** those environments: the process is no longer UID 0, and if `NET_BIND_SERVICE` is not effective, the kernel rejects the bind. It is **not** “non-root in Docker always breaks port 443 on every machine.”
+
+### non-root runtimes can use `NET_BIND_SERVICE`
+
+Allow binding to ports below 1024 inside the container:
+
+```yaml
+services:
+  filebrowser:
+    cap_add:
+      - NET_BIND_SERVICE
+```
+
+For `docker run`, use `--cap-add=NET_BIND_SERVICE`. **Podman** supports the same flag (or the equivalent in your compose file). Prefer this over `--privileged` unless you need broader host access.
+
+Further reading: [Docker: Runtime privilege and Linux capabilities](https://docs.docker.com/engine/containers/run/#runtime-privilege-and-linux-capabilities).
+
 ## Next Steps
 
 - {{< doclink path="configuration/sources/" text="Configure sources" />}}
