@@ -55,7 +55,7 @@ Content here...
 
 ## Next Steps
 
-- {{< doclink path="section/page/" text="Related topic" />}}
+- {{< doclink path="contributing/welcome/" text="Related topic" />}}
 ```
 
 ### 4. Test Locally

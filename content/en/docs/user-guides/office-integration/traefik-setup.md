@@ -806,7 +806,7 @@ If you have other issues related with OnlyOffice and FileBrowser, you should che
 
 ## Next Steps
 
-- {{< doclink path="user-guides/office-integration/traefik-https/" text="Advanced HTTPS Configuration" />}} - Self-signed certificates and Traefik file provider
+- {{< doclink path="user-guides/office-integration/office-internal-https/" text="Advanced HTTPS Configuration" />}} - Self-signed certificates and Traefik file provider
 - {{< doclink path="integrations/office/troubleshooting/" text="Office Troubleshooting" />}} - Detailed troubleshooting guide
 - {{< doclink path="integrations/office/configuration/" text="Configuration Reference" />}} - All configuration options
 

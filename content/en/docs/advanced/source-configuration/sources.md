@@ -121,7 +121,7 @@ Sources are indexed by default, which enables:
 
 **Performance:** Indexing uses adaptive scanning intervals based on filesystem complexity. For typical filesystems (under 50,000 items), expect scan times under 30 seconds with minimal memory usage (100-300MB). Larger filesystems may require more resources but benefit from smart interval adjustments that reduce scan frequency.
 
-For detailed indexing information, see {{< doclink path="advanced/indexing/" text="Understanding Indexing" />}}.
+For detailed indexing information, see {{< doclink path="features/indexing/" text="Understanding Indexing" />}}.
 
 ## Configuration Options
 
@@ -334,7 +334,7 @@ sources:
 
 - {{< doclink path="advanced/source-configuration/conditional-rules/" text="Conditional Rules Guide" />}}
 - {{< doclink path="access-control/access-control-overview/" text="Access Control" />}}
-- {{< doclink path="advanced/indexing/" text="Understanding Indexing" />}}
+- {{< doclink path="features/indexing/" text="Understanding Indexing" />}}
 - {{< doclink path="reference/fullconfig/" text="Full Config Reference" />}}
 
 <style>

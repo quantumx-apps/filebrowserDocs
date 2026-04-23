@@ -218,6 +218,6 @@ Users with API permission can create tokens:
 ## Next Steps
 
 - {{< doclink path="access-control/rules/" text="Configure access rules" />}}
-- {{< doclink path="access-control/groups/" text="Set up groups" />}}
+- {{< doclink path="access-control/rules/" text="Set up groups" />}}
 - {{< doclink path="configuration/authentication/" text="Configure authentication" />}}
 

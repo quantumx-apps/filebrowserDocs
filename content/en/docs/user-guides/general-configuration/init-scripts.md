@@ -256,7 +256,7 @@ curl -H "Authorization: Bearer ${TOKEN}" \
 
 ## Troubleshooting
 
-For common issues and solutions, see the {{< doclink path="user-guides/init-scripts/troubleshooting/" text="Troubleshooting guide" />}}.
+For common issues and solutions, see the {{< doclink path="access-control/troubleshooting/" text="Troubleshooting guide" />}}.
 
 ## Complete Examples
 

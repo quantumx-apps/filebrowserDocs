@@ -201,4 +201,4 @@ integrations:
 
 ## Next Steps
 
-- {{< doclink path="integrations/media/guides/" text="Media guides" />}} - Usage examples and guides
+- {{< doclink path="integrations/media/about/" text="Media guides" />}} - Usage examples and guides

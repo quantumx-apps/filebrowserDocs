@@ -320,7 +320,7 @@ sources:
 ## Next Steps
 
 - {{< doclink path="advanced/source-configuration/sources/" text="Source Configuration" />}}
-- {{< doclink path="advanced/indexing/" text="Understanding Indexing" />}}
+- {{< doclink path="features/indexing/" text="Understanding Indexing" />}}
 - {{< doclink path="user-guides/general-configuration/exclusion-rules/" text="Migrating from Old Format" />}}
 
 <style>

@@ -164,6 +164,7 @@ check-doclinks:
 		npm install; \
 	fi
 	@npm run doclinks:check
+	@npm run doclinks:validate-paths
 	@echo "✅ Doclinks validation complete"
 	@echo ""
 
