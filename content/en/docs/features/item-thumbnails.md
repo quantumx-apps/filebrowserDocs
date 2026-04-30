@@ -1,6 +1,6 @@
 ---
 title: "Thumbnail Previews"
-description: "Explaining how thumbnail perviews are generated and configured"
+description: "Explaining how thumbnail previews are generated and configured"
 icon: "preview"
 order: 2
 ---
@@ -34,14 +34,12 @@ Thumbnails are generated in various ways depending on the filetype.
 
 ## Configuring previews
 
-By default, previews are enabled if available. But they can be configured by each user in settings:
+By default, previews are enabled when the server can generate them. Each user can turn previews on or off per type, tune pop-up and motion behavior, and exclude extensions from thumbnails in **Settings → Profile**. See {{< doclink path="user-preferences/thumbnail-options/" text="Thumbnail options (profile settings)" />}} for a full walkthrough of every toggle and the matching `userDefaults` keys.
 
-<img src="/images/generated/settings/profile-thumbnail-options-dark.jpg">
-
-An administrator can create users with defaults by configuring userDefaults. But these defaults do not change existing users.
+An administrator can set defaults for **new** users with `userDefaults.preview` and `userDefaults.disablePreviewExt`; those defaults do not change existing users.
 
 {{% alert context="info" %}}
-Some settings such as office previews many not show up in settings if the integration is not available.
+Some toggles (for example office or video previews) may not appear in settings if the relevant integration is not available.
 {{% /alert %}}
 
 ## Pop-up preview

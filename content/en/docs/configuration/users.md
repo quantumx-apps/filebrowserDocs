@@ -103,6 +103,8 @@ userDefaults:
   preferEditorForMarkdown: false
 ```
 
+For what each `fileLoading` field does (matching **Settings → Uploads & Downloads**), see {{< doclink path="user-preferences/uploads-downloads/" text="Uploads & Downloads (user preferences)" />}}.
+
 {{% alert context="info" %}}
 **Deprecated:** `disableOfficePreviewExt` is deprecated; use `disablePreviewExt` (and/or `disableOnlyOfficeExt` for the OnlyOffice editor) instead. **`preview.highQuality`** is deprecated and treated as always on in v1.3.0+.
 {{% /alert %}}

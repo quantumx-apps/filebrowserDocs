@@ -4,12 +4,8 @@ description: "Access FileBrowser Quantum as WebDAV Storage"
 icon: "storage"
 order: 4
 date: "2026-02-27"
-lastmod: "2026-02-27"
+lastmod: "2026-04-30"
 ---
-
-{{% alert context="warning" %}}
-WebDAV is only available as of `v1.3.0-beta` version of FileBrowser. It's enabled by default and no additional configuration is needed. This banner (and the "experimental" status) will be removed once WebDAV is implemented for `stable` version as well.
-{{% /alert %}}
 
 ## What is WebDAV?
 
@@ -19,62 +15,67 @@ It's also an alternative to the WebUI since you can mount/use one (or multiples)
 
 ## How to use WebDAV
 
-WebDAV is enabled by default and can be accessed from various clients in your devices via Basic Auth with an API Token being the password. You'll need to follow these steps:
+WebDAV is enabled by default. Clients connect with **Basic Auth**: the **password must be a full, uncustomized API token** issued in the Web UI. Before you configure a client, make sure these line up:
 
-### 01. Create API Token
+1. **Server URL** — Starts with `/dav/<source name>` and matches how you reach FileBrowser (direct host, port, or path behind a **reverse proxy**). See [Server URL](#server-url) below.
+2. **HTTP or HTTPS** — Use the same scheme (and port) as in the browser. Some clients call this **WebDAV** vs **WebDAVS** or plain **HTTP** vs **HTTPS**; pick the one that matches your deployment (TLS on 443 vs plain HTTP on your FileBrowser port).
+3. **Password** — The uncustomized API token. Customized tokens may not work with many webdav clients.
 
-- Login into FileBrowser and go to `Settings` -> `API Tokens`:
+For a step-by-step example on WinSCP, see the {{< doclink path="/user-guides/webdav-guides/winscp/" text="WinSCP guide" />}}.
+
+### API tokens
+
+**Settings → API Tokens** is only available if your user has `api` or `admin` permissions. If you are logged in as a normal user and do not see API Tokens, make sure your user has permissions set correctly.
+
+### Create an API token for WebDAV
+
+- Log in to FileBrowser and open **Settings → API Tokens**:
 
 <img src="/images/features/webdav/create-api-token.png">
 
-### 02. Tokens without customization
+Enter a name and an expiration that fits your use case.
 
-Enter a suitable name and set a duration for the expiration of the token according to your requirements.
-
-When creating an API Token for WebDAV, you'll need to create a Token _without_ customization enabled. The option is disabled by default but make sure that you have it disabled.
-
-When creating a Token this way, it will inherit the permissions of the user who created it. These types of tokens are **much shorter** than the customized ones, this is necessary since not all WebDAV clients/apps support longer passwords for authentication.
+**Important:** Create the token **without** customization enabled (the option is off by default). WebDAV needs the **short/minimal** token form; many clients cannot use the long customized tokens as a password.
 
 <img src="/images/features/webdav/token-customization-disabled.png">
 
-### 03. Copy Token
-
-Once you created the Token, copy it to your clipboard and use it as password for you preferred WebDAV client.
+When you create the token, **copy the full value** and use it only as the **password** in your WebDAV client.
 
 <img src="/images/features/webdav/copy-token.png">
 
-{{% alert context="info" %}}
-When authenticating to WebDAV clients, the `username` field will be completely **_ignored_** by FileBrowser, you can fill it with anything. Setting your username itself will be ideal, but the only required fields are the URL to the server and the password for authentication. Some clients may have extra configurations to add (most of them optional), such as DAV protocol: DAV or DAVS (`http` or `https` in simpler words), ports, etc.
-{{% /alert %}}
+### Username and password
 
-### 04. Server URL
+FileBrowser **ignores the WebDAV username**. It can be left empty, or set to any placeholder (for example `a`). Some clients require a non-empty username—in that case, any value is fine.
 
-The remote path set for WebDAV is basically the starting point when you open a client:
-
-- `/dav`: This is required for FileBrowser to know that you are trying to access WebDAV.
-- `/<source_name>`: Required to set the name of the source (case-sensitive).
+The **password** must be the **complete** minimal API token string, with no extra spaces or truncation.
 
 {{% alert context="info" %}}
-If your user has {{< doclink path="/configuration/users/#user-scopes" text="user scopes" />}} configured, FileBrowser will return the path of the scope automatically based in who created the Token, there's no need to specify the full path including the scope folder.
+If your user has {{< doclink path="/configuration/users/#user-scopes" text="user scopes" />}} configured, FileBrowser resolves paths according to the user who **created** the token; you do not need to add a scope folder to the path manually when that applies.
 {{% /alert %}}
 
-- `/` -- Trailing slash: Is recommended to add one at the end, but this is optional.
+### Server URL
 
-So, the final URL in the URL field could be like:
+Examples:
+
 - `https://files.example.com/dav/<source-name>/`
 - `http://192.168.1.210:8080/dav/<source-name>/`
 - `http://localhost/dav/<source-name>/`
 
-If you don't want to use the _whole_ source and just map a specific folder, you can too, for example:
+**Reverse proxy:** If FileBrowser is served under a host or path prefix, use the same origin you use in the browser. For example:
+
+- `https://sub.example.com/dav/<source-name>/`
+- `https://sub.example.com/prefix/dav/<source-name>/` — when the app is mounted under `/prefix`
+
+That pattern is valid for clients such as DAVx5 as long as the URL matches how you reach the instance.
+
+To open a folder inside a source instead of the whole source:
 
 - `https://files.example.com/dav/<source-name>/my-folder/`
 
-An easy way to set the URL is open the WebUI in your browser, navigate to your desired folder, copy the URL, and replace `/files/` with `/dav/`. For example:
-
-- `https://files.example.com/files/data/folder/` becomes `https://files.example.com/dav/data/folder/`
+**Quick method:** In the Web UI, open the folder you want, copy the address bar URL, then replace `/files/` with `/dav/`. Example: `https://files.example.com/files/data/folder/` → `https://files.example.com/dav/data/folder/`
 
 {{% alert context="warning" %}}
-You'll only have access to folders and sources that _your user_ has access to -- For example, you can't open a folder or access a source if your user can't. You'll be unable to perform certain operations if your user lacks the necessary permissions as well. You'll need `download` permission to view, and `modify/create/delete` permission to modify files.
+You only see folders and sources your user can access. You need `download` to read and `modify` / `create` / `delete` to change files.
 {{% /alert %}}
 
 ## Tested Clients
@@ -86,7 +87,7 @@ Windows Explorer supports mounting WebDAV as a drive natively in Windows Explore
 Some clients working with FileBrowser are:
 
 - [rclone](https://rclone.org/) - Cross-platform (desktop only) and supports mount.
-- [WinSCP](https://winscp.net/) - Third party client for Windows.
+- {{< doclink path="/user-guides/webdav-guides/winscp/" text="WinSCP" />}} - Third party client for Windows (see the linked guide).
 - [MixPlorer](https://mixplorer.com/) - File manager for Android.
 - [Symfonium](https://www.symfonium.app/) - Music Player for Android.
 - [Material Files](https://github.com/zhanghai/MaterialFiles) - File Manager for Android.
@@ -128,6 +129,10 @@ If you get access denied could be for the following reasons:
 - The API Token expired: Try setting a longer duration time for the API Token.
 - The path that you're trying to access is not valid: Make sure that you access to the path by checking in the WebUI.
 - You don't have enough permissions: Check that your user has the necessary permissions to access WebDAV, you'll need `download` permission to view, and `modify/create/delete` permission to modify files. Also see {{< doclink path="/access-control/access-control-overview/" text="Access control" />}}.
+
+### Connection or configuration issues
+
+If WebDAV still fails after checking URL, scheme (HTTP/HTTPS), and a fresh minimal token, inspect **FileBrowser server logs** around the time of the request. Failed auth, wrong paths, or proxy misconfiguration often show up there. Log configuration is described in {{< doclink path="/configuration/logging/" text="Logging configuration" />}}.
 
 ## Next Steps
 
