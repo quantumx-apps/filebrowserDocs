@@ -30,6 +30,10 @@ server:
 **Docker Healthcheck**: If you change the port from the default (`80`), you must update the Docker healthcheck in your `docker-compose.yaml` to match the new port. See {{< doclink path="getting-started/docker/#healthcheck-configuration" text="Docker healthcheck configuration" />}} for details.
 {{% /alert %}}
 
+{{% alert context="warning" %}}
+**Privileged ports**: For ports **below 1024**, Linux only allows a non-root process to bind if it has the **`NET_BIND_SERVICE`** capability (or `net.ipv4.ip_unprivileged_port_start` is lowered). **Rootful** Docker Engine / Docker Desktop usually includes `NET_BIND_SERVICE` in the default profile, so the non-root `filebrowser` user may still bind `80`/`443` there. **`bind: permission denied` is more typical with rootless engines** (Docker rootless, Podman rootless).
+{{% /alert %}}
+
 ### listen
 Server listen address (default: 0.0.0.0)
 
@@ -208,7 +212,6 @@ The `cacheDir` is a critical configuration that defines where FileBrowser stores
 
 The cacheDir is used by:
 
-- **Chunked file uploads**: Each upload chunk is temporarily stored here before being assembled
 - **Image preview generation**: Thumbnails and processed images are cached
 - **Archive operations**: ZIP extraction and compression temporary files
 - **Document processing**: Temporary files during PDF/image conversion

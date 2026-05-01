@@ -6,6 +6,8 @@ icon: "preview"
 
 FileBrowser includes powerful built-in viewers for a wide range of file types, letting you preview and edit content without downloading files to your device.
 
+You can turn built-in playback and editing behaviors on or off per user under **Settings → Profile → File Viewer Options**—media player choice, autoplay, editor shortcuts, Markdown routing, and extension-specific disables (including OnlyOffice when configured). See {{< doclink path="user-preferences/file-viewer-options/" text="File Viewer Options (profile settings)" />}}.
+
 ## Quick Preview
 
 Click any file to open it in the appropriate viewer. FileBrowser automatically detects the file type and opens it with the best viewer available.

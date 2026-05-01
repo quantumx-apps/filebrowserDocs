@@ -6,6 +6,8 @@ icon: "read_more"
 
 Starting in **v1.1.x**, the sidebar is fully customizable per user. This means a user can configure their sidebar with their own links, icons, and order it how they want.
 
+Separate from links, **Settings → Profile** includes toggles for sidebar behavior (quick toggles, file actions, tree layout, and keeping the sidebar open while previewing or editing). See {{< doclink path="user-preferences/sidebar-options/" text="Sidebar options (profile settings)" />}}.
+
 ## Default configuration
 
 By default, a user's sidebar is populated with the sources they have access to. But after a user is created they will need to update their sidebar to add/remove sources.
