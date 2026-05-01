@@ -6,6 +6,8 @@ icon: "search"
 
 FileBrowser's search feature helps you quickly find files and folders across your sources. With instant results powered by an efficient index, you can locate any file in seconds.
 
+To hide **advanced filters** in search (categories, size/date limits, preview thumbnails in results) for your account, use **Settings → Profile → Search options**. See {{< doclink path="user-preferences/search-options/" text="Search options (profile settings)" />}}.
+
 ## Quick Access
 
 Click the search bar or press `/` on your keyboard from anywhere in FileBrowser to instantly open the search bar and start searching.
@@ -86,7 +88,7 @@ This will show only files between 100-500 MB.
 Or by date:
 
 - **Older Than** - Pick a date/time to display only those older than
-- **Newer Than** - ick a date/time to display only those newer than
+- **Newer Than** - Pick a date/time to display only those newer than
 
 ### Preview Images
 

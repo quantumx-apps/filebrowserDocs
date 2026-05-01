@@ -212,7 +212,6 @@ The `cacheDir` is a critical configuration that defines where FileBrowser stores
 
 The cacheDir is used by:
 
-- **Chunked file uploads**: Each upload chunk is temporarily stored here before being assembled
 - **Image preview generation**: Thumbnails and processed images are cached
 - **Archive operations**: ZIP extraction and compression temporary files
 - **Document processing**: Temporary files during PDF/image conversion
