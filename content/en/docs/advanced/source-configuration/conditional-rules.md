@@ -46,6 +46,19 @@ sources:
           ignoreSymlinks: true        # ignores all symlinks
 ```
 
+### Disable Indexing
+
+Indexing can be fully disabled for a source by creating a global rule with `viewable: true`. This will disable indexing but allow contents to be viewable in the UI.
+
+```yaml
+sources:
+  - path: "/data"
+    config:
+      rules:
+        - folderPath: "/"         # (global) 
+          viewable: true          # allow viewing in the ui
+```
+
 ## Rule Properties
 
 These properties can be added to any rule to control behavior:
