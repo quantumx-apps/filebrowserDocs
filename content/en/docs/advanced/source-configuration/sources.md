@@ -204,17 +204,6 @@ sources:
 
 New users are scoped under `/shared/users` (and receive a per-user directory there when applicable).
 
-### `createUserDir` (deprecated)
-
-{{% alert context="warning" %}}
-**Deprecated:** `createUserDir` is deprecated — user directories under `defaultUserScope` for each username are **always** created for supported authentication flows. Remove this key from new configs; set only `defaultUserScope` (for example `/` or `/home`) to control where user folders are rooted.
-{{% /alert %}}
-
-```yaml
-config:
-  defaultUserScope: "/home"
-```
-
 Creates `/home/john` for user `john` under the source path and scopes the user there.
 
 ### `disabled`
@@ -229,7 +218,7 @@ Disable the source without removing it from config. Defaults to `false`. Useful 
 ### `disableIndexing` (deprecated)
 
 {{% alert context="warning" %}}
-**Deprecated:** `disableIndexing` on source `config` is deprecated (it does not appear in the generated reference). Prefer {{< doclink path="advanced/source-configuration/conditional-rules/" text="conditional `rules`" />}} — for example `viewable: true` on paths you want in the UI without full indexing, `neverWatchPath` for stable trees, and global flags with `folderPath: "/"`. If you still set `disableIndexing: true` in YAML for compatibility, indexing and search for that source are effectively off (same caveats as below).
+**Deprecated:** `disableIndexing` on source `config` is deprecated. See {{< doclink path="advanced/source-configuration/conditional-rules/#disable-indexing" text="rules - disable indexing" />}} on how to disable indexing
 {{% /alert %}}
 
 When indexing is effectively off for a source, these features **do not work**:
@@ -240,18 +229,6 @@ When indexing is effectively off for a source, these features **do not work**:
 - Source statistics / health
 
 Users may still browse files with reduced functionality.
-
-### `indexingIntervalMinutes` (deprecated)
-
-{{% alert context="warning" %}}
-**Deprecated:** `indexingIntervalMinutes` on source `config` is deprecated. Prefer adaptive scanning and {{< doclink path="advanced/source-configuration/conditional-rules/" text="`neverWatchPath` rules" />}} for large, rarely changing trees. The legacy field may still be honored if present.
-{{% /alert %}}
-
-### `conditionals` (deprecated)
-
-{{% alert context="warning" %}}
-**Deprecated:** The `conditionals` wrapper is deprecated — use `config.rules` only. See {{< doclink path="advanced/source-configuration/conditional-rules/" text="Conditional Rules Guide" />}}.
-{{% /alert %}}
 
 ## Common Configuration Patterns
 
