@@ -2,6 +2,8 @@
 title: "Styling"
 description: "Custom CSS and background colors"
 icon: "brush"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-04-20T18:55:31Z"
 ---
 
 Apply custom CSS and configure background colors for light/dark modes.

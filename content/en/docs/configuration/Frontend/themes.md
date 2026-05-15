@@ -2,6 +2,8 @@
 title: "Themes"
 description: "User-selectable custom themes"
 icon: "color_lens"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-04-20T18:55:31Z"
 ---
 
 Create custom themes that users can select in their settings.

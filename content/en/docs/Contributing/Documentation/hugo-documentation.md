@@ -2,8 +2,8 @@
 title: "Understanding Hugo Documentation"
 description: "Guide to understanding Hugo-generated documentation structure and conventions"
 icon: "code"
-date: "2024-01-15T10:00:00Z"
-lastmod: "2024-10-08T18:30:00Z"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2025-11-07T01:17:22Z"
 katex: true
 ---
 

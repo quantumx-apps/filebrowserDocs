@@ -2,6 +2,8 @@
 title: "Search"
 description: "Fast, indexed search to find your files instantly"
 icon: "search"
+date: "2026-02-27T21:50:04Z"
+lastmod: "2026-05-01T16:02:24Z"
 ---
 
 FileBrowser's search feature helps you quickly find files and folders across your sources. With instant results powered by an efficient index, you can locate any file in seconds.

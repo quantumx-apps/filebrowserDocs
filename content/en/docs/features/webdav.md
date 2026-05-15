@@ -2,9 +2,9 @@
 title: "WebDAV"
 description: "Access FileBrowser Quantum as WebDAV Storage"
 icon: "storage"
+date: "2026-02-27T22:40:24Z"
+lastmod: "2026-05-01T16:02:24Z"
 order: 4
-date: "2026-02-27"
-lastmod: "2026-04-30"
 ---
 
 ## What is WebDAV?

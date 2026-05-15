@@ -2,6 +2,8 @@
 title: "Configuration Migration"
 description: "Migrate configuration from original FileBrowser"
 icon: "settings_suggest"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2025-11-17T19:11:56Z"
 ---
 
 Migrate your configuration from the original FileBrowser to Quantum.

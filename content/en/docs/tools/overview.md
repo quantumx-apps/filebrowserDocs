@@ -2,6 +2,8 @@
 title: "About tools"
 description: "What tools are available and how to find them"
 icon: "read_more"
+date: "2026-02-24T00:57:44Z"
+lastmod: "2026-02-24T00:57:44Z"
 order: 1
 ---
 

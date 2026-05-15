@@ -61,6 +61,9 @@ defaultContentLanguageInSubdir = true
         sidebarIcons = true
         titleIcon = true
         navDesc = true
+        # “Suggest and edit” on doc pages (GitHub edit URL for content source)
+        repoURL = "https://github.com/quantumx-apps/filebrowserDocs"
+        repoBranch = "main"
 
     [params.docsearch]
         appID = "" # Algolia Application ID (get from DocSearch application)

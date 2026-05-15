@@ -2,16 +2,18 @@
 title: "Proxy Authentication"
 description: "Header-based authentication"
 icon: "security"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-04-20T18:55:31Z"
 order: 2
 ---
 
 Authenticate based on HTTP headers -- strictly designed to be used behind a reverse proxy.
 
+## Configuration
+
 {{% alert context="warning" %}}
 If proxy authentication is enabled and a server is accessed without a proxy, FileBrowser will blindly accept the headers. If anyone can bypass the proxy, they can login as any proxy-based user. Take care to configure your environment securely when using this method.
 {{% /alert %}}
-
-## Configuration
 
 ```yaml
 auth:
@@ -45,12 +47,14 @@ auth:
 **Deprecated:** `createUser` in this block is deprecated and ignored for new configs — user provisioning behavior is always on for supported methods.
 {{% /alert %}}
 
-## Use Cases
+## Example Use Cases
 
 - Corporate SSO via proxy
 - Kubernetes ingress authentication
 - Nginx auth_request module
 - Traefik ForwardAuth
+
+<div class="pattern-card">
 
 ## Traefik Example
 
@@ -62,6 +66,10 @@ http:
         address: "https://auth.example.com/verify"
         trustForwardHeader: true
 ```
+
+</div>
+
+<div class="pattern-card">
 
 ## Nginx Example
 
@@ -88,6 +96,7 @@ server {
 ```
 
 FileBrowser config:
+
 ```yaml
 auth:
   methods:
@@ -97,6 +106,8 @@ auth:
     password:
       enabled: false
 ```
+
+</div>
 
 ## Next Steps
 

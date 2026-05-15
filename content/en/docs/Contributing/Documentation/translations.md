@@ -2,6 +2,8 @@
 title: "Translations & i18n"
 description: "How to add and manage translations for the documentation"
 icon: "translate"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-03-10T00:10:42Z"
 ---
 
 {{% alert context="warning" %}}

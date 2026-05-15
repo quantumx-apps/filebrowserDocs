@@ -2,13 +2,21 @@
 title: "Configuration"
 description: "Configure media integration settings"
 icon: "settings"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-04-21T20:01:57Z"
 ---
 
 Configure FFmpeg paths, subtitle extraction, and media processing options for video thumbnails and subtitle support.
 
 ## Basic Configuration
 
+<div class="pattern-card">
+
 Path to the directory where ffmpeg and ffprobe executables are installed (only needed if not in PATH):
+
+{{% alert context="info" %}}
+**Only Docker users:** FFmpeg is already in the PATH for `stable` and `beta` images and no additional configuration is needed. `stable-slim` and `beta-slim` images do not include FFmpeg. You must switch to `stable` or `beta` to enable preview features.
+{{% /alert %}}
 
 ```yaml
 integrations:
@@ -16,9 +24,7 @@ integrations:
     ffmpegPath: "/usr/local/bin"  # Directory containing ffmpeg and ffprobe
 ```
 
-{{% alert context="info" %}}
-**Only Docker users:** FFmpeg is already in the PATH for `stable` and `beta` images and no additional configuration is needed. `stable-slim` and `beta-slim` images do not include FFmpeg. You must switch to `stable` or `beta` to enable preview features.
-{{% /alert %}}
+</div>
 
 ## Subtitle Extraction
 

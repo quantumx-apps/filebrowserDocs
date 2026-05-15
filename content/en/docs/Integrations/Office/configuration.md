@@ -2,15 +2,19 @@
 title: "Configuration"
 description: "Configure OnlyOffice integration"
 icon: "settings"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-03-10T00:10:42Z"
 ---
 
 Configure OnlyOffice Document Server for document editing.
 
+## Basic Configuration
+
+<div class="pattern-card">
+
 {{% alert context="info" %}}
 OnlyOffice is currently the only supported office integration. Collabora support is planned for the future.
 {{% /alert %}}
-
-## Basic Configuration
 
 ```yaml
 integrations:
@@ -18,6 +22,8 @@ integrations:
     url: "http://onlyoffice:80"
     secret: "your_secret_here"
 ```
+
+</div>
 
 ## Docker Setup
 
@@ -35,6 +41,12 @@ TevrjpRNMmKC0JxAwY7iZ2VXLrvG1gue
 ```
 
 ### Docker Compose Example
+
+<div class="pattern-card">
+
+{{% alert context="info" %}}
+Use the same secret value for `FILEBROWSER_ONLYOFFICE_SECRET` and OnlyOffice `JWT_SECRET` when JWT is enabled on the document server.
+{{% /alert %}}
 
 ```yaml
 services:
@@ -57,6 +69,8 @@ services:
       - JWT_ENABLED=true
       - JWT_SECRET=your_secret_here
 ```
+
+</div>
 
 ## HTTPS Configuration
 
@@ -86,6 +100,8 @@ server {
 
 ### External and Internal URLs
 
+<div class="pattern-card">
+
 ```yaml
 server:
   externalUrl: "https://files.yourdomain.com"  # Accessible from browser
@@ -103,6 +119,8 @@ integrations:
 - **Browser** → The browser always uses `integrations.office.url` to connect from your browser to only office server.
 - **OnlyOffice** → Uses either `server.externalUrl` or `server.internalUrl` for downloading/saving files to FileBrowser server.
 - **FileBrowser** → Uses either `integratons.office.internalUrl` or `integrations.office.url` to connect from the FileBrowser server to OnlyOffice server.
+
+</div>
 
 
 ## Next Steps

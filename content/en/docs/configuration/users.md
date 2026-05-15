@@ -2,6 +2,8 @@
 title: "User Management"
 description: "Manage users and permissions"
 icon: "group"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-05-01T16:02:24Z"
 order: 5
 ---
 
@@ -22,6 +24,12 @@ There's two main areas that user settings are configured.
 
 Configure defaults applied to new users:
 
+<div class="pattern-card">
+
+{{% alert context="warning" %}}
+**Deprecated:** `createUserDir` on source `config` is deprecated (user directories under `defaultUserScope` are always created for new users when applicable). Prefer setting `defaultUserScope` only; remove `createUserDir` from new configs.
+{{% /alert %}}
+
 ```yaml
 server:
   sources:
@@ -31,13 +39,13 @@ server:
         defaultUserScope: "/"       # Default access path under the source
 ```
 
-{{% alert context="warning" %}}
-**Deprecated:** `createUserDir` on source `config` is deprecated (user directories under `defaultUserScope` are always created for new users when applicable). Prefer setting `defaultUserScope` only; remove `createUserDir` from new configs.
-{{% /alert %}}
+</div>
 
 ### User Defaults
 
 User defaults are configured on the `config.yaml` and are the default initial values for users when they are created.
+
+<div class="pattern-card">
 
 {{% alert context="info" %}}
 **Note**: userDefaults do NOT update or enforce a user's settings after one has been created. Its more accurately, "user create settings" than user defaults.
@@ -103,11 +111,9 @@ userDefaults:
   preferEditorForMarkdown: false
 ```
 
-For what each `fileLoading` field does (matching **Settings → Uploads & Downloads**), see {{< doclink path="user-preferences/uploads-downloads/" text="Uploads & Downloads (user preferences)" />}}.
+</div>
 
-{{% alert context="info" %}}
-**Deprecated:** `disableOfficePreviewExt` is deprecated; use `disablePreviewExt` (and/or `disableOnlyOfficeExt` for the OnlyOffice editor) instead. **`preview.highQuality`** is deprecated and treated as always on in v1.3.0+.
-{{% /alert %}}
+For what each `fileLoading` field does (matching **Settings → Uploads & Downloads**), see {{< doclink path="user-preferences/uploads-downloads/" text="Uploads & Downloads (user preferences)" />}}.
 
 `permissions` are not editable by the user unless they are admin, but all other settings are modifyable in profile settings in the UI.
 
@@ -168,7 +174,9 @@ In User Management:
 
 ### Auto-Create User Directories
 
-Per-user directories are created under each source’s `defaultUserScope` using the username (the old `createUserDir` toggle is deprecated). Example:
+Per-user directories are created under each source’s `defaultUserScope` using the username (the old `createUserDir` toggle is deprecated):
+
+<div class="pattern-card">
 
 ```yaml
 server:
@@ -181,6 +189,8 @@ server:
 
 This creates `/home/users/<username>` for each new user and scopes them to that folder.
 
+</div>
+
 ## User Groups
 
 Groups are currently managed and provided by the LDAP or OIDC provider. Adding groups manually in technically supported via API (see swagger), but not yet implemented as a feature in the UI. Stay tuned.
@@ -188,6 +198,8 @@ Groups are currently managed and provided by the LDAP or OIDC provider. Adding g
 ## Password Management
 
 ### Set Password Requirements
+
+Minimum password length for password authentication:
 
 ```yaml
 auth:

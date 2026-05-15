@@ -2,13 +2,11 @@
 title: "LDAP Authentication"
 description: "Integrate with LDAP directories for centralized user authentication"
 icon: "security"
+date: "2026-02-27T21:50:04Z"
+lastmod: "2026-04-20T18:55:31Z"
 ---
 
 Authenticate users against LDAP directories like Active Directory, OpenLDAP, Authentik, and other LDAP-compliant systems.
-
-{{% alert context="info" %}}
-requires `v1.3.x` or newer
-{{% /alert %}}
 
 ## Basic Configuration
 
@@ -218,6 +216,8 @@ auth:
 
 ## Provider Examples
 
+<div class="pattern-card">
+
 ### Authentik
 
 ```yaml
@@ -232,6 +232,10 @@ auth:
       userFilter: "(&(cn=%s)(objectClass=user))"
       adminGroup: "authentik Admins"
 ```
+
+</div>
+
+<div class="pattern-card">
 
 ### Active Directory
 
@@ -250,6 +254,10 @@ auth:
       adminGroup: "Domain Admins"
 ```
 
+</div>
+
+<div class="pattern-card">
+
 ### OpenLDAP
 
 ```yaml
@@ -263,6 +271,10 @@ auth:
       userPassword: "readonly-password"
       userFilter: "(&(uid=%s)(objectClass=inetOrgPerson))"
 ```
+
+</div>
+
+<div class="pattern-card">
 
 ### FreeIPA
 
@@ -278,6 +290,8 @@ auth:
       userFilter: "(uid=%s)"
       groupsClaim: "memberOf"
 ```
+
+</div>
 
 ## TLS Configuration
 

@@ -2,6 +2,8 @@
 title: "About"
 description: "Overview of media integration features"
 icon: "info"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-01-30T13:20:14Z"
 ---
 
 Overview of FFmpeg-based media processing features.

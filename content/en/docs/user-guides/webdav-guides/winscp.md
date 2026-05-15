@@ -2,6 +2,8 @@
 title: "WinSCP"
 description: "A short guide on setting up WinSCP with FileBrowser"
 icon: "deployed_Code"
+date: "2026-02-27T22:40:24Z"
+lastmod: "2026-02-27T22:40:24Z"
 ---
 
 [WinSCP](https://winscp.net/eng/index.php) is a free file manager for Windows supporting FTP, SFTP, S3 and WebDAV.

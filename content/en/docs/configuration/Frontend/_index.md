@@ -2,6 +2,8 @@
 title: "Frontend Customization"
 description: "Customize the user interface"
 icon: "palette"
+date: "2025-11-09T23:00:24Z"
+lastmod: "2026-04-20T18:55:31Z"
 order: 7
 ---
 
