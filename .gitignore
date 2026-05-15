@@ -9,3 +9,4 @@ tmp/
 .htmltest/
 htmltest.log
 refcache.json
+**__pycache__**

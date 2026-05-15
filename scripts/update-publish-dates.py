@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
-"""Set Hugo front matter date (first git commit) and lastmod (latest commit) per file."""
+"""Set Hugo front matter date (first git commit) and lastmod (latest commit) per file.
+
+When the newest git commit UTC date is on or before LASTMOD_PRESERVE_BEFORE_UTC_DAY_INCLUSIVE,
+existing lastmod in front matter is kept instead of overwriting from git. Uses git lastmod if
+YAML has no lastmod yet. Commits strictly after that UTC day still refresh lastmod from git.
+"""
 
 from __future__ import annotations
 
 import argparse
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
+
+# Preserve YAML lastmod when latest git commit is this UTC calendar day or earlier (inclusive cutoff).
+LASTMOD_PRESERVE_BEFORE_UTC_DAY_INCLUSIVE = date(2026, 5, 15)
 
 
 def repo_root() -> Path:
@@ -107,6 +115,33 @@ def join_front_matter(fm_lines: list[str], body_lines: list[str]) -> str:
     return "".join(["---\n", *fm_lines, "---\n", *body_lines])
 
 
+def parse_lastmod_scalar(fm_lines: list[str]) -> str | None:
+    """Return existing lastmod string value from front matter lines, if present."""
+    for ln in fm_lines:
+        st = ln.strip()
+        if not st.startswith("lastmod:"):
+            continue
+        rest = st[8:].strip()
+        if len(rest) >= 2 and rest[0] == rest[-1] and rest[0] in "\"'":
+            return rest[1:-1]
+        return rest.strip()
+    return None
+
+
+def utc_date_from_z(zulu: str) -> date:
+    dt = datetime.fromisoformat(zulu.replace("Z", "+00:00"))
+    return dt.astimezone(timezone.utc).date()
+
+
+def lastmod_for_write(git_lastmod_z: str, fm_lines: list[str]) -> str:
+    """If latest commit UTC date is on or before cutoff, keep existing lastmod; else use git."""
+    if utc_date_from_z(git_lastmod_z) <= LASTMOD_PRESERVE_BEFORE_UTC_DAY_INCLUSIVE:
+        preserved = parse_lastmod_scalar(fm_lines)
+        if preserved is not None:
+            return preserved
+    return git_lastmod_z
+
+
 def insert_date_fields(fm_lines: list[str], date_val: str, lastmod_val: str) -> list[str]:
     without_dates: list[str] = []
     for ln in fm_lines:
@@ -154,7 +189,8 @@ def process_file(rel_path: str, root: Path, dry_run: bool, verbose: bool) -> boo
         return True
 
     fm_lines, body_lines = parsed
-    new_fm = insert_date_fields(fm_lines, pub, mod)
+    mod_effective = lastmod_for_write(mod, fm_lines)
+    new_fm = insert_date_fields(fm_lines, pub, mod_effective)
     new_raw = join_front_matter(new_fm, body_lines)
 
     if new_raw == raw:
@@ -163,7 +199,10 @@ def process_file(rel_path: str, root: Path, dry_run: bool, verbose: bool) -> boo
         return True
 
     if dry_run:
-        print(f"… Would update: {rel_path}  date={pub}  lastmod={mod}")
+        note = ""
+        if mod_effective != mod:
+            note = f"  (lastmod kept: {mod_effective!r}, git had {mod!r})"
+        print(f"… Would update: {rel_path}  date={pub}  lastmod={mod_effective}{note}")
         return True
 
     path.write_text(new_raw, encoding="utf-8")
