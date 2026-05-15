@@ -2,6 +2,8 @@
 title: "rclone with FileBrowser"
 description: "A guide to using FileBrowser with rclone."
 icon: "cloud_sync"
+date: "2026-02-27T22:40:24Z"
+lastmod: "2026-04-21T20:01:57Z"
 ---
 
 {{% alert context="warning" %}}

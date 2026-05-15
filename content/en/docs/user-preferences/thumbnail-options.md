@@ -2,6 +2,8 @@
 title: "Thumbnail Options"
 description: "Explaining the thumbnail and preview toggles in user profile settings"
 icon: "school"
+date: "2026-05-01T16:02:24Z"
+lastmod: "2026-05-01T16:02:24Z"
 ---
 
 Thumbnail options control whether listings show thumbnail previews, which file types get them, hover pop-up behavior, motion previews, and per-extension exclusions. Users change them under **Settings → Profile** in the **Thumbnail Options** section (when settings are not disabled for the account).

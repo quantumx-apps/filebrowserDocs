@@ -2,6 +2,8 @@
 title: "Running behind a reverse proxy"
 description: "Complete guide for configuring FileBrowser Quantum behind reverse proxies"
 icon: "other_houses"
+date: "2025-10-28T22:14:01Z"
+lastmod: "2026-03-21T20:42:00Z"
 order: 7
 ---
 

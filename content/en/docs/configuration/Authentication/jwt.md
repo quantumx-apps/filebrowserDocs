@@ -2,13 +2,11 @@
 title: "JWT Authentication"
 description: "External JWT token authentication for SSO and proxy integration"
 icon: "security"
+date: "2026-02-27T21:50:04Z"
+lastmod: "2026-04-20T18:55:31Z"
 ---
 
 Accept externally-signed JWT tokens for secure authentication, enabling single sign-on, proxy authentication, and iframe embedding scenarios.
-
-{{% alert context="info" %}}
-requires `v1.3.x` or newer
-{{% /alert %}}
 
 ## Basic Configuration
 
@@ -105,6 +103,8 @@ Your JWT token **must** contain:
 
 ## Generating JWT Tokens
 
+<div class="pattern-card">
+
 ### Node.js
 
 ```javascript
@@ -121,6 +121,10 @@ const token = jwt.sign(
   { algorithm: 'HS256' }
 );
 ```
+
+</div>
+
+<div class="pattern-card">
 
 ### Python
 
@@ -140,6 +144,10 @@ token = jwt.encode(
 )
 ```
 
+</div>
+
+<div class="pattern-card">
+
 ### Go
 
 ```go
@@ -158,6 +166,8 @@ claims := jwt.MapClaims{
 token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 tokenString, _ := token.SignedString([]byte("your-shared-secret-key-here"))
 ```
+
+</div>
 
 ## Group-Based Authorization
 
@@ -252,6 +262,8 @@ auth:
 
 ## Integration Examples
 
+<div class="pattern-card">
+
 ### NGINX Reverse Proxy
 
 Generate JWT tokens from authenticated users:
@@ -270,6 +282,10 @@ server {
 }
 ```
 
+</div>
+
+<div class="pattern-card">
+
 ### Iframe Embedding
 
 Embed FileBrowser with user identity:
@@ -281,6 +297,10 @@ Embed FileBrowser with user identity:
   height="600">
 </iframe>
 ```
+
+</div>
+
+<div class="pattern-card">
 
 ### Windows NTLM Proxy
 
@@ -308,6 +328,8 @@ app.use((req, res, next) => {
   // Proxy to FileBrowser
 });
 ```
+
+</div>
 
 ## Security Best Practices
 

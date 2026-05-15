@@ -2,15 +2,17 @@
 title: "No Authentication"
 description: "Disable all authentication (generally unsafe)"
 icon: "lock_open"
+date: "2026-02-04T23:33:08Z"
+lastmod: "2026-02-27T21:50:04Z"
 ---
 
 Disable all authentication methods to allow unrestricted access to FileBrowser.
 
+## Configuration
+
 {{% alert context="warning" %}}
 **Security Warning**: No authentication mode disables all security checks and allows unrestricted access to your FileBrowser instance. This should **only** be used in controlled testing environments or isolated networks where security is not a concern.
 {{% /alert %}}
-
-## Configuration
 
 Enable no authentication mode:
 
@@ -21,6 +23,7 @@ auth:
 ```
 
 When `noauth: true` is set:
+
 - All authentication methods are disabled
 - All users can access FileBrowser without login
 - The system automatically uses user ID 1 for all requests

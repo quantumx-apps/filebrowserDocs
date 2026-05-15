@@ -2,6 +2,8 @@
 title: "Duplicate file finder"
 description: "Find and manage your duplicate files"
 icon: "dynamic_feed"
+date: "2026-02-24T00:57:44Z"
+lastmod: "2026-02-24T00:57:44Z"
 ---
 
 ## About

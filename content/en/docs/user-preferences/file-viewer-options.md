@@ -2,6 +2,8 @@
 title: "File Viewer Options"
 description: "Explaining viewer and editor toggles in user profile settings"
 icon: "school"
+date: "2026-05-01T16:02:24Z"
+lastmod: "2026-05-01T16:02:24Z"
 ---
 
 File viewer options control media playback, the text editor, markdown opening behavior, and which extensions use File Browser’s built-in viewer/editor versus downloads or other handlers (including OnlyOffice when configured). Users change them under **Settings → Profile** in the **File Viewer Options** section (when settings are not disabled for the account).

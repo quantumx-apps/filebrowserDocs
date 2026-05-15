@@ -2,6 +2,8 @@
 title: "Server Settings"
 description: "Configure server options"
 icon: "dns"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-05-01T16:02:24Z"
 order: 2
 ---
 
@@ -18,7 +20,10 @@ server:
 
 ## Configuration Options
 
+<div class="pattern-card">
+
 ### port
+
 Server port (default: `80`)
 
 ```yaml
@@ -34,7 +39,10 @@ server:
 **Privileged ports**: For ports **below 1024**, Linux only allows a non-root process to bind if it has the **`NET_BIND_SERVICE`** capability (or `net.ipv4.ip_unprivileged_port_start` is lowered). **Rootful** Docker Engine / Docker Desktop usually includes `NET_BIND_SERVICE` in the default profile, so the non-root `filebrowser` user may still bind `80`/`443` there. **`bind: permission denied` is more typical with rootless engines** (Docker rootless, Podman rootless).
 {{% /alert %}}
 
+</div>
+
 ### listen
+
 Server listen address (default: 0.0.0.0)
 
 ```yaml
@@ -43,6 +51,7 @@ server:
 ```
 
 ### baseURL
+
 Base URL -- primarily for reverse proxy
 
 ```yaml
@@ -51,6 +60,7 @@ server:
 ```
 
 ### socket
+
 Unix socket to listen on (alternative to TCP port). When set, overrides port configuration.
 
 ```yaml
@@ -59,6 +69,7 @@ server:
 ```
 
 ### minSearchLength
+
 Minimum length of search query to begin searching (default: 3)
 
 ```yaml
@@ -67,6 +78,7 @@ server:
 ```
 
 ### disableUpdateCheck
+
 Disable backend update check service
 
 ```yaml
@@ -75,6 +87,7 @@ server:
 ```
 
 ### numImageProcessors
+
 Number of concurrent image processing jobs used to create previews. Default is number of CPU cores available.
 
 ```yaml
@@ -83,6 +96,7 @@ server:
 ```
 
 ### disablePreviews
+
 Disable all previews and thumbnails. Simple icons will be used instead.
 
 ```yaml
@@ -91,6 +105,7 @@ server:
 ```
 
 ### disablePreviewResize
+
 Disable resizing of previews for faster loading over slow connections.
 
 ```yaml
@@ -99,6 +114,7 @@ server:
 ```
 
 ### disableTypeDetectionByHeader
+
 Disable type detection by header. Useful if filesystem is slow.
 
 ```yaml
@@ -107,6 +123,7 @@ server:
 ```
 
 ### externalUrl
+
 Used by share links if set. This is the base domain that share links will use.
 
 ```yaml
@@ -115,6 +132,7 @@ server:
 ```
 
 ### cacheDirCleanup
+
 Whether to automatically cleanup the cache directory. Note: Docker must also mount a persistent volume to persist the cache (default: false).
 
 ```yaml
@@ -123,6 +141,7 @@ server:
 ```
 
 ### filesystem
+
 Filesystem settings for file and directory creation permissions.
 
 ```yaml
@@ -132,7 +151,10 @@ server:
     createDirectoryPermission: "755" # Unix permissions like 755, 2755, 1777 (default: 755)
 ```
 
+<div class="pattern-card">
+
 ### indexSqlConfig
+
 Index database SQL configuration for performance tuning.
 
 ```yaml
@@ -153,7 +175,10 @@ If you notice long delays on startup, you could configure this to `probe` (recom
 - **`probe`** — Lightweight check (catalog / sample read); faster for huge indexes.
 - **`off`** — Minimal check beyond opening the DB; fastest boot, least safety.
 
+</div>
+
 ### disableWebDAV
+
 Disable WebDAV support (default: `false`).
 
 ```yaml
@@ -162,12 +187,17 @@ server:
 ```
 
 ### sources
+
 Configure file system sources. See {{< doclink path="configuration/sources/" text="Sources configuration" />}} for detailed information.
 
 ### logging
+
 Configure logging output and levels. See {{< doclink path="configuration/logging/" text="Logging configuration" />}} for detailed information.
 
+<div class="pattern-card">
+
 ### database
+
 Database file path. See {{< doclink path="getting-started/config/#how-to-specify-a-config-file" text="configuration file priority" />}} for default locations.
 
 ```yaml
@@ -178,6 +208,10 @@ server:
 **Default locations:**
 - Current directory: `./database.db`
 - Docker: first checks `/home/filebrowser/data/database.db`, then current directory `./database.db`
+
+</div>
+
+<div class="pattern-card">
 
 ### maxArchiveSize
 
@@ -191,6 +225,10 @@ Ensure you have enough free space in `cacheDir` if you raise this value.
 server:
   maxArchiveSize: 20   # GB; 0 = no limit (default: 20)
 ```
+
+</div>
+
+<div class="pattern-card">
 
 ### cacheDir
 
@@ -209,7 +247,6 @@ The `cacheDir` is a critical configuration that defines where FileBrowser stores
 
 {{% /alert %}}
 
-
 The cacheDir is used by:
 
 - **Image preview generation**: Thumbnails and processed images are cached
@@ -222,9 +259,16 @@ server:
   cacheDir: "tmp" # this is default when not configured.
 ```
 
+
+</div>
+
+
 #### Docker Examples
 
+<div class="pattern-card">
+
 **Basic Docker Setup:**
+
 ```yaml
 # docker-compose.yaml
 services:
@@ -248,6 +292,8 @@ server:
 Alternatively, in Docker, we can mount a single directory called `data` that contains the config, database files, and cacheDir. Check the {{< doclink path="user-guides/Other/standalone.md" text="Standalone docker setup guide" />}} to see how it's done.
 {{% /alert %}}
 
+</div>
+
 #### Troubleshooting
 
 **Permission Issues:**
@@ -260,6 +306,7 @@ sudo chown -R 1000:1000 /var/cache/filebrowser
 ```
 
 ### internalUrl
+
 Internal URL for integrations to access FileBrowser (Currently just OnlyOffice)
 
 This could be a docker network DNS name or a local IP address on the network. This address should allow the integration to communicate directly with the service.
@@ -282,4 +329,3 @@ server:
 - {{< doclink path="configuration/sources/" text="Configure sources" />}}
 - {{< doclink path="configuration/authentication/" text="Set up authentication" />}}
 - {{< doclink path="configuration/logging/" text="Configure logging" />}}
-

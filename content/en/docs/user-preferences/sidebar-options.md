@@ -2,6 +2,8 @@
 title: "Sidebar Options"
 description: "Explaining the sidebar toggles in user profile settings"
 icon: "school"
+date: "2026-05-01T16:02:24Z"
+lastmod: "2026-05-01T16:02:24Z"
 ---
 
 Sidebar options adjust how the sidebar behaves: quick toggles, visibility of file actions, whether the folder tree shows files, and whether the sidebar stays visible while you preview or edit. Users change them under **Settings → Profile** in the **Sidebar options** section (when settings are not disabled for the account).

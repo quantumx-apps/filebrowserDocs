@@ -2,6 +2,8 @@
 title: "Previewing Files"
 description: "View and edit your files directly in the browser"
 icon: "preview"
+date: "2026-02-27T21:50:04Z"
+lastmod: "2026-05-01T16:02:24Z"
 ---
 
 FileBrowser includes powerful built-in viewers for a wide range of file types, letting you preview and edit content without downloading files to your device.

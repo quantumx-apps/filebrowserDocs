@@ -2,6 +2,8 @@
 title: "OIDC Authentication"
 description: "OpenID Connect integration"
 icon: "fingerprint"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-04-20T18:55:31Z"
 ---
 
 Integrate with OpenID Connect providers for single sign-on.
@@ -23,7 +25,7 @@ auth:
 If you need group claims, add them to `scopes` (for example `groups`) per your provider.
 
 {{% alert context="info" %}}
-**Note**: Its common to configure a source with {{< doclink path="advanced/source-configuration/sources/#denybydefault" text="denyByDefault" />}} and use {{< doclink path="access-control/rules" text="access rules" />}} to enable group based access for OIDC users.
+**Note**: Its common to configure a source with {{< doclink path="configuration/sources#denybydefault" text="denyByDefault" />}} and use {{< doclink path="access-control/rules" text="access rules" />}} to enable group based access for OIDC users.
 {{% /alert %}}
 
 ## Configuration Options
@@ -90,7 +92,11 @@ auth:
 
 ## Provider Examples
 
+<div class="pattern-card">
+
 ### Authentik
+
+Typical settings when Authentik exposes groups and an optional admin group mapping:
 
 ```yaml
 auth:
@@ -103,7 +109,13 @@ auth:
       adminGroup: "authentik Admins"
 ```
 
+</div>
+
+<div class="pattern-card">
+
 ### Authelia
+
+Minimal Authelia client configuration:
 
 ```yaml
 auth:
@@ -115,9 +127,13 @@ auth:
       issuerUrl: "https://auth.example.com"
 ```
 
+</div>
+
 ## Group-Based Access Control
 
 ### Admin Group
+
+<div class="pattern-card">
 
 Grant admin privileges to users in a specific OIDC group:
 
@@ -132,7 +148,11 @@ auth:
       adminGroup: "FileBrowser Admins"
 ```
 
+</div>
+
 ### Restrict login to Specific Groups
+
+<div class="pattern-card">
 
 {{% alert context="info" %}}
 requires version `1.3.x`+
@@ -152,6 +172,8 @@ auth:
 ```
 
 Users not in these groups will be denied access even with valid OIDC authentication.
+
+</div>
 
 ## Next Steps
 

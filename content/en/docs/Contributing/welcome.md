@@ -2,6 +2,8 @@
 title: "Welcome Contributors"
 description: "Get started contributing to FileBrowser Quantum"
 icon: "waving_hand"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2025-10-09T00:54:16Z"
 ---
 
 Thank you for your interest in contributing to FileBrowser Quantum! This guide will help you find the right way to contribute.

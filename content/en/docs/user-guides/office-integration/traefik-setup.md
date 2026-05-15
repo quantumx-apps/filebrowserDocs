@@ -2,9 +2,9 @@
 title: "Traefik Setup"
 description: "Complete production setup with Traefik using Docker and Let's Encrypt"
 icon: "dns"
+date: "2025-10-29T22:21:43Z"
+lastmod: "2026-04-21T20:01:57Z"
 order: 3
-date: "2025-09-20"
-lastmod: "2025-12-14"
 ---
 
 Production-ready setup for FileBrowser Quantum and OnlyOffice behind Traefik reverse proxy with automatic HTTPS certificates from Let's Encrypt.

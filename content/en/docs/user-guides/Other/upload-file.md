@@ -2,6 +2,8 @@
 title: "Uploading Files on the go"
 description: "A example of using HTTP Shorcuts app to upload files to FileBrowser bypassing Filepicker"
 icon: "deployed_Code"
+date: "2026-01-30T13:20:14Z"
+lastmod: "2026-02-06T19:45:58Z"
 ---
 
 Uploading files from Android can be very difficult. You have to use the android file picker to navigate even if you want share a photo that you opened and its in front of you, but you can't because it is a photo from a few years back that is deep buried down, etc. This guide will demonstrate how to use the share button to upload to FileBrowser instead.

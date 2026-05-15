@@ -2,6 +2,8 @@
 title: "Access Rules"
 description: "Directory-level access control"
 icon: "gavel"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-03-10T00:39:22Z"
 order: 2
 ---
 
@@ -17,42 +19,48 @@ FileBrowser Quantum access rules differ entirely from the original FileBrowser. 
 
 ## How Access Control Works
 
-User access to files depends on three factors:
+### Rule Variables
 
-1. **User Scope** - User must have source in their scopes
-2. **denyByDefault** - Default access behavior (grant or deny)
-3. **Access Rules** - Specific allow/deny rules for directories
+1. **User scope** — The user must have the source in their scopes.
+2. **Deny/Allow** — The default behavior is to allow user access, unless the source is configured with {{< doclink path="configuration/sources#denybydefault" text="denyByDefault" />}}.
+3. **Access rules** — Allow/deny rules for specific directories.
 
-## Rule Evaluation
+### Rule evaluation
 
 When a user accesses a file or directory:
 
-1. **Direct Path Check** - Look for rules on the exact path
-2. **Recursive Parent Check** - Check parent directories up to root
-3. **Default Behavior** - Grant access if no rules found (unless denyByDefault)
+1. **Direct path check** — Rules on the exact path are considered first.
+2. **Recursive parent check** — Parent directories are checked up to the root.
+3. **Default behavior** — Access is granted if no rule applies, unless **denyByDefault** is enabled.
 
-## Rule Precedence
+### Rule precedence
 
-**More specific rules override general rules**
+**More specific paths override broader ones.**
 
-- Rule on `/folder/subfolder` overrides rule on `/folder`
-- **Allow rules take priority over deny rules**
+- A rule on `/folder/subfolder` overrides a rule on `/folder`.
+- **Allow rules take priority over deny rules** when both apply.
 
-## Creating Access Rules
+## Creating access rules
 
-Rules are created via the Web UI:
+### In the Web UI
 
-1. Go to **User Management** or **Group Management**
-2. Edit a user or group
-3. Select a source
-4. Click **Access Rules**
-5. Add allow/deny rules for specific directories
+1. Open **User Management** or **Group Management**.
+2. Edit a user or group.
+3. Select a **source**.
+4. Open **Access Rules**.
+5. Add allow or deny rules for the directories you need.
 
-## Source Default Behavior
+## Source configuration
+
+{{% alert context="info" %}}
+**Using groups:** OIDC, LDAP, and JWT authentication methods often map identity provider groups to FileBrowser Quantum groups. A typical pattern is to set the source to {{< doclink path="configuration/sources#denybydefault" text="denyByDefault" />}} and then grant access with rules tied to those groups.
+{{% /alert %}}
+
+<div class="pattern-card">
 
 ### denyByDefault
 
-Configure in source settings:
+Configure per source in your config:
 
 ```yaml
 server:
@@ -63,96 +71,145 @@ server:
 ```
 
 With `denyByDefault: true`:
-- Users see source exists
-- No file access without explicit allow rules
-- Must create allow rules for access
+
+- Users can see that the source exists.
+- There is **no** file access without explicit **allow** rules.
+- You must add allow rules for each path they should use.
+
+</div>
 
 ## Examples
 
-### Example 1: Basic Deny
+<div class="pattern-card">
 
-**Rule**: Deny user `graham` access to `/`
+### Basic deny
 
-**Result**: `graham` cannot access any files or directories
+**Rule:** Deny user `graham` access to `/`.
 
-### Example 2: Allow Specific Subfolder
+**Result:** `graham` cannot access any files or directories under that scope.
 
-**Rules**:
-- Deny user `graham` access to `/`
-- Allow user `graham` access to `/subpath`
+</div>
 
-**Result**: `graham` can only access `/subpath` and subdirectories
+<div class="pattern-card">
 
-### Example 3: Deny All with Exceptions
+### Allow a subfolder only
 
-**Rules**:
-- `denyAll` access to `/vip`
-- Allow user `admin` access to `/vip`
+**Rules:**
 
-**Result**: Only `admin` can access `/vip`
+- Deny user `graham` access to `/`.
+- Allow user `graham` access to `/subpath`.
 
-### Example 4: Departmental Access
+**Result:** `graham` can only access `/subpath` and its subdirectories.
 
-**Rules**:
-- Allow group `sales` access to `/departments/sales`
-- Allow group `engineering` access to `/departments/engineering`
-- Deny all users access to `/departments`
+</div>
 
-**Result**: Each department accesses only their folder
+<div class="pattern-card">
 
-### Example 5: Read-Only Area
+### Deny all with exceptions
 
-**Rules**:
-- Allow all users read access to `/public`
-- Deny all users write access to `/public`
-- Allow user `publisher` write access to `/public`
+**Rules:**
 
-**Result**: Everyone can read, only `publisher` can write
+- **DenyAll** on `/vip`.
+- Allow user `admin` access to `/vip`.
 
-## Rule Types
+**Result:** Only `admin` can access `/vip`.
 
-### Allow Rules
-Grant access to a path (read, write, execute, delete)
+</div>
 
-### Deny Rules
-Explicitly deny access to a path
+<div class="pattern-card">
 
-### DenyAll Rules
-Special rule denying all users (requires specific allow to override)
+### Departmental layout
 
-## Group-Based Rules
+**Rules:**
 
-Apply rules to groups for easier management:
+- Allow group `sales` access to `/departments/sales`.
+- Allow group `engineering` access to `/departments/engineering`.
+- Deny all users access to `/departments`.
 
-1. Create user groups
-2. Assign users to groups
-3. Create access rules for groups
-4. All members inherit rules
+**Result:** Each department only reaches its own folder.
 
-**Benefits**:
-- Easier to manage large user bases
-- Consistent permissions
-- Single point of updates
+</div>
 
-## Best Practices
+## Rule types
 
-### Use Least Privilege
+<div class="pattern-grid pattern-grid--rule-types">
 
-Start minimal, add as needed:
-1. Set `denyByDefault: true`
-2. Create specific allow rules
-3. Review regularly
+<div class="pattern-card rule-type-card">
 
-### Organize with Groups
+<span class="rule-type-card__icon" aria-hidden="true">✓</span>
+<div class="rule-type-card__body">
 
-Use groups instead of per-user rules:
-- Create groups: sales, engineering, admin
-- Apply rules to groups
-- Add/remove users from groups
+### Allow rules
 
-### Plan Directory Structure
+Grant access to a path (read, write, execute, delete).
 
-Design directories with access control in mind:
+</div>
+</div>
+
+<div class="pattern-card rule-type-card">
+
+<span class="rule-type-card__icon" aria-hidden="true">✕</span>
+<div class="rule-type-card__body">
+
+### Deny rules
+
+Explicitly deny access to a path.
+
+</div>
+</div>
+
+<div class="pattern-card rule-type-card">
+
+<span class="rule-type-card__icon" aria-hidden="true">⊘</span>
+<div class="rule-type-card__body">
+
+### DenyAll rules
+
+Deny **everyone** for that path until a specific **allow** overrides it.
+
+</div>
+</div>
+
+</div>
+
+## Group-based rules
+
+### Why use groups?
+
+Apply rules to groups instead of repeating them per user:
+
+1. Create user groups.
+2. Assign users to groups.
+3. Create access rules for those groups.
+4. Members inherit the group’s rules automatically.
+
+**Benefits:**
+
+- Easier management at scale.
+- Consistent permissions across a team.
+- Update rules in one place.
+
+## Best practices
+
+### Least privilege
+
+Start minimal and expand only when needed:
+
+1. Set `denyByDefault: true` on sensitive sources.
+2. Add narrow **allow** rules.
+3. Review rules periodically.
+
+### Prefer groups
+
+Avoid long lists of per-user rules:
+
+- Define groups such as sales, engineering, admin.
+- Attach access rules to groups.
+- Move users between groups as roles change.
+
+### Match directory layout
+
+Design folders with access control in mind:
 
 ```
 /departments/
@@ -162,20 +219,14 @@ Design directories with access control in mind:
   /shared/
 ```
 
-### Test Access
+### Verify access
 
-Always test after creating rules:
-- Log in as target user
-- Verify expected access
-- Check both allow and deny scenarios
+After changes, confirm behavior:
 
-## Common Patterns
-
-### OIDC
-
-OIDC authentication often uses groups to control access. It is common to set a source as {{< doclink path="advanced/source-configuration/sources/#denybydefault" text="denyByDefault" />}} and then configure rules for OIDC groups.
+- Sign in as the affected user.
+- Confirm allowed paths work as expected.
+- Confirm denied paths stay blocked.
 
 ## Troubleshooting
 
-For common issues and solutions, see the {{< doclink path="access-control/troubleshooting/" text="Troubleshooting guide" />}}.
-
+For common issues and fixes, see the {{< doclink path="access-control/troubleshooting/" text="Troubleshooting guide" />}}.

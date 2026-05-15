@@ -2,6 +2,8 @@
 title: "Logging"
 description: "Configure logging output and levels"
 icon: "description"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-04-21T20:01:57Z"
 order: 6
 ---
 
@@ -15,16 +17,7 @@ Without configuration, logs to stdout with INFO, WARNING, ERROR, and API levels 
 
 ## Configuration
 
-### Enable Debug Logging
-
-Debug logging allows for more granular info-level logs which can be very helpful if you see issues.
-
-```yaml
-server:
-  logging:
-    - output: stdout
-      levels: "info|warning|error|debug"
-```
+<div class="pattern-card">
 
 ### Log to File
 
@@ -40,6 +33,19 @@ server:
     - output: "/var/log/filebrowser.log"
       levels: "info|warning|error"
       noColors: true
+```
+
+</div>
+
+### Enable Debug Logging
+
+Debug logging allows for more granular info-level logs which can be very helpful if you see issues.
+
+```yaml
+server:
+  logging:
+    - output: stdout
+      levels: "info|warning|error|debug"
 ```
 
 ### Multiple Outputs
@@ -88,22 +94,28 @@ server:
 ## Configuration Options
 
 ### output
+
 - `stdout` or omit: Log to console
 - `"path/to/file.log"`: Log to file
 
 ### levels
+
 Specify which levels to log: `"info|warning|error|debug"` or `disabled`. Use pipe, space, or commas to separate multiple levels.
 
 ### apiLevels
+
 Same format as levels, but for API events. Use pipe (`|`) to separate multiple levels, or set to `disabled` to disable API logging.
 
 ### noColors
+
 Disable colored output (recommended for files). Default: `false`.
 
 ### json
+
 Output logs in JSON format for improved indexed logging. Default: `false`.
 
 ### utc
+
 Use UTC time in the output instead of local time. Default: `false`.
 
 ## Log Levels
@@ -118,4 +130,3 @@ Use UTC time in the output instead of local time. Default: `false`.
 
 - {{< doclink path="advanced/logging/debug-logging/" text="Enable debug logging" />}} for troubleshooting
 - {{< doclink path="configuration/server/" text="Configure server settings" />}}
-

@@ -2,8 +2,8 @@
 title: "Migrating Conditional Rules"
 description: "How to migrate from old exclude/include format to new conditional rules"
 icon: "filter_alt"
-date: "2024-10-17T10:00:00Z"
-lastmod: "2024-10-17T10:00:00Z"
+date: "2025-10-17T21:34:59Z"
+lastmod: "2026-04-21T20:01:57Z"
 ---
 
 ## Overview
@@ -433,28 +433,6 @@ Follow these steps to migrate your configuration:
   font-size: 0.9em;
 }
 
-/* Pattern Cards */
-.pattern-card {
-  margin: 1.5em 0;
-  padding: 1.5em;
-  border-left: 4px solid var(--primary);
-  background: rgba(14, 165, 233, 0.06);
-  border-radius: 4px;
-}
-
-.pattern-card h4 {
-  margin-top: 0;
-  margin-bottom: 1em;
-  color: var(--primary);
-}
-
-.pattern-card strong {
-  display: block;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
-  color: var(--textPrimary);
-}
-
 /* Benefits Grid */
 .benefits-grid {
   display: grid;
@@ -503,10 +481,6 @@ Follow these steps to migrate your configuration:
 [data-dark-mode] .comparison-card.new-format {
   border-color: #059669;
   background: rgba(5, 150, 105, 0.1);
-}
-
-[data-dark-mode] .pattern-card {
-  background: rgba(14, 165, 233, 0.12);
 }
 
 [data-dark-mode] .benefit-card {

@@ -1,7 +1,9 @@
 ---
 title: "Password Authentication"
 description: "Configure password authentication"
-icon: "text_fields_alt"
+icon: "key"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-04-20T18:55:31Z"
 ---
 
 Password authentication uses the typical `username` and `password` to login a user. Password authentication also supports **Signup**, **recaptcha**, and **Two-Factor Authentication** features.
@@ -37,22 +39,6 @@ auth:
       signup: true
 ```
 
-## With reCAPTCHA
-
-reCAPTCHA is only used when `signup: true`. All three fields are required:
-
-```yaml
-auth:
-  methods:
-    password:
-      enabled: true
-      signup: true
-      recaptcha:
-        host: "https://www.google.com/recaptcha/api.js"   # or your provider script URL
-        key: "your-site-key"
-        secret: "your-secret"   # Use environment variable
-```
-
 ## Set Admin Password
 
 If password authentication is enabled, by default filebrowser will create a default `admin` user. This admin user is uniquely able to have the password set by the config. This happens automatically on startup if you specify an admin password via environment variable or config file.
@@ -64,6 +50,10 @@ export FILEBROWSER_ADMIN_PASSWORD="secure-password"
 ```
 
 ### Config based admin password
+
+{{% alert context="warning" %}}
+If `adminPassword` is set in config, it is reset on every startup to that value—prefer `FILEBROWSER_ADMIN_PASSWORD` for production.
+{{% /alert %}}
 
 ```
 auth:
@@ -108,6 +98,7 @@ openssl rand -base64 32
 
 Add the generated key to your configuration:
 
+
 ```yaml
 auth:
   totpSecret: "your-generated-key-here"  # Use environment variable for security
@@ -120,6 +111,7 @@ auth:
 export FILEBROWSER_TOTP_SECRET="your-generated-key-here"
 ```
 {{% /alert %}}
+
 
 {{% alert context="warning" %}}
 **Important**: Changing the `totpSecret` after users have enabled 2FA will make all active users with 2FA enabled unable to sign in. An admin user would need to reset/disable user's 2FA in order for users to login -- or use CLI to reset a user's password which also resets 2FA. 

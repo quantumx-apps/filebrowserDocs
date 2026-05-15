@@ -2,6 +2,8 @@
 title: "File Watcher"
 description: "Monitor files for updates"
 icon: "preview"
+date: "2026-02-24T00:57:44Z"
+lastmod: "2026-02-24T00:57:44Z"
 ---
 
 ## About

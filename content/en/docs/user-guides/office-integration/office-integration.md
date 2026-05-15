@@ -2,6 +2,8 @@
 title: "Office Integration Guides"
 description: "Step-by-step guides for setting up OnlyOffice integration"
 icon: "menu_book"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2025-12-31T18:32:11Z"
 order: 1
 ---
 

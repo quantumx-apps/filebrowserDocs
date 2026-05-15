@@ -2,6 +2,8 @@
 title: "File Size Analyzer"
 description: "Find and visualize your largest files"
 icon: "magnification_large"
+date: "2026-02-24T00:57:44Z"
+lastmod: "2026-02-24T00:57:44Z"
 ---
 
 ## About

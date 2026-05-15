@@ -2,6 +2,8 @@
 title: "Search Options"
 description: "Profile toggle for showing or hiding advanced search filters"
 icon: "school"
+date: "2026-05-01T16:02:24Z"
+lastmod: "2026-05-01T16:02:24Z"
 ---
 
 Search options control whether the **advanced filters** appear in the search UI (file vs folder, categories, size and date limits, and preview thumbnails in results). The search field, source selector, and results list stay available either way.

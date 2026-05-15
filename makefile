@@ -57,6 +57,13 @@ doclinks-revert:
 	@echo "Reverting doclink shortcodes to relative links..."
 	npm run doclinks:revert
 
+# Set date / lastmod from git history (first commit / latest commit)
+update-publish-dates:
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo "Updating date and lastmod from git history..."
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	python3 scripts/update-publish-dates.py
+
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # VALIDATION CHECKS - Run locally or in CI/CD
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -443,6 +450,9 @@ help:
 	@echo "  make doclinks-convert - Convert relative links to doclink shortcodes"
 	@echo "  make doclinks-check   - Check doclinks without modifying"
 	@echo "  make doclinks-revert  - Revert doclinks to relative links"
+	@echo ""
+	@echo "Front matter:"
+	@echo "  make update-publish-dates - Set date/lastmod from git history"
 	@echo ""
 	@echo "Setup:"
 	@echo "  make setup            - Install all dependencies"

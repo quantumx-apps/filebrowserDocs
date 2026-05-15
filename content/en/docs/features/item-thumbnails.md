@@ -2,6 +2,8 @@
 title: "Thumbnail Previews"
 description: "Explaining how thumbnail previews are generated and configured"
 icon: "preview"
+date: "2025-12-23T00:30:21Z"
+lastmod: "2026-05-01T16:02:24Z"
 order: 2
 ---
 

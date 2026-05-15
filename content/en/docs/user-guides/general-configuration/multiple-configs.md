@@ -2,6 +2,8 @@
 title: "Multiple Config Files"
 description: "Use YAML anchoring for modular configuration"
 icon: "inventory_2"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2025-11-17T16:32:34Z"
 ---
 
 Use YAML anchoring with multi-file configuration for modular, reusable configurations.
