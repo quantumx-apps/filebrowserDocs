@@ -172,61 +172,6 @@ Deny **everyone** for that path until a specific **allow** overrides it.
 
 </div>
 
-## Group-based rules
-
-### Why use groups?
-
-Apply rules to groups instead of repeating them per user:
-
-1. Create user groups.
-2. Assign users to groups.
-3. Create access rules for those groups.
-4. Members inherit the group’s rules automatically.
-
-**Benefits:**
-
-- Easier management at scale.
-- Consistent permissions across a team.
-- Update rules in one place.
-
-## Best practices
-
-### Least privilege
-
-Start minimal and expand only when needed:
-
-1. Set `denyByDefault: true` on sensitive sources.
-2. Add narrow **allow** rules.
-3. Review rules periodically.
-
-### Prefer groups
-
-Avoid long lists of per-user rules:
-
-- Define groups such as sales, engineering, admin.
-- Attach access rules to groups.
-- Move users between groups as roles change.
-
-### Match directory layout
-
-Design folders with access control in mind:
-
-```
-/departments/
-  /sales/
-  /engineering/
-  /hr/
-  /shared/
-```
-
-### Verify access
-
-After changes, confirm behavior:
-
-- Sign in as the affected user.
-- Confirm allowed paths work as expected.
-- Confirm denied paths stay blocked.
-
 ## Troubleshooting
 
 For common issues and fixes, see the {{< doclink path="access-control/troubleshooting/" text="Troubleshooting guide" />}}.
