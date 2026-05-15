@@ -39,7 +39,7 @@ If you need group claims, add them to `scopes` (for example `groups`) per your p
 | `scopes` | Requested scopes |
 | `userIdentifier` | User field (`preferred_username`, `email`, `username`, `phone`) |
 | `adminGroup` | OIDC group name for admin rights |
-| `userGroups` | List of allowed groups (empty = allow all) - requires v1.3.x+ |
+| `userGroups` | List of allowed groups (empty = allow all) |
 | `groupsClaim` | JSON field for groups (default: `groups`) |
 | `disableVerifyTLS` | Disable TLS verification (testing only!) |
 | `logoutRedirectUrl` | Provider logout URL |
@@ -153,10 +153,6 @@ auth:
 ### Restrict login to Specific Groups
 
 <div class="pattern-card">
-
-{{% alert context="info" %}}
-requires version `1.3.x`+
-{{% /alert %}}
 
 Only allow users in specific OIDC groups to access FileBrowser:
 
