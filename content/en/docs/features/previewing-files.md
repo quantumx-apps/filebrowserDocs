@@ -2,6 +2,8 @@
 title: "Previewing Files"
 description: "View and edit your files directly in the browser"
 icon: "preview"
+date: "2026-02-27T21:50:04Z"
+lastmod: "2026-05-01T16:02:24Z"
 ---
 
 FileBrowser includes powerful built-in viewers for a wide range of file types, letting you preview and edit content without downloading files to your device.
@@ -40,14 +42,14 @@ The **Image Viewer** displays photos and graphics with smooth navigation:
 **Supported formats:**
 - whatever your browser's supported formats are
 - `.heic`, `.heif` - viewable natively on Safari; other browsers require media integration
-- Raw formats: `.raw`, `.cr2`, `.nef`, `.arw`, `.dng`, `.orf`, and others (requires v1.3.0+)
+- Raw formats: `.raw`, `.cr2`, `.nef`, `.arw`, `.dng`, `.orf`, and others
 
 {{% alert context="info" %}}
 **HEIC/HEIF Support:** These Apple image formats work natively in Safari. For other browsers, enable HEIC conversion in the {{< doclink path="integrations/media/configuration/#format-support" text="media integration" />}}.
 {{% /alert %}}
 
 {{% alert context="success" %}}
-**Raw Image Support (v1.3.0+):** Camera raw formats (CR2, NEF, ARW, DNG, etc.) are supported as long as the file contains an embedded preview image, which is standard for most modern cameras.
+**Raw Image Support:** Camera raw formats (CR2, NEF, ARW, DNG, etc.) are supported as long as the file contains an embedded preview image, which is standard for most modern cameras.
 {{% /alert %}}
 
 **Features:**
@@ -135,11 +137,6 @@ The **Document Viewer** provides basic preview for Microsoft Office files:
 {{% /alert %}}
 
 ### 3D Models
-
-{{% alert context="success" %}}
-**Requires v1.3.0+**.
-{{% /alert %}}
-
 
 The **3D Model Viewer** lets you inspect and rotate 3D objects:
 

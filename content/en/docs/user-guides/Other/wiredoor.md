@@ -2,6 +2,8 @@
 title: "OnlyOffice integration with Wiredoor"
 description: "A basic working example on setting up OnlyOffice and FileBrowser with Wiredoor"
 icon: "deployed_Code"
+date: "2026-01-30T13:20:14Z"
+lastmod: "2026-03-10T00:10:42Z"
 ---
 
 This guide shows how to integrate OnlyOffice and FileBrowser via Wiredoor. Wiredoor is a self-hosted ingress-as-a-service platform that lets you route internet traffic to internal apps, IoT, Kubernetes and more using a reverse VPN powered by WireGuard. Below steps are derived from this [discussion](https://github.com/orgs/wiredoor/discussions/110).

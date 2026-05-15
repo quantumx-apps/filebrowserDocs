@@ -2,6 +2,8 @@
 title: "Sidebar Customization"
 description: "Sidebar Link usage and examples"
 icon: "read_more"
+date: "2025-12-23T00:30:21Z"
+lastmod: "2026-05-01T16:02:24Z"
 ---
 
 Starting in **v1.1.x**, the sidebar is fully customizable per user. This means a user can configure their sidebar with their own links, icons, and order it how they want.

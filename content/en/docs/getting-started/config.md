@@ -2,6 +2,8 @@
 title: "Configuration Files"
 description: "Understanding and using configuration files in FileBrowser Quantum"
 icon: "settings"
+date: "2025-10-23T00:50:09Z"
+lastmod: "2026-04-21T20:01:57Z"
 order: 6
 ---
 
@@ -61,6 +63,13 @@ docker run -d \
 ```
 
 ### Using Docker Compose
+
+<div class="pattern-card">
+
+{{% alert context="info" %}}
+Mount a host directory on `/home/filebrowser/data` if you want config, database, and cache to persist across container restarts (see {{< doclink path="getting-started/docker/" text="Docker setup" />}}).
+{{% /alert %}}
+
 ```yaml
 services:
   filebrowser:
@@ -72,6 +81,8 @@ services:
     image: gtstef/filebrowser:stable
     restart: unless-stopped
 ```
+
+</div>
 
 ## Basic Configuration Example
 

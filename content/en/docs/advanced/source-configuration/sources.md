@@ -2,8 +2,8 @@
 title: "Source Configuration"
 description: "Understanding and configuring sources in FileBrowser Quantum"
 icon: "storage"
-date: "2024-10-17T10:00:00Z"
-lastmod: "2024-10-17T10:00:00Z"
+date: "2025-10-17T21:34:59Z"
+lastmod: "2026-05-04T20:29:44Z"
 order: 1
 ---
 
@@ -232,12 +232,9 @@ Users may still browse files with reduced functionality.
 
 ## Common Configuration Patterns
 
-<div class="pattern-grid">
+### Single shared source
 
-<div class="pattern-card">
-
-### Single Shared Source
-**Use case:** Simple shared file access
+**Use case:** Simple shared file access.
 
 ```yaml
 sources:
@@ -246,12 +243,9 @@ sources:
       defaultEnabled: true
 ```
 
-</div>
+### Multi-user with personal directories
 
-<div class="pattern-card">
-
-### Multi-User with Personal Directories
-**Use case:** Each user gets private space
+**Use case:** Each user gets private space.
 
 ```yaml
 sources:
@@ -261,12 +255,9 @@ sources:
       defaultUserScope: "/"
 ```
 
-</div>
+### Departmental sources
 
-<div class="pattern-card">
-
-### Departmental Sources
-**Use case:** Multiple departments with access control
+**Use case:** Multiple departments with access control.
 
 ```yaml
 sources:
@@ -278,12 +269,9 @@ sources:
 
 Use access rules to control who sees what.
 
-</div>
+### Mixed public / private
 
-<div class="pattern-card">
-
-### Mixed Public/Private
-**Use case:** Some sources public, others restricted
+**Use case:** Some sources public, others restricted.
 
 ```yaml
 sources:
@@ -295,10 +283,6 @@ sources:
       denyByDefault: true
       private: true
 ```
-
-</div>
-
-</div>
 
 ## Best Practices
 
@@ -313,54 +297,3 @@ sources:
 - {{< doclink path="access-control/access-control-overview/" text="Access Control" />}}
 - {{< doclink path="features/indexing/" text="Understanding Indexing" />}}
 - {{< doclink path="reference/fullconfig/" text="Full Config Reference" />}}
-
-<style>
-.pattern-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5em;
-  margin: 2em 0;
-}
-
-.pattern-card {
-  padding: 1.5em;
-  border: 1px solid var(--gray-300);
-  border-radius: 8px;
-  background: var(--surfaceSecondary);
-}
-
-.pattern-card h3 {
-  margin-top: 0;
-  margin-bottom: 0.5em;
-  color: var(--primary);
-  font-size: 1.1em;
-}
-
-.pattern-card p {
-  margin: 0.5em 0 1em 0;
-  font-size: 0.9em;
-  color: var(--textSecondary);
-}
-
-.pattern-card pre {
-  margin: 0;
-}
-
-/* Dark mode support */
-[data-dark-mode] .config-section {
-  background: rgba(14, 165, 233, 0.12);
-}
-
-[data-dark-mode] .pattern-card {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: var(--gray-700);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .pattern-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
-

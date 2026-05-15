@@ -2,9 +2,9 @@
 title: "Self-signed certificates with Traefik"
 description: "Internal HTTPS for onlyoffice using self-signed certificates with traefik"
 icon: "lock"
+date: "2025-12-22T20:47:25Z"
+lastmod: "2026-03-10T00:10:42Z"
 order: 4
-date: "2025-09-20"
-lastmod: "2025-12-14"
 ---
 
 Internal HTTPS setup for onlyoffice using self-signed certificates with traefik.

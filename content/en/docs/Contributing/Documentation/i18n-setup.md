@@ -2,6 +2,8 @@
 title: "Setting Up i18n for Documentation"
 description: "Step-by-step guide to enable multilingual support in your local docs"
 icon: "language"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2025-10-09T00:54:16Z"
 ---
 
 # Setting Up i18n for Documentation

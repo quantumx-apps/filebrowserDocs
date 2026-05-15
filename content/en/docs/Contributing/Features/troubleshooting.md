@@ -2,6 +2,8 @@
 title: "Troubleshooting"
 description: "Common development issues and solutions"
 icon: "bug_report"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2025-10-09T00:54:16Z"
 ---
 
 Common issues and solutions for FileBrowser development.

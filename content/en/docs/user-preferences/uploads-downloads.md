@@ -2,6 +2,8 @@
 title: "Uploads & Downloads"
 description: "Upload concurrency, chunk sizes for uploads and downloads, and clearing finished uploads"
 icon: "school"
+date: "2026-05-01T16:02:24Z"
+lastmod: "2026-05-01T16:02:24Z"
 ---
 
 These settings control how uploads run (parallelism and chunking), how large downloads are split into chunks to avoid timeouts, and whether **Clear completed** removes every finished upload—including errors, pauses, and conflicts—not only successes.

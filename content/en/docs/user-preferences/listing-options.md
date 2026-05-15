@@ -2,6 +2,8 @@
 title: "Listing Options"
 description: "Explaining the listing options in user profile settings"
 icon: "school"
+date: "2026-05-01T16:02:24Z"
+lastmod: "2026-05-01T16:02:24Z"
 ---
 
 Listing options control how items behave in the file listing and related menus: confirmations, dates, visibility of hidden files, quick actions, archive cleanup, and context-menu entries. Users change them under **Settings → Profile** in the **Listing options** section (when settings are not disabled for the account).

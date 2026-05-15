@@ -2,6 +2,8 @@
 title: "Which version should I use?"
 description: "Understanding the differences between stable and beta releases"
 icon: "numbers"
+date: "2025-10-28T22:14:01Z"
+lastmod: "2026-01-30T13:20:14Z"
 order: 5
 ---
 

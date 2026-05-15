@@ -2,6 +2,8 @@
 title: "Normal Shares"
 description: "Standard shares with viewing capabilities"
 icon: "folder_shared"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-02-04T23:33:08Z"
 order: 3
 ---
 

@@ -2,6 +2,8 @@
 title: "API Reference"
 description: "REST API documentation"
 icon: "api"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-02-05T00:01:15Z"
 ---
 
 FileBrowser provides a comprehensive REST API for programmatic access.

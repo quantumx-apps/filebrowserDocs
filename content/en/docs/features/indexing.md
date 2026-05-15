@@ -2,8 +2,8 @@
 title: "Indexing Overview"
 description: "Understanding FileBrowser Quantum's SQLite-based indexing system and scan strategies"
 icon: "database"
-date: "2024-01-15T10:00:00Z"
-lastmod: "2026-01-19T12:00:00Z"
+date: "2026-01-19T19:30:07Z"
+lastmod: "2026-02-05T00:30:11Z"
 order: 3
 ---
 

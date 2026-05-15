@@ -1,76 +1,78 @@
 ---
 title: "Access Control Overview"
-description: "How access control rules work in FileBrowser Quantum"
+description: "User permissions, source access, and path-based access rules in FileBrowser Quantum"
 icon: "security"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-01-30T13:20:14Z"
 order: 1
 ---
 
-# File Browser Access Control Rules
+# Access control in FileBrowser Quantum
+
+FileBrowser combines three separate ideas. Together they decide whether someone can see a source, open a path, and perform actions there:
+
+1. **User permissions** — What the user is generally allowed to do in the app (for example admin, API usage, creating shares, modifying files). These apply **across** sources and are not tied to individual folders.
+2. **Source-level access** — Whether the user even **has** a given source (scopes and defaults such as {{< doclink path="configuration/sources/" text="source configuration" />}}, including `defaultEnabled` and `denyByDefault`). This is **broad**: it gates the whole source or the user’s subtree under it, not individual paths inside the tree.
+3. **Access control rules** — **Additional, path-specific** allow/deny rules for directories under a source, optionally scoped to users or groups. Use these when you need fine control (“this folder, for this user or group”) rather than changing global user capabilities or whole-source defaults.
+
+Access rules are meant to refine **which paths** under a source are reachable once the user already has that source and sufficient **user permissions** for the action (read, modify, share, and so on).
 
 {{% alert context="info" %}}
 Access rules for shares apply based on the user that created the share.
 {{% /alert %}}
 
-This document explains how access control rules work in FileBrowser Quantum, including how rules are inherited and how they can be overridden.
-
 {{% alert context="warning" %}}
-FileBrowser Quantum access rules differ entirely from those in the original FileBrowser, and the rules do not carry over and need to be recreated if migrating from the OG filebrowser.
+FileBrowser Quantum access rules differ entirely from those in the original FileBrowser. Rules do not carry over when migrating from the legacy project and must be recreated.
 {{% /alert %}}
+
+**Keep reading this page** for how path-based rules are evaluated, how they combine with `denyByDefault`, and worked examples. For the full rule-type reference and precedence details, see {{< doclink path="access-control/rules/" text="Access rules" />}}.
 
 ## Source default behavior
 
 A user's access to files depends on:
 
-1. **User scope**: User's won't see any info or access for a source without adding a source scope for the user. You must enable a user to have access to a source. This can be default for new users via `defaultEnabled: true` in source config, or by manually adding a source for a user via user management.
-2. **DenyByDefault config**: When a user has a source scope, by default all files are accessible unless `denyByDefault: true` is set. If `denyByDefault` is set, a user can still see metadata about the source, but won't have access to browse or modify files.
-3. **Access rules**: The "user/group" access rule logic applies as mentioned below.
+1. **User scope** — Users do not see or use a source until it is part of their scopes. New users can get sources automatically when {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled is true for that source" />}}, or an admin can assign sources in user management.
+2. **`denyByDefault`** — With a source scope, paths are normally reachable unless the source sets `denyByDefault: true`. Then the user can still see that the source exists, but file access requires explicit **allow** rules for the paths they need.
+3. **Access rules** — Per-path allow/deny (and deny-all) rules for users or groups, as described below.
 
-## How Access Rules Work
+## How access rules work
 
-The Directory-level Access control is managed through a system of "allow" and "deny" rules that are created based on users or groups for specific directories. When a user tries to access a file or directory, the system checks for rules in the following order:
+Directory-level control uses **allow** and **deny** rules attached to paths under a source. When someone accesses a file or directory, evaluation proceeds in this order:
 
-1.  **Direct Path Check:** The system first looks for rules that apply directly to the file or directory being accessed.
-2.  **Recursive Parent Directory Check:** If no rules are found for the direct path, the system recursively checks the parent directories, moving up the directory tree until it finds a matching rule or reaches the root.
-3.  **Default Behavior:** If no rules are found all the way up to the root, access is granted by default unless `denyByDefault` is set for the source config.
+1. **Direct path** — Rules that match the exact path are considered first.
+2. **Parent paths** — If nothing applies directly, parent directories are walked toward the root until a matching rule appears or the tree ends.
+3. **Default** — If no rule applies along that chain, access follows the source default (allow unless `denyByDefault` is enabled).
 
-## Rule Precedence and Overriding
+## Rule precedence and overriding
 
-The more specific a rule is, the higher its precedence. This means a rule on a subdirectory will always override a rule on its parent directory.
+More specific paths override broader ones: a rule on `/folder/subfolder` wins over a rule on `/folder`.
 
-### Allow Rules take priority
-
-Allow rules override deny rules.
+**Allow** overrides **deny** when both would apply.
 
 ## Examples
 
-### Example 1: Basic Deny
+### Example 1: Basic deny
 
--   **Rule:** Deny user `graham` access to `/`.
--   **Result:** `graham` cannot access any files or directories.
+- **Rule:** Deny user `graham` access to `/`.
+- **Result:** `graham` cannot access any files or directories under that scope.
 
-### Example 2: Overriding a Deny with an Allow
+### Example 2: Overriding a deny with an allow
 
--   **Rule 1:** Deny user `graham` access to `/`.
--   **Rule 2:** Allow user `graham` access to `/subpath`.
--   **Result:** `graham` can only access the `/subpath` directory and its subdirectories. Access to all other directories is denied.
+- **Rule 1:** Deny user `graham` access to `/`.
+- **Rule 2:** Allow user `graham` access to `/subpath`.
+- **Result:** `graham` can only use `/subpath` and its subdirectories.
 
-### Example 3: Deny All rule as blacklist
+### Example 3: Deny-all as a blacklist
 
--   **Rule:** `denyAll` access to `/vip`.
--   **Result:**
-    -   no users can access `/vip` unless you add an allow rule for a specific user (overrides any deny)
+- **Rule:** Deny-all on `/vip`.
+- **Result:** No one can access `/vip` until an explicit **allow** rule overrides it for a given user or group.
 
 ## Configuration
 
-Access rules are configured through the admin interface or API. You can:
+Access rules are configured in the admin UI or via the API: per user or group, per directory, allow/deny/deny-all, with more specific paths overriding broader ones.
 
-- Create rules for specific users or groups
-- Set rules for specific directories
-- Use allow or deny rules
-- Override rules with more specific ones
+## Next steps
 
-## Next Steps
-
-- {{< doclink path="access-control/rules/" text="Access Rules" />}}
+- {{< doclink path="access-control/rules/" text="Access rules" />}}
 - {{< doclink path="access-control/troubleshooting/" text="Troubleshooting" />}}
-- {{< doclink path="configuration/users/" text="User Management" />}}
+- {{< doclink path="configuration/users/" text="User management" />}}

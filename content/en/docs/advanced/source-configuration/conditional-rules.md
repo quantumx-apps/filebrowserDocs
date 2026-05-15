@@ -2,8 +2,8 @@
 title: "Conditional Rules"
 description: "Control which files and folders are indexed using conditional rules"
 icon: "rule"
-date: "2024-10-17T10:00:00Z"
-lastmod: "2025-01-27T10:00:00Z"
+date: "2025-10-17T21:34:59Z"
+lastmod: "2026-05-04T20:29:44Z"
 ---
 
 ## Overview
@@ -335,54 +335,3 @@ sources:
 - {{< doclink path="advanced/source-configuration/sources/" text="Source Configuration" />}}
 - {{< doclink path="features/indexing/" text="Understanding Indexing" />}}
 - {{< doclink path="user-guides/general-configuration/exclusion-rules/" text="Migrating from Old Format" />}}
-
-<style>
-.pattern-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5em;
-  margin: 2em 0;
-}
-
-.pattern-card {
-  padding: 1.5em;
-  border: 1px solid var(--gray-300);
-  border-radius: 8px;
-  background: var(--surfaceSecondary);
-}
-
-.pattern-card h4 {
-  margin-top: 0;
-  margin-bottom: 1em;
-  color: var(--primary);
-  font-size: 1.1em;
-}
-
-.pattern-card p {
-  margin: 1em 0 0 0;
-  font-size: 0.9em;
-  color: var(--textSecondary);
-}
-
-.pattern-card pre {
-  margin: 0.5em 0;
-}
-
-/* Dark mode support */
-[data-dark-mode] .rule-section {
-  background: rgba(14, 165, 233, 0.12);
-}
-
-[data-dark-mode] .pattern-card {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: var(--gray-700);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .pattern-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
-

@@ -2,6 +2,8 @@
 title: "Integrations Overview"
 description: "Enable media and office document features"
 icon: "extension"
+date: "2025-10-08T14:59:30Z"
+lastmod: "2026-01-30T13:20:14Z"
 ---
 
 Extend FileBrowser with powerful integrations for media and documents.
