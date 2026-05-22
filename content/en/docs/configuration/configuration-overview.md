@@ -12,6 +12,7 @@ Complete configuration guide for all aspects of FileBrowser Quantum.
 ## Configuration Topics
 
 - {{< doclink path="configuration/server/" text="Server Settings" />}} - Port, address, database, caching
+- {{< doclink path="configuration/http/" text="HTTP Settings" />}} - Trusted proxy headers and auth rate limiting
 - {{< doclink path="configuration/sources/" text="Sources" />}} - File system source configuration
 - {{< doclink path="configuration/authentication/" text="Authentication" />}} - Auth methods (password, OIDC, proxy)
 - {{< doclink path="configuration/users/" text="Users" />}} - User management and permissions

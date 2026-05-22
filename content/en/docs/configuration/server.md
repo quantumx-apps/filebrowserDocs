@@ -35,6 +35,10 @@ server:
 **Docker Healthcheck**: If you change the port from the default (`80`), you must update the Docker healthcheck in your `docker-compose.yaml` to match the new port. See {{< doclink path="getting-started/docker/#healthcheck-configuration" text="Docker healthcheck configuration" />}} for details.
 {{% /alert %}}
 
+{{% alert context="info" %}}
+**Authentication rate limiting**: Login and other auth routes are rate-limited by default. If FileBrowser sits behind a reverse proxy, configure `http.trustedHeaders` so per-IP limits apply to real client addresses — not the proxy. See {{< doclink path="configuration/http/" text="HTTP settings" />}} and {{< doclink path="getting-started/reverse-proxy/#client-ip-and-trusted-headers" text="reverse proxy: client IP" />}}.
+{{% /alert %}}
+
 {{% alert context="warning" %}}
 **Privileged ports**: For ports **below 1024**, Linux only allows a non-root process to bind if it has the **`NET_BIND_SERVICE`** capability (or `net.ipv4.ip_unprivileged_port_start` is lowered). **Rootful** Docker Engine / Docker Desktop usually includes `NET_BIND_SERVICE` in the default profile, so the non-root `filebrowser` user may still bind `80`/`443` there. **`bind: permission denied` is more typical with rootless engines** (Docker rootless, Podman rootless).
 {{% /alert %}}
@@ -326,6 +330,7 @@ server:
 
 ## Next Steps
 
+- {{< doclink path="configuration/http/" text="HTTP settings" />}} — trusted proxy headers and auth rate limiting
 - {{< doclink path="configuration/sources/" text="Configure sources" />}}
 - {{< doclink path="configuration/authentication/" text="Set up authentication" />}}
 - {{< doclink path="configuration/logging/" text="Configure logging" />}}

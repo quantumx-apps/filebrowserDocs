@@ -64,13 +64,40 @@ All reverse proxy configurations must include these headers:
 ```yaml
 # Required headers for FileBrowser Quantum
 proxy_set_header Host $host;                                  # Cookie domain scoping
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # IP chain
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # Client IP chain
 proxy_set_header X-Forwarded-Proto $scheme;                   # HTTP/HTTPS protocol
 ```
 
 {{% alert context="info" %}}
 **Note**: FileBrowser Quantum also supports `X-Forwarded-Host` as an alternative to the `Host` header for cookie domain scoping.
 {{% /alert %}}
+
+### Client IP and trusted headers
+
+{{% alert context="info" %}}
+This applies to version `v1.4.x` and later
+{{% /alert %}}
+
+FileBrowser uses the client IP for **authentication rate limiting** and **failed-login lockout**. When traffic passes through a reverse proxy, the connection address seen by FileBrowser is the proxy — not the end user — unless you forward the real client IP and tell FileBrowser to trust those headers.
+
+Also, the IP that shows in logging will use the value from the proxy if these are set.
+
+Configure your proxy to set `X-Forwarded-For` (recommended) or `X-Real-IP`, then enable the same headers in FileBrowser:
+
+```yaml
+http:
+  trustedHeaders:
+    - X-Forwarded-For
+    - X-Real-IP
+```
+
+Without `http.trustedHeaders`, every user appears to share the proxy's IP. Rate limits and lockouts then apply to all clients behind that proxy collectively, not per user.
+
+{{% alert context="warning" %}}
+Only add headers to `http.trustedHeaders` when FileBrowser is behind a proxy that controls these headers. If users can reach FileBrowser without going through your proxy, they can spoof `X-Forwarded-For` and bypass per-IP limits.
+{{% /alert %}}
+
+See {{< doclink path="configuration/http/#trustedheaders" text="HTTP settings: trustedHeaders" />}} and {{< doclink path="configuration/http/#built-in-authentication-rate-limiting" text="built-in authentication rate limiting" />}} for details.
 
 ### FileBrowser Configuration
 
@@ -80,6 +107,11 @@ Configure FileBrowser to work with your reverse proxy:
 server:
   baseURL: "/files"                          # Base path for reverse proxy
   externalUrl: "https://files.example.com/files"   # External URL (used when generated public links)
+
+http:
+  trustedHeaders:
+    - X-Forwarded-For
+    - X-Real-IP
 ```
 
 ## nginx Configuration
@@ -342,6 +374,7 @@ http:
 
 ## Next Steps
 
+- {{< doclink path="configuration/http/" text="HTTP Settings" />}} - Trusted headers and auth rate limiting
 - {{< doclink path="configuration/authentication/proxy/" text="Proxy Authentication" />}} - Configure header-based authentication
 - {{< doclink path="integrations/office/troubleshooting/" text="Office Integration" />}} - OnlyOffice behind reverse proxy
 - {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} - Filebrowser + OnlyOffice behind traefik reverse proxy.
