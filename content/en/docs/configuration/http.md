@@ -2,8 +2,8 @@
 title: "HTTP Settings"
 description: "Configure HTTP options including trusted proxy headers and auth rate limiting"
 icon: "http"
-date: "2026-05-21T00:00:00Z"
-lastmod: "2026-05-21T00:00:00Z"
+date: "2026-05-22T15:32:14Z"
+lastmod: "2026-05-22T15:40:53Z"
 order: 4
 ---
 

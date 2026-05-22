@@ -3,7 +3,7 @@ title: "Server Settings"
 description: "Configure server options"
 icon: "dns"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-05-01T16:02:24Z"
+lastmod: "2026-05-22T15:40:53Z"
 order: 2
 ---
 
