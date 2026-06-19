@@ -10,12 +10,88 @@ lastmod: "2026-06-18T02:26:44Z"
 You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/filebrowser/releases)
 {{% /alert %}}
 
+---
+
+## v1.4.0-stable
+
+This release is based on {{< doclink path="changelog/beta/#v144-beta" text="v1.4.4-beta" />}}!
+
+**Security**:
+ - [High] Path traversal in subtitle handler allows any authenticated user to read arbitrary files ([GHSA-vvp7-h4fj-m28w](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-vvp7-h4fj-m28w)).
+ - [Moderate] Add Rate Limiting on Authentication Endpoint Enables Brute Force Attacks ([GHSA-r4v7-6wcg-ghj5](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-r4v7-6wcg-ghj5)).
+
+**New Features**:
+ - Pinned files/folders ([pr #2510](https://github.com/gtsteffaniak/filebrowser/pull/2510)) ([pr #2396](https://github.com/gtsteffaniak/filebrowser/pull/2396)).
+ - Markdown Image relative reference support ([issue #2355](https://github.com/gtsteffaniak/filebrowser/issues/2355)).
+ - Add an option to create a new folder for unarchiving ([issue #2338](https://github.com/gtsteffaniak/filebrowser/issues/2338)).
+ - Read-only source configuration via `source.config.readOnly: true` ([issue #2438](https://github.com/gtsteffaniak/filebrowser/issues/2438)).
+ - Add Passkey (WebAuthn) support for passwordless authentication ([issue #2287](https://github.com/gtsteffaniak/filebrowser/issues/2287)) ([pr #2379](https://github.com/gtsteffaniak/filebrowser/pull/2379)) -- thanks [@juansoler](https://github.com/juansoler).
+ - Lyrics support for audio files ([pr #2360](https://github.com/gtsteffaniak/filebrowser/pull/2360)):
+   - Updated UI for audio previews!
+   - New panel for desktop, on mobile lyrics are inline (below the art).
+   - Supports synced lyrics, the player gets syncronized in UI.
+   - Supports embedded lyrics (`ID3`, `USLT`, `flac`, `ogg`, `clyr`) and sidecar `.lrc` files with the same name as the audio file.
+   - The existent `Q` shortcut in audio files will toggle the new panel visibility.
+   - Added `E` shortcut to change between tabs of the new panel if it's open.
+ - API log filtering support via `apiFilter` option for logging.
+   - Regex filter that excludes matching full API paths from being logged. (eg. `/user\?id\=self`) Defaults to `^/health|^/favicon.ico|^/static|^/public/static`.
+   - Add config option to disable `/health` endpoint logging ([issue #2291](https://github.com/gtsteffaniak/filebrowser/issues/2291)).
+ - More shortcuts ([pr #2300](https://github.com/gtsteffaniak/filebrowser/pull/2300)).
+   - `CTRL+F1` switch to normal view.
+   - `CTRL+F2` switch to gallery view.
+   - `CTRL+F3` switch to list view.
+   - `Double click` on empty space to select all items.
+ - Option to hide certain files in UI by extension ([pr #2403](https://github.com/gtsteffaniak/filebrowser/pull/2403)) ([issue #2277](https://github.com/gtsteffaniak/filebrowser/issues/2277)).
+ - Additional search features:
+   - Wildcard search similar to regex, but limited to sqlite GLOB syntax ([issue #769](https://github.com/gtsteffaniak/filebrowser/issues/769)).
+   - Advanced search tool that shows all results in a listing thats sortable and actionable like a normal listing ([issue #1051](https://github.com/gtsteffaniak/filebrowser/issues/1051)).
+   - Advanced search supports multiple custom scopes per search.
+   - Multiple search terms with `AND` or `OR` logic support.
+
+**Notes**:
+ - Added fallback to show text in notification if copy fails ([pr #2517](https://github.com/gtsteffaniak/filebrowser/pull/2517)).
+ - Added `alt`+`arrow up` shortcut as alias of `backspace` to go into parent directory ([issue #2501](https://github.com/gtsteffaniak/filebrowser/issues/2501)) ([pr #2521](https://github.com/gtsteffaniak/filebrowser/pull/2521)).
+ - Added `alt`+`arrow down` shortcut as alias of `enter` to open files in Listing View ([issue #2501](https://github.com/gtsteffaniak/filebrowser/issues/2501)) ([pr #2521](https://github.com/gtsteffaniak/filebrowser/pull/2521)).
+ - Updated help menu with better translations.
+ - Migrate `vue-i18n` to `v11` + lazy load languages ([pr #2504](https://github.com/gtsteffaniak/filebrowser/pull/2504)) ([issue #2472](https://github.com/gtsteffaniak/filebrowser/issues/2472)).
+ - Migrate `eslint` to `v10` + lint fix ([pr #2488](https://github.com/gtsteffaniak/filebrowser/pull/2488)) ([issue #2459](https://github.com/gtsteffaniak/filebrowser/issues/2459)).
+ - Improved preview cancellation to improve performance when navigating UI.
+ - Auth rate limiting can be disabled via `auth.disableRateLimit`.
+ - Updated share hash middleware ([pr #2443](https://github.com/gtsteffaniak/filebrowser/pull/2443)).
+ - Updated source info popup to include private and readOnly properties.
+ - Enhanced indexing scheduler which doesn't wake the disk as often.
+ - New API route `media/lyrics` used to fetch and parse lyrics (embedded or from `.lrc` sidecar) ([pr #2360](https://github.com/gtsteffaniak/filebrowser/pull/2360)).
+ - Swiping down gesture in fullscreen videos exit fullscreen instead of close preview ([pr #2360](https://github.com/gtsteffaniak/filebrowser/pull/2360)).
+ - Improved styles for path selection and tables.
+ - Improved style of drag and drop into listing view ([pr #2407](https://github.com/gtsteffaniak/filebrowser/pull/2407)).
+ - Edit Sidebar links has new `show tools in sidebar` toggle and all users have this enabled by default. can be disabled via for new users `userDefaults.sidebar.showTools: false`.
+ - Update user defaults ordering ([issue #1140](https://github.com/gtsteffaniak/filebrowser/issues/1140)).
+ - Save view modes and sizes into local storage instead of db ([issue #2301](https://github.com/gtsteffaniak/filebrowser/issues/2301)) ([pr #2300](https://github.com/gtsteffaniak/filebrowser/pull/2300)).
+
+**BugFixes**:
+ - Fix folder previews issue ([pr #2487](https://github.com/gtsteffaniak/filebrowser/pull/2487)) ([issue #2492](https://github.com/gtsteffaniak/filebrowser/issues/2492)).
+ - Fix accidental exit on images while using gestures ([pr #2508](https://github.com/gtsteffaniak/filebrowser/pull/2508)).
+ - Socket field in `config.yaml` is ignored ([issue #2497](https://github.com/gtsteffaniak/filebrowser/issues/2497)).
+ - Fix keep opened file selected after closing its preview [@anpryl](https://github.com/anpryl) ([pr #2515](https://github.com/gtsteffaniak/filebrowser/pull/2515)).
+ - Logout from share page now redirects to the share instead of `/Login` again ([pr #2445](https://github.com/gtsteffaniak/filebrowser/pull/2445)).
+ - `This location cannot be reached` error when navigating with FileTree in shares ([pr #2445](https://github.com/gtsteffaniak/filebrowser/pull/2445)).
+ - Fix FileTree rename and move actions in previews ([pr #2445](https://github.com/gtsteffaniak/filebrowser/pull/2445)).
+ - Delete prompt not showing date and thumbnails in some previews ([pr #2445](https://github.com/gtsteffaniak/filebrowser/pull/2445)).
+ - Fix path slash issue on windows ([pr #2451](https://github.com/gtsteffaniak/filebrowser/pull/2451)) ([issue #2433](https://github.com/gtsteffaniak/filebrowser/issues/2433)) ([issue #2419](https://github.com/gtsteffaniak/filebrowser/issues/2419)).
+ - Always force url rewrite for onlyoffice internal URL. Fixes Error saving with OnlyOffice ([issue #2450](https://github.com/gtsteffaniak/filebrowser/issues/2450)).
+ - Overriding a Deny with an Allow not working ([issue #2405](https://github.com/gtsteffaniak/filebrowser/issues/2405)).
+ - Blue overlay when using gestures in video files on mobile ([pr #2360](https://github.com/gtsteffaniak/filebrowser/pull/2360)).
+ - Playback queue wasn't updating when changing of folder ([pr #2360](https://github.com/gtsteffaniak/filebrowser/pull/2360)).
+ - Navigate close settings shows "something went wrong" ([issue #2047](https://github.com/gtsteffaniak/filebrowser/issues/2047)).
+
+**Full Changelog**: [v1.3.3-stable...v1.4.0-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.3.3-stable...v1.4.0-stable) -- **Release:**: [v1.4.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.0-stable).
+
 ## v1.3.3-stable
 
- **Security**:
+**Security**:
  - [Critical] Path traversal in public share PATCH allows file ops outside shared directory -- thanks [@fg0x0](https://github.com/fg0x0) and [@Revanth011](https://github.com/Revanth011) for reporting ([GHSA-qqqm-5547-774x](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-qqqm-5547-774x)).
 
- **Notes**:
+**Notes**:
  - Updated share hash middleware ([pr #2443](https://github.com/gtsteffaniak/filebrowser/pull/2443)).
  - Fix path slash issue on windows ([pr #2451](https://github.com/gtsteffaniak/filebrowser/pull/2451)) ([issue #2433](https://github.com/gtsteffaniak/filebrowser/issues/2433)) ([issue #2419](https://github.com/gtsteffaniak/filebrowser/issues/2419)).
 
@@ -25,7 +101,7 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 ## v1.3.2-stable
 
- **Security**:
+**Security**:
  - Fix critical: unauthenticated user can view source info ([GHSA-3jmg-p96m-m328](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-3jmg-p96m-m328)).
 
 **Full Changelog**: [v1.3.1-stable...v1.3.2-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.3.1-stable...v1.3.2-stable) -- **Release**: [v1.3.2-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.2-stable).
@@ -38,14 +114,14 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 A security issue was introduced in this release which causes unauthenticated users to access source information on shares. A fix is being rolled out for `v1.3.2-stable`
 {{% /alert %}}
 
- **Security**:
+**Security**:
  - [Critical] Unauthenticated Path Traversal in Public Share Delete Allows Arbitrary File Deletion [GHSA-fwj3-42wh-8673](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-fwj3-42wh-8673) (thanks [@Yesuhei](https://github.com/Yesuhei)).
  - [Moderate] Stored XSS via SVG File in Public Share (Missing CSP Header) [GHSA-mmpx-jh39-wrv6](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-mmpx-jh39-wrv6) (thanks [@MuxiLyuLucy](https://github.com/MuxiLyuLucy)).
  
- **Notes**:
+**Notes**:
  - Creating/deleting password-based user requires reauthentication ([issue #2112](https://github.com/gtsteffaniak/filebrowser/issues/2112)).
  
- **BugFixes**:
+**BugFixes**:
  - Fix context menu items and adjust when items show to more accurately reflect permissions.
  - Quick download icon style after icon change.
  - Missing error popup for resource creation actions (upload/create).
@@ -68,7 +144,7 @@ A security issue was introduced in this release which causes unauthenticated use
   - (potentially breaking) for Docker users: The default user is now `filebrowser` (1000:1000) instead of `root`. see {{< doclink path="getting-started/docker/#running-container-with-a-different-user" text="running container with a different user" />}}
 {{% /alert %}}
 
- **New Features**:
+**New Features**:
   - New Sidebar Features:
     - Sidebar tree navigation ([pr #2006](https://github.com/gtsteffaniak/filebrowser/pull/2006)) ([issue #350](https://github.com/gtsteffaniak/filebrowser/issues/350)).
     - Source usage to be customized to show os-reported values rather than calculated. This can be changed per source by editing the source link in the sidebar ([issue #1266](https://github.com/gtsteffaniak/filebrowser/issues/1266)) ([issue #982](https://github.com/gtsteffaniak/filebrowser/issues/982)).
@@ -118,7 +194,7 @@ A security issue was introduced in this release which causes unauthenticated use
   - Add Requirement for Current Password When Changing Account Password or user for permissions and scope ([issue #2112](https://github.com/gtsteffaniak/filebrowser/issues/2112)).
   - Copy file path to clipboard through right-click ([issue #2204](https://github.com/gtsteffaniak/filebrowser/issues/2204)).
 
- **Notes**:
+**Notes**:
   - User scope editing has path picker and filesystem validation.
   - Removed upx compression on docker image ([issue #2193](https://github.com/gtsteffaniak/filebrowser/issues/2193)).
   - Videos double-tap to fast-forward and rewind added.
@@ -157,7 +233,7 @@ A security issue was introduced in this release which causes unauthenticated use
     - `/public/api/shareinfo` has been moved to `/public/api/share/info`.
     - `POST /resources/bulk/delete` api has been moved to `DELETE /resources/bulk` ([issue #1984](https://github.com/gtsteffaniak/filebrowser/issues/1984)).
 
- **BugFixes**:
+**BugFixes**:
   - Long folder names get cut off at the top navigation bar ([issue #1934](https://github.com/gtsteffaniak/filebrowser/issues/1934))
 
 **Full Changelog**: [v1.2.4-stable...v1.3.0-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.2.4-stable...v1.3.0-stable) -- **Release**: [v1.3.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-stable).
@@ -166,10 +242,10 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ## v1.2.4-stable
 
- **Security**:
+**Security**:
  - Anonymous user shouldn't see server folder path with the `Go to source location` button from the share page ([issue #2216](https://github.com/gtsteffaniak/filebrowser/issues/2216)).
 
- **Notes**:
+**Notes**:
  - removed upx compression on docker images ([issue #2193](https://github.com/gtsteffaniak/filebrowser/issues/2193))
 
 **BugFixes**:
@@ -181,14 +257,14 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ## v1.2.3-stable
 
- **Security**:
+**Security**:
  - Patched Username Enumeration via Authentication Timing Side-Channel ([GHSA-7789-65hx-f26w](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-7789-65hx-f26w)).
 
- **Notes**:
+**Notes**:
  - Docs preview for text and pdf has a 2 second timeout. If it hangs for whatever reason, the maximum time would be 2 seconds ([issue #2105](https://github.com/gtsteffaniak/filebrowser/issues/2105)) ([issue #2114](https://github.com/gtsteffaniak/filebrowser/issues/2114)).
  - [docker] ffmpeg version upgraded to 8.1
 
- **BugFixes**:
+**BugFixes**:
  - Wrong username in share settings ([issue #2147](https://github.com/gtsteffaniak/filebrowser/issues/2147)) ([pr #2148](https://github.com/gtsteffaniak/filebrowser/pull/2148)).
  - [OnlyOffice] Error when saving a file under a user scope ([issue #2133](https://github.com/gtsteffaniak/filebrowser/issues/2133)).
  - Cannot edit shared file in OnlyOffice ([issue #2143](https://github.com/gtsteffaniak/filebrowser/issues/2143))
@@ -205,19 +281,19 @@ A security issue was introduced in this release which causes unauthenticated use
 - if you use global indexing rules, they have changed format -- see {{< doclink path="advanced/source-configuration/conditional-rules/" text="conditional rules" />}}.
 {{% /alert %}}
 
- **Security**:
+**Security**:
  - Patched Stored XSS in public share page via unsanitized share metadata (text/template misuse) ([GHSA-r633-fcgp-m532](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-r633-fcgp-m532)).
  - Patched Incomplete Remediation of CVE-2026-27611: Password-Protected Share Bypass via `/public/api/share/info` ([GHSA-525j-95gf-766f](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-525j-95gf-766f)).
 
- **New Features**:
+**New Features**:
  - "Divider" option in sidebar links to add a text or divider between links ([issue #1875](https://github.com/gtsteffaniak/filebrowser/issues/1875)).
  - Shares offer a "go to source Location" sidebar link and button when editing a share.
 
- **Notes**:
+**Notes**:
  - Share edit/delete permissions are scoped to the user's shares rather than global ([issue #2050](https://github.com/gtsteffaniak/filebrowser/issues/2050)).
  - OIDC group claims accepted as map ([pr #1444](https://github.com/gtsteffaniak/filebrowser/pull/2084)).
 
- **BugFixes**:
+**BugFixes**:
  - Fixed the requirement that the database path needed to be set in the config file, now it loads `FILEBROWSER_DATABASE` value by default, fallback to config file property.
  - Error downloading zipped directory: no such file or directory on users with scope ([issue #2015](https://github.com/gtsteffaniak/filebrowser/issues/2015)).
 
@@ -234,7 +310,7 @@ Read: [New Announcement](https://github.com/gtsteffaniak/filebrowser/discussions
 - if you use global indexing rules, they have changed format -- see {{< doclink path="advanced/source-configuration/conditional-rules/" text="conditional rules" />}}.
 {{% /alert %}}
 
- **BugFixes**:
+**BugFixes**:
  - Startup icon generation order ([issue #2019](https://github.com/gtsteffaniak/filebrowser/issues/2019)).
  - Login button on shares not showing ([issue #2028](https://github.com/gtsteffaniak/filebrowser/issues/2028)).
  - Removed file watcher link in context menu for shares ([issue #2025](https://github.com/gtsteffaniak/filebrowser/issues/2025)).
@@ -260,7 +336,7 @@ Also see the docs for {{< doclink path="tools/overview" text="tools" />}} if you
 
 This is a major version update with many changes which could cause unexpected behavior. Upgrades should proceed with caution and report any undesirable behavior. See the changes over {{< doclink path="changelog/stable/#v113-stable" text="v1.1.3-stable" />}} below:
 
- **New Features**:
+**New Features**:
  - SQLite-based indexing.
    - reduced memory usage, higher CPU and IO usage.
    - index persistence between restarts requires {{< doclink path="configuration/server/#cachedir" text="persistent cacheDir" />}}.
@@ -288,7 +364,7 @@ This is a major version update with many changes which could cause unexpected be
  - Enhanced media playback: Ability to control the queue from your device's lock screen and notification panel - Will also show
    metadata of the current playing media if available ([pr #1917](https://github.com/gtsteffaniak/filebrowser/pull/1917)).
 
- **Notes**:
+**Notes**:
  - `server.cacheDirCleanup` defaults to `false` instead of `true`. For docker, you would still need to mount a cacheDir volume to persist cache between restarts.
  - Indexing rules have been streamlined, see [docs](https://filebrowserquantum.com/en/docs/advanced/source-configuration/conditional-rules/). The previous style is deprecated but still functional.
  - Improved listing load times for directories with metadata -- a two-pass approach. First a fast load to get the listing items, then a second api request to include metadata.
@@ -322,7 +398,7 @@ This is a major version update with many changes which could cause unexpected be
 
 Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecting password protected share links.
 
- **Security**:
+**Security**:
  - Resolves [GHSA-8vrh-3pm2-v4v6](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-8vrh-3pm2-v4v6).
 
 **Full Changelog**: [v1.1.2-stable...v1.1.3-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.1.2-stable...v1.1.3-stable) -- **Release**: [v1.1.3-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.3-stable).
@@ -331,7 +407,7 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ## v1.1.2-stable
 
- **BugFixes**:
+**BugFixes**:
  - Fix transversal vulnerability.
  - Fix image generation concurrency limits.
 
@@ -341,12 +417,12 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ## v1.1.1-stable
 
- **Notes**:
+**Notes**:
  - Major git container tag request ([issue #1756](https://github.com/gtsteffaniak/filebrowser/issues/1756))
  - `showHidden` is now a backend attribute. Shares will NOT show hidden files by default unless configured to.
  - Improved listing view UI performance, especially for folders with many items. ([issue #1773](https://github.com/gtsteffaniak/filebrowser/issues/1773))
 
- **BugFixes**:
+**BugFixes**:
  - Sharing broken if source `disableIndexing: true` ([issue #1742](https://github.com/gtsteffaniak/filebrowser/issues/1742))
  - Password protected share permission ([issue #1729](https://github.com/gtsteffaniak/filebrowser/issues/1729)) ([issue #1606](https://github.com/gtsteffaniak/filebrowser/issues/1606)) ([issue #1593](https://github.com/gtsteffaniak/filebrowser/issues/1593))
  - Sidebar Sliding left ([issue #1737](https://github.com/gtsteffaniak/filebrowser/issues/1737))
@@ -378,7 +454,7 @@ Also, single-source URLs are updated: `/files/path/to/text.txt` becomes: `/files
 
 This update brings all changes present in {{< doclink path="changelog/beta/#v114-beta" text="v1.1.4-beta" />}} to stable.
 
- **New Features**:
+**New Features**:
  - Toggle to show searching results with thumbnails ([issue #1545](https://github.com/gtsteffaniak/filebrowser/issues/1545))
  - Added tools:
    - File size analyser -- quickly show the largest files in an interactive graphical chart
@@ -407,7 +483,7 @@ This update brings all changes present in {{< doclink path="changelog/beta/#v114
  - Choose different bind IP via `server.listen` ([issue #1573](https://github.com/gtsteffaniak/filebrowser/issues/1573))
  - Allow disabling clearing cache each startup via `server.cacheDirCleanup: false` in config ([issue #1576](https://github.com/gtsteffaniak/filebrowser/issues/1576))
 
- **Notes**:
+**Notes**:
  - File list has loading spinner to help prevent double click issues and give better feedback.
  - Improved cacheDir startup checks.
    - Warning for slow read/write speeds below 50MB/s
@@ -423,7 +499,7 @@ This update brings all changes present in {{< doclink path="changelog/beta/#v114
  - Access control cache is cleared more aggresively to ensure no delay.
  - Removed default `.ico` favicon in favor of `.svg`
 
- **BugFixes**:
+**BugFixes**:
  - Passwords with special characters not working properly ([issue #1648](https://github.com/gtsteffaniak/filebrowser/issues/1648)).
  - Fix/Improve some behaviors in nextPrevious ([pr #1707](https://github.com/gtsteffaniak/filebrowser/pull/1707))
  - Files recognized as folder if they have the same name as previously deleted folders ([issue #1697](https://github.com/gtsteffaniak/filebrowser/issues/1697)).
@@ -435,7 +511,7 @@ This update brings all changes present in {{< doclink path="changelog/beta/#v114
 
 ## v1.0.3-stable
 
- **BugFixes**:
+**BugFixes**:
  - Download progress is not shown ([issue #1687](https://github.com/gtsteffaniak/filebrowser/issues/1687)).
 
 **Full Changelog**: [v1.0.2-stable...v1.0.3-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.0.2-stable...v1.0.3-stable) -- **Release**: [v1.0.3-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.0.3-stable).
@@ -444,10 +520,10 @@ This update brings all changes present in {{< doclink path="changelog/beta/#v114
 
 ## v1.0.2-stable
 
- **Notes**:
+**Notes**:
  - `[docker]` Upgraded ffmpeg 8.0 to 8.0.1
 
- **BugFixes**:
+**BugFixes**:
  - Added missing exiftool to docker image for heic conversion orientation support.
  - Uploading a file will silently overwrite any existing file with the same name ([issue #1564](https://github.com/gtsteffaniak/filebrowser/issues/1564)).
  - Unable to download folder as ZIP ([issue #1604](https://github.com/gtsteffaniak/filebrowser/issues/1604))
@@ -459,7 +535,7 @@ This update brings all changes present in {{< doclink path="changelog/beta/#v114
 
 ## v1.0.1-stable
 
- **BugFixes**:
+**BugFixes**:
  - UserDefault always applies to newly created users ([issue #1518](https://github.com/gtsteffaniak/filebrowser/issues/1518))
  - Updating user's own password sometimes doesn't work.
  - Anonymous Share link with optional password does not allow downloads ([issue #1553](https://github.com/gtsteffaniak/filebrowser/issues/1553)).
@@ -486,10 +562,10 @@ Wondering whether to use stable or beta? [Read this](https://filebrowserquantum.
 
 
 
- **New Features**:
+**New Features**:
  - Login icon support added via `frontend.loginIcon` config path variable.
 
- **Notes**:
+**Notes**:
  - Updated default login icon.
  - Stopped publishing rolling `dev` docker tag.
  - Build requirement change -- from node 18 > node 20 with npm 9.0.0+
@@ -503,7 +579,7 @@ Wondering whether to use stable or beta? [Read this](https://filebrowserquantum.
    - If theres no database on start, any admin user's first login will see a welcome message in the ui.
    - For docker, it defaults to ./data/database.db, but will also fallback to ./database.db without any additional configuration.
 
- **BugFixes**:
+**BugFixes**:
  - Generating multiple HEIC previews in parallel fails ([issue #1470](https://github.com/gtsteffaniak/filebrowser/issues/1470)).
  - ? in path not always encoded right ([issue #1447](https://github.com/gtsteffaniak/filebrowser/issues/1447))
  - Fixed some condition that the halloween background doesn't load properly.
