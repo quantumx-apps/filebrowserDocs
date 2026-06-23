@@ -16,6 +16,10 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 This release is based on {{< doclink path="changelog/beta/#v144-beta" text="v1.4.4-beta" />}}!
 
+{{% alert context="danger" %}}
+Breaking change: removed deprecated `source.config.disableIndexing`, see {{< doclink path="advanced/source-configuration/conditional-rules/#disable-indexing" text="rules" />}}
+{{% /alert %}}
+
 **Security**:
  - [High] Path traversal in subtitle handler allows any authenticated user to read arbitrary files ([GHSA-vvp7-h4fj-m28w](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-vvp7-h4fj-m28w)).
  - [Moderate] Add Rate Limiting on Authentication Endpoint Enables Brute Force Attacks ([GHSA-r4v7-6wcg-ghj5](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-r4v7-6wcg-ghj5)).
