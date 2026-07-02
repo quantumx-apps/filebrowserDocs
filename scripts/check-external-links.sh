@@ -3,6 +3,13 @@
 
 set -e
 
+# Files to exclude from link checking.
+# For example the changelog files that contain lot of GitHub links which get rate-limited after a short time.
+EXCLUDE_FILES=(
+    "content/en/docs/changelog/stable.md"
+    "content/en/docs/changelog/beta.md"
+)
+
 # Cache file location
 CACHE_FILE=".external-links"
 
@@ -40,6 +47,16 @@ strip_code_blocks() {
 
 # Process all markdown files quickly
 find content -name "*.md" -type f | while read file; do
+    # Skip excluded files
+    skip=0
+    for excl in "${EXCLUDE_FILES[@]}"; do
+        if [[ "$file" == "$excl" ]]; then
+            skip=1
+            break
+        fi
+    done
+    (( skip )) && continue
+
     # Strip code blocks to temp file
     CLEANED=$(mktemp)
     strip_code_blocks "$file" > "$CLEANED"
