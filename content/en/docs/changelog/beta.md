@@ -10,6 +10,16 @@ lastmod: "2026-06-18T03:13:01Z"
 You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/filebrowser/releases)
 {{% /alert %}}
 
+## v1.5.1-beta
+
+**BugFixes**:
+ - Fixed http config section being dropped so trustedHeaders and disableRateLimit apply ([pr #2602](https://github.com/gtsteffaniak/filebrowser/pull/2602)) ([issue #2560](https://github.com/gtsteffaniak/filebrowser/issues/2560)).
+ - Fixed upload shares with password ([pr #2560](https://github.com/gtsteffaniak/filebrowser/pull/2589)) ([issue #2465](https://github.com/gtsteffaniak/filebrowser/issues/2465)).
+ - Fixed token when returning from preview on shares with pass ([pr #2588](https://github.com/gtsteffaniak/filebrowser/pull/2588)) ([issue #2573](https://github.com/gtsteffaniak/filebrowser/issues/2573)).
+ - Fixed share undefined url after editing a existent share ([pr #2567](https://github.com/gtsteffaniak/filebrowser/pull/2567)) ([issue #2523](https://github.com/gtsteffaniak/filebrowser/issues/2523)).
+
+**Full Changelog**: [v1.5.0-beta...v1.5.1-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.0-beta...v1.5.1-beta) -- **Release**: [v1.5.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.1-beta).
+
 ---
 
 ## v1.5.0-beta
