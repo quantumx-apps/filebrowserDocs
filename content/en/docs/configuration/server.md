@@ -3,79 +3,30 @@ title: "Server Settings"
 description: "Configure server options"
 icon: "dns"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-05-22T16:24:35Z"
+lastmod: "2026-07-23T23:12:00Z"
 order: 2
 ---
 
 {{% alert context="warning" title="v2.0.0 behavior change" %}}
-In v2.0.0, `server.database` is an object with `path` (and optional `migrateFrom` during upgrade). HTTP options such as `trustedHeaders` moved to the top-level `http` key — see {{< doclink path="configuration/http/" text="HTTP settings" />}}. Default database is SQLite (`filebrowser.sqlite`), not BoltDB (`database.db`).
+In v2.0.0, `server.database` is an object with `path` (and optional `migrateFrom` during upgrade). Listening, URLs, TLS, WebDAV, and proxy options moved to the top-level `http` key — see {{< doclink path="configuration/http/" text="HTTP settings" />}}. Default database is SQLite (`filebrowser.sqlite`), not BoltDB (`database.db`).
 {{% /alert %}}
 
-Configure server settings including port, address, database, and caching.
+Configure server-side behavior: database, caching, indexing, previews, sources, and logging. For port, `baseURL`, TLS, and reverse-proxy options, see {{< doclink path="configuration/http/" text="HTTP settings" />}}.
 
 ## Basic Server Configuration
 
 ```yaml
 server:
-  port: 80
   database:
     path: "filebrowser.sqlite"
   cacheDir: "tmp"
+  sources:
+    - path: "/srv"
 ```
 
 ## Configuration Options
 
 <div class="pattern-card">
-
-### port
-
-Server port (default: `80`)
-
-```yaml
-server:
-  port: 80
-```
-
-{{% alert context="info" %}}
-**Docker Healthcheck**: If you change the port from the default (`80`), you must update the Docker healthcheck in your `docker-compose.yaml` to match the new port. See {{< doclink path="getting-started/docker/#healthcheck-configuration" text="Docker healthcheck configuration" />}} for details.
-{{% /alert %}}
-
-{{% alert context="info" %}}
-**Authentication rate limiting**: Login and other auth routes are rate-limited by default. If FileBrowser sits behind a reverse proxy, configure `http.trustedHeaders` so per-IP limits apply to real client addresses — not the proxy. See {{< doclink path="configuration/http/" text="HTTP settings" />}} and {{< doclink path="getting-started/reverse-proxy/#client-ip-and-trusted-headers" text="reverse proxy: client IP" />}}.
-{{% /alert %}}
-
-{{% alert context="warning" %}}
-**Privileged ports**: For ports **below 1024**, Linux only allows a non-root process to bind if it has the **`NET_BIND_SERVICE`** capability (or `net.ipv4.ip_unprivileged_port_start` is lowered). **Rootful** Docker Engine / Docker Desktop usually includes `NET_BIND_SERVICE` in the default profile, so the non-root `filebrowser` user may still bind `80`/`443` there. **`bind: permission denied` is more typical with rootless engines** (Docker rootless, Podman rootless).
-{{% /alert %}}
-
-</div>
-
-### listen
-
-Server listen address (default: 0.0.0.0)
-
-```yaml
-server:
-  listen: "localhost" # override the default 0.0.0.0
-```
-
-### baseURL
-
-Base URL -- primarily for reverse proxy
-
-```yaml
-server:
-  baseURL: "/filebrowser"
-```
-
-### socket
-
-Unix socket to listen on (alternative to TCP port). When set, overrides port configuration.
-
-```yaml
-server:
-  socket: "/var/run/filebrowser.sock"
-```
 
 ### minSearchLength
 
@@ -86,6 +37,10 @@ server:
   minSearchLength: 3
 ```
 
+</div>
+
+<div class="pattern-card">
+
 ### disableUpdateCheck
 
 Disable backend update check service
@@ -94,6 +49,10 @@ Disable backend update check service
 server:
   disableUpdateCheck: false
 ```
+
+</div>
+
+<div class="pattern-card">
 
 ### numImageProcessors
 
@@ -104,6 +63,10 @@ server:
   numImageProcessors: 4
 ```
 
+</div>
+
+<div class="pattern-card">
+
 ### disablePreviews
 
 Disable all previews and thumbnails. Simple icons will be used instead.
@@ -112,6 +75,10 @@ Disable all previews and thumbnails. Simple icons will be used instead.
 server:
   disablePreviews: false
 ```
+
+</div>
+
+<div class="pattern-card">
 
 ### disablePreviewResize
 
@@ -122,6 +89,10 @@ server:
   disablePreviewResize: false
 ```
 
+</div>
+
+<div class="pattern-card">
+
 ### disableTypeDetectionByHeader
 
 Disable type detection by header. Useful if filesystem is slow.
@@ -131,14 +102,9 @@ server:
   disableTypeDetectionByHeader: false
 ```
 
-### externalUrl
+</div>
 
-Used by share links if set. This is the base domain that share links will use.
-
-```yaml
-server:
-  externalUrl: "https://mydomain.com"
-```
+<div class="pattern-card">
 
 ### cacheDirCleanup
 
@@ -148,6 +114,10 @@ Whether to automatically cleanup the cache directory. Note: Docker must also mou
 server:
   cacheDirCleanup: false
 ```
+
+</div>
+
+<div class="pattern-card">
 
 ### filesystem
 
@@ -159,6 +129,8 @@ server:
     createFilePermission: "644"      # Unix permissions like 644, 755, 2755 (default: 644)
     createDirectoryPermission: "755" # Unix permissions like 755, 2755, 1777 (default: 755)
 ```
+
+</div>
 
 <div class="pattern-card">
 
@@ -186,22 +158,21 @@ If you notice long delays on startup, you could configure this to `probe` (recom
 
 </div>
 
-### disableWebDAV
-
-Disable WebDAV support (default: `false`).
-
-```yaml
-server:
-  disableWebDAV: true
-```
+<div class="pattern-card">
 
 ### sources
 
 Configure file system sources. See {{< doclink path="configuration/sources/" text="Sources configuration" />}} for detailed information.
 
+</div>
+
+<div class="pattern-card">
+
 ### logging
 
 Configure logging output and levels. See {{< doclink path="configuration/logging/" text="Logging configuration" />}} for detailed information.
+
+</div>
 
 <div class="pattern-card">
 
@@ -272,9 +243,7 @@ server:
   cacheDir: "tmp" # this is default when not configured.
 ```
 
-
 </div>
-
 
 #### Docker Examples
 
@@ -318,28 +287,9 @@ By default, FileBrowser uses UID 1000 for the user (you can change that):
 sudo chown -R 1000:1000 /var/cache/filebrowser
 ```
 
-### internalUrl
-
-Internal URL for integrations to access FileBrowser (Currently just OnlyOffice)
-
-This could be a docker network DNS name or a local IP address on the network. This address should allow the integration to communicate directly with the service.
-
-```yaml
-server:
-  internalUrl: "http://filebrowser:80"
-```
-
-### TLS Configuration
-
-```yaml
-server:
-  tlsCert: "/path/to/cert.pem"
-  tlsKey: "/path/to/key.pem"
-```
-
 ## Next Steps
 
-- {{< doclink path="configuration/http/" text="HTTP settings" />}} — trusted proxy headers and auth rate limiting
+- {{< doclink path="configuration/http/" text="HTTP settings" />}} — port, baseURL, TLS, WebDAV, trusted headers, and auth rate limiting
 - {{< doclink path="configuration/sources/" text="Configure sources" />}}
 - {{< doclink path="configuration/authentication/" text="Set up authentication" />}}
 - {{< doclink path="configuration/logging/" text="Configure logging" />}}

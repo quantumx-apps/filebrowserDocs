@@ -7,7 +7,7 @@ lastmod: "2026-07-23T15:00:00Z"
 order: 1
 ---
 
-This guide walks you through upgrading an existing **FileBrowser Quantum v1.x** installation to **v2.0.0**. It does not cover migrating from the original FileBrowser project — see {{< doclink path="getting-started/Migration/" text="Migration from original FileBrowser" />}} for that.
+This guide walks you through upgrading an existing **FileBrowser Quantum v1.x** installation to **v2.0.0**. It does not cover migrating from the original FileBrowser project — see {{< doclink path="getting-started/migration/" text="Migration from original FileBrowser" />}} for that.
 
 ## Why migration is required
 
