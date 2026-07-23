@@ -12,7 +12,7 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 ---
 
-## v1.5.0-stable - (2026-07-21)
+## v1.5.0-stable
 
 This release is based on {{< doclink path="changelog/beta/#v152-beta" text="v1.5.2-beta" />}}!
 
