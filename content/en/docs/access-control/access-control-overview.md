@@ -3,7 +3,7 @@ title: "Access Control Overview"
 description: "User permissions, source access, and path-based access rules in FileBrowser Quantum"
 icon: "security"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-01-30T13:20:14Z"
+lastmod: "2026-07-17T12:00:00Z"
 order: 1
 ---
 
@@ -11,11 +11,16 @@ order: 1
 
 FileBrowser combines three separate ideas. Together they decide whether someone can see a source, open a path, and perform actions there:
 
-1. **User permissions** — What the user is generally allowed to do in the app (for example admin, API usage, creating shares, modifying files). These apply **across** sources and are not tied to individual folders.
-2. **Source-level access** — Whether the user even **has** a given source (scopes and defaults such as {{< doclink path="configuration/sources/" text="source configuration" />}}, including `defaultEnabled` and `denyByDefault`). This is **broad**: it gates the whole source or the user’s subtree under it, not individual paths inside the tree.
-3. **Access control rules** — **Additional, path-specific** allow/deny rules for directories under a source, optionally scoped to users or groups. Use these when you need fine control (“this folder, for this user or group”) rather than changing global user capabilities or whole-source defaults.
+1. **User permissions** — Global capabilities that apply **across** sources: **admin**, **api**, **share**, and **realtime**. File operations (view, download, modify, create, delete) are **not** global; see per-source permissions below.
+2. **Per-source permissions** — For each source in a user's **scopes**, what they may do with files in that source: **view**, **download**, **modify**, **create**, and **delete**. These are configured in User Management on each scope row (v2.0.0+).
+3. **Source-level access** — Whether the user even **has** a given source (scopes and defaults such as {{< doclink path="configuration/sources/" text="source configuration" />}}, including `defaultEnabled` and `denyByDefault`). This is **broad**: it gates the whole source or the user’s subtree under it, not individual paths inside the tree.
+4. **Access control rules** — **Additional, path-specific** allow/deny rules for directories under a source, optionally scoped to users or groups. Use these when you need fine control (“this folder, for this user or group”) rather than changing per-source permissions or whole-source defaults.
 
-Access rules are meant to refine **which paths** under a source are reachable once the user already has that source and sufficient **user permissions** for the action (read, modify, share, and so on).
+Access rules refine **which paths** under a source are reachable once the user already has that source and sufficient **per-source permissions** for the action.
+
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+Starting in **v2.0.0**, file-operation permissions are **per source** (on each user scope), not global checkboxes on the user. Global permissions are **admin**, **api**, **share**, and **realtime** only. **`view` is a new permission type** — in v1.x, browsing a source was always allowed once the user had that scope; v2.0.0 adds an explicit **view** grant (migration sets it to **true** on existing scopes). After upgrading, confirm each user's scopes in **User Management** — migration copies former global file permissions onto every scope, but requirements for WebDAV, API, and the UI now check the **source you are using**.
+{{% /alert %}}
 
 {{% alert context="info" %}}
 Access rules for shares apply based on the user that created the share.

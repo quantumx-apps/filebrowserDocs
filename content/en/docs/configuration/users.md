@@ -3,11 +3,15 @@ title: "User Management"
 description: "Manage users and permissions"
 icon: "group"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-05-01T16:02:24Z"
+lastmod: "2026-07-17T12:00:00Z"
 order: 5
 ---
 
 Configure users, permissions, and default user settings.
+
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+Starting in **v2.0.0**, file permissions are **per source**, not global. Each user scope (source assignment) has its own **view**, **download**, **modify**, **create**, and **delete** flags. **`view` is new in v2.0.0** — in v1.x, browsing and listing a source was always allowed once the user had that scope; v2.0.0 makes **view** an explicit grant (migration sets it to **true** on existing scopes unless you configure otherwise). Global user permissions are limited to **admin**, **api**, **share**, and **realtime**. Values under `userDefaults.permissions` in config (modify, create, delete, download) now seed **default per-source permissions** for new users — they are no longer stored as global caps on the user record. CLI user commands also changed: use `user set` and `user promote` instead of `set -u` (see {{< doclink path="reference/cli/" text="CLI reference" />}}). See {{< doclink path="features/webdav/" text="WebDAV" />}} for how each capability maps to client operations.
+{{% /alert %}}
 
 ## User Management
 
@@ -47,8 +51,12 @@ User defaults are configured on the `config.yaml` and are the default initial va
 
 <div class="pattern-card">
 
+User defaults can still be listed in `config.yaml` to **bootstrap** a new instance: on first startup, values are seeded into SQLite and only the fields you set remain locked in **Settings → User management → User defaults**. After that, the database is authoritative. Remove `userDefaults` from config when you no longer need those locks on fresh installs.
+
+Legacy flat keys (for example `hideFilesInTree`, `permissions.modify`) are no longer supported — use the nested v2 structure shown below. Move legacy `permissions.modify`, `create`, `delete`, and `download` under `userDefaults` to `server.sources[].config.defaultPermissions` for per-source defaults.
+
 {{% alert context="info" %}}
-**Note**: userDefaults do NOT update or enforce a user's settings after one has been created. Its more accurately, "user create settings" than user defaults.
+**Note**: Config `userDefaults` do not overwrite existing users after creation. They seed universal defaults for **new** users and the admin **User defaults** template in SQLite.
 {{% /alert %}}
 
 These values match the shape of the generated config reference (`frontend/public/config.generated.yaml` in the main repo). Only a subset is shown; omit keys you want to leave at defaults.
@@ -89,9 +97,11 @@ userDefaults:
   permissions:
     api: false
     admin: false
-    modify: false
     share: false
     realtime: false
+    # v2.0.0+: the keys below seed DEFAULT per-source permissions for new scopes
+    # (not global user permissions after the user is created)
+    modify: false
     delete: false
     create: false
     download: true
@@ -115,7 +125,7 @@ userDefaults:
 
 For what each `fileLoading` field does (matching **Settings → Uploads & Downloads**), see {{< doclink path="user-preferences/uploads-downloads/" text="Uploads & Downloads (user preferences)" />}}.
 
-`permissions` are not editable by the user unless they are admin, but all other settings are modifyable in profile settings in the UI.
+`permissions` under `userDefaults` are not editable by non-admin users in the profile UI. Global flags (**admin**, **api**, **share**, **realtime**) live on the user; file-operation defaults apply when a **new scope** is added unless you set explicit per-source permissions in User Management.
 
 ## Creating Users
 
@@ -124,41 +134,91 @@ For what each `fileLoading` field does (matching **Settings → Uploads & Downlo
 1. Log in as admin
 2. Go to **User Management**
 3. Click **Create User**
-4. Set username, password, permissions
-5. Assign sources and scopes
+4. Set username, password, global permissions, and **per-source permissions** on each scope
+5. Assign sources and scope paths
 
 ### Via CLI
 
 ```bash
-./filebrowser set -u username,password -c config.yaml
+./filebrowser user set username --password secret -c config.yaml
 ```
 
 Create as admin:
+
 ```bash
-./filebrowser set -u username,password -a -c config.yaml
+./filebrowser user set username --password secret -a -c config.yaml
+```
+
+Promote an existing user to admin without changing their password:
+
+```bash
+./filebrowser user promote username -c config.yaml
+```
+
+For scripted password resets, pipe stdin:
+
+```bash
+echo 'newpassword' | ./filebrowser user set username --password -c config.yaml
 ```
 
 ## User Permissions
 
-### Admin Permissions
+### Global permissions (all sources)
 
+Configure on the user record; apply everywhere:
+
+| Permission | Purpose |
+|---|---|
+| **Admin** | Full system access, user management, configuration |
+| **API** | Create API tokens, REST API access |
+| **Share** | Create and manage share links |
+| **Realtime** | Real-time connections and live updates |
+
+Admins receive full file-operation access on every source automatically.
+
+### Per-source file permissions (v2.0.0+)
+
+Configure **per scope** in User Management when editing a user — expand a source row to set:
+
+| Permission | Typical use |
+|---|---|
+| **View** | Browse folders, list files, see properties (WebDAV `PROPFIND`). **New in v2.0.0** — in v1.x this was always granted for any source in the user's scopes |
+| **Download** | Read or download file contents (`GET`, streaming, copy source) |
+| **Modify** | Edit, upload/overwrite, rename, move within or across sources |
+| **Create** | Create files and folders, copy into this source |
+| **Delete** | Delete files and folders |
+
+Omitting permissions on a scope when saving via API lets the server apply **userDefaults** for that source. Explicit values override defaults.
+
+### API user shape (v2.0.0+)
+
+```json
+{
+  "username": "demo",
+  "password": "demo123",
+  "permissions": {
+    "admin": false,
+    "api": true,
+    "share": true,
+    "realtime": false
+  },
+  "scopes": [
+    {
+      "name": "files",
+      "scope": "/",
+      "permissions": {
+        "view": true,
+        "download": true,
+        "modify": true,
+        "create": true,
+        "delete": true
+      }
+    }
+  ]
+}
 ```
-- Full system access
-- User management
-- Configuration access
-- All file operations
-```
 
-### Standard Permissions
-
-Configure per user:
-- **Create** - Create files and folders
-- **Rename** - Rename files and folders
-- **Modify** - Edit and modify files
-- **Delete** - Delete files and folders
-- **Share** - Create share links
-- **Download** - Download files
-- **API** - Access REST API
+Legacy API payloads that put `modify`, `create`, `delete`, or `download` only under top-level `permissions` are migrated on upgrade; new integrations should use `scopes[].permissions`.
 
 ## User Scopes
 
@@ -168,9 +228,10 @@ Scopes define which sources and paths a user can access.
 
 In User Management:
 1. Edit user
-2. Select source
+2. Select source(s)
 3. Set scope path (e.g., `/`, `/subfolder`, `/users/john`)
-4. Save
+4. Expand each source row and set **per-source permissions** (view, download, modify, create, delete)
+5. Save
 
 ### Auto-Create User Directories
 
@@ -211,7 +272,13 @@ auth:
 ### Reset User Password
 
 ```bash
-./filebrowser set -u username,newpassword -c config.yaml
+./filebrowser user set username --password newpassword -c config.yaml
+```
+
+Or pipe the password from a script:
+
+```bash
+echo 'newpassword' | ./filebrowser user set username --password -c config.yaml
 ```
 
 ## Two-Factor Authentication

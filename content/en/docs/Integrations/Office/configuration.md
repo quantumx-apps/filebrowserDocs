@@ -8,6 +8,10 @@ lastmod: "2026-03-10T00:10:42Z"
 
 Configure OnlyOffice Document Server for document editing.
 
+{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+Use a **data directory mount** (`./data:/home/filebrowser/data`) instead of bind-mounting a single `database.db` file. v2.0.0 uses SQLite — see {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} and {{< doclink path="getting-started/docker/" text="Docker setup" />}}.
+{{% /alert %}}
+
 ## Basic Configuration
 
 <div class="pattern-card">
@@ -56,8 +60,8 @@ services:
       - "80:80"
     volumes:
       - ./config.yaml:/home/filebrowser/config.yaml
+      - ./data:/home/filebrowser/data
       - ./data:/data
-      - ./database.db:/home/filebrowser/database.db
     environment:
       - FILEBROWSER_ONLYOFFICE_SECRET=your_secret_here
 

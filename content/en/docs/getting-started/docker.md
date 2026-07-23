@@ -3,9 +3,13 @@ title: "Docker"
 description: "Get started with FileBrowser using Docker"
 icon: "deployed_code"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-04-23T20:47:14Z"
+lastmod: "2026-07-23T13:00:00Z"
 order: 1
 ---
+
+{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+v2.0.0 uses **SQLite** instead of BoltDB and requires a one-time migration. Use a **directory mount** (`./data:/home/filebrowser/data`) rather than a single database file mount. Replace `FILEBROWSER_DATABASE` with `FILEBROWSER_DATABASE_PATH`. See the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before changing your image tag.
+{{% /alert %}}
 
 The fastest way to get started with FileBrowser Quantum.
 
@@ -145,8 +149,12 @@ services:
 
 ## Database Location
 
+{{% alert context="warning" title="v2.0.0 change" %}}
+v2.0.0 uses **SQLite** (default: `filebrowser.sqlite`), not BoltDB (`database.db`). Set `server.database.path` in config or use `FILEBROWSER_DATABASE_PATH`. Upgrading from v1.x? See {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
+{{% /alert %}}
+
 {{% alert context="info" %}}
-**Default Database Location**: In Docker, the default database location is `/home/filebrowser/data/database.db`. This is different from the standalone default of `./database.db` in the current directory.
+**Default Database Location (v2.0.0+)**: In Docker, the default is `/home/filebrowser/data/filebrowser.sqlite` when using the recommended `./data` mount. Standalone default is `./filebrowser.sqlite` in the current directory.
 
 To persist your database, mount a volume to `/home/filebrowser/data`:
 

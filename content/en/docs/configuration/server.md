@@ -7,6 +7,10 @@ lastmod: "2026-05-22T16:24:35Z"
 order: 2
 ---
 
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+In v2.0.0, `server.database` is an object with `path` (and optional `migrateFrom` during upgrade). HTTP options such as `trustedHeaders` moved to the top-level `http` key — see {{< doclink path="configuration/http/" text="HTTP settings" />}}. Default database is SQLite (`filebrowser.sqlite`), not BoltDB (`database.db`).
+{{% /alert %}}
+
 Configure server settings including port, address, database, and caching.
 
 ## Basic Server Configuration
@@ -14,7 +18,8 @@ Configure server settings including port, address, database, and caching.
 ```yaml
 server:
   port: 80
-  database: "database.db"
+  database:
+    path: "filebrowser.sqlite"
   cacheDir: "tmp"
 ```
 
@@ -202,16 +207,20 @@ Configure logging output and levels. See {{< doclink path="configuration/logging
 
 ### database
 
-Database file path. See {{< doclink path="getting-started/config/#how-to-specify-a-config-file" text="configuration file priority" />}} for default locations.
+SQLite database file path. See {{< doclink path="getting-started/config/#database-path-configuration" text="database path priority" />}} for defaults and env var overrides.
 
 ```yaml
 server:
-  database: "data/database.db"
+  database:
+    path: "data/filebrowser.sqlite"
+    migrateFrom: "database.db.old"  # one-time v1 → v2 migration only
 ```
 
-**Default locations:**
-- Current directory: `./database.db`
-- Docker: first checks `/home/filebrowser/data/database.db`, then current directory `./database.db`
+**Default locations (v2.0.0+):**
+- Standalone: `./filebrowser.sqlite`
+- Docker (with `./data` mount): `/home/filebrowser/data/filebrowser.sqlite`
+
+During upgrade from v1.x, set `migrateFrom` to your renamed BoltDB file. Remove it after migration — see {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
 
 </div>
 

@@ -8,6 +8,16 @@ lastmod: "2026-02-05T00:01:15Z"
 
 FileBrowser provides a comprehensive REST API for programmatic access.
 
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+- **`GET /api/raw`** and **`GET /public/api/raw`** removed — use **`/api/resources/download`** (and the public share equivalent) instead.
+- **`PUT /api/users`** → **`PATCH /api/users/{username}`** — send partial payloads only.
+- Users are addressed by **username** in frontend-facing APIs (not numeric `id`).
+- Media streaming moved to **`/api/media/stream`**; inline non-media viewing uses **`/api/resources/view`**.
+- Search API: use **`sources`** (not singular `source`), **`useWildcard`** (not `glob` / `useGlob`), and scope paths with a **`sourceName:`** prefix.
+
+See {{< doclink path="getting-started/v2/about/" text="About v2.0.0" />}} for the full list.
+{{% /alert %}}
+
 ## API Routes Overview
 
 FileBrowser Quantum separates API routes into **standard** and **public** endpoints:
@@ -30,9 +40,9 @@ Standard API routes generally require user authentication and are used for authe
 Public API routes use hash-based authentication for share access and do not require user login:
 
 - `/public/api/resources` - Access shared files (hash-based)
-- `/public/api/raw` - Direct file download (hash-based)
+- `/public/api/resources/download` - Direct file download for shares (hash-based)
 - `/public/api/preview` - File previews (hash-based)
-- `/public/api/shareinfo` - Share information
+- `/public/api/share/info` - Share information
 - `/public/api/onlyoffice/*` - OnlyOffice callbacks for shares
 
 {{% alert context="info" %}}

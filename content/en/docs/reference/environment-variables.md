@@ -8,12 +8,16 @@ lastmod: "2026-03-10T00:10:42Z"
 
 The preferred configuration method is to use config.yaml. However, environment variables are available for **secrets**, **config override**, and **developer purposes**.
 
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+`FILEBROWSER_DATABASE` was removed — startup fails if it is still set. Use **`FILEBROWSER_DATABASE_PATH`** (maps to `server.database.path`, default `filebrowser.sqlite`) instead. See {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
+{{% /alert %}}
+
 ## Available Variables
 
 | Variable | Config Equivalent | Description |
 |----------|-------------------|-------------|
 | `FILEBROWSER_CONFIG` | - | Config file path when no CLI argument provided |
-| `FILEBROWSER_DATABASE` | `server.database` | Database file path |
+| `FILEBROWSER_DATABASE_PATH` | `server.database.path` | SQLite database file path (default: `filebrowser.sqlite`) |
 | `FILEBROWSER_ADMIN_PASSWORD` | `auth.adminPassword` | Admin password |
 | `FILEBROWSER_ONLYOFFICE_SECRET` | `integrations.office.secret` | OnlyOffice JWT secret |
 | `FILEBROWSER_FFMPEG_PATH` | `integrations.media.ffmpegPath` | Path to FFmpeg binaries |
