@@ -3,10 +3,14 @@ title: "WinSCP"
 description: "A short guide on setting up WinSCP with FileBrowser"
 icon: "deployed_Code"
 date: "2026-02-27T22:40:24Z"
-lastmod: "2026-02-27T22:40:24Z"
+lastmod: "2026-07-17T12:00:00Z"
 ---
 
 [WinSCP](https://winscp.net/eng/index.php) is a free file manager for Windows supporting FTP, SFTP, S3 and WebDAV.
+
+{{% alert context="info" title="v2.0.0 permissions" %}}
+WebDAV checks **per-source** permissions for the source in your URL (`/dav/<source>/…`). **`view` is new in v2.0.0** — in v1.x, listing a source was always allowed. Most setups need **View** + **Download** to browse and open files, and **Create**, **Modify**, and **Delete** for uploads, renames, and deletes. See the full matrix in {{< doclink path="/features/webdav/#required-permissions" text="WebDAV — Required permissions" />}}.
+{{% /alert %}}
 
 ## Creating a new site
 
@@ -60,8 +64,9 @@ Create a new API token as we did in the previous section and paste it in here. M
 
 Make sure you are using an API token with customization turned off. If you are, then re-enter the API token again in the prompt.
 
-If the problem is still not solved, you get access denied could be for the following reasons:
+If the problem is still not solved, access denied could be for the following reasons:
 
-- The API token expired: Try setting a more long duration time for the API token.
-- The path that you're trying to access is not valid: Make sure that you access to the path by checking in the WebUI.
-- You don't have enough permissions: Check that the user has the permissions to access WebDAV, you'll need `download` permission to view, and `modify/create/delete` permission to modify the files.
+- The API token expired: Try setting a longer duration time for the API token.
+- The path that you're trying to access is not valid: Make sure that you can access the path in the Web UI.
+- **Insufficient per-source permissions:** In **User Management**, edit the token owner, expand the source in your WebDAV URL, and enable **View**, **Download**, and any write caps you need (**Create**, **Modify**, **Delete**). See {{< doclink path="/features/webdav/#required-permissions" text="WebDAV — Required permissions" />}}.
+- **Scope or access rule:** The path may be outside the user's scope or blocked by {{< doclink path="/access-control/access-control-overview/" text="access control" />}}.

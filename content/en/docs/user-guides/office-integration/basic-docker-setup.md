@@ -3,10 +3,14 @@ title: "Basic Docker Setup"
 description: "Simple OnlyOffice setup with Docker for local development"
 icon: "deployed_Code"
 date: "2025-10-09T00:23:04Z"
-lastmod: "2026-03-10T00:10:42Z"
+lastmod: "2026-07-17T12:00:00Z"
 ---
 
 Complete setup for running FileBrowser Quantum with OnlyOffice using Docker Compose on your local network.
+
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+`userDefaults.permissions` values such as `modify` and `download` seed **default per-source permissions** for new users' scopes — they are not global file caps. To edit documents in OnlyOffice, each user needs **view** and **modify** (and usually **download**) on the **source** containing the files. Adjust scopes in **User Management** after creating users.
+{{% /alert %}}
 
 {{% alert context="warning" %}}
 This guide uses HTTP which is **not secure** for production. Only use for local development or testing. For production deployments with HTTPS. See {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}}
@@ -49,7 +53,7 @@ services:
       - "8080:80"
     environment:
       FILEBROWSER_CONFIG: "data/config.yaml"
-      FILEBROWSER_DATABASE: "data/database.db"
+      FILEBROWSER_DATABASE_PATH: "data/filebrowser.sqlite"
     user: filebrowser # non-root user
     volumes:
       - ./data:/home/filebrowser/data
@@ -68,13 +72,10 @@ services:
 
 ### Step 03: Create FileBrowser Configuration
 
-Create a `data` directory, and create two new files:
-
-- `config.yaml`: The configuration file that we will modify.
-- `database.db`: The database, used for store settings, users, and more. Is needed for persist them.
+Create a `data` directory and `config.yaml`. v2.0.0 creates the SQLite database automatically on first run — you do not need to create an empty database file.
 
 ```bash
-mkdir data && touch data/config.yaml && touch data/database.db
+mkdir data && touch data/config.yaml
 ```
 
 Then populate the config, see {{< doclink path="getting-started/config/" text="Getting started" />}}.
@@ -104,14 +105,17 @@ userDefaults:
   permissions:
     api: false
     admin: false
-    modify: false
     share: false
     realtime: false
+    # Default per-source permissions for new scopes (v2.0.0+)
+    modify: false
     delete: false
     create: false
     download: true
   disableOnlyOfficeExt: ".md .txt .pdf"   # List of file extensions to disable onlyoffice editor for - only applied to new users.
 ```
+
+For editing (not view-only), set `modify: true` here **or** enable **Modify** on the user's scope in User Management. OnlyOffice requires **view** on the source; editing also requires **modify**.
 
 ### Step 4: Start Services
 

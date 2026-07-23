@@ -1,0 +1,58 @@
+server:
+  port: 8080
+  listen: "0.0.0.0"
+  baseURL: "/files"
+  database: "database.db"
+  sources:
+    - path: "/data"
+      name: "data"
+      config:
+        defaultEnabled: true
+        indexingIntervalMinutes: 60
+        hidden: true
+        conditionals:
+          rules:
+            - fileNames:
+                - "^\\."
+              folderNames:
+                - "^\\.git"
+
+auth:
+  adminPassword: changeme
+  disableRateLimit: false
+
+userDefaults:
+  stickySidebar: true
+  hideSidebarFileActions: false
+  hideFilesInTree: false
+  editorQuickSave: true
+  preferEditorForMarkdown: true
+  darkMode: true
+  themeColor: "#0284c7"
+  locale: en
+  loginMethod: password
+  permissions:
+    admin: false
+    api: false
+    share: true
+    realtime: true
+    modify: true
+    create: true
+    delete: false
+    download: true
+  preview:
+    autoplayMedia: false
+    disableHideSidebar: true
+    image: true
+    video: true
+  fileLoading:
+    maxConcurrentUpload: 4
+    uploadChunkSizeMb: 32
+
+integrations:
+  media:
+    exiftoolPath: /usr/bin/exiftool
+    hardwareAcceleration: true
+
+frontend:
+  name: "My FileBrowser"

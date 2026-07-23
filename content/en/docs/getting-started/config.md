@@ -7,6 +7,10 @@ lastmod: "2026-04-21T20:01:57Z"
 order: 6
 ---
 
+{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+v2.0.0 removes deprecated flat config formats and moves HTTP settings from `server` to `http`. Use the config migration tool and follow the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before upgrading.
+{{% /alert %}}
+
 ## What is a Config File?
 
 A configuration file (config file) is a YAML file that defines how FileBrowser Quantum should work. While FileBrowser can run without a config file using default settings, a config file is *generally necessary* and allows you to customize:
@@ -40,15 +44,20 @@ export FILEBROWSER_CONFIG="/path/to/config.yaml"
 
 ## Database Path Configuration
 
-The database path is configured in the `server.database` setting. See {{< doclink path="configuration/server/#database" text="Server configuration" />}} for details.
+The database path is configured under `server.database.path`. See {{< doclink path="configuration/server/#database" text="Server configuration" />}} for details.
 
-**Default database locations:**
-- Standalone: `./database.db` (current directory)
-- Docker: first checks `/home/filebrowser/data/database.db`, then `./database.db` (current directory)
+**Default database locations (v2.0.0+):**
+- Standalone: `./filebrowser.sqlite` (current directory)
+- Docker: `/home/filebrowser/data/filebrowser.sqlite` when using the recommended `./data` mount
 
 **Priority for database path:**
-1. Path specified in `config.yaml` via `server.database`
-2. Default location based on deployment type (standalone vs Docker)
+1. `FILEBROWSER_DATABASE_PATH` environment variable (if set)
+2. Path in `config.yaml` via `server.database.path`
+3. Default location based on deployment type
+
+{{% alert context="info" %}}
+**Upgrading from v1.x?** v2.0.0 uses SQLite instead of BoltDB (`database.db`). Rename your old database, set `migrateFrom`, and follow the {{< doclink path="getting-started/v2/migration/" text="migration guide" />}}. The `FILEBROWSER_DATABASE` env var is removed — use `FILEBROWSER_DATABASE_PATH` instead.
+{{% /alert %}}
 
 ## Docker Configuration
 

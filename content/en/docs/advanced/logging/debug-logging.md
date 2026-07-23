@@ -184,7 +184,8 @@ For production environments, recommended logging configuration:
 server:
   port: 8080
   baseURL: "/"
-  database: "/database/database.db"
+  database:
+    path: "/database/filebrowser.sqlite"
   logging:
     # Main application logs to file
     - output: "/var/log/filebrowser/app.log"

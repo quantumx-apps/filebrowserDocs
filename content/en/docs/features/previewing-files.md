@@ -8,6 +8,10 @@ lastmod: "2026-05-01T16:02:24Z"
 
 FileBrowser includes powerful built-in viewers for a wide range of file types, letting you preview and edit content without downloading files to your device.
 
+{{% alert context="info" title="v2.0.0 permissions" %}}
+In v2.0.0, **view** (browse/preview in the UI) and **download** (save bytes) are separate per-source permissions. **`view` is new** — in v1.x, browsing a source was always allowed once the user had that scope. Users need **view** to open the file viewer; **download** is required to save files or for some client integrations. See {{< doclink path="configuration/users/" text="User Management" />}}.
+{{% /alert %}}
+
 You can turn built-in playback and editing behaviors on or off per user under **Settings → Profile → File Viewer Options**—media player choice, autoplay, editor shortcuts, Markdown routing, and extension-specific disables (including OnlyOffice when configured). See {{< doclink path="user-preferences/file-viewer-options/" text="File Viewer Options (profile settings)" />}}.
 
 ## Quick Preview
