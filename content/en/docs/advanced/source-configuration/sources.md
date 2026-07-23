@@ -11,6 +11,10 @@ order: 1
 
 Sources are the directories that FileBrowser Quantum makes available to users. Each source represents a filesystem path that can be browsed, searched, and managed through the web interface.
 
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+v2.0.0 **removed** source-level `indexingIntervalMinutes` (indexing always uses adaptive scheduling), the `config.conditionals` wrapper, and deprecated rule field names (`fileNames`, `folderNames`, top-level `hidden`). Use `config.rules` with `fileName`, `folderName`, and `ignoreHidden` on rule items. See {{< doclink path="advanced/source-configuration/conditional-rules/" text="Conditional rules" />}}.
+{{% /alert %}}
+
 {{% alert context="info" %}}
 **Getting Started:** For basic usage, you only need to define the `path` and optionally set **defaultEnabled** set to `true` to give the source to all new users. Most other configuration options can be left at their defaults.
 {{% /alert %}}

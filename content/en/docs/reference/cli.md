@@ -3,10 +3,39 @@ title: "CLI Commands"
 description: "Command-line interface reference"
 icon: "terminal"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-04-21T20:01:57Z"
+lastmod: "2026-07-23T13:00:00Z"
 ---
 
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+Starting in **v2.0.0**, user CLI commands changed. Use `user set <username> --password [value]` instead of `set -u username,password`. Use `user promote <username>` to grant admin without changing the password. The old `set -u` form still works but prints a deprecation warning on stderr. Docker examples should mount a **data directory** (not a single `database.db` file) — see {{< doclink path="getting-started/docker/" text="Docker setup" />}}.
+{{% /alert %}}
+
 FileBrowser provides a minimal CLI for setup and user management.
+
+## CLI migration (v2.0.0+)
+
+```bash
+# User create
+set -u john,pass -c cfg          →  user set john --password pass -c cfg
+
+# User password reset
+set -u john,newpass -c cfg       →  user set john --password newpass -c cfg
+                                   # or: echo 'newpass' | user set john --password -c cfg
+
+# Create admin
+set -u admin,pass -a -c cfg      →  user set admin --password pass -a -c cfg
+
+# Promote to admin (preferred — no password change)
+set -u joe,newpass -a -c cfg     →  user promote joe -c cfg
+
+# Access rules — NO CHANGE
+set rule -s access -p / -r user -v admin --allow -c cfg
+
+# Server / setup / version — NO CHANGE
+filebrowser -c cfg
+filebrowser setup
+filebrowser version
+```
 
 ## Available Commands
 
@@ -44,22 +73,44 @@ Check version information:
 
 ### User Management
 
-Add or update user:
+Create or update a password-authenticated user:
 
 ```bash
-./filebrowser set -u username,password
+./filebrowser user set username --password secret -c config.yaml
 ```
 
-With custom config:
+Prompt for password on a TTY (omit the value):
 
 ```bash
-./filebrowser set -u username,password -c config.yaml
+./filebrowser user set username --password -c config.yaml
 ```
 
-Create admin user:
+Read password from stdin (scripts):
 
 ```bash
-./filebrowser set -u username,password -a
+echo 'secret' | ./filebrowser user set username --password -c config.yaml
+```
+
+Create as admin:
+
+```bash
+./filebrowser user set username --password secret -a -c config.yaml
+```
+
+Promote an existing user to admin without changing their password:
+
+```bash
+./filebrowser user promote username -c config.yaml
+```
+
+{{% alert context="info" %}}
+`user set … -a` still resets the password and clears 2FA (same as the old `set -u … -a`). Prefer `user promote` when you only need to grant admin.
+{{% /alert %}}
+
+**Deprecated** (still works with stderr warning):
+
+```bash
+./filebrowser set -u username,password [-a] [-c config.yaml]
 ```
 
 ### Access Rule Management
@@ -68,31 +119,31 @@ Create or update access rules via CLI:
 
 **Allow user access:**
 ```bash
-./filebrowser set rule -f /mnt/storage -p /secret -r user -v username -allow -c config.yaml
+./filebrowser set rule -s access -p /secret -r user -v username --allow -c config.yaml
 ```
 
 **Deny user access:**
 ```bash
-./filebrowser set rule -f /mnt/storage -p /secret -r user -v username -c config.yaml
+./filebrowser set rule -s access -p /secret -r user -v username -c config.yaml
 ```
 
 **Allow group access:**
 ```bash
-./filebrowser set rule -f /mnt/storage -p /departments/sales -r group -v sales -allow -c config.yaml
+./filebrowser set rule -s access -p /departments/sales -r group -v sales --allow -c config.yaml
 ```
 
 **Deny all users:**
 ```bash
-./filebrowser set rule -f /mnt/storage -p /restricted -r all -c config.yaml
+./filebrowser set rule -s access -p /restricted -r all -c config.yaml
 ```
 
 **Rule command options:**
-- `-f` - Real filesystem path (e.g. `/mnt/storage`)
-- `-p` - Index path (e.g. `/secret`)
-- `-r` - Rule category: `user`, `group`, or `all` (for deny only)
-- `-v` - Value: username or groupname (not required if `-r` is `all`)
-- `-allow` - Allow access (default: false, which means deny)
-- `-c` - Config file path
+- `-s` / `--source` - Source name from config (not the filesystem path)
+- `-p` / `--path` - Index path (e.g. `/secret`)
+- `-r` / `--role` - Rule category: `user`, `group`, or `all` (for deny only)
+- `-v` / `--value` - Username or groupname (not required if `-r` is `all`)
+- `--allow` - Allow access (default: false, which means deny)
+- `-c` / `--config` - Config file path
 
 ## Important Notes
 
@@ -105,7 +156,7 @@ Only one process can access the database at once.
 systemctl stop filebrowser
 
 # Run CLI command
-./filebrowser set -u admin,newpass -c config.yaml
+./filebrowser user set admin --password newpass -c config.yaml
 
 # Start service
 systemctl start filebrowser
@@ -131,7 +182,7 @@ docker run -it \
 
 Inside container:
 ```bash
-./filebrowser set -u admin,newpass -c config.yaml
+./filebrowser user set admin --password newpass -c config.yaml
 exit
 ```
 
@@ -144,7 +195,7 @@ docker run -it --rm \
   -v $(pwd)/config.yaml:/home/filebrowser/config.yaml \
   --entrypoint="" \
   gtstef/filebrowser:stable \
-  ./filebrowser set -u admin,newpassword -c config.yaml
+  ./filebrowser user set admin --password newpassword -c config.yaml
 ```
 
 **Create user**:
@@ -154,7 +205,7 @@ docker run -it --rm \
   -v $(pwd)/config.yaml:/home/filebrowser/config.yaml \
   --entrypoint="" \
   gtstef/filebrowser:stable \
-  ./filebrowser set -u newuser,password -c config.yaml
+  ./filebrowser user set newuser --password password -c config.yaml
 ```
 
 ## Common Operations
@@ -166,7 +217,8 @@ docker run -it --rm \
 {{% /alert %}}
 
 ```bash
-./filebrowser set -u admin,newpassword -c config.yaml
+./filebrowser user set admin --password newpassword -c config.yaml
+# or: echo 'newpassword' | ./filebrowser user set admin --password -c config.yaml
 ```
 
 This is useful if:
@@ -177,7 +229,7 @@ This is useful if:
 ### Create New User
 
 ```bash
-./filebrowser set -u joe,password -c config.yaml
+./filebrowser user set joe --password password -c config.yaml
 ```
 
 {{% alert context="info" %}}
@@ -187,12 +239,14 @@ Always include config path, so user defaults are applied.
 ### Promote User to Admin
 
 ```bash
-./filebrowser set -u joe,newpassword -a -c config.yaml
+./filebrowser user promote joe -c config.yaml
 ```
 
-{{% alert context="info" %}}
-Promoting also resets password.
-{{% /alert %}}
+To promote and reset password at the same time:
+
+```bash
+./filebrowser user set joe --password newpassword -a -c config.yaml
+```
 
 ### Initial Admin Setup
 
@@ -200,7 +254,7 @@ After first install:
 
 ```bash
 # Option 1: Use CLI
-./filebrowser set -u admin,secure-password -a -c config.yaml
+./filebrowser user set admin --password secure-password -a -c config.yaml
 
 # Option 2: Use environment variable
 export FILEBROWSER_ADMIN_PASSWORD="secure-password"
@@ -254,55 +308,80 @@ Built: 2025-01-15
 Go version: go1.23
 ```
 
-### filebrowser set
+### filebrowser user set
 
-Add or update users, or manage access rules.
+Create or update a password-authenticated user.
 
-**User Management Syntax**:
+**Syntax**:
+```bash
+./filebrowser user set <username> --password [value] [-a] [-c config.yaml]
+```
+
+**Options**:
+- `--password` - Password (inline value, TTY prompt when omitted, or read from stdin when piped)
+- `-a` / `--admin` - Grant admin permissions
+- `-c` / `--config` - Config file path
+- `--no-input` - Disable interactive prompts (fail if password value is required)
+
+**Examples**:
+```bash
+# Create user
+./filebrowser user set john --password pass123 -c config.yaml
+
+# Create admin
+./filebrowser user set admin --password secure-pass -a -c config.yaml
+
+# Reset password (piped)
+echo 'newpass' | ./filebrowser user set john --password -c config.yaml
+```
+
+### filebrowser user promote
+
+Grant admin permissions without changing the password.
+
+**Syntax**:
+```bash
+./filebrowser user promote <username> [-c config.yaml]
+```
+
+**Example**:
+```bash
+./filebrowser user promote joe -c config.yaml
+```
+
+### filebrowser set (deprecated user syntax)
+
+**Deprecated user syntax** (prints stderr warning):
 ```bash
 ./filebrowser set -u username,password [-a] [-c config.yaml]
 ```
 
-**User Management Options**:
-- `-u` - Username and password (comma-separated)
-- `-a` - Make user admin
-- `-c` - Config file path
+Use `user set` instead. This form remains available in v2.0.0 for compatibility.
 
-**User Management Examples**:
+### filebrowser set rule
+**Syntax**:
 ```bash
-# Create user
-./filebrowser set -u john,pass123 -c config.yaml
-
-# Create admin
-./filebrowser set -u admin,secure-pass -a -c config.yaml
-
-# Reset password
-./filebrowser set -u john,newpass -c config.yaml
-```
-
-**Access Rule Management Syntax**:
-```bash
-./filebrowser set rule -f <fsPath> -p <indexPath> -r <user|group|all> [-v <value>] [-allow] [-c config.yaml]
+./filebrowser set rule -s <sourceName> -p <indexPath> -r <user|group|all> [-v <value>] [--allow] [-c config.yaml]
 ```
 
 **Access Rule Options**:
-- `-f` - Real filesystem path (required)
-- `-p` - Index path (required)
-- `-r` - Rule category: `user`, `group`, or `all` (for deny only) (required)
-- `-v` - Value: username or groupname (required when `-r` is `user` or `group`)
-- `-allow` - Allow access (default: false, which means deny)
-- `-c` - Config file path
+- `-s` / `--source` - Source name from config (required)
+- `-p` / `--path` - Index path (required)
+- `-r` / `--role` - Rule category: `user`, `group`, or `all` (for deny only) (required)
+- `-v` / `--value` - Username or groupname (required when `-r` is `user` or `group`)
+- `--allow` - Allow access (default: false, which means deny)
+- `-c` / `--config` - Config file path
 
 **Access Rule Examples**:
 ```bash
 # Allow user access to a path
-./filebrowser set rule -f /mnt/storage -p /documents -r user -v john -allow -c config.yaml
+./filebrowser set rule -s access -p /documents -r user -v john --allow -c config.yaml
 
 # Deny group access
-./filebrowser set rule -f /mnt/storage -p /restricted -r group -v guests -c config.yaml
+./filebrowser set rule -s access -p /restricted -r group -v guests -c config.yaml
 
 # Deny all users
-./filebrowser set rule -f /mnt/storage -p /private -r all -c config.yaml
+./filebrowser set rule -s access -p /private -r all -c config.yaml
 ```
 
 ## Troubleshooting

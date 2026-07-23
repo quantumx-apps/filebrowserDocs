@@ -94,6 +94,13 @@ ignoreLogs = ['warning-goldmark-raw-html']
     tabWidth = 4
 
 [module]
+    # Custom mounts replace Hugo defaults — include project static/ as well as tools/.
+    [[module.mounts]]
+        source = "static"
+        target = "static"
+    [[module.mounts]]
+        source = "tools"
+        target = "static/tools"
     [[module.imports]]
         path = "github.com/quantumx-apps/filebrowserDocsTheme"
         disable = false

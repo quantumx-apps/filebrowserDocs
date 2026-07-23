@@ -2,10 +2,14 @@
 title: "HTTP Settings"
 description: "Configure HTTP options including trusted proxy headers and auth rate limiting"
 icon: "http"
-date: "2026-05-22T15:32:14Z"
-lastmod: "2026-05-22T15:40:53Z"
+date: "2026-05-22T15:40:53Z"
+lastmod: "2026-05-22T16:24:35Z"
 order: 4
 ---
+
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+HTTP-related options (trusted proxy headers, rate limiting) moved from `server` to the top-level `http` key. If your config still has `server.trustedHeaders` or similar, run the config migration tool or move them manually — see {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
+{{% /alert %}}
 
 Configure HTTP-level options for reverse-proxy integration and authentication rate limiting.
 

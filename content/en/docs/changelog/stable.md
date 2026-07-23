@@ -2,13 +2,47 @@
 title: "Stable"
 description: "See what changed in stable versions"
 icon: "api"
-date: "2026-06-18T02:26:44Z"
-lastmod: "2026-06-19T01:52:21Z"
+date: "2026-07-02T23:17:05Z"
+lastmod: "2026-07-23T01:20:39Z"
 ---
 
 {{% alert context="info" %}}
 You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/filebrowser/releases)
 {{% /alert %}}
+
+---
+
+## v1.5.0-stable
+
+This release is based on {{< doclink path="changelog/beta/#v152-beta" text="v1.5.2-beta" />}}!
+
+ **New Features**:
+ - Added basic html viewer with relative reference support ([issue #2522](https://github.com/gtsteffaniak/filebrowser/issues/2522)).
+ - Shares can have pinned files, requires a user to have edit access to share.
+ - Enhanced search:
+   - Now uses "lazy" match by default ([issue #2509](https://github.com/gtsteffaniak/filebrowser/issues/2509))
+   - Added missing `case sensitive` option in the UI.
+ - Progressive Web App (PWA) improvements:
+   - Restored install prompt with sidebar install button ([issue #2086](https://github.com/gtsteffaniak/filebrowser/issues/2086)).
+   - Camera and video capture buttons on upload (mobile-friendly `capture` inputs)
+   - Send files to other apps via the Web Share API (`Send to app` in the context menu)
+ - App notifications for file operations ([issue #2478](https://github.com/gtsteffaniak/filebrowser/issues/2478))
+   - Optional browser notifications: uploads, chunked downloads, move/copy, or failures finish while the tab is in the background.
+   - Single on/off toggle in Notifications settings, stored in browser local storage.
+
+ **Notes**:
+ - [docker] Upgraded ffmpeg version 8.1 to 8.1.2
+
+ **BugFixes**:
+ - Fixed OnlyOffice reopening an older editor state after a document is modified ([pr #2633](https://github.com/gtsteffaniak/filebrowser/pull/2633)) ([issue #2578](https://github.com/gtsteffaniak/filebrowser/issues/2578)).
+ - Cannot "Reset and generate new two-factor code" to reset the TOTP for a user ([pr #2641](https://github.com/gtsteffaniak/filebrowser/pull/2641))([issue #2399](https://github.com/gtsteffaniak/filebrowser/issues/2399)).
+ - Fixed upload shares with password ([pr #2560](https://github.com/gtsteffaniak/filebrowser/pull/2589)) ([issue #2465](https://github.com/gtsteffaniak/filebrowser/issues/2465)).
+ - Fixed token when returning from preview on shares with pass ([pr #2588](https://github.com/gtsteffaniak/filebrowser/pull/2588)) ([issue #2573](https://github.com/gtsteffaniak/filebrowser/issues/2573)).
+ - Fixed share undefined url after editing a existent share ([pr #2567](https://github.com/gtsteffaniak/filebrowser/pull/2567)) ([issue #2523](https://github.com/gtsteffaniak/filebrowser/issues/2523)).
+ - Fixed PWA manifest `scope` and `id` so install works when the app is served under a base URL.
+ - Fixed installation of a public share as a PWA. Now opens the share URL instead of the site root (#2302).
+
+**Full Changelog**: [v1.4.0-stable...v1.5.0-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.4.0-stable...v1.5.0-stable) -- **Release:**: [v1.5.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.0-stable).
 
 ---
 
@@ -88,7 +122,7 @@ Breaking change: removed deprecated `source.config.disableIndexing`, see {{< doc
  - Playback queue wasn't updating when changing of folder ([pr #2360](https://github.com/gtsteffaniak/filebrowser/pull/2360)).
  - Navigate close settings shows "something went wrong" ([issue #2047](https://github.com/gtsteffaniak/filebrowser/issues/2047)).
 
-**Full Changelog**: [v1.3.3-stable...v1.4.0-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.3.3-stable...v1.4.0-stable) -- **Release:**: [v1.4.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.0-stable).
+**Full Changelog**: [v1.3.3-stable...v1.4.0-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.3.3-stable...v1.4.0-stable) -- **Release:**: [v1.4.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.0-stable).
 
 ## v1.3.3-stable
 

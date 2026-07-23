@@ -8,6 +8,10 @@ lastmod: "2025-11-17T19:11:56Z"
 
 Migrate your configuration from the original FileBrowser to Quantum.
 
+{{% alert context="info" %}}
+**Upgrading Quantum v1.x → v2.0.0?** This page is for the **original FileBrowser** project. Use the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} instead.
+{{% /alert %}}
+
 ## Configuration Format Changes
 
 FileBrowser Quantum uses a YAML-based configuration file instead of command-line flags and database settings.
@@ -38,7 +42,8 @@ Create a new `config.yaml` file with your settings:
 server:
   port: 8080
   baseURL: "/"
-  database: "data/database.db"
+  database:
+    path: "data/filebrowser.sqlite"
   sources:
     - name: "files"
       path: "/srv"
@@ -61,7 +66,7 @@ userDefaults:
 | `--port` | `server.port` |
 | `--address` | `server.address` |
 | `--baseurl` | `server.baseURL` |
-| `--database` | `server.database` |
+| `--database` | `server.database.path` (or `FILEBROWSER_DATABASE_PATH`) |
 | `--root` | `server.sources[0].path` |
 | `--log` | `server.logging[0].levels` |
 

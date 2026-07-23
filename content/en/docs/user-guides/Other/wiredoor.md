@@ -3,10 +3,14 @@ title: "OnlyOffice integration with Wiredoor"
 description: "A basic working example on setting up OnlyOffice and FileBrowser with Wiredoor"
 icon: "deployed_Code"
 date: "2026-01-30T13:20:14Z"
-lastmod: "2026-03-10T00:10:42Z"
+lastmod: "2026-07-17T12:00:00Z"
 ---
 
 This guide shows how to integrate OnlyOffice and FileBrowser via Wiredoor. Wiredoor is a self-hosted ingress-as-a-service platform that lets you route internet traffic to internal apps, IoT, Kubernetes and more using a reverse VPN powered by WireGuard. Below steps are derived from this [discussion](https://github.com/orgs/wiredoor/discussions/110).
+
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+File permissions are **per source**. `userDefaults.permissions.modify` (and related keys) apply as **defaults for new scopes**, not as global modify access. Grant **view** and **modify** on the relevant scope in User Management if users cannot open or edit Office files after upgrade.
+{{% /alert %}}
 
 {{% alert context="warning" %}}
 This guide assumes you have some knowledge on using Wiredoor. Be sure to check [Wiredoor docs to learn more](https://www.wiredoor.net/documentation) about it.
@@ -98,9 +102,14 @@ userDefaults:
   singleClick: false
   permissions:
     admin: false
-    modify: false
-    share: false
     api: false
+    share: false
+    realtime: false
+    # v2.0.0+: default per-source permissions for new scopes
+    modify: true
+    download: true
+    create: true
+    delete: true
 integrations:
   office:
     url: "https://onlyoffice.example.com"   # Domain used to expose onlyoffice

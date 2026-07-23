@@ -3,7 +3,7 @@ title: "WebDAV"
 description: "Access FileBrowser Quantum as WebDAV Storage"
 icon: "storage"
 date: "2026-02-27T22:40:24Z"
-lastmod: "2026-05-01T16:02:24Z"
+lastmod: "2026-07-17T12:00:00Z"
 order: 4
 ---
 
@@ -12,6 +12,10 @@ order: 4
 [WebDAV](https://en.wikipedia.org/wiki/WebDAV) is a feature in FileBrowser that will let you access and manage your files directly from your devices remotely.
 
 It's also an alternative to the WebUI since you can mount/use one (or multiples) of your {{< doclink path="/configuration/sources/" text="sources" />}} directly on your devices and manage the files stored in them. This allows the use of native applications to create/edit/organize files via WebDAV that are not possible via WebUI. For example, you can edit documents using native office suites without {{< doclink path="/integrations/office/about/" text="Office Integration" />}} enabled, or organize folders/files using native apps like Explorer on Windows (In versions before Nov 2023), Finder on macOS, Thunar/Dolphin in Linux, etc. You can also use any third party client or app that support WebDAV to access your files!
+
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+WebDAV permission checks are **per source** (the source name in `/dav/<source>/`). Each capability is checked separately — **view** and **download** are not the same. **`view` is new in v2.0.0** — in v1.x, listing a source was always allowed. See [Required permissions](#required-permissions) below. Token-based WebDAV uses the token owner's per-source permissions (intersected with any file caps on the token).
+{{% /alert %}}
 
 ## How to use WebDAV
 
@@ -74,8 +78,30 @@ To open a folder inside a source instead of the whole source:
 
 **Quick method:** In the Web UI, open the folder you want, copy the address bar URL, then replace `/files/` with `/dav/`. Example: `https://files.example.com/files/data/folder/` → `https://files.example.com/dav/data/folder/`
 
-{{% alert context="warning" %}}
-You only see folders and sources your user can access. You need `download` to read and `modify` / `create` / `delete` to change files.
+## Required permissions
+
+Permissions are evaluated for the **source** in the WebDAV URL (`/dav/<source-name>/…`). You only see sources and paths your user can access. {{< doclink path="/access-control/access-control-overview/" text="Access control rules" />}} can still deny specific paths even when permissions are granted.
+
+| Client action | WebDAV method | Required permission(s) |
+|---|---|---|
+| Browse folders, list properties | `PROPFIND`, `OPTIONS` | **View** |
+| Read / download file contents | `GET`, `HEAD` | **Download** |
+| Create a folder | `MKCOL` | **Create** |
+| Upload / overwrite a file | `PUT` | **Modify** |
+| Delete a file or folder | `DELETE` | **Delete** |
+| Copy within the same source | `COPY` | **Download** + **Create** |
+| Move / rename | `MOVE` | **Modify** |
+
+**Practical summary:**
+
+- **Read-only mount** (browse + open files): **View** + **Download**
+- **Full sync / file manager** (typical WinSCP, rclone, Finder): **View**, **Download**, **Create**, **Modify**, **Delete** as needed
+- **Browse-only** (folders visible but files won't open): **View** without **Download**
+
+Configure these on each user **scope** in {{< doclink path="/configuration/users/" text="User Management" />}} (expand the source row). Unhandled WebDAV methods (for example `LOCK`, `PROPPATCH`) are denied.
+
+{{% alert context="info" %}}
+Before v2.0.0, browsing a source was always allowed once the user had that scope — there was no separate **view** permission. v2.0.0 introduces **view** as an explicit grant and splits **listing** (**view**) from **reading bytes** (**download**). Migration sets **view** to **true** on existing scopes unless configured otherwise.
 {{% /alert %}}
 
 ## Tested Clients
@@ -128,7 +154,8 @@ If you get access denied could be for the following reasons:
 
 - The API Token expired: Try setting a longer duration time for the API Token.
 - The path that you're trying to access is not valid: Make sure that you access to the path by checking in the WebUI.
-- You don't have enough permissions: Check that your user has the necessary permissions to access WebDAV, you'll need `download` permission to view, and `modify/create/delete` permission to modify files. Also see {{< doclink path="/access-control/access-control-overview/" text="Access control" />}}.
+- **Insufficient per-source permissions:** Open **User Management**, edit the user (or the user who owns the token), expand the **source** matching your WebDAV URL, and grant the capabilities from [Required permissions](#required-permissions) — for most clients you need **View** + **Download** to browse and open files, plus **Create** / **Modify** / **Delete** for writes. Also see {{< doclink path="/access-control/access-control-overview/" text="Access control" />}}.
+- **Scope or access rule:** The path may be outside the user's scope for that source, or blocked by an allow/deny rule.
 
 ### Connection or configuration issues
 

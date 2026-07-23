@@ -3,10 +3,14 @@ title: "Init Script Setup"
 description: "Automate FileBrowser initialization with scripts"
 icon: "play_circle"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-04-21T20:01:57Z"
+lastmod: "2026-07-17T12:00:00Z"
 ---
 
 Automated initialization scripts for FileBrowser using the API. Works across Docker, Docker Compose, Kubernetes, and bare metal deployments.
+
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+User **file** permissions (**view**, **download**, **modify**, **create**, **delete**) must be set on **`scopes[].permissions`**, not on top-level `permissions`. **`view` is new in v2.0.0** — in v1.x, browsing a scope was always allowed. Top-level `permissions` is global only: **admin**, **api**, **share**, **realtime**. User API updates use **`PATCH`** (partial payloads) and address users by **username**. See {{< doclink path="configuration/users/" text="User Management" />}} and {{< doclink path="reference/api/" text="API reference" />}}.
+{{% /alert %}}
 
 ## Overview
 
@@ -53,9 +57,23 @@ curl -X POST \
       "loginMethod": "password",
       "permissions": {
         "admin": false,
-        "modify": true,
-        "share": true
-      }
+        "api": false,
+        "share": true,
+        "realtime": false
+      },
+      "scopes": [
+        {
+          "name": "files",
+          "scope": "/",
+          "permissions": {
+            "view": true,
+            "download": true,
+            "modify": true,
+            "create": true,
+            "delete": true
+          }
+        }
+      ]
     }
   }' \
   "${FILEBROWSER_URL}/api/users"
@@ -203,9 +221,23 @@ curl -X POST \
       "loginMethod": "password",
       "permissions": {
         "admin": false,
-        "modify": true,
-        "share": true
-      }
+        "api": false,
+        "share": true,
+        "realtime": false
+      },
+      "scopes": [
+        {
+          "name": "files",
+          "scope": "/",
+          "permissions": {
+            "view": true,
+            "download": true,
+            "modify": true,
+            "create": true,
+            "delete": true
+          }
+        }
+      ]
     }
   }' \
   http://localhost:8080/api/users
@@ -347,14 +379,21 @@ create_user() {
                 \"loginMethod\": \"password\",
                 \"permissions\": {
                     \"admin\": ${is_admin},
-                    \"modify\": true,
+                    \"api\": false,
                     \"share\": true,
-                    \"create\": true,
-                    \"rename\": true,
-                    \"delete\": true,
-                    \"download\": true
+                    \"realtime\": false
                 },
-                \"scopes\": []
+                \"scopes\": [{
+                    \"name\": \"files\",
+                    \"scope\": \"/\",
+                    \"permissions\": {
+                        \"view\": true,
+                        \"download\": true,
+                        \"modify\": true,
+                        \"create\": true,
+                        \"delete\": true
+                    }
+                }]
             }
         }" \
         "${FILEBROWSER_URL}/api/users")
@@ -573,7 +612,7 @@ data:
       -X POST \
       -H "Authorization: Bearer ${TOKEN}" \
       -H "Content-Type: application/json" \
-      -d '{"which":[],"data":{"username":"demo","password":"demo123","loginMethod":"password","permissions":{"admin":false,"modify":true,"share":true,"create":true,"rename":true,"delete":true,"download":true},"scopes":[]}}' \
+      -d '{"which":[],"data":{"username":"demo","password":"demo123","loginMethod":"password","permissions":{"admin":false,"api":false,"share":true,"realtime":false},"scopes":[{"name":"files","scope":"/","permissions":{"view":true,"download":true,"modify":true,"create":true,"delete":true}}]}}' \
       "${FILEBROWSER_URL}/api/users")
 
     if [ "$HTTP_CODE" = "201" ]; then
@@ -708,14 +747,23 @@ curl -X POST \
       "loginMethod": "password",
       "permissions": {
         "admin": false,
-        "modify": true,
+        "api": false,
         "share": true,
-        "create": true,
-        "rename": true,
-        "delete": true,
-        "download": true
+        "realtime": false
       },
-      "scopes": []
+      "scopes": [
+        {
+          "name": "files",
+          "scope": "/",
+          "permissions": {
+            "view": true,
+            "download": true,
+            "modify": true,
+            "create": true,
+            "delete": true
+          }
+        }
+      ]
     }
   }' \
   http://localhost:8080/api/users
@@ -860,7 +908,8 @@ Since settings cannot be updated via the API, you must configure FileBrowser thr
 server:
   port: 8080
   baseURL: /
-  database: /database/database.db
+  database:
+    path: /database/filebrowser.sqlite
   log: stdout
   sources:
     - name: files
@@ -880,10 +929,12 @@ auth:
 userDefaults:
   permissions:
     admin: false
-    modify: true
+    api: false
     share: true
+    realtime: false
+    # v2.0.0+: seeds default per-source permissions for new scopes
+    modify: true
     create: true
-    rename: true
     delete: true
     download: true
   scopes: []

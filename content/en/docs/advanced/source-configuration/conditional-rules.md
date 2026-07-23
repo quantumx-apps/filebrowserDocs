@@ -10,6 +10,10 @@ lastmod: "2026-05-04T20:29:44Z"
 
 Conditional rules allow you to control which files and folders are indexed by FileBrowser Quantum. Use rules to exclude system files, temporary directories, or large archives while keeping your UI clean and search results relevant.
 
+{{% alert context="warning" title="v2.0.0 behavior change" %}}
+The `conditionals` wrapper on source `config` was **removed** in v2.0.0 — configure rules directly under `config.rules`. Deprecated field names (`fileNames`, `folderNames`, top-level `hidden`) are no longer accepted; use `fileName`, `folderName`, and `ignoreHidden` on rule items.
+{{% /alert %}}
+
 {{% alert context="info" %}}
 **Version 1.2.0+**: Rules have been simplified. The `conditionals` wrapper has been removed, and `ignoreHidden`, `ignoreZeroSizeFolders`, and `ignoreSymlinks` are moved to rule items.
 {{% /alert %}}
