@@ -2,7 +2,7 @@
 title: "Changelog"
 description: "See what changed in Filebrowser Quantum"
 icon: "assignment"
-date: "2026-06-18T02:26:44Z"
-lastmod: "2026-06-18T03:13:01Z"
+date: "2026-07-02T23:17:05Z"
+lastmod: "2026-07-02T23:17:05Z"
 order: -1
 ---
