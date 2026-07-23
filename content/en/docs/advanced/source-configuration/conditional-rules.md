@@ -3,7 +3,7 @@ title: "Conditional Rules"
 description: "Control which files and folders are indexed using conditional rules"
 icon: "rule"
 date: "2025-10-17T21:34:59Z"
-lastmod: "2026-05-04T20:29:44Z"
+lastmod: "2026-07-23T17:03:27Z"
 ---
 
 ## Overview
