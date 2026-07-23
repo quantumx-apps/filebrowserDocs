@@ -3,7 +3,7 @@ title: "Traefik Setup"
 description: "Complete production setup with Traefik using Docker and Let's Encrypt"
 icon: "dns"
 date: "2025-10-29T22:21:43Z"
-lastmod: "2026-04-21T20:01:57Z"
+lastmod: "2026-07-23T17:03:27Z"
 order: 3
 ---
 
@@ -31,7 +31,7 @@ That said, this guide will cover:
 
 - Docker and Docker Compose installed, see [how to install docker](https://docs.docker.com/compose/install/) for your respective OS.
 - A valid and working **Domain name** and/or a **DDNS provider** configured which is required for Let's Encrypt DNS Challenge in traefik.
-- **DDNS provider** ([Dynu](https://www.dynu.com/Resources/Tutorials/DynamicDNS/GettingStarted), Cloudflare, DuckDNS, etc) - [See supported providers](https://doc.traefik.io/traefik/https/acme/#providers)
+- **DDNS provider** [See supported providers](https://doc.traefik.io/traefik/https/acme/#providers)
 - Basic understanding of Traefik, Docker, and Docker compose in general.
 - Email address for Let's encrypt.
 

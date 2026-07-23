@@ -2,8 +2,8 @@
 title: "Config Migration"
 description: "Convert a v1.x config.yaml to the v2.0.0 structure"
 icon: "sync_alt"
-date: "2026-07-23T16:00:00Z"
-lastmod: "2026-07-23T16:00:00Z"
+date: "2026-07-23T17:03:27Z"
+lastmod: "2026-07-23T17:03:27Z"
 order: 0.5
 ---
 

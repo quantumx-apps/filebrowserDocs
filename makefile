@@ -227,48 +227,9 @@ update-link-cache:
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	@echo "Updating external links cache..."
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-	@echo "Extracting all external links from markdown files..."
-	@TEMP_URLS=$$(mktemp); \
-	find content -name "*.md" -type f -exec grep -oP '!?\[[^\]]*\]\(https?://[^)]+\)' {} \; | \
-		sed -E 's/.*\((https?:\/\/[^)]+).*/\1/' >> "$$TEMP_URLS"; \
-	find content -name "*.md" -type f -exec grep -oP '(href|src)=["'\'']https?://[^"'\'']+["'\'']' {} \; | \
-		sed -E 's/(href|src)=["'\'']([^"'\'']+)["'\'']/\2/' >> "$$TEMP_URLS"; \
-	ALL_URLS=$$(sort -u "$$TEMP_URLS"); \
-	rm -f "$$TEMP_URLS"; \
-	URL_COUNT=$$(echo "$$ALL_URLS" | wc -l); \
-	echo "Found $$URL_COUNT unique external URLs"; \
-	echo "Validating all URLs (this may take a while)..."; \
-	echo ""; \
-	VALID_URLS=$$(mktemp); \
-	CHECKED=0; \
-	echo "$$ALL_URLS" | while read url; do \
-		CHECKED=$$((CHECKED + 1)); \
-		echo -n "[$$CHECKED/$$URL_COUNT] Checking: $$url ... "; \
-		HTTP_CODE=$$(curl -o /dev/null -s -w "%{http_code}" -L --max-time 10 --retry 1 "$$url" 2>/dev/null || echo "000"); \
-		case "$$HTTP_CODE" in \
-			200|201|202|203|204|301|302|303|307|308) \
-				echo "✓ OK ($$HTTP_CODE)"; \
-				echo "$$url" >> "$$VALID_URLS"; \
-				;; \
-			*) \
-				echo "❌ FAILED ($$HTTP_CODE)"; \
-				;; \
-		esac; \
-	done; \
-	VALID_COUNT=$$(wc -l < "$$VALID_URLS" 2>/dev/null || echo "0"); \
-	echo ""; \
-	echo "Updating .external-links with $$VALID_COUNT valid URLs..."; \
-	{ \
-		echo "# External Links Cache"; \
-		echo "# This file contains URLs that have been validated and can be skipped in checks"; \
-		echo "# Format: one URL per line"; \
-		echo "# Last updated: $$(date '+%Y-%m-%d %H:%M:%S')"; \
-		echo ""; \
-		sort -u "$$VALID_URLS" 2>/dev/null || true; \
-	} > .external-links; \
-	rm -f "$$VALID_URLS"; \
-	echo "✅ Cache file updated with $$VALID_COUNT validated URLs"; \
-	echo "   Commit .external-links to share with team"
+	@chmod +x scripts/check-external-links.sh
+	@bash scripts/check-external-links.sh --refresh-cache
+	@echo "   Commit .external-links to share with team"
 
 # 9. Validate image references
 check-images:

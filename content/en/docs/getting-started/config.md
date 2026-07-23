@@ -3,7 +3,7 @@ title: "Configuration Files"
 description: "Understanding and using configuration files in FileBrowser Quantum"
 icon: "settings"
 date: "2025-10-23T00:50:09Z"
-lastmod: "2026-04-21T20:01:57Z"
+lastmod: "2026-07-23T17:03:27Z"
 order: 6
 ---
 

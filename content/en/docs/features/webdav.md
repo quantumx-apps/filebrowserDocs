@@ -3,7 +3,7 @@ title: "WebDAV"
 description: "Access FileBrowser Quantum as WebDAV Storage"
 icon: "storage"
 date: "2026-02-27T22:40:24Z"
-lastmod: "2026-07-17T12:00:00Z"
+lastmod: "2026-07-23T17:03:27Z"
 order: 4
 ---
 
