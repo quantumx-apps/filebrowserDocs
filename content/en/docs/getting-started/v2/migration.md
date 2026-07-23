@@ -2,8 +2,8 @@
 title: "Migration Guide"
 description: "Upgrade FileBrowser Quantum from v1.x to v2.0.0"
 icon: "upgrade"
-date: "2026-07-23T13:00:00Z"
-lastmod: "2026-07-23T15:00:00Z"
+date: "2026-07-23T17:03:27Z"
+lastmod: "2026-07-23T23:13:35Z"
 order: 1
 ---
 
