@@ -2,13 +2,28 @@
 title: "Beta"
 description: "See what changed in beta versions"
 icon: "rocket_launch"
-date: "2026-06-18T02:26:44Z"
-lastmod: "2026-06-18T03:13:01Z"
+date: "2026-07-02T23:17:05Z"
+lastmod: "2026-07-23T01:20:39Z"
 ---
 
 {{% alert context="info" %}}
 You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/filebrowser/releases)
 {{% /alert %}}
+
+---
+
+## v1.5.2-beta
+
+ **Notes**:
+ - [docker] Upgraded ffmpeg version 8.1 to 8.1.2
+
+ **BugFixes**:
+ - Fixed OnlyOffice reopening an older editor state after a document is modified ([pr #2633](https://github.com/gtsteffaniak/filebrowser/pull/2633)) ([issue #2578](https://github.com/gtsteffaniak/filebrowser/issues/2578)).
+ - Cannot "Reset and generate new two-factor code" to reset the TOTP for a user ([pr #2641](https://github.com/gtsteffaniak/filebrowser/pull/2641))([issue #2399](https://github.com/gtsteffaniak/filebrowser/issues/2399)).
+
+**Full Changelog**: [v1.5.1-beta...v1.5.2-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.1-beta...v1.5.2-beta) -- **Release:**: [v1.5.2-beta](https://github.com/gtsteffaniak/filebrowser/releases#release-v1.5.2-beta)
+
+---
 
 ## v1.5.1-beta
 
