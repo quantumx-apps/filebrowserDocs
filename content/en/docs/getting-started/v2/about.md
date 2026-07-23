@@ -29,7 +29,7 @@ Per-source access rules and scoped permissions existed in v1.x, but state lived 
 
 ## New state management architecture
 
-v2.x.x introduces **write-through backend state management** in [`backend/internal/state`](https://github.com/gtsteffaniak/filebrowser/tree/main/backend/internal/state). All persisted data flows through a single gateway:
+v2.x.x introduces **write-through backend state management**:
 
 ```mermaid
 flowchart LR
@@ -77,8 +77,6 @@ All durable mutations write through to SQLite so restarts recover consistent sta
 | **Config rules** | `config.conditionals` removed. Source-level `indexingIntervalMinutes` removed (adaptive scheduling). Rule fields `fileNames` / `folderNames` / top-level `hidden` → `config.rules` with `fileName`, `folderName`, `ignoreHidden`. |
 | **CLI** | User commands → `user set` / `user promote`; `set -u` deprecated. See {{< doclink path="reference/cli/" text="CLI reference" />}}. |
 | **Env vars** | `FILEBROWSER_DATABASE` removed. Use `FILEBROWSER_DATABASE_PATH` or `server.database.path`. |
-
-See the full list in the [CHANGELOG](https://github.com/gtsteffaniak/filebrowser/blob/main/CHANGELOG.md#v200).
 
 ## API and response cleanup
 
