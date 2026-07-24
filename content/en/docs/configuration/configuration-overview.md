@@ -7,7 +7,9 @@ lastmod: "2026-07-23T17:03:27Z"
 order: 1
 ---
 
-{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+{{% alert context="warning" %}}
+**Upgrading to v2.0.0?**
+
 v2.0.0 restructures config (SQLite database, `http` block, structured `userDefaults`, per-source permissions). Convert your existing `config.yaml` with the config migration tool before upgrading — see {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
 {{% /alert %}}
 

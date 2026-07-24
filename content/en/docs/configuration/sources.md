@@ -9,7 +9,9 @@ order: 3
 
 Sources are the core concept in FileBrowser - each source represents a file system location users can access.
 
-{{% alert context="info" title="v2.0.0 source config" %}}
+{{% alert context="info" %}}
+**v2.0.0 source config**
+
 Deprecated source options (`indexingIntervalMinutes`, `conditionals` wrapper, old rule field names) were removed in v2.0.0. See {{< doclink path="advanced/source-configuration/sources/" text="Advanced source configuration" />}} for current rule syntax.
 {{% /alert %}}
 

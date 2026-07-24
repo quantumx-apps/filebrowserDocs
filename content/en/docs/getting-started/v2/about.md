@@ -9,7 +9,9 @@ order: 0
 
 FileBrowser Quantum **v2.0.0** is the largest upgrade to date. It modernizes persistence, configuration, permissions, and API shapes so the application can support richer features going forward.
 
-{{% alert context="warning" title="Upgrading from v1.x?" %}}
+{{% alert context="warning" %}}
+**Upgrading from v1.x?**
+
 v2.0.0 **requires** a config update and a one-time database migration. Back up your `database.db` before upgrading and follow the {{< doclink path="getting-started/v2/migration/" text="migration guide" />}} step by step.
 {{% /alert %}}
 

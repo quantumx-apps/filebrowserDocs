@@ -8,7 +8,9 @@ lastmod: "2026-07-23T17:03:27Z"
 
 A config needs to be validated using a few simple rules:
 
-{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+{{% alert context="warning" %}}
+**Upgrading to v2.0.0?**
+
 v2.0.0 removes deprecated flat config formats and legacy fields from generated output. Convert your existing config with the config migration tool before upgrading — see {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
 {{% /alert %}}
 

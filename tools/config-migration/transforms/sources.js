@@ -1,6 +1,7 @@
 import {
   REMOVED_RULE_KEYS,
   CONDITIONALS_GLOBAL_KEYS,
+  FILE_PERMISSION_KEYS,
 } from '../constants.js';
 import { renamedRuleFieldHighlight } from '../highlight-map.js';
 import { recordChange, recordRelocation } from '../utils.js';
@@ -39,23 +40,98 @@ export function transformSources(config, filePerms, filePermsConfigured, changes
       cfg.rules = migrateRulesArray(cfg.rules, changes, warnings, rulesFromConditionals);
     }
 
-    if (!cfg.defaultPermissions || typeof cfg.defaultPermissions !== 'object') {
-      cfg.defaultPermissions = { ...filePerms };
-      if (filePermsConfigured) {
-        cfg.defaultPermissions.configured = true;
-      }
-      recordChange(changes, 'added', `server.sources[${i}].config.defaultPermissions`, {
-        outputPath: 'server.sources[].config.defaultPermissions',
-        outputKey: 'defaultPermissions',
-      });
-      if (filePermsConfigured) {
-        recordChange(changes, 'added', `server.sources[${i}].config.defaultPermissions.configured`, {
-          outputPath: 'server.sources[].config.defaultPermissions.configured',
-          outputKey: 'configured',
-        });
+    applyDefaultPermissions(cfg, filePerms, filePermsConfigured, changes, i);
+  }
+}
+
+/**
+ * @param {Record<string, unknown>} cfg
+ * @param {Record<string, boolean>} filePerms
+ * @param {boolean} filePermsConfigured
+ * @param {Array<{action: string, path: string, inputKey?: string, outputKey?: string, inputPath?: string, outputPath?: string}>} changes
+ * @param {number} sourceIndex
+ */
+function applyDefaultPermissions(cfg, filePerms, filePermsConfigured, changes, sourceIndex) {
+  const hadDefaultPermissions =
+    cfg.defaultPermissions &&
+    typeof cfg.defaultPermissions === 'object' &&
+    !Array.isArray(cfg.defaultPermissions);
+
+  if (!hadDefaultPermissions && !filePermsConfigured) {
+    return;
+  }
+
+  /** @type {Set<string>} */
+  const originalKeys = hadDefaultPermissions
+    ? new Set(Object.keys(/** @type {Record<string, unknown>} */ (cfg.defaultPermissions)))
+    : new Set();
+
+  if (!hadDefaultPermissions) {
+    cfg.defaultPermissions = finalizeDefaultPermissions({ ...filePerms }, filePermsConfigured);
+    recordChange(changes, 'added', `server.sources[${sourceIndex}].config.defaultPermissions`, {
+      outputPath: 'server.sources[].config.defaultPermissions',
+      outputKey: 'defaultPermissions',
+    });
+  } else {
+    const existing = /** @type {Record<string, unknown>} */ (cfg.defaultPermissions);
+    if (filePermsConfigured) {
+      for (const key of FILE_PERMISSION_KEYS) {
+        existing[key] = filePerms[key];
       }
     }
+    cfg.defaultPermissions = finalizeDefaultPermissions(existing, filePermsConfigured);
   }
+
+  recordDefaultPermissionHighlights(cfg, changes, sourceIndex, originalKeys);
+}
+
+/**
+ * Highlight defaultPermissions fields on output: view always, plus any key newly added to the source.
+ * @param {Record<string, unknown>} cfg
+ * @param {Array<{action: string, path: string, inputKey?: string, outputKey?: string, inputPath?: string, outputPath?: string}>} changes
+ * @param {number} sourceIndex
+ * @param {Set<string>} originalKeys
+ */
+function recordDefaultPermissionHighlights(cfg, changes, sourceIndex, originalKeys) {
+  const final = cfg.defaultPermissions;
+  if (!final || typeof final !== 'object' || Array.isArray(final)) {
+    return;
+  }
+
+  const perms = /** @type {Record<string, unknown>} */ (final);
+  for (const key of FILE_PERMISSION_KEYS) {
+    if (perms[key] === undefined) {
+      continue;
+    }
+    if (key !== 'view' && originalKeys.has(key)) {
+      continue;
+    }
+    recordChange(changes, 'added', `server.sources[${sourceIndex}].config.defaultPermissions.${key}`, {
+      outputPath: `server.sources[].config.defaultPermissions.${key}`,
+      outputKey: key,
+    });
+  }
+}
+
+/**
+ * `configured` is a backend marker for intentional deny-all. Explicit permission keys in YAML
+ * are enough otherwise — do not emit configured: true in migrated config output.
+ * @param {Record<string, unknown>} perms
+ * @param {boolean} filePermsConfigured
+ * @returns {Record<string, unknown>}
+ */
+function finalizeDefaultPermissions(perms, filePermsConfigured) {
+  const next = { ...perms };
+  const denyAll =
+    filePermsConfigured &&
+    FILE_PERMISSION_KEYS.every((key) => next[key] === false);
+
+  if (denyAll) {
+    next.configured = true;
+  } else {
+    delete next.configured;
+  }
+  return next;
 }
 
 /**

@@ -7,7 +7,9 @@ lastmod: "2026-07-23T23:13:35Z"
 order: 2
 ---
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
 In v2.0.0, `server.database` is an object with `path` (and optional `migrateFrom` during upgrade). Listening, URLs, TLS, WebDAV, and proxy options moved to the top-level `http` key — see {{< doclink path="configuration/http/" text="HTTP settings" />}}. Default database is SQLite (`filebrowser.sqlite`), not BoltDB (`database.db`).
 {{% /alert %}}
 

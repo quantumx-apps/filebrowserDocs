@@ -8,7 +8,9 @@ lastmod: "2026-07-23T17:03:27Z"
 
 Complete setup for running FileBrowser Quantum with OnlyOffice using Docker Compose on your local network.
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
 `userDefaults.permissions` values such as `modify` and `download` seed **default per-source permissions** for new users' scopes — they are not global file caps. To edit documents in OnlyOffice, each user needs **view** and **modify** (and usually **download**) on the **source** containing the files. Adjust scopes in **User Management** after creating users.
 {{% /alert %}}
 

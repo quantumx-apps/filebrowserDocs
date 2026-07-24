@@ -9,7 +9,9 @@ order: 5
 
 Configure users, permissions, and default user settings.
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
 Starting in **v2.0.0**, file permissions are **per source**, not global. Each user scope (source assignment) has its own **view**, **download**, **modify**, **create**, and **delete** flags. **`view` is new in v2.0.0** — in v1.x, browsing and listing a source was always allowed once the user had that scope; v2.0.0 makes **view** an explicit grant (migration sets it to **true** on existing scopes unless you configure otherwise). Global user permissions are limited to **admin**, **api**, **share**, and **realtime**. Values under `userDefaults.permissions` in config (modify, create, delete, download) now seed **default per-source permissions** for new users — they are no longer stored as global caps on the user record. CLI user commands also changed: use `user set` and `user promote` instead of `set -u` (see {{< doclink path="reference/cli/" text="CLI reference" />}}). See {{< doclink path="features/webdav/" text="WebDAV" />}} for how each capability maps to client operations.
 {{% /alert %}}
 

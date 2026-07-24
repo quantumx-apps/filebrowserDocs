@@ -18,7 +18,9 @@ FileBrowser combines three separate ideas. Together they decide whether someone 
 
 Access rules refine **which paths** under a source are reachable once the user already has that source and sufficient **per-source permissions** for the action.
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
 Starting in **v2.0.0**, file-operation permissions are **per source** (on each user scope), not global checkboxes on the user. Global permissions are **admin**, **api**, **share**, and **realtime** only. **`view` is a new permission type** — in v1.x, browsing a source was always allowed once the user had that scope; v2.0.0 adds an explicit **view** grant (migration sets it to **true** on existing scopes). After upgrading, confirm each user's scopes in **User Management** — migration copies former global file permissions onto every scope, but requirements for WebDAV, API, and the UI now check the **source you are using**.
 {{% /alert %}}
 

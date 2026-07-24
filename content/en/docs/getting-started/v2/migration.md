@@ -22,7 +22,9 @@ Migration happens in **four phases**:
 | **3. Cleanup** | If validated, update config to final structure without `migrateFrom` and `userDefaults` |
 | **4. Confirm** | Restart and final validation |
 
-{{% alert context="danger" title="Rollback policy" %}}
+{{% alert context="danger" %}}
+**Rollback policy**
+
 **Always keep a backup of your original `database.db` file** in a safe location outside the active data directory.
 
 If you notice **anything wrong** after upgrading — missing users, broken shares, incorrect permissions, sidebar links — **stop using v2.0.0 immediately** and roll back to your v1.x installation. Open a [GitHub issue](https://github.com/gtsteffaniak/filebrowser/issues) so the developers can investigate.
@@ -59,7 +61,7 @@ Then set the new SQLite path and point `migrateFrom` at your renamed BoltDB file
 ```yaml
 server:
   database:
-    path: "filebrowser.sqlite"
+    path: "filebrowser.sqlite" # or use FILEBROWSER_DATABASE_PATH env var
     migrateFrom: "database.db.old"
 ```
 
@@ -131,7 +133,7 @@ Delete the `migrateFrom` key from `config.yaml`:
 ```yaml
 server:
   database:
-    path: "filebrowser.sqlite"
+    path: "filebrowser.sqlite" # or use FILEBROWSER_DATABASE_PATH env var
     # migrateFrom removed — migration is complete
 ```
 
@@ -178,7 +180,7 @@ You are now running v2.0.0.
 ```yaml
 server:
   database:
-    path: "filebrowser.sqlite"
+    path: "filebrowser.sqlite" # or use FILEBROWSER_DATABASE_PATH env var
     migrateFrom: "database.db.old"
   sources:
     - path: "/your/files"

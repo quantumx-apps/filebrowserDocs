@@ -4,6 +4,7 @@ import {
   DEPRECATED_RULE_KEYS,
   VALID_TOP_LEVEL_KEYS,
   FLAT_USER_DEFAULTS_MAP,
+  FILE_PERMISSION_KEYS,
 } from '../constants.js';
 import { recordChange } from '../utils.js';
 
@@ -72,11 +73,27 @@ export function transformCleanup(config, changes, warnings) {
             }
           }
         }
+        stripConfiguredUnlessDenyAll(cfg);
       }
     }
   }
 
   stripConsumedFlatUserDefaults(config, changes);
+}
+
+/**
+ * Remove internal `configured` marker unless all file permissions are explicitly false (deny-all).
+ * @param {Record<string, unknown>} cfg
+ */
+function stripConfiguredUnlessDenyAll(cfg) {
+  if (!cfg.defaultPermissions || typeof cfg.defaultPermissions !== 'object' || Array.isArray(cfg.defaultPermissions)) {
+    return;
+  }
+  const perms = /** @type {Record<string, unknown>} */ (cfg.defaultPermissions);
+  const denyAll = FILE_PERMISSION_KEYS.every((key) => perms[key] === false);
+  if (!denyAll) {
+    delete perms.configured;
+  }
 }
 
 /**

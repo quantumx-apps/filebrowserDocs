@@ -7,7 +7,9 @@ lastmod: "2026-07-23T17:03:27Z"
 order: 6
 ---
 
-{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+{{% alert context="warning" %}}
+**Upgrading to v2.0.0?**
+
 v2.0.0 removes deprecated flat config formats and moves HTTP settings from `server` to `http`. Use the config migration tool and follow the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before upgrading.
 {{% /alert %}}
 

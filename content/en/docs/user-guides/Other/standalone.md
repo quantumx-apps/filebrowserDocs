@@ -8,7 +8,9 @@ lastmod: "2026-07-23T17:03:27Z"
 
 This guide will help you set up your FileBrowser instance alone. This will be helpful for users who just want to access their files over LAN for storage.
 
-{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+{{% alert context="warning" %}}
+**Upgrading to v2.0.0?**
+
 v2.0.0 uses **SQLite** (`filebrowser.sqlite`) instead of BoltDB (`database.db`). Mount a **data directory** and follow the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} if upgrading from v1.x.
 {{% /alert %}}
 
