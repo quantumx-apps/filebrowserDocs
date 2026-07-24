@@ -8,7 +8,9 @@ lastmod: "2026-07-23T17:03:27Z"
 
 [WinSCP](https://winscp.net/eng/index.php) is a free file manager for Windows supporting FTP, SFTP, S3 and WebDAV.
 
-{{% alert context="info" title="v2.0.0 permissions" %}}
+{{% alert context="info" %}}
+**v2.0.0 permissions**
+
 WebDAV checks **per-source** permissions for the source in your URL (`/dav/<source>/…`). **`view` is new in v2.0.0** — in v1.x, listing a source was always allowed. Most setups need **View** + **Download** to browse and open files, and **Create**, **Modify**, and **Delete** for uploads, renames, and deletes. See the full matrix in {{< doclink path="/features/webdav/#required-permissions" text="WebDAV — Required permissions" />}}.
 {{% /alert %}}
 

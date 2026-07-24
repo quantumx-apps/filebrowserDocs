@@ -8,7 +8,9 @@ lastmod: "2026-07-23T17:03:27Z"
 
 Configure OnlyOffice Document Server for document editing.
 
-{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+{{% alert context="warning" %}}
+**Upgrading to v2.0.0?**
+
 Use a **data directory mount** (`./data:/home/filebrowser/data`) instead of bind-mounting a single `database.db` file. v2.0.0 uses SQLite — see {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} and {{< doclink path="getting-started/docker/" text="Docker setup" />}}.
 {{% /alert %}}
 

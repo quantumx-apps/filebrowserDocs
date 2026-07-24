@@ -8,7 +8,9 @@ lastmod: "2026-07-23T17:03:27Z"
 
 FileBrowser includes powerful built-in viewers for a wide range of file types, letting you preview and edit content without downloading files to your device.
 
-{{% alert context="info" title="v2.0.0 permissions" %}}
+{{% alert context="info" %}}
+**v2.0.0 permissions**
+
 In v2.0.0, **view** (browse/preview in the UI) and **download** (save bytes) are separate per-source permissions. **`view` is new** — in v1.x, browsing a source was always allowed once the user had that scope. Users need **view** to open the file viewer; **download** is required to save files or for some client integrations. See {{< doclink path="configuration/users/" text="User Management" />}}.
 {{% /alert %}}
 

@@ -8,7 +8,9 @@ lastmod: "2026-07-23T17:03:27Z"
 
 This guide shows how to integrate OnlyOffice and FileBrowser via Wiredoor. Wiredoor is a self-hosted ingress-as-a-service platform that lets you route internet traffic to internal apps, IoT, Kubernetes and more using a reverse VPN powered by WireGuard. Below steps are derived from this [discussion](https://github.com/orgs/wiredoor/discussions/110).
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
 File permissions are **per source**. `userDefaults.permissions.modify` (and related keys) apply as **defaults for new scopes**, not as global modify access. Grant **view** and **modify** on the relevant scope in User Management if users cannot open or edit Office files after upgrade.
 {{% /alert %}}
 
