@@ -26,7 +26,9 @@ Common issues and solutions for migration.
 
 ## Permission changes (v2.0.0+)
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
 File-operation permissions (**view**, **download**, **modify**, **create**, **delete**) moved from **global user permissions** to **per-source scopes**. Global permissions are now **admin**, **api**, **share**, and **realtime** only. **`view` is new in v2.0.0** — in v1.x, listing and browsing a source was always allowed; you can now deny **view** independently of **download**.
 {{% /alert %}}
 

@@ -8,7 +8,9 @@ lastmod: "2026-07-23T17:03:27Z"
 
 Automated initialization scripts for FileBrowser using the API. Works across Docker, Docker Compose, Kubernetes, and bare metal deployments.
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
 User **file** permissions (**view**, **download**, **modify**, **create**, **delete**) must be set on **`scopes[].permissions`**, not on top-level `permissions`. **`view` is new in v2.0.0** — in v1.x, browsing a scope was always allowed. Top-level `permissions` is global only: **admin**, **api**, **share**, **realtime**. User API updates use **`PATCH`** (partial payloads) and address users by **username**. See {{< doclink path="configuration/users/" text="User Management" />}} and {{< doclink path="reference/api/" text="API reference" />}}.
 {{% /alert %}}
 

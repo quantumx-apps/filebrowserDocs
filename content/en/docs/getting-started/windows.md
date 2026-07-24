@@ -7,7 +7,9 @@ lastmod: "2026-07-23T17:03:27Z"
 order: 4
 ---
 
-{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+{{% alert context="warning" %}}
+**Upgrading to v2.0.0?**
+
 v2.0.0 requires a config update and one-time database migration. See the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before upgrading from v1.x.
 {{% /alert %}}
 

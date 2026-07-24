@@ -9,7 +9,9 @@ order: 3
 
 Production-ready setup for FileBrowser Quantum and OnlyOffice behind Traefik reverse proxy with automatic HTTPS certificates from Let's Encrypt.
 
-{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+{{% alert context="warning" %}}
+**Upgrading to v2.0.0?**
+
 v2.0.0 uses **SQLite** (`filebrowser.sqlite`) in your data directory, not BoltDB (`database.db`). Use a directory mount for `./data` and follow the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} if upgrading from v1.x.
 {{% /alert %}}
 

@@ -13,7 +13,9 @@ order: 4
 
 It's also an alternative to the WebUI since you can mount/use one (or multiples) of your {{< doclink path="/configuration/sources/" text="sources" />}} directly on your devices and manage the files stored in them. This allows the use of native applications to create/edit/organize files via WebDAV that are not possible via WebUI. For example, you can edit documents using native office suites without {{< doclink path="/integrations/office/about/" text="Office Integration" />}} enabled, or organize folders/files using native apps like Explorer on Windows (In versions before Nov 2023), Finder on macOS, Thunar/Dolphin in Linux, etc. You can also use any third party client or app that support WebDAV to access your files!
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
 WebDAV permission checks are **per source** (the source name in `/dav/<source>/`). Each capability is checked separately — **view** and **download** are not the same. **`view` is new in v2.0.0** — in v1.x, listing a source was always allowed. See [Required permissions](#required-permissions) below. Token-based WebDAV uses the token owner's per-source permissions (intersected with any file caps on the token).
 {{% /alert %}}
 

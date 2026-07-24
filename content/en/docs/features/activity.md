@@ -7,7 +7,9 @@ lastmod: "2026-07-23T17:03:27Z"
 order: 5
 ---
 
-{{% alert context="warning" title="v2.0.0 only" %}}
+{{% alert context="warning" %}}
+**v2.0.0 only**
+
 The Activity Viewer and semantic activity audit log were introduced in **v2.0.0**. They require the SQLite database migration from v1.x. If you are still on v1.x, see {{< doclink path="getting-started/v2/migration/" text="Migration guide" />}} before upgrading.
 {{% /alert %}}
 

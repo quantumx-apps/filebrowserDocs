@@ -7,7 +7,9 @@ lastmod: "2026-07-23T17:03:27Z"
 order: 1
 ---
 
-{{% alert context="warning" title="Upgrading to v2.0.0?" %}}
+{{% alert context="warning" %}}
+**Upgrading to v2.0.0?**
+
 v2.0.0 uses **SQLite** instead of BoltDB and requires a one-time migration. Use a **directory mount** (`./data:/home/filebrowser/data`) rather than a single database file mount. Replace `FILEBROWSER_DATABASE` with `FILEBROWSER_DATABASE_PATH`. See the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before changing your image tag.
 {{% /alert %}}
 
@@ -149,7 +151,9 @@ services:
 
 ## Database Location
 
-{{% alert context="warning" title="v2.0.0 change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 change**
+
 v2.0.0 uses **SQLite** (default: `filebrowser.sqlite`), not BoltDB (`database.db`). Set `server.database.path` in config or use `FILEBROWSER_DATABASE_PATH`. Upgrading from v1.x? See {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
 {{% /alert %}}
 

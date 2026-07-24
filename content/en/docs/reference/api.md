@@ -8,7 +8,9 @@ lastmod: "2026-07-23T17:03:27Z"
 
 FileBrowser provides a comprehensive REST API for programmatic access.
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
 - **`GET /api/raw`** and **`GET /public/api/raw`** removed — use **`/api/resources/download`** (and the public share equivalent) instead.
 - **`PUT /api/users`** → **`PATCH /api/users/{username}`** — send partial payloads only.
 - Users are addressed by **username** in frontend-facing APIs (not numeric `id`).

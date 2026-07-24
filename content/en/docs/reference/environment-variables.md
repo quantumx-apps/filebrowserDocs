@@ -8,8 +8,15 @@ lastmod: "2026-07-23T17:03:27Z"
 
 The preferred configuration method is to use config.yaml. However, environment variables are available for **secrets**, **config override**, and **developer purposes**.
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
-`FILEBROWSER_DATABASE` was removed — startup fails if it is still set. Use **`FILEBROWSER_DATABASE_PATH`** (maps to `server.database.path`, default `filebrowser.sqlite`) instead. See {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
+Database env vars changed between major versions:
+
+- **`FILEBROWSER_DATABASE`** — **v1.x.x only** 
+- **`FILEBROWSER_DATABASE_PATH`** — **v2.0.0+**
+
+When upgrading, rename **`FILEBROWSER_DATABASE`** → **`FILEBROWSER_DATABASE_PATH`** and point it at your new SQLite file. See {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
 {{% /alert %}}
 
 ## Available Variables
@@ -17,7 +24,8 @@ The preferred configuration method is to use config.yaml. However, environment v
 | Variable | Config Equivalent | Description |
 |----------|-------------------|-------------|
 | `FILEBROWSER_CONFIG` | - | Config file path when no CLI argument provided |
-| `FILEBROWSER_DATABASE_PATH` | `server.database.path` | SQLite database file path (default: `filebrowser.sqlite`) |
+| `FILEBROWSER_DATABASE` | `server.database` | **v1.x.x only.** BoltDB database file path (e.g. `database.db`). Removed in v2.0.0 — use `FILEBROWSER_DATABASE_PATH` instead. |
+| `FILEBROWSER_DATABASE_PATH` | `server.database.path` | **v2.0.0+.** SQLite database file path (default: `filebrowser.sqlite`) |
 | `FILEBROWSER_ADMIN_PASSWORD` | `auth.adminPassword` | Admin password |
 | `FILEBROWSER_ONLYOFFICE_SECRET` | `integrations.office.secret` | OnlyOffice JWT secret |
 | `FILEBROWSER_FFMPEG_PATH` | `integrations.media.ffmpegPath` | Path to FFmpeg binaries |

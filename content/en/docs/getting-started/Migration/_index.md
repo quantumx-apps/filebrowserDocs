@@ -9,7 +9,9 @@ order: -1
 
 Guides for moving to FileBrowser Quantum from other installations.
 
-{{% alert context="warning" title="Upgrading Quantum v1.x → v2.0.0?" %}}
+{{% alert context="warning" %}}
+**Upgrading Quantum v1.x → v2.0.0?**
+
 This section covers migration from the **original FileBrowser** project. If you already run **FileBrowser Quantum v1.x** and want to upgrade to **v2.0.0**, use the dedicated {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} instead.
 {{% /alert %}}
 

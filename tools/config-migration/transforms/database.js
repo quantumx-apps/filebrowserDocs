@@ -59,5 +59,24 @@ export function transformDatabase(config, changes, warnings, options = {}) {
         outputKey: 'migrateFrom',
       });
     }
+    return;
   }
+
+  const { path, migrateFrom } = sqlitePathsFromLegacyDatabase('');
+  server.database = { path, migrateFrom };
+  recordChange(changes, 'added', 'server.database', {
+    outputPath: 'server.database',
+    outputKey: 'database',
+  });
+  recordChange(changes, 'added', 'server.database.path', {
+    outputPath: 'server.database.path',
+    outputKey: 'path',
+  });
+  recordChange(changes, 'added', 'server.database.migrateFrom', {
+    outputPath: 'server.database.migrateFrom',
+    outputKey: 'migrateFrom',
+  });
+  warnings.push(
+    'Added server.database for v2 SQLite migration. Rename your BoltDB file to database.db.old (or update migrateFrom) before first v2 start.',
+  );
 }

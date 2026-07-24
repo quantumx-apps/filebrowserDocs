@@ -6,7 +6,9 @@ date: "2025-10-08T14:59:30Z"
 lastmod: "2026-07-23T17:03:27Z"
 ---
 
-{{% alert context="warning" title="v2.0.0 behavior change" %}}
+{{% alert context="warning" %}}
+**v2.0.0 behavior change**
+
 Starting in **v2.0.0**, user CLI commands changed. Use `user set <username> --password [value]` instead of `set -u username,password`. Use `user promote <username>` to grant admin without changing the password. The old `set -u` form still works but prints a deprecation warning on stderr. Docker examples should mount a **data directory** (not a single `database.db` file) — see {{< doclink path="getting-started/docker/" text="Docker setup" />}}.
 {{% /alert %}}
 
