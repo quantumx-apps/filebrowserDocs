@@ -1,5 +1,7 @@
 import { recordChange, sqlitePathsFromLegacyDatabase } from '../utils.js';
 
+const MIGRATE_FROM_DEFAULT = 'default';
+
 /**
  * @param {Record<string, unknown>} config
  * @param {Array<{action: string, path: string, inputKey?: string, outputKey?: string, inputPath?: string, outputPath?: string}>} changes
@@ -53,7 +55,7 @@ export function transformDatabase(config, changes, warnings, options = {}) {
       });
     }
     if (dbObj.migrateFrom === undefined || dbObj.migrateFrom === '') {
-      dbObj.migrateFrom = 'database.db.old';
+      dbObj.migrateFrom = MIGRATE_FROM_DEFAULT;
       recordChange(changes, 'added', 'server.database.migrateFrom', {
         outputPath: 'server.database.migrateFrom',
         outputKey: 'migrateFrom',
@@ -62,21 +64,16 @@ export function transformDatabase(config, changes, warnings, options = {}) {
     return;
   }
 
-  const { path, migrateFrom } = sqlitePathsFromLegacyDatabase('');
-  server.database = { path, migrateFrom };
+  server.database = { migrateFrom: MIGRATE_FROM_DEFAULT };
   recordChange(changes, 'added', 'server.database', {
     outputPath: 'server.database',
     outputKey: 'database',
-  });
-  recordChange(changes, 'added', 'server.database.path', {
-    outputPath: 'server.database.path',
-    outputKey: 'path',
   });
   recordChange(changes, 'added', 'server.database.migrateFrom', {
     outputPath: 'server.database.migrateFrom',
     outputKey: 'migrateFrom',
   });
   warnings.push(
-    'Added server.database for v2 SQLite migration. Rename your BoltDB file to database.db.old (or update migrateFrom) before first v2 start.',
+    'Added server.database.migrateFrom: "default". v2 uses FILEBROWSER_DATABASE or database.db on first start.',
   );
 }
