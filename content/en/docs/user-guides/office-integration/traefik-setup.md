@@ -798,7 +798,7 @@ server:
 integrations:
   office:
     url: "https://office.yourdomain.com"
-    internalUrl: "http://onlyoffice:80"
+    internalUrl: "http://onlyoffice:80" # (optional)
 ```
 
 ### Other issues

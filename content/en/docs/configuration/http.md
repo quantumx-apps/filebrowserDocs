@@ -125,11 +125,11 @@ When TLS is enabled, the server logs an `https://` URL. **Cannot be combined** w
 
 ### externalUrl
 
-Public base URL used when generating **outbound** links FileBrowser embeds in responses or passes to integrations (optional). Include scheme and host only — `baseURL` is appended automatically when needed.
+Public base URL used when generating links. Include scheme and host only — `baseURL` is appended automatically when needed.
 
 ```yaml
 http:
-  externalUrl: "https://files.example.com"
+  externalUrl: "https://files.example.com" # will automatically apply /files if missing
   baseURL: "/files"
 ```
 
@@ -140,10 +140,6 @@ http:
 | | Session cookies or login redirects |
 
 If unset, share links and OnlyOffice public-path URLs fall back to the incoming request (`Host` header and scheme). Behind a reverse proxy, list `X-Forwarded-Proto` and `X-Forwarded-Host` in `http.trustedHeaders` so request-derived URLs use the client-facing scheme and host.
-
-{{% alert context="info" %}}
-**Localhost vs public host:** You can set `externalUrl` to your public HTTPS domain for shares while still opening FileBrowser at `http://localhost:8080` for admin work. OIDC continues to use whatever host the browser used for login.
-{{% /alert %}}
 
 </div>
 

@@ -8,6 +8,10 @@ lastmod: "2026-04-20T18:55:31Z"
 
 Integrate with OpenID Connect providers for single sign-on.
 
+{{% alert context="info" %}}
+**OIDC callback URL:** FileBrowser does **not** use `http.externalUrl` for OIDC. Register your provider callback from the URL you actually use to log in (for example `https://files.example.com/files/api/auth/oidc/callback`). See [Callback URL](#callback-url) below.
+{{% /alert %}}
+
 ## Basic Setup
 
 ```yaml
@@ -79,9 +83,7 @@ https://your-domain.com/custom-base/api/auth/oidc/callback
 
 ## Reverse proxy (v2.0.0+)
 
-FileBrowser builds the OIDC `redirect_uri` from the **incoming request** (scheme + host + `baseURL`). It does **not** use `http.externalUrl`.
-
-Behind HTTPS nginx, Traefik, or Caddy, configure your proxy to set forwarded headers and list them in config:
+When FileBrowser sits behind HTTPS nginx, Traefik, or Caddy, the incoming request often arrives as `http://` with the proxy's internal host. Configure forwarded headers so the request-derived callback uses the browser-facing scheme and host:
 
 ```yaml
 http:
@@ -94,7 +96,7 @@ http:
 
 Your proxy must send at least `X-Forwarded-Proto: https` and `X-Forwarded-Host` matching the browser URL. Without them, the callback may register as `http://` or the wrong host and your OIDC provider will reject login.
 
-On startup, FileBrowser logs a **warning** (not a fatal error) when OIDC is enabled but `X-Forwarded-Proto` or `X-Forwarded-Host` is missing from `trustedHeaders`.
+On startup, FileBrowser logs a **warning** when OIDC is enabled but `X-Forwarded-Proto` or `X-Forwarded-Host` is missing from `trustedHeaders`.
 
 See {{< doclink path="getting-started/reverse-proxy/" text="Running behind a reverse proxy" />}} and {{< doclink path="configuration/http/#trustedheaders" text="HTTP trustedHeaders" />}}.
 
