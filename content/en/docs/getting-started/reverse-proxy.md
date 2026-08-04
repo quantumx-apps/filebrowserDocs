@@ -72,15 +72,17 @@ proxy_set_header X-Forwarded-Proto $scheme;                   # HTTP/HTTPS proto
 **Note**: FileBrowser Quantum also supports `X-Forwarded-Host` as an alternative to the `Host` header for cookie domain scoping.
 {{% /alert %}}
 
-### Client IP and trusted headers
+### Proxy headers FileBrowser understands
 
 {{% alert context="info" %}}
 This applies to version `v1.4.x` and later
 {{% /alert %}}
 
-FileBrowser uses the client IP for **authentication rate limiting** and **failed-login lockout**. When traffic passes through a reverse proxy, the connection address seen by FileBrowser is the proxy — not the end user — unless you forward the real client IP and tell FileBrowser to trust those headers.
+When FileBrowser runs behind a reverse proxy, your proxy should set standard forwarding headers. FileBrowser only honors those headers when you list them in `http.trustedHeaders` (or configure proxy authentication separately — see below).
 
-Also, the IP that shows in logging will use the value from the proxy if these are set.
+#### Client IP
+
+FileBrowser uses the client IP for **authentication rate limiting**, **failed-login lockout**, and **activity logging**. Without forwarding and trusting client IP headers, every user appears to share the proxy's IP.
 
 Configure your proxy to set `X-Forwarded-For` (recommended) or `X-Real-IP`, then enable the same headers in FileBrowser:
 
@@ -91,7 +93,38 @@ http:
     - X-Real-IP
 ```
 
-Without `http.trustedHeaders`, every user appears to share the proxy's IP. Rate limits and lockouts then apply to all clients behind that proxy collectively, not per user.
+Without `http.trustedHeaders`, rate limits and lockouts apply to all clients behind that proxy collectively, not per user.
+
+#### Scheme and host
+
+Your proxy should also set `X-Forwarded-Proto` (and optionally `X-Forwarded-Host`). **Forwarding alone is not enough** — list them in `http.trustedHeaders` or FileBrowser ignores them:
+
+```yaml
+http:
+  trustedHeaders:
+    - X-Forwarded-For
+    - X-Real-IP
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
+```
+
+These affect HTTPS detection, cookie domain, OIDC `redirect_uri`, share URLs, and WebAuthn. Without trusting `X-Forwarded-Proto`, FileBrowser sees `http` behind TLS-terminated nginx and OIDC redirects break.
+
+Keep `proxy_set_header Host $host` in nginx. `X-Forwarded-Host` is used when the proxy strips or overwrites `Host`.
+
+#### Proxy authentication username
+
+If you use {{< doclink path="configuration/authentication/proxy/" text="proxy authentication" />}}, your auth middleware sets a username header (commonly `X-Forwarded-User`). That header is configured separately — **not** via `http.trustedHeaders`:
+
+```yaml
+auth:
+  methods:
+    proxy:
+      enabled: true
+      header: "X-Forwarded-User"
+```
+
+When proxy auth is enabled, FileBrowser accepts the configured header as the username. Only enable this when FileBrowser is unreachable except through your proxy.
 
 {{% alert context="warning" %}}
 Only add headers to `http.trustedHeaders` when FileBrowser is behind a proxy that controls these headers. If users can reach FileBrowser without going through your proxy, they can spoof `X-Forwarded-For` and bypass per-IP limits.
@@ -104,14 +137,20 @@ See {{< doclink path="configuration/http/#trustedheaders" text="HTTP settings: t
 Configure FileBrowser to work with your reverse proxy:
 
 ```yaml
-server:
-  baseURL: "/files"                          # Base path for reverse proxy
-  externalUrl: "https://files.example.com/files"   # External URL (used when generated public links)
-
 http:
+  baseURL: "/files"
+  externalUrl: "https://files.example.com/files"
   trustedHeaders:
     - X-Forwarded-For
     - X-Real-IP
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
+
+auth:
+  methods:
+    proxy:
+      enabled: true
+      header: "X-Forwarded-User"   # only when using external auth; not part of trustedHeaders
 ```
 
 ## nginx Configuration
