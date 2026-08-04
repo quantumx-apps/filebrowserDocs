@@ -77,6 +77,27 @@ If you use a custom `baseURL` in your `config.yaml`:
 https://your-domain.com/custom-base/api/auth/oidc/callback
 ```
 
+## Reverse proxy (v2.0.0+)
+
+FileBrowser builds the OIDC `redirect_uri` from the **incoming request** (scheme + host + `baseURL`). It does **not** use `http.externalUrl`.
+
+Behind HTTPS nginx, Traefik, or Caddy, configure your proxy to set forwarded headers and list them in config:
+
+```yaml
+http:
+  baseURL: "/files"
+  trustedHeaders:
+    - X-Forwarded-For
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
+```
+
+Your proxy must send at least `X-Forwarded-Proto: https` and `X-Forwarded-Host` matching the browser URL. Without them, the callback may register as `http://` or the wrong host and your OIDC provider will reject login.
+
+On startup, FileBrowser logs a **warning** (not a fatal error) when OIDC is enabled but `X-Forwarded-Proto` or `X-Forwarded-Host` is missing from `trustedHeaders`.
+
+See {{< doclink path="getting-started/reverse-proxy/" text="Running behind a reverse proxy" />}} and {{< doclink path="configuration/http/#trustedheaders" text="HTTP trustedHeaders" />}}.
+
 ## Auto-Redirect
 
 When OIDC is the only auth method, users are automatically redirected to the OIDC provider.

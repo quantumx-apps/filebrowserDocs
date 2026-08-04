@@ -109,22 +109,32 @@ server {
 <div class="pattern-card">
 
 ```yaml
-server:
-  externalUrl: "https://files.yourdomain.com"  # Accessible from browser
-  internalUrl: "http://192.168.1.100"         # Either use local network or docker network IP thats accessible from onlyoffice server.
+http:
+  externalUrl: "https://files.yourdomain.com"  # Public URL (browser / shares)
+  internalUrl: "http://filebrowser:80"         # Docker/LAN URL OnlyOffice uses to reach FileBrowser
+  baseURL: "/files"
+  trustedHeaders:
+    - X-Forwarded-For
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
 
 integrations:
   office:
-    url: "https://office.yourdomain.com"       # Accessible from browser
-    internalUrl: # optional this should be a local network address that FileBrowser can access.
+    url: "https://office.yourdomain.com"       # Browser → OnlyOffice
+    internalUrl: "http://onlyoffice:80"        # FileBrowser → OnlyOffice (optional)
     secret: "your-jwt-secret"
 ```
 
-**Why two URLs?**
+**Why multiple URLs?**
 
-- **Browser** → The browser always uses `integrations.office.url` to connect from your browser to only office server.
-- **OnlyOffice** → Uses either `server.externalUrl` or `server.internalUrl` for downloading/saving files to FileBrowser server.
-- **FileBrowser** → Uses either `integratons.office.internalUrl` or `integrations.office.url` to connect from the FileBrowser server to OnlyOffice server.
+| Direction | Config | Purpose |
+|-----------|--------|---------|
+| Browser → OnlyOffice | `integrations.office.url` | Editor UI loaded in the browser |
+| FileBrowser → OnlyOffice | `integrations.office.internalUrl` (or `url`) | Server-side API calls |
+| OnlyOffice → FileBrowser | `http.internalUrl` → `http.externalUrl` → request | Download/callback URLs embedded in editor config |
+
+- **`http.trustedHeaders`** affects user-facing request flows (cookies, OIDC, activity IP). It does **not** gate `http.internalUrl`.
+- **`http.externalUrl`** is used for shares and (when `internalUrl` is unset) OnlyOffice paths — **not** for OIDC redirects.
 
 </div>
 

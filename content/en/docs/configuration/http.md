@@ -125,7 +125,7 @@ When TLS is enabled, the server logs an `https://` URL. **Cannot be combined** w
 
 ### externalUrl
 
-Public base URL used when generating share links (optional). Include scheme and host; `baseURL` is appended automatically when needed.
+Public base URL used when generating **outbound** links FileBrowser embeds in responses or passes to integrations (optional). Include scheme and host only — `baseURL` is appended automatically when needed.
 
 ```yaml
 http:
@@ -133,7 +133,17 @@ http:
   baseURL: "/files"
 ```
 
-If unset, share links are built from the incoming request (`Host` header and scheme).
+| Used for | Not used for |
+|----------|--------------|
+| Share links and Open Graph metadata | OIDC `redirect_uri` (always derived from the incoming request) |
+| OnlyOffice download/callback URLs when `internalUrl` is unset | WebAuthn RP ID (uses `externalUrl` when set, else request host) |
+| | Session cookies or login redirects |
+
+If unset, share links and OnlyOffice public-path URLs fall back to the incoming request (`Host` header and scheme). Behind a reverse proxy, list `X-Forwarded-Proto` and `X-Forwarded-Host` in `http.trustedHeaders` so request-derived URLs use the client-facing scheme and host.
+
+{{% alert context="info" %}}
+**Localhost vs public host:** You can set `externalUrl` to your public HTTPS domain for shares while still opening FileBrowser at `http://localhost:8080` for admin work. OIDC continues to use whatever host the browser used for login.
+{{% /alert %}}
 
 </div>
 
@@ -141,12 +151,20 @@ If unset, share links are built from the incoming request (`Host` header and sch
 
 ### internalUrl
 
-Base URL integration services use to reach FileBrowser on the network (optional). Used by OnlyOffice and similar integrations when the public URL is not reachable from the integration container.
+Base URL integration services use to reach FileBrowser on the **private network** (optional). HTTP is allowed. This path does **not** use `trustedHeaders` — it is a fixed configured origin, not derived from proxied client requests.
 
 ```yaml
 http:
   internalUrl: "http://filebrowser:80"
+  baseURL: "/files"
 ```
+
+| Used for | Not used for |
+|----------|--------------|
+| OnlyOffice download/callback URLs (highest priority) | Share links shown in the browser |
+| | OIDC redirects |
+
+**URL priority for OnlyOffice → FileBrowser:** `internalUrl` → `externalUrl` → incoming request (with `trustedHeaders` when behind a proxy).
 
 Typically a Docker service name, internal DNS name, or LAN IP. See {{< doclink path="integrations/office/configuration/" text="OnlyOffice configuration" />}}.
 
@@ -192,6 +210,10 @@ Supported headers:
 | `X-Forwarded-Host` | Uses the **first** host in the chain as the client-facing host (cookie domain, URLs) |
 
 Scheme and host headers affect cookies, OIDC `redirect_uri`, share URLs, WebAuthn, and integrations. Client IP headers affect rate limiting, lockout, and activity logging.
+
+{{% alert context="warning" %}}
+**v2.0.0+:** Forwarded headers are **opt-in**. FileBrowser ignores `X-Forwarded-*` values unless the header name appears in `http.trustedHeaders`. Upgrades from v1.x behind a reverse proxy must add this list or client IP, OIDC callbacks, cookies, and subpath URLs may break.
+{{% /alert %}}
 
 {{% alert context="info" %}}
 **Proxy authentication username** headers (for example `X-Forwarded-User`) are **not** configured here. Set the header name under `auth.methods.proxy.header`. See {{< doclink path="configuration/authentication/proxy/" text="Proxy authentication" />}}.

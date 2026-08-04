@@ -244,14 +244,18 @@ networks:
 
 **FileBrowser Config:**
 ```yaml
-server:
+http:
   externalUrl: "https://files.yourdomain.com"
   internalUrl: "http://filebrowser:80"
+  trustedHeaders:
+    - X-Forwarded-For
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
 
 integrations:
   office:
     url: "https://office.yourdomain.com"
-    internalUrl: "https://onlyoffice" # (optional) this is the internal url that the filebrowser server can communicate with directly. otherwise url is used
+    internalUrl: "http://onlyoffice:80"
     secret: "your-secret"
 ```
 
@@ -296,10 +300,18 @@ server {
 
 **FileBrowser Config:**
 ```yaml
+http:
+  internalUrl: "http://filebrowser:80"
+  externalUrl: "https://files.yourdomain.com"
+  trustedHeaders:
+    - X-Forwarded-For
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
+
 integrations:
   office:
     url: "https://office.yourdomain.com"
-    internalUrl: "http://onlyoffice:80" # (optional)
+    internalUrl: "http://onlyoffice:80"
     secret: "your-secret"
 ```
 {{< /tab >}}
@@ -355,19 +367,23 @@ onlyoffice:
 
 ### External and Internal URLs
 
-See {{< doclink path="integrations/office/configuration#external-and-internal-urls" text="Configuration" />}}
+See {{< doclink path="integrations/office/configuration#external-and-internal-urls" text="Configuration" />}} for the full URL priority table (`http.internalUrl` → `http.externalUrl` → request).
 
-**Why two URLs?**
+### 401 or connection refused behind reverse proxy
 
-- **Browser** → The browser always uses `integrations.office.url` to connect from your browser to only office server.
-- **OnlyOffice** → Uses either `server.externalUrl` or `server.internalUrl` for downloading/saving files to FileBrowser server.
-- **FileBrowser** → Uses either `integratons.office.internalUrl` or `integrations.office.url` to connect from the filebrowser server to OnlyOffice server.
+When FileBrowser is on a subpath (for example `/files/`) behind HTTPS nginx:
+
+1. Set `http.trustedHeaders` including `X-Forwarded-Proto` and `X-Forwarded-Host` on FileBrowser.
+2. Set `http.internalUrl` to a URL OnlyOffice can reach on the Docker/LAN network (for example `http://filebrowser:80`).
+3. Optionally set `http.externalUrl` if OnlyOffice cannot use the internal URL but shares the same public host as users.
+
+Download/callback URLs embedded in the editor config use that priority — they do **not** read raw `X-Forwarded-*` unless falling back to the request path with `trustedHeaders` configured.
 
 ## Performance Issues
 
 ### Slow Document Loading
 
-Document loading can be quite slow because of the many components onlyoffice needs to talk to. The best way to improve document loading times it to set `server.internalUrl` so OnlyOffice can communicate directly with filebrowser (it's possible on same private network).
+Document loading can be quite slow because of the many components onlyoffice needs to talk to. The best way to improve document loading times is to set `http.internalUrl` so OnlyOffice can communicate directly with FileBrowser on the same private network.
 
 ## Download Fails
 
