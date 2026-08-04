@@ -647,8 +647,8 @@ integrations:
 
 {{% alert context="warning" %}}
 **Critical Configuration:**
-- `server.externalUrl`: Must match your FileBrowser domain configured in `.env` file.
-- `server.internalUrl`: Uses Docker service name `onlyoffice` and its internal port (80).
+- `http.externalUrl`: Must match your FileBrowser domain configured in `.env` file.
+- `http.internalUrl`: Uses Docker service name reachable from OnlyOffice (for example `http://filebrowser:80`).
 - `integrations.office.url`: Must match your OnlyOffice domain configured on the `.env` file of OnlyOffice.
 - `integrations.office.secret`: Must match OnlyOffice `JWT_SECRET` exactly (also in the onlyoffice `.env`)
 {{% /alert %}}
@@ -798,7 +798,7 @@ server:
 integrations:
   office:
     url: "https://office.yourdomain.com"
-    internalUrl: "http://onlyoffice:80"
+    internalUrl: "http://onlyoffice:80" # (optional)
 ```
 
 ### Other issues
