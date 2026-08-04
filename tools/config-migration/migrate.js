@@ -67,7 +67,7 @@ export function migrateConfig(raw) {
     delete config[stubKey];
   }
   transformDatabase(config, changes, warnings, transformOptions);
-  transformHttp(config, changes, transformOptions);
+  transformHttp(config, changes, warnings, transformOptions);
   const { filePerms, filePermsConfigured } = transformUserDefaults(config, changes);
   transformSources(config, filePerms, filePermsConfigured, changes, warnings);
   transformCleanup(config, changes, warnings);

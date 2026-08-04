@@ -5,9 +5,10 @@ import { recordChange, recordRelocation } from '../utils.js';
 /**
  * @param {Record<string, unknown>} config
  * @param {Array<{action: string, path: string, inputKey?: string, outputKey?: string, inputPath?: string, outputPath?: string}>} changes
+ * @param {string[]} warnings
  * @param {{ protectedTopLevelKeys?: Set<string> }} [options]
  */
-export function transformHttp(config, changes, options = {}) {
+export function transformHttp(config, changes, warnings, options = {}) {
   const protectedKeys = options.protectedTopLevelKeys;
   if (protectedKeys?.has('http') || protectedKeys?.has('server')) {
     return;
@@ -54,4 +55,49 @@ export function transformHttp(config, changes, options = {}) {
   if (!hadHttpBlock && Object.keys(http).length > 0) {
     recordChange(changes, 'added', 'http', { outputPath: 'http', outputKey: 'http' });
   }
+
+  emitOidcTrustedHeadersWarnings(config, http, warnings);
+}
+
+const PROXY_TRUSTED_HEADERS = ['X-Forwarded-Proto', 'X-Forwarded-Host', 'X-Forwarded-For'];
+
+/**
+ * @param {Record<string, unknown>} config
+ * @param {Record<string, unknown>} http
+ * @param {string[]} warnings
+ */
+function emitOidcTrustedHeadersWarnings(config, http, warnings) {
+  if (!isOidcEnabled(config)) {
+    return;
+  }
+
+  const trusted = http.trustedHeaders;
+  const trustedList = Array.isArray(trusted) ? trusted.map((h) => String(h).toLowerCase()) : [];
+  const hasProto = trustedList.includes('x-forwarded-proto');
+  const hasHost = trustedList.includes('x-forwarded-host');
+
+  if (!hasProto || !hasHost) {
+    warnings.push(
+      `OIDC is enabled but http.trustedHeaders is missing reverse-proxy headers. Add ${PROXY_TRUSTED_HEADERS.join(', ')} when FileBrowser sits behind HTTPS termination (fixes http:// redirect_uri behind nginx).`,
+    );
+  }
+}
+
+/**
+ * @param {Record<string, unknown>} config
+ */
+function isOidcEnabled(config) {
+  if (!config.auth || typeof config.auth !== 'object' || Array.isArray(config.auth)) {
+    return false;
+  }
+  const auth = /** @type {Record<string, unknown>} */ (config.auth);
+  if (!auth.methods || typeof auth.methods !== 'object' || Array.isArray(auth.methods)) {
+    return false;
+  }
+  const methods = /** @type {Record<string, unknown>} */ (auth.methods);
+  const oidc = methods.oidc;
+  if (!oidc || typeof oidc !== 'object' || Array.isArray(oidc)) {
+    return false;
+  }
+  return /** @type {{ enabled?: boolean }} */ (oidc).enabled === true;
 }

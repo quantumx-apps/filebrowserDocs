@@ -118,4 +118,38 @@ function stripConsumedFlatUserDefaults(config, changes) {
       delete ud[key];
     }
   }
+
+  stripInvalidAccountPermissions(ud, changes);
+}
+
+/**
+ * Remove file-scoped permission keys that must live on source defaultPermissions only.
+ * @param {Record<string, unknown>} ud
+ * @param {Array<{action: string, path: string, lineKey: string}>} changes
+ */
+function stripInvalidAccountPermissions(ud, changes) {
+  if (!ud.account || typeof ud.account !== 'object' || Array.isArray(ud.account)) {
+    return;
+  }
+  const account = /** @type {Record<string, unknown>} */ (ud.account);
+  if (!account.permissions || typeof account.permissions !== 'object' || Array.isArray(account.permissions)) {
+    return;
+  }
+  const permissions = /** @type {Record<string, unknown>} */ (account.permissions);
+  for (const key of FILE_PERMISSION_KEYS) {
+    if (permissions[key] === undefined) {
+      continue;
+    }
+    recordChange(changes, 'removed', `userDefaults.account.permissions.${key}`, {
+      inputPath: `userDefaults.account.permissions.${key}`,
+      inputKey: key,
+    });
+    delete permissions[key];
+  }
+  if (Object.keys(permissions).length === 0) {
+    delete account.permissions;
+  }
+  if (Object.keys(account).length === 0) {
+    delete ud.account;
+  }
 }
