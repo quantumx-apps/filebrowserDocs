@@ -29,6 +29,8 @@ http:
   trustedHeaders:
     - X-Forwarded-For
     - X-Real-IP
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
   disableRateLimit: false
 ```
 
@@ -167,16 +169,18 @@ http:
 
 ### trustedHeaders
 
-List of request headers FileBrowser should trust when resolving the client IP address (default: none).
+List of request headers FileBrowser should trust when resolving the **client IP**, **request scheme**, and **client-facing host** (default: none).
 
 ```yaml
 http:
   trustedHeaders:
     - X-Forwarded-For
     - X-Real-IP
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
 ```
 
-When a header is listed, FileBrowser uses it instead of the direct connection address (`RemoteAddr`). This is required for correct client IP detection when FileBrowser runs behind a reverse proxy.
+When a header is listed, FileBrowser uses it instead of the direct connection. This is required for correct behavior when FileBrowser runs behind a reverse proxy.
 
 Supported headers:
 
@@ -184,12 +188,20 @@ Supported headers:
 |--------|----------|
 | `X-Forwarded-For` | Uses the **first** IP in the comma-separated chain as the client address |
 | `X-Real-IP` | Uses the header value as the client address |
+| `X-Forwarded-Proto` | Uses `http` or `https` as the request scheme |
+| `X-Forwarded-Host` | Uses the **first** host in the chain as the client-facing host (cookie domain, URLs) |
 
-{{% alert context="warning" %}}
-Only enable headers your reverse proxy **sets or overwrites**. If FileBrowser is reachable directly from the internet, trusting `X-Forwarded-For` or `X-Real-IP` lets clients spoof their IP by sending those headers themselves — which weakens per-IP rate limiting and failed-login lockout.
+Scheme and host headers affect cookies, OIDC `redirect_uri`, share URLs, WebAuthn, and integrations. Client IP headers affect rate limiting, lockout, and activity logging.
+
+{{% alert context="info" %}}
+**Proxy authentication username** headers (for example `X-Forwarded-User`) are **not** configured here. Set the header name under `auth.methods.proxy.header`. See {{< doclink path="configuration/authentication/proxy/" text="Proxy authentication" />}}.
 {{% /alert %}}
 
-When running behind a proxy, configure your proxy to forward client IPs and list the matching headers here. See {{< doclink path="getting-started/reverse-proxy/#client-ip-and-trusted-headers" text="Reverse proxy: client IP and trusted headers" />}} for nginx, Traefik, and Caddy examples.
+{{% alert context="warning" %}}
+Only enable headers your reverse proxy **sets or overwrites**. If FileBrowser is reachable directly from the internet, trusting forwarded headers lets clients spoof IP, scheme, or host — which weakens rate limiting, lockout, and URL/cookie security.
+{{% /alert %}}
+
+When running behind a proxy, configure your proxy to forward the matching headers and list them here. See {{< doclink path="getting-started/reverse-proxy/#proxy-headers-filebrowser-understands" text="Reverse proxy: proxy headers FileBrowser understands" />}} for nginx, Traefik, and Caddy examples.
 
 {{% alert context="info" %}}
 **Authentication rate limiting**: Login and other auth routes are rate-limited by default. Configure `http.trustedHeaders` so per-IP limits apply to real client addresses — not the proxy.
@@ -258,6 +270,8 @@ http:
   trustedHeaders:
     - X-Forwarded-For
     - X-Real-IP
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
   disableRateLimit: false
 
 server:
