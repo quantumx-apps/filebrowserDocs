@@ -3,7 +3,7 @@ title: "About"
 description: "About the v2.0.0 release and what changed"
 icon: "info"
 date: "2026-07-23T17:03:27Z"
-lastmod: "2026-07-23T17:03:27Z"
+lastmod: "2026-07-24T01:02:28Z"
 order: 0
 ---
 

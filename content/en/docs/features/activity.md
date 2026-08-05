@@ -3,7 +3,7 @@ title: "Activity"
 description: "Audit log, charts, and reports for user and file activity in FileBrowser Quantum v2.0.0"
 icon: "monitoring"
 date: "2026-07-23T17:03:27Z"
-lastmod: "2026-07-23T17:03:27Z"
+lastmod: "2026-07-24T01:02:28Z"
 order: 5
 ---
 

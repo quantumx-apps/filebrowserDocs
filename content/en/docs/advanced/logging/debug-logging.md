@@ -3,7 +3,7 @@ title: "Debug Logging"
 description: "Enable detailed logging for troubleshooting"
 icon: "bug_report"
 date: "2025-10-09T00:23:04Z"
-lastmod: "2026-07-23T17:03:27Z"
+lastmod: "2026-07-23T23:21:59Z"
 ---
 
 Debug logging must be configured to see more detailed "debug" level logs.

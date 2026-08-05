@@ -2,8 +2,8 @@
 title: "HTTP Settings"
 description: "Configure HTTP listening, URLs, TLS, WebDAV, reverse-proxy headers, and auth rate limiting"
 icon: "http"
-date: "2026-05-22T15:32:14Z"
-lastmod: "2026-07-23T23:13:35Z"
+date: "2026-05-22T15:40:53Z"
+lastmod: "2026-08-05T15:34:23Z"
 order: 4
 ---
 
