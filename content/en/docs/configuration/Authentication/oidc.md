@@ -3,7 +3,7 @@ title: "OIDC Authentication"
 description: "OpenID Connect integration"
 icon: "fingerprint"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-04-20T18:55:31Z"
+lastmod: "2026-08-05T15:34:23Z"
 ---
 
 Integrate with OpenID Connect providers for single sign-on.

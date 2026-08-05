@@ -3,7 +3,7 @@ title: "Init Script Setup"
 description: "Automate FileBrowser initialization with scripts"
 icon: "play_circle"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-07-23T17:03:27Z"
+lastmod: "2026-07-24T01:02:28Z"
 ---
 
 Automated initialization scripts for FileBrowser using the API. Works across Docker, Docker Compose, Kubernetes, and bare metal deployments.

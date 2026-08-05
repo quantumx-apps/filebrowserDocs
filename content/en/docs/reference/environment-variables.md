@@ -3,7 +3,7 @@ title: "Environment Variables"
 description: "Optional environment variables for configuration"
 icon: "input"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-07-23T17:03:27Z"
+lastmod: "2026-07-24T01:02:28Z"
 ---
 
 The preferred configuration method is to use config.yaml. However, environment variables are available for **secrets**, **config override**, and **developer purposes**.

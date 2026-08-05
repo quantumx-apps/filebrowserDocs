@@ -3,7 +3,7 @@ title: "Traefik Setup"
 description: "Complete production setup with Traefik using Docker and Let's Encrypt"
 icon: "dns"
 date: "2025-10-29T22:21:43Z"
-lastmod: "2026-07-23T17:03:27Z"
+lastmod: "2026-08-04T18:26:58Z"
 order: 3
 ---
 

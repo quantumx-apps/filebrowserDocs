@@ -3,7 +3,7 @@ title: "Configuration"
 description: "Configure OnlyOffice integration"
 icon: "settings"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-07-23T17:03:27Z"
+lastmod: "2026-08-05T15:34:23Z"
 ---
 
 Configure OnlyOffice Document Server for document editing.

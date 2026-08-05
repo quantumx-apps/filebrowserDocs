@@ -3,7 +3,7 @@ title: "Basic Docker Setup"
 description: "Simple OnlyOffice setup with Docker for local development"
 icon: "deployed_Code"
 date: "2025-10-09T00:23:04Z"
-lastmod: "2026-07-23T17:03:27Z"
+lastmod: "2026-07-24T01:02:28Z"
 ---
 
 Complete setup for running FileBrowser Quantum with OnlyOffice using Docker Compose on your local network.

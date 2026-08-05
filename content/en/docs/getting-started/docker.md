@@ -3,7 +3,7 @@ title: "Docker"
 description: "Get started with FileBrowser using Docker"
 icon: "deployed_code"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-07-23T17:03:27Z"
+lastmod: "2026-07-24T01:02:28Z"
 order: 1
 ---
 
