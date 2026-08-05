@@ -81,9 +81,11 @@ If you use a custom `baseURL` in your `config.yaml`:
 https://your-domain.com/custom-base/api/auth/oidc/callback
 ```
 
-## Reverse proxy (v2.0.0+)
+## Reverse proxy
 
-When FileBrowser sits behind HTTPS nginx, Traefik, or Caddy, the incoming request often arrives as `http://` with the proxy's internal host. Configure forwarded headers so the request-derived callback uses the browser-facing scheme and host:
+When FileBrowser sits behind HTTPS nginx, Traefik, or Caddy, the incoming request often arrives as `http://` with the proxy's internal host. Configure forwarded headers so the request-derived callback uses the browser-facing scheme and host.
+
+**v2.0.0+** — single boolean (replaces the v1.5.x list):
 
 ```yaml
 http:
@@ -91,11 +93,23 @@ http:
   trustProxyHeaders: true
 ```
 
-Your proxy must send at least `X-Forwarded-Proto: https` and `X-Forwarded-Host` matching the browser URL. Without `trustProxyHeaders: true`, the callback may register as `http://` or the wrong host and your OIDC provider will reject login.
+**v1.5.x** (current stable) — list the forwarding headers your proxy sets:
 
-On startup, FileBrowser logs a **warning** when OIDC is enabled but `trustProxyHeaders` is false.
+```yaml
+http:
+  baseURL: "/files"
+  trustedHeaders:
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
+    - X-Forwarded-For
+    - X-Real-IP
+```
 
-See {{< doclink path="getting-started/reverse-proxy/" text="Running behind a reverse proxy" />}} and {{< doclink path="configuration/http/#trustproxyheaders" text="HTTP trustProxyHeaders" />}}.
+Your proxy must send at least `X-Forwarded-Proto: https` and `X-Forwarded-Host` matching the browser URL. Without header trust enabled, the callback may register as `http://` or the wrong host and your OIDC provider will reject login.
+
+On **v2.0.0+**, FileBrowser logs a **warning** when OIDC is enabled but `trustProxyHeaders` is false.
+
+See {{< doclink path="getting-started/reverse-proxy/" text="Running behind a reverse proxy" />}} and {{< doclink path="configuration/http/#trustproxyheaders" text="HTTP reverse-proxy headers" />}}.
 
 ## Auto-Redirect
 

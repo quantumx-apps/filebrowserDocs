@@ -109,6 +109,7 @@ server {
 <div class="pattern-card">
 
 ```yaml
+# v2.0.0+
 http:
   externalUrl: "https://files.yourdomain.com"  # Public URL (browser / shares)
   internalUrl: "http://filebrowser:80"         # Docker/LAN URL OnlyOffice uses to reach FileBrowser
@@ -122,6 +123,25 @@ integrations:
     secret: "your-jwt-secret"
 ```
 
+```yaml
+# v1.5.x
+http:
+  externalUrl: "https://files.yourdomain.com"
+  internalUrl: "http://filebrowser:80"
+  baseURL: "/files"
+  trustedHeaders:
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
+    - X-Forwarded-For
+    - X-Real-IP
+
+integrations:
+  office:
+    url: "https://office.yourdomain.com"
+    internalUrl: "http://onlyoffice:80"
+    secret: "your-jwt-secret"
+```
+
 **Why multiple URLs?**
 
 | Direction | Config | Purpose |
@@ -130,7 +150,7 @@ integrations:
 | FileBrowser → OnlyOffice | `integrations.office.internalUrl` (or `url`) | Server-side API calls |
 | OnlyOffice → FileBrowser | `http.internalUrl` → `http.externalUrl` → request | Download/callback URLs embedded in editor config |
 
-- **`http.trustProxyHeaders`** affects user-facing request flows (cookies, OIDC, activity IP). It does **not** gate `http.internalUrl`.
+- **`http.trustProxyHeaders`** (v2.0.0+) or **`http.trustedHeaders`** (v1.5.x) affects user-facing request flows (cookies, OIDC, activity IP). Neither gates `http.internalUrl`.
 - **`http.externalUrl`** is used for shares and (when `internalUrl` is unset) OnlyOffice paths — **not** for OIDC redirects.
 
 </div>

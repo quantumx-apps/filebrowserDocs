@@ -98,6 +98,7 @@ server {
 FileBrowser config:
 
 ```yaml
+# v2.0.0+
 http:
   trustProxyHeaders: true
 
@@ -110,8 +111,26 @@ auth:
       enabled: false
 ```
 
+```yaml
+# v1.5.x
+http:
+  trustedHeaders:
+    - X-Forwarded-Proto
+    - X-Forwarded-Host
+    - X-Forwarded-For
+    - X-Real-IP
+
+auth:
+  methods:
+    proxy:
+      enabled: true
+      header: "X-Forwarded-User"
+    password:
+      enabled: false
+```
+
 {{% alert context="info" %}}
-`auth.methods.proxy.header` names the **username** header. Client IP and scheme/host forwarding use `http.trustProxyHeaders` — see {{< doclink path="configuration/http/#trustproxyheaders" text="HTTP trustProxyHeaders" />}}.
+`auth.methods.proxy.header` names the **username** header. Client IP and scheme/host forwarding use `http.trustProxyHeaders` (**v2.0.0+**) or `http.trustedHeaders` (**v1.5.x**) — see {{< doclink path="configuration/http/#trustproxyheaders" text="HTTP reverse-proxy headers" />}}.
 {{% /alert %}}
 
 </div>
