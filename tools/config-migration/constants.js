@@ -9,7 +9,6 @@ export const SERVER_HTTP_KEYS = [
   'externalUrl',
   'internalUrl',
   'disableWebDAV',
-  'trustedHeaders',
   'disableRateLimit',
 ];
 

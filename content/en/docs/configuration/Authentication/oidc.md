@@ -88,17 +88,14 @@ When FileBrowser sits behind HTTPS nginx, Traefik, or Caddy, the incoming reques
 ```yaml
 http:
   baseURL: "/files"
-  trustedHeaders:
-    - X-Forwarded-For
-    - X-Forwarded-Proto
-    - X-Forwarded-Host
+  trustProxyHeaders: true
 ```
 
-Your proxy must send at least `X-Forwarded-Proto: https` and `X-Forwarded-Host` matching the browser URL. Without them, the callback may register as `http://` or the wrong host and your OIDC provider will reject login.
+Your proxy must send at least `X-Forwarded-Proto: https` and `X-Forwarded-Host` matching the browser URL. Without `trustProxyHeaders: true`, the callback may register as `http://` or the wrong host and your OIDC provider will reject login.
 
-On startup, FileBrowser logs a **warning** when OIDC is enabled but `X-Forwarded-Proto` or `X-Forwarded-Host` is missing from `trustedHeaders`.
+On startup, FileBrowser logs a **warning** when OIDC is enabled but `trustProxyHeaders` is false.
 
-See {{< doclink path="getting-started/reverse-proxy/" text="Running behind a reverse proxy" />}} and {{< doclink path="configuration/http/#trustedheaders" text="HTTP trustedHeaders" />}}.
+See {{< doclink path="getting-started/reverse-proxy/" text="Running behind a reverse proxy" />}} and {{< doclink path="configuration/http/#trustproxyheaders" text="HTTP trustProxyHeaders" />}}.
 
 ## Auto-Redirect
 

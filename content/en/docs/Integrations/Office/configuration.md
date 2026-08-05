@@ -113,10 +113,7 @@ http:
   externalUrl: "https://files.yourdomain.com"  # Public URL (browser / shares)
   internalUrl: "http://filebrowser:80"         # Docker/LAN URL OnlyOffice uses to reach FileBrowser
   baseURL: "/files"
-  trustedHeaders:
-    - X-Forwarded-For
-    - X-Forwarded-Proto
-    - X-Forwarded-Host
+  trustProxyHeaders: true
 
 integrations:
   office:
@@ -133,7 +130,7 @@ integrations:
 | FileBrowser → OnlyOffice | `integrations.office.internalUrl` (or `url`) | Server-side API calls |
 | OnlyOffice → FileBrowser | `http.internalUrl` → `http.externalUrl` → request | Download/callback URLs embedded in editor config |
 
-- **`http.trustedHeaders`** affects user-facing request flows (cookies, OIDC, activity IP). It does **not** gate `http.internalUrl`.
+- **`http.trustProxyHeaders`** affects user-facing request flows (cookies, OIDC, activity IP). It does **not** gate `http.internalUrl`.
 - **`http.externalUrl`** is used for shares and (when `internalUrl` is unset) OnlyOffice paths — **not** for OIDC redirects.
 
 </div>

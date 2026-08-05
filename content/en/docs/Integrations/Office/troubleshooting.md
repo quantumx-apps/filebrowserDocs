@@ -247,10 +247,7 @@ networks:
 http:
   externalUrl: "https://files.yourdomain.com"
   internalUrl: "http://filebrowser:80"
-  trustedHeaders:
-    - X-Forwarded-For
-    - X-Forwarded-Proto
-    - X-Forwarded-Host
+  trustProxyHeaders: true
 
 integrations:
   office:
@@ -303,10 +300,7 @@ server {
 http:
   internalUrl: "http://filebrowser:80"
   externalUrl: "https://files.yourdomain.com"
-  trustedHeaders:
-    - X-Forwarded-For
-    - X-Forwarded-Proto
-    - X-Forwarded-Host
+  trustProxyHeaders: true
 
 integrations:
   office:
@@ -373,11 +367,11 @@ See {{< doclink path="integrations/office/configuration#external-and-internal-ur
 
 When FileBrowser is on a subpath (for example `/files/`) behind HTTPS nginx:
 
-1. Set `http.trustedHeaders` including `X-Forwarded-Proto` and `X-Forwarded-Host` on FileBrowser.
+1. Set `http.trustProxyHeaders: true` on FileBrowser.
 2. Set `http.internalUrl` to a URL OnlyOffice can reach on the Docker/LAN network (for example `http://filebrowser:80`).
 3. Optionally set `http.externalUrl` if OnlyOffice cannot use the internal URL but shares the same public host as users.
 
-Download/callback URLs embedded in the editor config use that priority — they do **not** read raw `X-Forwarded-*` unless falling back to the request path with `trustedHeaders` configured.
+Download/callback URLs embedded in the editor config use that priority — they do **not** read raw `X-Forwarded-*` unless falling back to the request path with `trustProxyHeaders` enabled.
 
 ## Performance Issues
 

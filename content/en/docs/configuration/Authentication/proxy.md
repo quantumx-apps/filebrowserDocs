@@ -99,10 +99,7 @@ FileBrowser config:
 
 ```yaml
 http:
-  trustedHeaders:
-    - X-Forwarded-For
-    - X-Forwarded-Proto
-    - X-Forwarded-Host
+  trustProxyHeaders: true
 
 auth:
   methods:
@@ -114,7 +111,7 @@ auth:
 ```
 
 {{% alert context="info" %}}
-`auth.methods.proxy.header` names the **username** header. Client IP and scheme/host forwarding use the separate `http.trustedHeaders` list — see {{< doclink path="configuration/http/#trustedheaders" text="HTTP trustedHeaders" />}}.
+`auth.methods.proxy.header` names the **username** header. Client IP and scheme/host forwarding use `http.trustProxyHeaders` — see {{< doclink path="configuration/http/#trustproxyheaders" text="HTTP trustProxyHeaders" />}}.
 {{% /alert %}}
 
 </div>
