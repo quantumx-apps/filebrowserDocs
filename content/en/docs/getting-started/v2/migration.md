@@ -79,21 +79,17 @@ Paths are relative to the FileBrowser working directory (standalone) or your mou
 
 ### Reverse proxy and trusted headers
 
-If FileBrowser runs behind a reverse proxy (especially on a subpath such as `/files/`), add `http.trustedHeaders` after migrating config keys from `server` to `http`:
+If FileBrowser runs behind a reverse proxy (especially on a subpath such as `/files/`), set `http.trustProxyHeaders: true` after migrating config keys from `server` to `http`:
 
 ```yaml
 http:
   baseURL: "/files"
-  trustedHeaders:
-    - X-Forwarded-For
-    - X-Real-IP
-    - X-Forwarded-Proto
-    - X-Forwarded-Host
+  trustProxyHeaders: true
 ```
 
-v2.0.0+ **ignores** forwarded headers unless they are listed. Without this, activity logs may show the proxy IP, OIDC callbacks may use `http://`, and cookies may not bind to the public host.
+v2.0.0+ ignores forwarded headers unless `trustProxyHeaders` is enabled. Without it, activity logs may show the proxy IP, OIDC callbacks may use `http://`, and cookies may not bind to the public host.
 
-The {{< doclink path="getting-started/v2/config-migration/" text="config migration tool" />}} warns when OIDC is enabled but these headers are missing. See {{< doclink path="getting-started/reverse-proxy/" text="Reverse proxy guide" />}}.
+The {{< doclink path="getting-started/v2/config-migration/" text="config migration tool" />}} converts v1.5.x `trustedHeaders` lists to `trustProxyHeaders: true`. See {{< doclink path="getting-started/reverse-proxy/" text="Reverse proxy guide" />}}.
 
 </div>
 

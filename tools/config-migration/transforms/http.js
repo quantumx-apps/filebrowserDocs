@@ -52,33 +52,67 @@ export function transformHttp(config, changes, warnings, options = {}) {
     }
   }
 
+  migrateTrustedHeadersToTrustProxy(http, server, changes, warnings);
+
   if (!hadHttpBlock && Object.keys(http).length > 0) {
     recordChange(changes, 'added', 'http', { outputPath: 'http', outputKey: 'http' });
   }
 
-  emitOidcTrustedHeadersWarnings(config, http, warnings);
+  emitOidcTrustProxyHeadersWarnings(config, http, warnings);
 }
 
-const PROXY_TRUSTED_HEADERS = ['X-Forwarded-Proto', 'X-Forwarded-Host', 'X-Forwarded-For'];
+/**
+ * v1.5.x used http.trustedHeaders (or server.trustedHeaders) as a string list.
+ * v2.0.0+ uses http.trustProxyHeaders: true instead.
+ *
+ * @param {Record<string, unknown>} http
+ * @param {Record<string, unknown>} server
+ * @param {Array<{action: string, path: string, inputKey?: string, outputKey?: string, inputPath?: string, outputPath?: string}>} changes
+ * @param {string[]} warnings
+ */
+function migrateTrustedHeadersToTrustProxy(http, server, changes, warnings) {
+  let legacy = http.trustedHeaders;
+  if (legacy === undefined && server.trustedHeaders !== undefined) {
+    legacy = server.trustedHeaders;
+    delete server.trustedHeaders;
+  }
+  if (legacy === undefined) {
+    return;
+  }
+
+  const hadEntries = Array.isArray(legacy) && legacy.length > 0;
+  if (hadEntries && http.trustProxyHeaders === undefined) {
+    http.trustProxyHeaders = true;
+    recordChange(changes, 'replaced', 'http.trustProxyHeaders', {
+      inputPath: 'http.trustedHeaders',
+      inputKey: 'trustedHeaders',
+      outputPath: 'http.trustProxyHeaders',
+      outputKey: 'trustProxyHeaders',
+    });
+  }
+
+  delete http.trustedHeaders;
+
+  if (hadEntries) {
+    warnings.push(
+      'http.trustedHeaders (v1.5.x) was replaced with http.trustProxyHeaders: true. Remove any leftover trustedHeaders entries from v2 configs.',
+    );
+  }
+}
 
 /**
  * @param {Record<string, unknown>} config
  * @param {Record<string, unknown>} http
  * @param {string[]} warnings
  */
-function emitOidcTrustedHeadersWarnings(config, http, warnings) {
+function emitOidcTrustProxyHeadersWarnings(config, http, warnings) {
   if (!isOidcEnabled(config)) {
     return;
   }
 
-  const trusted = http.trustedHeaders;
-  const trustedList = Array.isArray(trusted) ? trusted.map((h) => String(h).toLowerCase()) : [];
-  const hasProto = trustedList.includes('x-forwarded-proto');
-  const hasHost = trustedList.includes('x-forwarded-host');
-
-  if (!hasProto || !hasHost) {
+  if (http.trustProxyHeaders !== true) {
     warnings.push(
-      `OIDC is enabled but http.trustedHeaders is missing reverse-proxy headers. Add ${PROXY_TRUSTED_HEADERS.join(', ')} when FileBrowser sits behind HTTPS termination (fixes http:// redirect_uri behind nginx).`,
+      'OIDC is enabled but http.trustProxyHeaders is not true. Set trustProxyHeaders: true when FileBrowser sits behind HTTPS termination (fixes http:// redirect_uri behind nginx).',
     );
   }
 }
