@@ -6,7 +6,7 @@ date: "2025-12-23T00:30:21Z"
 lastmod: "2026-05-01T16:02:24Z"
 ---
 
-Starting in **v1.1.x**, the sidebar is fully customizable per user. This means a user can configure their sidebar with their own links, icons, and order it how they want.
+The sidebar is fully customizable per user — configure your own links, icons, and order.
 
 Separate from links, **Settings → Profile** includes toggles for sidebar behavior (quick toggles, file actions, tree layout, and keeping the sidebar open while previewing or editing). See {{< doclink path="user-preferences/sidebar-options/" text="Sidebar options (profile settings)" />}}.
 

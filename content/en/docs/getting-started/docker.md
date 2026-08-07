@@ -176,14 +176,7 @@ See {{< doclink path="configuration/server/#database" text="Server configuration
 
 ## Running container with a different user
 
-{{% alert context="info" %}}
-On `v1.2.x` and earlier, the default user is `root`.
-On `v1.3.x` and later, the default user is `filebrowser` (1000:1000).
-{{% /alert %}}
-
-FileBrowser Quantum docker images have a non-default `filebrowser` user built-in. This user has UID:GID of 1000:1000. In `v1.2.x` and earlier you need to specify this user manually:
-
-Add to docker-compose.yaml:
+Docker images run as the built-in `filebrowser` user (UID:GID **1000:1000**) by default. To use a different UID:GID, set `user` in your compose file:
 ```yaml
 services:
   filebrowser:
@@ -213,8 +206,9 @@ Linux treats **ports below 1024** as *privileged*: a non-root user needs the **`
 On **rootful** Docker Engine or Docker Desktop, the container still usually gets **`NET_BIND_SERVICE`** in the default capability set, so that user **can** listen on `80` or `443` without extra flags. **`bind: permission denied` on a low `server.port` shows up more often when:**
 
 - you use a **rootless** container engine (**Docker rootless**, **Podman rootless**), or  
-- the runtime uses a **stricter** capability profile (some **Podman** installs, explicit `--cap-drop`, hardened policies),
-So the v1.3 switch to a non-root default **pairs with** those environments: the process is no longer UID 0, and if `NET_BIND_SERVICE` is not effective, the kernel rejects the bind. It is **not** “non-root in Docker always breaks port 443 on every machine.”
+- the runtime uses a **stricter** capability profile (some **Podman** installs, explicit `--cap-drop`, hardened policies).
+
+Because the default user is not root, **`bind: permission denied` on a low `server.port` shows up more often** in those environments when `NET_BIND_SERVICE` is not effective. It is **not** “non-root in Docker always breaks port 443 on every machine.”
 
 ### non-root runtimes can use `NET_BIND_SERVICE`
 

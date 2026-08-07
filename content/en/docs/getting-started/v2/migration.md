@@ -89,7 +89,7 @@ http:
 
 v2.0.0+ ignores forwarded headers unless `trustProxyHeaders` is enabled. Without it, activity logs may show the proxy IP, OIDC callbacks may use `http://`, and cookies may not bind to the public host.
 
-The {{< doclink path="getting-started/v2/config-migration/" text="config migration tool" />}} converts v1.5.x `trustedHeaders` lists to `trustProxyHeaders: true`. See {{< doclink path="getting-started/reverse-proxy/" text="Reverse proxy guide" />}}.
+The {{< doclink path="getting-started/v2/config-migration/" text="config migration tool" />}} converts v1.4.x–v1.5.x `trustedHeaders` lists to `trustProxyHeaders: true`. See {{< doclink path="getting-started/reverse-proxy/" text="Reverse proxy guide" />}}.
 
 </div>
 

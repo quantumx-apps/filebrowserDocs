@@ -113,10 +113,6 @@ server:
             ignoreSymlinks: false
 ```
 
-{{% alert context="warning" %}}
-**Deprecated (still accepted for backward compatibility):** In rule objects, prefer `fileName` / `folderName`. The fields `fileNames` and `folderNames` are deprecated names for the same idea. The old `conditionals` block on source `config` is deprecated — use `rules` only. On source `config`, `createUserDir`, `disableIndexing`, `indexingIntervalMinutes`, and `conditionals` are deprecated; see sections below.
-{{% /alert %}}
-
 ## Indexing Overview
 
 Sources are indexed by default, which enables:
@@ -220,21 +216,6 @@ config:
 ```
 
 Disable the source without removing it from config. Defaults to `false`. Useful for temporarily disabling a source for maintenance or testing. Users cannot access disabled sources.
-
-### `disableIndexing` (deprecated)
-
-{{% alert context="warning" %}}
-**Deprecated:** `disableIndexing` on source `config` is deprecated. See {{< doclink path="advanced/source-configuration/conditional-rules/#disable-indexing" text="rules - disable indexing" />}} on how to disable indexing
-{{% /alert %}}
-
-When indexing is effectively off for a source, these features **do not work**:
-
-- Search
-- Folder size calculations
-- Folder preview images
-- Source statistics / health
-
-Users may still browse files with reduced functionality.
 
 ## Common Configuration Patterns
 

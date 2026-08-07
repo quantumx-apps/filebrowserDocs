@@ -85,7 +85,7 @@ https://your-domain.com/custom-base/api/auth/oidc/callback
 
 When FileBrowser sits behind HTTPS nginx, Traefik, or Caddy, the incoming request often arrives as `http://` with the proxy's internal host. Configure forwarded headers so the request-derived callback uses the browser-facing scheme and host.
 
-**v2.0.0+** — single boolean (replaces the v1.5.x list):
+**v2.0.0+** — single boolean (replaces the v1.4.x–v1.5.x `trustedHeaders` list):
 
 ```yaml
 http:
@@ -93,7 +93,7 @@ http:
   trustProxyHeaders: true
 ```
 
-**v1.5.x** (current stable) — list the forwarding headers your proxy sets:
+**v1.4.x–v1.5.x** — list the forwarding headers your proxy sets:
 
 ```yaml
 http:

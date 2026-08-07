@@ -94,11 +94,6 @@ auth:
 
 ## Running container with a different user
 
-{{% alert context="info" %}}
-On `v1.2.x` and earlier, the default user is `root`.
-On `v1.3.x` and later, the default user is `filebrowser` (1000:1000).
-{{% /alert %}}
-
 The easist way to update the user is through docker compose. For example to create a new user 1001:1001 "${UID}:${GID}":
 
 ```yaml title="compose.yml" linenums="1"

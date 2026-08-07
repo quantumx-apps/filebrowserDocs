@@ -16,10 +16,6 @@ Conditional rules allow you to control which files and folders are indexed by Fi
 The `conditionals` wrapper on source `config` was **removed** in v2.0.0 — configure rules directly under `config.rules`. Deprecated field names (`fileNames`, `folderNames`, top-level `hidden`) are no longer accepted; use `fileName`, `folderName`, and `ignoreHidden` on rule items.
 {{% /alert %}}
 
-{{% alert context="info" %}}
-**Version 1.2.0+**: Rules have been simplified. The `conditionals` wrapper has been removed, and `ignoreHidden`, `ignoreZeroSizeFolders`, and `ignoreSymlinks` are moved to rule items.
-{{% /alert %}}
-
 ## Basic Structure
 
 Rules are configured directly under `rules` in your source configuration:
@@ -156,10 +152,6 @@ rules:
 ```
 
 Matches any file with this exact name, anywhere in the source. For example, `fileName: ".DS_Store"` excludes all `.DS_Store` files. Useful for excluding system or temporary files by name.
-
-{{% alert context="warning" %}}
-**Deprecated:** The alternate spellings `fileNames` and `folderNames` on a rule are deprecated in favor of `fileName` and `folderName`. Prefer the singular keys for new configuration.
-{{% /alert %}}
 
 ### Pattern-Based Rules (Global)
 
