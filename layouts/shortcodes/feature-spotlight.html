@@ -1,0 +1,40 @@
+{{/*
+  Clickable feature spotlight card for docs pages.
+
+  Usage:
+  {{< feature-spotlight path="features/user-permissions/" title="User permissions" icon="lock" variant="permissions" >}}
+  Short description shown on the card.
+  {{< /feature-spotlight >}}
+*/}}
+
+{{- $path := .Get "path" -}}
+{{- $title := .Get "title" -}}
+{{- $icon := .Get "icon" | default "star" -}}
+{{- $variant := .Get "variant" | default "default" -}}
+{{- $desc := strings.TrimSpace .Inner -}}
+
+{{- if not $path -}}
+  {{- errorf "feature-spotlight shortcode: 'path' parameter is required" -}}
+{{- end -}}
+{{- if not $title -}}
+  {{- errorf "feature-spotlight shortcode: 'title' parameter is required" -}}
+{{- end -}}
+
+{{- if not (hasPrefix $path "/") -}}
+  {{- $path = printf "/%s" $path -}}
+{{- end -}}
+{{- $path = printf "/docs%s" $path -}}
+{{- $url := $path | relLangURL -}}
+
+<a class="feature-spotlight-card feature-spotlight-card--{{ $variant }}" href="{{ $url }}">
+  <span class="feature-spotlight-card__icon" aria-hidden="true">
+    <i class="material-icons">{{ $icon }}</i>
+  </span>
+  <span class="feature-spotlight-card__body">
+    <span class="feature-spotlight-card__title">{{ $title }}</span>
+    {{- with $desc -}}
+    <span class="feature-spotlight-card__desc">{{ . }}</span>
+    {{- end -}}
+    <span class="feature-spotlight-card__cta">Read the guide <span class="feature-spotlight-card__arrow" aria-hidden="true">→</span></span>
+  </span>
+</a>
