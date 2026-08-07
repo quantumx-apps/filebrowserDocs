@@ -3,12 +3,105 @@ title: "Beta"
 description: "See what changed in beta versions"
 icon: "rocket_launch"
 date: "2026-07-02T23:17:05Z"
-lastmod: "2026-07-23T23:21:59Z"
+lastmod: "2026-08-07T18:10:00Z"
 ---
 
 {{% alert context="info" %}}
 You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/filebrowser/releases)
 {{% /alert %}}
+
+{{% alert context="warning" %}}
+**v2.0.0** requires a config update and one-time database migration from v1.x. See {{< doclink path="getting-started/v2/migration/" text="Migration guide" />}} and {{< doclink path="getting-started/v2/about/" text="About v2.0.0" />}}.
+{{% /alert %}}
+
+---
+
+## v2.0.0
+
+This version is the most significant change to date. It **requires** both a database migration and config structural changes. Use the {{< doclink path="getting-started/v2/config-migration/" text="config migration tool" />}} before upgrading from v1.x.
+
+ **Breaking Changes**:
+ - Removed: `GET /api/raw` and `GET /public/api/raw` download routes — use `/api/resources/download` instead.
+ - Removed: `/share/…` URL redirect to `/public/share/…` — use `/public/share/…` directly.
+ - Removed: singular `source` search api param (use `sources`), bare `scope` paths without `sourceName:` prefix, and `glob` / `useGlob` aliases (use `useWildcard`).
+ - Removed `config.conditionals`, source-level `indexingIntervalMinutes` (indexing always uses adaptive scheduling), and deprecated rule fields `fileNames` / `folderNames` / top-level `hidden` — use `config.rules` with `fileName`, `folderName`, and `ignoreHidden` on rules. See {{< doclink path="access-control/rules/" text="Exclusion rules" />}}.
+ - Removed: deprecated flat `userDefaults` config formats — use the {{< doclink path="getting-started/v2/config-migration/" text="config migration tool" />}} before upgrading.
+ - Changed: `PUT /api/users` moved to `PATCH`. User updates are granular (partial payloads, not full user objects). Blank or `all` values for `which` are rejected.
+ - Changed: HTTP-related config options moved from `server` to `http`. See {{< doclink path="configuration/http/" text="HTTP settings" />}}.
+ - Changed (reverse proxy): `http.trustedHeaders` (v1.5.x list) removed — use `http.trustProxyHeaders: true` when behind nginx, Traefik, or Caddy. See {{< doclink path="configuration/http/#trustproxyheaders" text="trustProxyHeaders" />}} and {{< doclink path="getting-started/reverse-proxy/" text="Reverse proxy" />}}.
+ - Changed: `FILEBROWSER_DATABASE` environment variable removed — use `FILEBROWSER_DATABASE_PATH` or `server.database.path`. See {{< doclink path="reference/environment-variables/" text="Environment variables" />}}.
+ - Changed: Stream API moved to `/api/media/stream`. Inline non-media viewing uses `GET /api/resources/view` (both use `viewToken` from file metadata). See {{< doclink path="reference/api/" text="API reference" />}}.
+ - Changed: CLI user management — canonical commands are `user set <username> --password [value]` and `user promote <username>`; `set -u` is deprecated. See {{< doclink path="reference/cli/" text="CLI reference" />}}.
+ - Changed: File permissions (**view**, **download**, **modify**, **create**, **delete**) are **per source**, not global. Global permissions are **admin**, **api**, **share**, and **realtime** only. **`view` is new** — browsing and UI preview are separate from download. See {{< doclink path="features/user-permissions/" text="User permissions" />}}.
+ - Changed: Default file-operation permissions moved from `userDefaults.permissions` to **Settings → Access management** (and `server.sources[].config.defaultPermissions`). See {{< doclink path="features/user-permissions/" text="User permissions" />}}.
+
+ **New Features**:
+ - **Activity Viewer** — semantic audit log with interactive charts, table reports, and CSV export. Configurable retention (default 30 days), optional disable, and buffered writes (default 10 second flush interval). See {{< doclink path="features/activity/" text="Activity Viewer" />}}.
+ - **Per-source permissions** — view, download, modify, create, delete on each user scope; deployment-wide defaults and optional **Enforce** for all non-admin users in Access management. See {{< doclink path="features/user-permissions/" text="User permissions" />}}.
+ - **User defaults** — universal template for new users (profile, preview, sidebar, uploads, global admin/api/share/realtime); admins can **Enforce** individual fields and resync all non-admin users. See {{< doclink path="features/user-defaults/" text="User defaults" />}}.
+ - **View vs download** — separate grants; inline UI preview via `viewToken` does not count as a download in permissions or activity logs.
+ - **Media player improvements**:
+   - Refreshed playback queue UI with thumbnails, session storage, and a clear-queue button ([#2575](https://github.com/gtsteffaniak/filebrowser/issues/2575)) ([#2600](https://github.com/gtsteffaniak/filebrowser/pull/2600)).
+   - Loop modes: off, single, and all — none clear the existing queue ([#2600](https://github.com/gtsteffaniak/filebrowser/pull/2600)).
+   - Audio visualizer for desktop ([#2575](https://github.com/gtsteffaniak/filebrowser/issues/2575)) ([#2620](https://github.com/gtsteffaniak/filebrowser/pull/2620)).
+   - Audio panel state stored in local storage.
+   - Gestures: swipe up for fullscreen, long-press for playback speed, single tap to pause ([#2575](https://github.com/gtsteffaniak/filebrowser/issues/2575)).
+   - Videos resume fullscreen and PiP when navigating ([#2649](https://github.com/gtsteffaniak/filebrowser/pull/2649)).
+ - Added `F4` shortcut to refresh the current directory and metadata ([#2600](https://github.com/gtsteffaniak/filebrowser/pull/2600)).
+ - Opt-in deployment analytics — anonymized monthly config snapshot with in-app preview before sending.
+ - WebDAV: set modification time via `X-OC-Mtime` header ([#2626](https://github.com/gtsteffaniak/filebrowser/pull/2626)). See {{< doclink path="features/webdav/" text="WebDAV" />}}.
+ - Copy operations preserve original modification times ([#2642](https://github.com/gtsteffaniak/filebrowser/issues/2642)) ([#2647](https://github.com/gtsteffaniak/filebrowser/pull/2647)) — WebUI: files and directories; WebDAV `COPY`: files only.
+ - User defaults editor in Settings and in the create/edit user prompt. See {{< doclink path="configuration/users/" text="User management" />}}.
+ - CLI: `user set` with `--password` (inline, TTY prompt, or piped stdin); `user promote` for admin without password reset.
+
+ **Notes**:
+ - v2.x uses write-through state management — in-memory caches with reliable on-disk persistence. See {{< doclink path="getting-started/v2/about/#new-state-management-architecture" text="About v2.0.0" />}}.
+ - Changing a **default** (User defaults or Access management permission defaults) does **not** update existing users — use **Enforce** or edit users individually. See {{< doclink path="features/user-permissions/" text="User permissions" />}}.
+ - Access allow/deny rules control path visibility; they do **not** replace create/modify/delete scope permissions.
+ - `user.id` is a backend property; frontend APIs use **username**. Swagger updated.
+ - Removed legacy properties from API responses and generated config output.
+ - Removed exiftool as an optional helper — always built with supported libraries (64-bit OS required).
+ - Default browser media player option removed — always uses themed plyr.
+ - Swipe gestures to dismiss notifications ([#2672](https://github.com/gtsteffaniak/filebrowser/pull/2672)).
+ - Refreshed dropdown and input styles.
+ - [docker] Upgraded ffmpeg from 8.1.2 to 9.0.
+ - If migration issues arise, see {{< doclink path="getting-started/migration/troubleshooting/" text="Migration troubleshooting" />}}.
+
+**Documentation**:
+ - New feature guides: {{< doclink path="features/user-permissions/" text="User permissions" />}}, {{< doclink path="features/user-defaults/" text="User defaults" />}}, {{< doclink path="features/activity/" text="Activity Viewer" />}}.
+ - Updated {{< doclink path="getting-started/v2/about/" text="About v2.0.0" />}} with feature spotlight cards and clearer permission/default behavior.
+
+---
+
+## v1.5.5-beta
+
+ **BugFixes**:
+ - Fixed uncustomized (minimal) API token creation needed by WebDAV clients ([issue #2503](https://github.com/gtsteffaniak/filebrowser/issues/2503)).
+
+**Full Changelog**: [v1.5.4-beta...v1.5.5-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.4-beta...v1.5.5-beta) -- **Release**: [v1.5.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.5-beta)
+
+---
+
+## v1.5.4-beta
+
+ **Notes**:
+ - PWA installation name now capped at 30 characters instead of 12 ([issue #2699](https://github.com/gtsteffaniak/filebrowser/issues/2699)).
+
+ **BugFixes**:
+ - Fixed forward slash blocked in text fields when the search shortcut listener intercepts `/` ([issue #2696](https://github.com/gtsteffaniak/filebrowser/issues/2696)).
+
+**Full Changelog**: [v1.5.3-beta...v1.5.4-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.3-beta...v1.5.4-beta) -- **Release**: [v1.5.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.4-beta)
+
+---
+
+## v1.5.3-beta
+
+ **BugFixes**:
+ - Fixed probe `canShare` with the real file, not a fixed `text/plain` stand-in ([issue #2664](https://github.com/gtsteffaniak/filebrowser/issues/2664)).
+ - When the logout button is pressed, the user is redirected to an invalid URL that does not honor `baseURL` / `externalUrl` ([issue #2657](https://github.com/gtsteffaniak/filebrowser/issues/2657)).
+ - Fixed redirect to login when an authenticated request returns 401 (expired session).
+
+**Full Changelog**: [v1.5.2-beta...v1.5.3-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.2-beta...v1.5.3-beta) -- **Release**: [v1.5.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.3-beta)
 
 ---
 

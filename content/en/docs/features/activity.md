@@ -1,9 +1,9 @@
 ---
-title: "Activity"
+title: "Activity Viewer"
 description: "Audit log, charts, and reports for user and file activity in FileBrowser Quantum v2.0.0"
 icon: "monitoring"
 date: "2026-07-23T17:03:27Z"
-lastmod: "2026-07-24T01:02:28Z"
+lastmod: "2026-08-07T17:07:00Z"
 order: 5
 ---
 
@@ -15,9 +15,9 @@ The Activity Viewer and semantic activity audit log were introduced in **v2.0.0*
 
 ## Overview
 
-Activity logging records **semantic events** — downloads, uploads, share changes, logins, and similar actions — in the main SQLite database. The **Activity Viewer** tool turns that history into a searchable table, charts, and CSV exports.
+v2.0.0 stores **semantic activity events** — downloads, uploads, share changes, logins, and similar actions — in SQLite. The **Activity Viewer** turns that history into a searchable table, interactive charts, and CSV exports.
 
-Events are buffered in memory and written to SQLite in batches. Old rows are purged automatically based on retention settings. Activity is separate from the file index database; both live under `server.database` in config.
+This feature depends on the v2 write-through **state** layer and structured SQL storage introduced in v2.0.0. Events are buffered in memory and written to SQLite in batches. By default, there can be a **short delay** (up to **10 seconds**) before a new event appears in the Activity Viewer — events sit in an in-memory buffer until the next flush. Old rows are purged automatically based on retention settings (**30 days** by default).
 
 ## Opening the Activity Viewer
 
@@ -35,6 +35,8 @@ There are several ways to open the tool:
    - **Access editor** — access changes for the current path
 
 Shortcuts open the viewer with filters pre-filled (scope, source, path, share hash, or event types).
+
+<img src="/images/features/activity/bar-by-type.png" alt="Activity Viewer bar graph view by type">
 
 ## Who can see what
 
@@ -60,8 +62,6 @@ Scopes limit which event types appear. Use them in the viewer or in API query pa
 | **access** | Access create, update, delete |
 | **shares** | Share create, update, delete, and **download** events tied to a share (via `shareHash` in details) |
 
-When `scope=shares` and no event types are selected, the viewer shows all share-related events including share downloads. Other scopes apply their event-type set automatically unless you pick specific types in the filter.
-
 ## View types
 
 The Activity Viewer supports five layouts:
@@ -72,63 +72,77 @@ The Activity Viewer supports five layouts:
 - **Pie chart** — Distribution of counts for the selected range and filters.
 - **Summary** — Aggregated totals without a time axis.
 
+<img src="/images/features/activity/chart-by-user.png" alt="Activity bar chart split by user">
+
 Chart views support time buckets of **minute** (up to 48 hours), **hour**, or **day** (ranges up to 90 days). Split-by options include event type, user (admins only), or total.
-
-## Filters
-
-Common filters work together:
-
-- **Time range** — Unix `from` / `to` timestamps (default last 7 days in the API).
-- **Event type** — One or more types, comma-separated.
-- **Source and path** — Browse to a folder or type a path prefix under a source.
-- **Path glob** — Admin-only glob patterns (for example `/docs/*`) scoped to the selected source.
-- **Share** — Pick a share to limit to that link's activity (non-admins: own shares only).
-- **User** — Admin-only username filter.
-
-Changing filters and clicking **Refresh** reloads data. Table view also supports **Export CSV**.
 
 ## What gets logged
 
-Activity covers file operations, administration, authentication, and tool usage. WebDAV operations are logged the same way as Web UI actions when performed by an authenticated user.
+Activity covers file operations from the Web UI, administration, authentication, and tool usage. Web UI file changes (move, copy, rename, upload, delete, archive) are fully recorded.
 
 ### File and path operations
 
-- **download** — File or folder download (including share and token-based downloads)
-- **upload** — New file or folder upload
-- **move**, **copy**, **rename** — PATCH actions on resources
-- **delete**, **bulkDelete** — Single or multi-item deletion
-- **archive**, **unarchive** — Archive tool actions
+| Event type | Triggered by |
+|---|---|
+| **download** | Web UI or API download (`/api/resources/download`), including share and token-based downloads |
+| **upload** | New file or folder upload (Web UI or WebDAV `MKCOL`) |
+| **move**, **copy**, **rename** | Resource PATCH actions (Web UI) |
+| **delete**, **bulkDelete** | Single or multi-item deletion (Web UI or WebDAV delete) |
+| **archive**, **unarchive** | Archive tool actions |
+
+Web UI operations on files and folders — including multi-select delete, drag-and-drop move/copy, and archive/unarchive — produce the corresponding activity rows with source, path, and field-level details where applicable.
 
 ### Shares and access
 
-- **shareCreate**, **shareUpdate**, **shareDelete** — Share lifecycle (field-level changes on update)
-- **accessCreate**, **accessUpdate**, **accessDelete** — Per-path access rules
+| Event type | Triggered by |
+|---|---|
+| **shareCreate**, **shareUpdate**, **shareDelete** | Share lifecycle (field-level changes on update) |
+| **accessCreate**, **accessUpdate**, **accessDelete** | Per-path access rules |
+
+Share **downloads** appear as **download** events with `details.shareHash` set. The share's download counter and per-user limits are updated separately in share state (not duplicate audit rows).
 
 ### Users, tokens, and auth
 
-- **userCreate**, **userUpdate**, **userDelete** — User administration (scope and permission changes appear in details)
-- **tokenCreate**, **tokenDelete** — API token lifecycle
-- **login**, **logout**, **signup** — Authentication events
-- **passkeyRegister**, **passkeyDelete** — Passkey changes
+| Event type | Triggered by |
+|---|---|
+| **userCreate**, **userUpdate**, **userDelete** | User administration (scope and permission changes appear in details) |
+| **tokenCreate**, **tokenDelete** | API token lifecycle |
+| **login**, **logout**, **signup** | Authentication events |
+| **passkeyRegister**, **passkeyDelete** | Passkey changes |
 
 ### Tools
 
-- **duplicateFinder** — Duplicate finder tool runs
+| Event type | Triggered by |
+|---|---|
+| **duplicateFinder** | Duplicate finder tool runs |
 
-Each row stores the actor username, event type, timestamp, client IP, and structured **details** (paths, share hash, field diffs, and so on). Admins see the richest detail in the UI and in CSV export.
+### WebDAV
+
+WebDAV **write** operations are logged when performed by an authenticated user:
+
+| WebDAV operation | Activity event |
+|---|---|
+| Create directory (`MKCOL`) | **upload** |
+| Delete (`DELETE`) | **delete** |
+| Rename / move | **move** |
+
+WebDAV **reads** (file GET) and directory listings are **not** logged as activity today. Use Web UI or API downloads for audited download history.
+
+Each row stores the actor username, event type, timestamp, client IP, auth method (web session vs API key), and structured **details** (paths, share hash, field diffs, and so on). Admins see the richest detail in the UI and in CSV export.
 
 ## What is not logged
 
 These actions do **not** create activity rows:
 
-- **Inline viewing** via `viewToken` (`GET /api/resources/view` and related share/public view endpoints) — previewing in the UI does not count as a download and is not audited as activity.
+- **Inline viewing** via `viewToken` (`GET /api/resources/view`, `GET /api/media/stream`, and related share/public endpoints) — previewing in the UI does not count as a download and is not audited as activity. See {{< doclink path="features/user-permissions/#view-vs-download" text="View vs download" />}}.
+- **WebDAV file reads** — opening or copying file bytes over WebDAV does not create `download` events (WebDAV writes are logged; see above).
 - **Disabled logging** — When `server.database.activity.disabled` is `true`, new events are not recorded (existing rows remain until retention purge).
 
-Ordinary **downloads** (including forced download and WebDAV GET of file content) are logged.
+Ordinary **downloads** through the Web UI or `/api/resources/download` (including forced download and folder archives) are logged as **download** events.
 
 ## Configuration
 
-Activity settings live under `server.database.activity` in `config.yaml`:
+Activity settings live under `server.database.activity` in `config.yaml`. Admins can tune buffering, retention, or turn logging off entirely if audit history is not needed for your deployment.
 
 ```yaml
 server:
@@ -136,20 +150,31 @@ server:
     path: "filebrowser.sqlite"
     activity:
       disabled: false              # set true to stop recording new events
-      retentionDays: 30              # purge rows older than this (default 30)
+      retentionDays: 30            # purge rows older than this (default 30)
       flushIntervalSeconds: 10     # background flush interval (default 10)
       maxBufferSize: 10000         # flush immediately when buffer reaches this size
 ```
 
-- **`disabled`** — When `true`, the recorder does not accept new events.
-- **`retentionDays`** — On startup and during periodic purges, rows older than this many days are deleted.
-- **`flushIntervalSeconds`** / **`maxBufferSize`** — Control how often buffered events are written to SQLite.
+| Setting | Default | Purpose |
+|---|---|---|
+| **`disabled`** | `false` | Set to `true` to **disable activity logging** entirely. No new events are recorded; existing rows remain until retention purge. Use this if you do not want audit history stored. |
+| **`retentionDays`** | `30` | Rows older than this many days are **deleted automatically** on startup and during periodic purges. Increase for longer history; decrease to limit database growth. |
+| **`flushIntervalSeconds`** | `10` | How often buffered events are **written to SQLite**. Until a flush runs, new events may not appear in the Activity Viewer or API — there can be up to this many seconds of delay after an action. Lower for near-real-time visibility; raise to reduce write frequency. |
+| **`maxBufferSize`** | `10000` | When the in-memory buffer reaches this size, a flush runs **immediately** regardless of the interval. |
+
+{{% alert context="info" %}}
+Activity is **buffered**, not written synchronously on every request. After a download or admin change, wait up to **`flushIntervalSeconds`** (default **10 seconds**) before expecting the row in the viewer, unless the buffer hits **`maxBufferSize`** first.
+{{% /alert %}}
 
 See also {{< doclink path="configuration/server/#database" text="Server database settings" />}} and {{< doclink path="getting-started/v2/about/" text="About v2.0.0" />}} for the SQLite migration context.
 
 ## CSV export
 
-In **table** view, **Export CSV** downloads activity for the current filters. Exports:
+In **table** view, **Export CSV** downloads activity for the current filters.
+
+<img src="/images/features/activity/viewer-table.png" alt="Activity Viewer table view with filters">
+
+Exports:
 
 - Paginate through the result set in chunks (up to **100,000** rows total; larger exports are truncated with a `TRUNCATED` marker row).
 - Include optional columns you enabled in the table: **source**, **path**, **shareHash**, **tokenName**.
@@ -174,6 +199,7 @@ See {{< doclink path="reference/api/" text="API reference" />}} for authenticati
 ## Related topics
 
 - {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} — SQLite upgrade required for activity
+- {{< doclink path="features/user-permissions/" text="User permissions" />}} — view vs download; what counts as a logged download
 - {{< doclink path="configuration/users/" text="User management" />}} — per-source permissions and scopes shown in activity paths
-- {{< doclink path="features/webdav/" text="WebDAV" />}} — WebDAV file operations appear in activity when logged in
+- {{< doclink path="features/webdav/" text="WebDAV" />}} — WebDAV write operations appear in activity
 - {{< doclink path="features/sidebar-links/#tool-link-configuration" text="Sidebar tool links" />}} — pin the Activity Viewer in the sidebar

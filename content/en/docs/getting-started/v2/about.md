@@ -3,11 +3,11 @@ title: "About"
 description: "About the v2.0.0 release and what changed"
 icon: "info"
 date: "2026-07-23T17:03:27Z"
-lastmod: "2026-07-24T01:02:28Z"
+lastmod: "2026-08-07T18:18:00Z"
 order: 0
 ---
 
-FileBrowser Quantum **v2.0.0** is the largest upgrade to date. It modernizes persistence, configuration, permissions, and API shapes so the application can support richer features going forward.
+FileBrowser Quantum **v2.0.0** is the largest upgrade to date. It refreshes how settings, users, and history are stored, simplifies configuration, and reshapes permissions so the product can grow without hitting the limits of the old design.
 
 {{% alert context="warning" %}}
 **Upgrading from v1.x?**
@@ -17,68 +17,37 @@ v2.0.0 **requires** a config update and a one-time database migration. Back up y
 
 ## Why v2.0.0?
 
-Earlier releases stored application state in BoltDB (`database.db`) using Storm-style key/value buckets. Every read and write went through that embedded database directly. v2.0.0 moves to **SQLite** with a structured schema and a new **`state` package** that sits between handlers and disk.
+Previously, everything was kept in a simple database that organized data as key/value pairs. That worked well for the original file browser, but it was a poor fit for richer features — activity history, reporting, and fine-grained permission lookups all need structured data that is easy to query and retain over time.
 
-This foundation unlocks:
+v2.0.0 replaces that layout with a structured on-disk database and a dedicated state management layer (described {{< doclink path="getting-started/v2/about/#new-state-management-architecture" text="below" />}}). The goal is better performance at scale and room for features the old format could not support cleanly, while keeping everyday browsing fast.
 
-- **Activity logging** — charts, historical data, and reporting (requires structured SQL storage)
-- **Richer permission and access queries** — nuanced lookups across users, scopes, and rules with less overhead than repeated BoltDB key/value reads
-- **Better resource usage and performance** — layered caching (runtime maps + TTL caches) with write-through SQLite persistence
-- **Cleaner configuration** — HTTP settings separated from server settings, structured `userDefaults`
-- **Standardized APIs** — consistent request/response shapes, Swagger updates, and removal of legacy aliases
+## Feature spotlights
 
-Per-source access rules and scoped permissions existed in v1.x, but state lived entirely in BoltDB-backed in-memory structures. v2.0.0 keeps hot paths fast while SQLite makes cross-entity queries, history, and new features like activity logs practical.
+The guides below cover v2.0.0's largest additions in depth. For the full release list — media player updates, WebDAV, CLI changes, breaking changes, and more — see the {{< doclink path="changelog/beta/#v200" text="beta changelog" />}}.
 
-## New state management architecture
+<div class="feature-spotlight-grid">
 
-v2.x.x introduces **write-through backend state management**:
+{{< feature-spotlight path="features/user-permissions/" title="User permissions" icon="lock" variant="permissions" >}}
+Per-source view, download, modify, create, and delete — defaults, enforcement, and which Settings page to use.
+{{< /feature-spotlight >}}
 
-```mermaid
-flowchart LR
-    handlers[Frontend]
-    statePkg[backend state]
-    runtimeMaps[in-memory values]
-    ttlCache[cache]
-    sqlite[(sqlite database)]
+{{< feature-spotlight path="features/user-defaults/" title="User defaults" icon="tune" variant="defaults" >}}
+Universal profile template for new users — enforce theme, preview, and global permission defaults.
+{{< /feature-spotlight >}}
 
-    handlers --> statePkg
-    statePkg --> runtimeMaps
-    statePkg --> ttlCache
-    statePkg --> sqlite
-    runtimeMaps --> sqlite
-    ttlCache --> sqlite
-```
+{{< feature-spotlight path="features/activity/" title="Activity Viewer" icon="monitoring" variant="activity" >}}
+Audit log with charts and CSV export — what is recorded, retention, and report modes.
+{{< /feature-spotlight >}}
 
-**How it differs from v1.x BoltDB:**
+</div>
 
-| v1.x (BoltDB / Storm) | v2.x (SQLite + state) |
-|---|---|
-| Key/value buckets queried on many code paths | Relational tables with typed rows |
-| In-memory access data loaded from BoltDB; repeated disk reads on cache miss | Runtime maps for shares, access rules, and index metadata; user records in a 30-minute TTL cache (go-cache) with SQLite fallback |
-| Harder to add cross-entity queries (activity, reports) | SQL enables joins, history, and structured migrations |
-| Scattered persistence calls | Single `state` gateway — all durable writes go through one layer |
+## Breaking changes
 
-The `state` package uses **two caching strategies**, not one:
+{{% alert context="warning" %}}
+v2.0.0 includes many breaking changes. Read the release notes carefully before upgrading.
+{{% /alert %}}
 
-- **Runtime maps** — shares, access rules, groups, token hashes, and index metadata are loaded at startup and kept in memory for the process lifetime. Reads hit memory; writes go to memory and SQLite together (write-through).
-- **TTL cache (go-cache)** — user records are cached temporarily (30 minutes). On a cache miss or expiry, the record is loaded from SQLite, then cached again. This avoids holding every user in memory indefinitely while still reducing disk reads on hot paths.
-
-All durable mutations write through to SQLite so restarts recover consistent state. Legacy BoltDB is only read once — during the one-time migration via `migrateFrom` — then SQLite becomes the sole database.
-
-## Breaking changes (summary)
-
-| Area | What changed |
-|---|---|
-| **Database** | BoltDB → SQLite. Rename `FILEBROWSER_DATABASE` → `FILEBROWSER_DATABASE_PATH` (point at your new `.sqlite` file). One-time import via `server.database.migrateFrom`. |
-| **Permissions** | File permissions (**view**, **download**, **modify**, **create**, **delete**) are **per source**, not global. **`view` is new in v2.0.0** — in v1.x, browsing a scope was always allowed. Global permissions are **admin**, **api**, **share**, **realtime** only. |
-| **Config** | Deprecated `userDefaults` and flat config formats removed. HTTP options moved from `server` to `http`. Use the config migration tool before upgrading. |
-| **API routes** | `GET /api/raw` removed → use `/api/resources/download`. Share URLs must use `/public/share/…` directly. Stream endpoint → `/api/media/stream`. |
-| **API methods** | `PUT /api/users` → `PATCH`. User updates are granular (partial payloads, not full user objects). |
-| **API identifiers** | `user.id` is a backend property; frontend APIs query users by **username**. Swagger updated. |
-| **Search API** | Singular `source` param removed (use `sources`). Bare `scope` paths require `sourceName:` prefix. `glob` / `useGlob` → `useWildcard`. |
-| **Config rules** | `config.conditionals` removed. Source-level `indexingIntervalMinutes` removed (adaptive scheduling). Rule fields `fileNames` / `folderNames` / top-level `hidden` → `config.rules` with `fileName`, `folderName`, `ignoreHidden`. |
-| **CLI** | User commands → `user set` / `user promote`; `set -u` deprecated. See {{< doclink path="reference/cli/" text="CLI reference" />}}. |
-| **Env vars** | `FILEBROWSER_DATABASE` removed. Use `FILEBROWSER_DATABASE_PATH` or `server.database.path`. |
+Review the full list in the {{< doclink path="changelog/beta/#v200" text="v2.0.0 release notes" />}} and make sure you understand what affects your deployment before upgrading. The {{< doclink path="getting-started/v2/migration/" text="migration guide" />}} walks through the upgrade steps.
 
 ## API and response cleanup
 
@@ -92,18 +61,41 @@ v2.0.0 standardizes several API conventions that were inconsistent in v1.x:
 
 If you maintain scripts or integrations, review the updated Swagger page at `/swagger` after upgrading.
 
-## New features
+## New state management architecture
 
-- **Activity logs** — user activity charts, historical data, activity tool, and reports
-- **Per-source permissions** — view, download, modify, create, delete per scope; defaults in Settings → Access management
-- **User defaults editor** — admin controls for universal defaults and enforced preferences in the UI
-- **View vs download** — separate grants for browsing and downloading files
-- **Media player improvements** — playback queue UI, loop modes (off/single/all), audio visualizer, gesture controls, fullscreen/PiP resume on navigation
-- **WebDAV** — set modification time via `X-OC-Mtime` header; copy preserves file modification times
-- **Copy operations** — preserve original modification times in WebUI (WebDAV COPY: files only)
-- **CLI improvements** — `user set` with `--password` (inline, prompt, or piped stdin); `user promote` for admin without password reset
-- **Deployment analytics** (opt-in) — anonymized monthly config snapshot with in-app preview
-- **UI** — refreshed dropdown and input styles
+v2.x.x uses **write-through state management**: the application keeps working copies in memory for speed, and saves changes to the database as they happen so a restart does not lose work.
+
+```mermaid
+flowchart LR
+    ui[Web UI and API]
+    stateLayer[Application state layer]
+    runtimeMaps[Long-lived memory cache]
+    ttlCache[Short-lived user cache]
+    disk[(On-disk database)]
+
+    ui --> stateLayer
+    stateLayer --> runtimeMaps
+    stateLayer --> ttlCache
+    stateLayer --> disk
+    runtimeMaps --> disk
+    ttlCache --> disk
+```
+
+**How it differs from v1.x:**
+
+| v1.x (BoltDB / Storm) | v2.x (SQLite + state) |
+|---|---|
+| Simple key/value storage — fine for basic settings, awkward for history and reports | Structured tables — suited to activity logs, user data, and complex queries |
+| Data often re-read from disk when not already in memory | Hot data (shares, access rules, index metadata) stays in memory for the life of the process; user records use a timed cache with disk fallback |
+| Hard to add features that span users, time ranges, or event types | Built for cross-user history, reporting, and safe schema upgrades |
+| Updates could touch storage from many places | One state layer handles writes — easier to keep data consistent |
+
+The state layer uses **two caching strategies**:
+
+- **Long-lived memory cache** — shares, access rules, groups, token metadata, and index information load at startup and stay in memory. Reads are fast and writes update memory and disk together.
+- **Short-lived user cache** — kept in memory only for a short time to prevent high access disk usage. This balances speed with memory use on busy instances.
+
+Every change is written through to the on-disk database, so restarts recover a consistent picture. Your old `database.db` is read **once** during migration (`server.database.migrateFrom`); after that, v2 uses its own database file (see the {{< doclink path="getting-started/v2/migration/" text="migration guide" />}}).
 
 ## Before you upgrade
 
@@ -113,7 +105,11 @@ If you maintain scripts or integrations, review the updated Swagger page at `/sw
 
 ## Next steps
 
+- {{< doclink path="changelog/beta/" text="Beta changelog" />}} — full v2.0.0 feature and fix list
 - {{< doclink path="getting-started/v2/migration/" text="Migration guide" />}} — step-by-step upgrade from v1.x
-- {{< doclink path="configuration/users/" text="User management" />}} — per-source permissions in v2.0.0+
+- {{< doclink path="features/user-permissions/" text="User permissions" />}} — per-source view/download/modify/create/delete
+- {{< doclink path="features/user-defaults/" text="User defaults" />}} — enforceable profile template
+- {{< doclink path="features/activity/" text="Activity Viewer" />}} — audit log and reporting
+- {{< doclink path="configuration/users/" text="User management" />}} — YAML config, CLI, and API reference
 - {{< doclink path="reference/cli/" text="CLI reference" />}} — updated user commands
 - {{< doclink path="getting-started/Migration/troubleshooting/" text="Migration troubleshooting" />}} — common issues after upgrade

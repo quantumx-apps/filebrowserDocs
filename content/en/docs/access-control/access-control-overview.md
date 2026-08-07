@@ -18,6 +18,10 @@ FileBrowser combines three separate ideas. Together they decide whether someone 
 
 Access rules refine **which paths** under a source are reachable once the user already has that source and sufficient **per-source permissions** for the action.
 
+{{% alert context="info" %}}
+**Access rules are not file permissions.** Allow/deny rules control path visibility. They do **not** replace **create**, **modify**, or **delete** on the user's scope — those are configured in **User management** (per user) and **Access management** (defaults and enforce). See {{< doclink path="features/user-permissions/" text="User permissions" />}}.
+{{% /alert %}}
+
 {{% alert context="warning" %}}
 **v2.0.0 behavior change**
 
