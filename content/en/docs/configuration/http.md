@@ -135,7 +135,7 @@ http:
 | OnlyOffice download/callback URLs when `internalUrl` is unset | WebAuthn RP ID (uses `externalUrl` when set, else request host) |
 | | Session cookies or login redirects |
 
-If unset, share links and OnlyOffice public-path URLs fall back to the incoming request (`Host` header and scheme). Behind a reverse proxy, enable header trust so request-derived URLs use the client-facing scheme and host — `http.trustProxyHeaders: true` on **v2.0.0+**, or list forwarding headers under `http.trustedHeaders` on **v1.5.x**.
+If unset, share links and OnlyOffice public-path URLs fall back to the incoming request (`Host` header and scheme). Behind a reverse proxy, enable header trust so request-derived URLs use the client-facing scheme and host — `http.trustProxyHeaders: true` on **v2.0.0+**, or list forwarding headers under `http.trustedHeaders` on **v1.4.x–v1.5.x**.
 
 </div>
 
@@ -156,7 +156,7 @@ http:
 | OnlyOffice download/callback URLs (highest priority) | Share links shown in the browser |
 | | OIDC redirects |
 
-**URL priority for OnlyOffice → FileBrowser:** `internalUrl` → `externalUrl` → incoming request (with header trust enabled when behind a proxy: `trustProxyHeaders` on v2.0.0+, `trustedHeaders` on v1.5.x).
+**URL priority for OnlyOffice → FileBrowser:** `internalUrl` → `externalUrl` → incoming request (with header trust enabled when behind a proxy: `trustProxyHeaders` on v2.0.0+, `trustedHeaders` on v1.4.x–v1.5.x).
 
 Typically a Docker service name, internal DNS name, or LAN IP. See {{< doclink path="integrations/office/configuration/" text="OnlyOffice configuration" />}}.
 
@@ -177,14 +177,14 @@ http:
 
 <div class="pattern-card">
 
-### trustProxyHeaders (v2.0.0+) / trustedHeaders (v1.5.x)
+### trustProxyHeaders (v2.0.0+) / trustedHeaders (v1.4.x–v1.5.x)
 
 How FileBrowser honors reverse-proxy forwarding headers depends on your version:
 
 | Version | Config key | Behavior |
 |---------|------------|----------|
 | **v2.0.0+** | `http.trustProxyHeaders` | Single boolean (default: `false`). When `true`, honors all standard forwarding headers. |
-| **v1.5.x** | `http.trustedHeaders` | List of header names to trust individually. |
+| **v1.4.x–v1.5.x** | `http.trustedHeaders` | List of header names to trust individually. |
 
 **v2.0.0+:**
 
@@ -196,7 +196,7 @@ http:
 
 When `true`, FileBrowser honors `X-Forwarded-Host`, `X-Forwarded-Proto`, `X-Forwarded-For`, and `X-Real-IP`.
 
-**v1.5.x** (current stable):
+**v1.4.x–v1.5.x:**
 
 ```yaml
 http:
@@ -210,7 +210,7 @@ http:
 
 List only the headers your proxy sets. For OIDC or HTTPS behind a proxy, include at least `X-Forwarded-Proto` and `X-Forwarded-Host`.
 
-Enable header trust **only** when a reverse proxy you control is the sole entry point to FileBrowser. Direct deployments (no proxy) should leave `trustProxyHeaders` false (v2.0.0+) or omit `trustedHeaders` (v1.5.x).
+Enable header trust **only** when a reverse proxy you control is the sole entry point to FileBrowser. Direct deployments (no proxy) should leave `trustProxyHeaders` false (v2.0.0+) or omit `trustedHeaders` (v1.4.x–v1.5.x).
 
 When enabled, FileBrowser uses forwarded headers for:
 
@@ -223,7 +223,7 @@ When enabled, FileBrowser uses forwarded headers for:
 This affects session cookie domain, OIDC `redirect_uri`, WebAuthn RP ID/origin, share and page URLs, auth rate limiting, failed-login lockout, and activity audit IP.
 
 {{% alert context="info" %}}
-The {{< doclink path="getting-started/v2/config-migration/" text="config migration tool" />}} converts a non-empty v1.5.x `trustedHeaders` list to `trustProxyHeaders: true` when upgrading to v2.0.0+.
+The {{< doclink path="getting-started/v2/config-migration/" text="config migration tool" />}} converts a non-empty v1.4.x–v1.5.x `trustedHeaders` list to `trustProxyHeaders: true` when upgrading to v2.0.0+.
 {{% /alert %}}
 
 {{% alert context="info" %}}
@@ -237,7 +237,7 @@ If FileBrowser is reachable directly from the internet with header trust enabled
 See {{< doclink path="getting-started/reverse-proxy/#proxy-headers-filebrowser-understands" text="Reverse proxy: proxy headers" />}} for nginx, Traefik, and Caddy examples.
 
 {{% alert context="info" %}}
-**Authentication rate limiting**: Login and other auth routes are rate-limited by default. Enable header trust behind a proxy (`trustProxyHeaders: true` on v2.0.0+, or `trustedHeaders` on v1.5.x) so per-IP limits apply to real client addresses — not the proxy.
+**Authentication rate limiting**: Login and other auth routes are rate-limited by default. Enable header trust behind a proxy (`trustProxyHeaders: true` on v2.0.0+, or `trustedHeaders` on v1.4.x–v1.5.x) so per-IP limits apply to real client addresses — not the proxy.
 {{% /alert %}}
 
 </div>
@@ -311,7 +311,7 @@ server:
 ```
 
 ```yaml
-# v1.5.x
+# v1.4.x–v1.5.x
 http:
   port: 8080
   baseURL: "/files"

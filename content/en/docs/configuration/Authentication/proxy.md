@@ -112,7 +112,7 @@ auth:
 ```
 
 ```yaml
-# v1.5.x
+# v1.4.x–v1.5.x
 http:
   trustedHeaders:
     - X-Forwarded-Proto
@@ -130,7 +130,7 @@ auth:
 ```
 
 {{% alert context="info" %}}
-`auth.methods.proxy.header` names the **username** header. Client IP and scheme/host forwarding use `http.trustProxyHeaders` (**v2.0.0+**) or `http.trustedHeaders` (**v1.5.x**) — see {{< doclink path="configuration/http/#trustproxyheaders" text="HTTP reverse-proxy headers" />}}.
+`auth.methods.proxy.header` names the **username** header. Client IP and scheme/host forwarding use `http.trustProxyHeaders` (**v2.0.0+**) or `http.trustedHeaders` (**v1.4.x–v1.5.x**) — see {{< doclink path="configuration/http/#trustproxyheaders" text="HTTP reverse-proxy headers" />}}.
 {{% /alert %}}
 
 </div>

@@ -74,12 +74,16 @@ proxy_set_header X-Forwarded-Proto $scheme;                   # HTTP/HTTPS proto
 
 ### Proxy headers FileBrowser understands
 
+{{% alert context="info" %}}
+**Version note:** On **v1.4.x–v1.5.x**, honor forwarding headers with a **`http.trustedHeaders`** list (individual header names). **v2.0.0+** removes that option and uses **`http.trustProxyHeaders: true`** instead. The {{< doclink path="getting-started/v2/config-migration/" text="config migration tool" />}} converts a non-empty `trustedHeaders` list when upgrading to v2.
+{{% /alert %}}
+
 When FileBrowser runs behind a reverse proxy, your proxy should set standard forwarding headers. FileBrowser must be told to honor them — the setting depends on your version:
 
 | Version | Config key | Example |
 |---------|------------|---------|
 | **v2.0.0+** | `http.trustProxyHeaders: true` | Single boolean; trusts all standard forwarding headers |
-| **v1.5.x** | `http.trustedHeaders` | List of header names to trust individually |
+| **v1.4.x–v1.5.x** | `http.trustedHeaders` | List of header names to trust individually |
 
 #### Client IP
 
@@ -94,7 +98,7 @@ http:
 ```
 
 ```yaml
-# v1.5.x
+# v1.4.x–v1.5.x
 http:
   trustedHeaders:
     - X-Forwarded-For
@@ -112,7 +116,7 @@ http:
 ```
 
 ```yaml
-# v1.5.x
+# v1.4.x–v1.5.x
 http:
   trustedHeaders:
     - X-Forwarded-Proto
@@ -140,7 +144,7 @@ auth:
 When proxy auth is enabled, FileBrowser accepts the configured header as the username. Only enable this when FileBrowser is unreachable except through your proxy.
 
 {{% alert context="warning" %}}
-Only enable header trust when FileBrowser is behind a proxy that controls these headers. On **v2.0.0+**, set `trustProxyHeaders: true`; on **v1.5.x**, list the headers under `trustedHeaders`. If users can reach FileBrowser without going through your proxy, they can spoof `X-Forwarded-*` and bypass per-IP limits.
+Only enable header trust when FileBrowser is behind a proxy that controls these headers. On **v2.0.0+**, set `trustProxyHeaders: true`; on **v1.4.x–v1.5.x**, list the headers under `trustedHeaders`. If users can reach FileBrowser without going through your proxy, they can spoof `X-Forwarded-*` and bypass per-IP limits.
 {{% /alert %}}
 
 See {{< doclink path="configuration/http/#trustproxyheaders" text="HTTP reverse-proxy headers" />}} and {{< doclink path="configuration/http/#built-in-authentication-rate-limiting" text="built-in authentication rate limiting" />}} for details.
@@ -164,7 +168,7 @@ auth:
 ```
 
 ```yaml
-# v1.5.x
+# v1.4.x–v1.5.x
 http:
   baseURL: "/files"
   externalUrl: "https://files.example.com/files"
