@@ -74,10 +74,6 @@ proxy_set_header X-Forwarded-Proto $scheme;                   # HTTP/HTTPS proto
 
 ### Proxy headers FileBrowser understands
 
-{{% alert context="info" %}}
-This applies to version `v1.4.x` and later
-{{% /alert %}}
-
 When FileBrowser runs behind a reverse proxy, your proxy should set standard forwarding headers. FileBrowser must be told to honor them — the setting depends on your version:
 
 | Version | Config key | Example |

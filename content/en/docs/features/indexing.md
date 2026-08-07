@@ -7,13 +7,9 @@ lastmod: "2026-02-05T00:30:11Z"
 order: 3
 ---
 
-{{% alert context="info" %}}
-**Note:** The SQLite-based indexing system was introduced in version 1.2.0
-{{% /alert %}}
-
 ## SQLite-Based Architecture
 
-Starting with version 1.2.0, FileBrowser Quantum uses SQLite as its indexing backend. This architectural change brings several important improvements and considerations:
+FileBrowser Quantum uses SQLite as its indexing backend. This brings several important improvements and considerations:
 
 ### Advantages
 

@@ -7,7 +7,7 @@ lastmod: "2026-02-24T00:57:44Z"
 order: 1
 ---
 
-Tools have been available since version `v1.1.x`, with new tools being added to each version. You can access tools from two methods:
+Tools are built into FileBrowser Quantum, with new tools added over time. You can access tools from two methods:
 
 
 ## Access by URL
