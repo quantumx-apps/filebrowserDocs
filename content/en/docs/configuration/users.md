@@ -190,7 +190,7 @@ Configure **per scope** in User Management when editing a user — expand a sour
 | **Create** | Create files and folders, copy into this source |
 | **Delete** | Delete files and folders |
 
-Omitting permissions on a scope when saving via API lets the server apply **userDefaults** for that source. Explicit values override defaults.
+Omitting permissions on a scope when saving via API lets the server apply **Access management default permissions** for that source. Explicit values override defaults. See {{< doclink path="features/user-permissions/" text="User permissions" />}}.
 
 ### API user shape (v2.0.0+)
 
