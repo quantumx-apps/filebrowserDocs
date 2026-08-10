@@ -1,22 +1,22 @@
 ---
-title: "Configuration Files (v2.0.0)"
-description: "Understanding and using configuration files in FileBrowser v2.0.0 (beta)"
+title: "Configuration Files (v1.5.x)"
+description: "Understanding and using configuration files in FileBrowser v1.5.x (stable)"
 icon: "settings"
 date: "2025-10-23T00:50:09Z"
 lastmod: "2026-08-10T00:00:00Z"
-order: 6
+order: 106
 ---
 
 {{% alert context="info" %}}
-**This guide is for v2.0.0 (beta).** It uses the **database** (`filebrowser.sqlite`) and the `server.database.path` config format.
+**This guide is for v1.5.x and older (stable).** It uses the **legacy database** (`database.db`) and the flat `server.database` config format.
 
-Using **v1.5.x or older**? See the {{< doclink path="getting-started/config-v1.5.x" text="v1.5.x configuration guide" />}} instead.
+Looking for **v2.0.0 (beta)**? See the {{< doclink path="getting-started/config" text="v2.0.0 configuration guide" />}} instead.
 {{% /alert %}}
 
 {{% alert context="warning" %}}
-**Upgrading from v1.x?**
+**Planning to upgrade to v2.0.0?**
 
-v2.0.0 removes deprecated flat config formats and moves HTTP settings from `server` to `http`. Use the config migration tool and follow the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before upgrading.
+v2.0.0 replaces the legacy database with a new database format and restructures configuration. Follow the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before upgrading.
 {{% /alert %}}
 
 ## What is a Config File?
@@ -52,20 +52,15 @@ export FILEBROWSER_CONFIG="/path/to/config.yaml"
 
 ## Database Path Configuration
 
-The database path is configured under `server.database.path`. See {{< doclink path="configuration/server/#database" text="Server configuration" />}} for details.
+The database path is configured in the `server.database` setting. See {{< doclink path="configuration/server/#database" text="Server configuration" />}} for details.
 
-**Default database locations (v2.0.0+):**
-- Standalone: `./filebrowser.sqlite` (current directory)
-- Docker: `/home/filebrowser/data/filebrowser.sqlite` when using the recommended `./data` mount
+**Default database locations:**
+- Standalone: `./database.db` (current directory)
+- Docker: first checks `/home/filebrowser/data/database.db`, then `./database.db` (current directory)
 
 **Priority for database path:**
-1. `FILEBROWSER_DATABASE_PATH` environment variable (if set)
-2. Path in `config.yaml` via `server.database.path`
-3. Default location based on deployment type
-
-{{% alert context="info" %}}
-**Upgrading from v1.x?** v2.0.0 uses a new database instead of the legacy database (`database.db`). Rename your old database file, set `migrateFrom`, and follow the {{< doclink path="getting-started/v2/migration/" text="migration guide" />}}. The `FILEBROWSER_DATABASE` env var is removed — use `FILEBROWSER_DATABASE_PATH` instead.
-{{% /alert %}}
+1. Path specified in `config.yaml` via `server.database`
+2. Default location based on deployment type (standalone vs Docker)
 
 ## Docker Configuration
 
@@ -76,7 +71,7 @@ docker run -d \
   -v /path/to/your/config.yaml:/home/filebrowser/data/config.yaml \
   -v /path/to/your/folder:/folder \
   -p 80:80 \
-  gtstef/filebrowser:beta
+  gtstef/filebrowser:stable
 ```
 
 ### Using Docker Compose
@@ -95,7 +90,7 @@ services:
       - './data:/home/filebrowser/data'
     ports:
       - '80:80'
-    image: gtstef/filebrowser:beta
+    image: gtstef/filebrowser:stable
     restart: unless-stopped
 ```
 

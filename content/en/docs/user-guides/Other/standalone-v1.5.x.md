@@ -1,17 +1,23 @@
 ---
-title: "Standalone docker guide (v2.0.0)"
-description: "A basic working example on setting up FileBrowser v2.0.0 in Docker with persistent indexing"
+title: "Standalone docker guide (v1.5.x and earlier)"
+description: "A basic working example on setting up FileBrowser v1.5.x (stable) in Docker with persistent indexing"
 icon: "deployed_Code"
 date: "2026-01-30T13:20:14Z"
 lastmod: "2026-08-10T00:00:00Z"
 ---
 
-This guide will help you set up your FileBrowser **v2.0.0** instance alone. This will be helpful for users who just want to access their files over LAN for storage.
+This guide will help you set up your FileBrowser **v1.5.x** and earlier instance alone. This will be helpful for users who just want to access their files over LAN for storage.
 
 {{% alert context="info" %}}
-**This guide is for v2.0.0.**
+**This guide is for v1.5.x and older (stable).** It uses the `stable` Docker image and the **legacy database** (`database.db`) for the database.
 
-Using **v1.5.x or older**? See the {{< doclink path="user-guides/other/standalone-v1.5.x" text="v1.5.x standalone guide" />}} instead.
+Looking for **v2.0.0 (beta)**? See the {{< doclink path="user-guides/other/standalone" text="v2.0.0 standalone guide" />}} instead.
+{{% /alert %}}
+
+{{% alert context="warning" %}}
+**Planning to upgrade to v2.0.0?**
+
+v2.0.0 replaces the legacy database with a new database format and requires a one-time migration. Do **not** switch your image tag until you have read and followed the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
 {{% /alert %}}
 
 ## Folder Structure
@@ -23,7 +29,7 @@ filebrowser-quantum/
 └── files/
 └── data/
     ├── config.yaml
-    ├── filebrowser.sqlite
+    ├── database.db
     └── tmp/
 ```
 
@@ -48,7 +54,7 @@ Update the compose.yml,
 ```yaml title="compose.yml" linenums="1"
 services:
   filebrowser:
-    image: gtstef/filebrowser:beta
+    image: gtstef/filebrowser:stable
     container_name: quantum-prod
     ports:
       - 8900:80
@@ -62,12 +68,15 @@ services:
       - "FILEBROWSER_CONFIG=data/config.yaml" # using our config file at ./data/config.yaml
 ```
 
+{{% alert context="info" %}}
+To pin a specific v1 release instead of tracking the latest stable, use a version tag such as `1.5-stable` or `1.5.5-stable`. See {{< doclink path="getting-started/version#docker-version-tags" text="Docker version tags" />}}.
+{{% /alert %}}
+
 Update the config.yaml,
 
 ```yaml
 server:
-  database:
-    path: "data/filebrowser.sqlite"
+  database: "data/database.db"
   cacheDir: "data/tmp"
   sources:
     - path: "/files"
@@ -95,12 +104,17 @@ auth:
 
 ## Running container with a different user
 
+{{% alert context="info" %}}
+On `v1.2.x` and earlier, the default user is `root`.
+On `v1.3.x` and later, the default user is `filebrowser` (1000:1000).
+{{% /alert %}}
+
 The easist way to update the user is through docker compose. For example to create a new user 1001:1001 "${UID}:${GID}":
 
 ```yaml title="compose.yml" linenums="1"
 services:
   filebrowser:
-    image: gtstef/filebrowser:beta
+    image: gtstef/filebrowser:stable
     container_name: quantum-prod
     user: "1001:1001"
     ports:
