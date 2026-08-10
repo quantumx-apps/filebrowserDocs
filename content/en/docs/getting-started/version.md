@@ -1,32 +1,36 @@
 ---
 title: "Which version should I use?"
-description: "Understanding the differences between stable and beta releases"
+description: "Understanding stable vs beta releases and v1.5.x vs v2.0.0"
 icon: "numbers"
 date: "2025-10-28T22:14:01Z"
-lastmod: "2026-01-30T13:20:14Z"
+lastmod: "2026-08-10T00:00:00Z"
 order: 5
 ---
 
-FileBrowser Quantum comes with 2 main release flavors. Choosing the right version is an important first step to getting started.
+FileBrowser Quantum comes with two release channels (**stable** and **beta**) and is currently transitioning from **v1.5.x** to **v2.0.0**. Choosing the right version is an important first step.
+
+{{% alert context="info" %}}
+**Current state:** **v1.5.x** is on the `stable` channel. **v2.0.0** is available on the `beta` channel only and requires a one-time migration from v1.x. See {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before upgrading.
+{{% /alert %}}
 
 {{% alert context="success" %}}
-**Recommended**: Start with the `stable` release build for the most reliable experience.
+**Recommended for new users:** Start with **v1.5.x (`stable`)** for the most reliable experience, unless you specifically want v2.0.0 features.
 {{% /alert %}}
 
 ## Release Types
 
-### Stable Release
+### Stable Release (v1.5.x)
 
-The `stable` release build is the most reliable version as the name implies. It gets updated less frequently, but is ideal for:
+The `stable` release build is the most reliable version as the name implies. It currently tracks **v1.5.x**. It gets updated less frequently, but is ideal for:
 
 - Those getting started with FileBrowser Quantum
 - Users with a userbase that doesn't want to see occasional bugs
 - Production environments requiring stability
 - Anyone who prefers proven, tested features
 
-### Beta Release
+### Beta Release (v2.0.0)
 
-The `beta` release build is ideal for those who:
+The `beta` release build currently tracks **v2.0.0** and is ideal for those who:
 
 - Don't have a large userbase
 - Want the latest features immediately
@@ -58,6 +62,15 @@ One major difference is the release cadence between the two versions:
     <p>~ 1 to 3 weeks</p>
   </div>
 </div>
+
+## Major version: v1.5.x vs v2.0.0
+
+| | v1.5.x (`stable`) | v2.0.0 (`beta`) |
+|---|---|---|
+| Release channel | `stable`, `1.5-stable` | `beta`, `2.0-beta` |
+| Database | Legacy (`database.db`) | New (`filebrowser.sqlite`) |
+| Getting started docs | {{< doclink path="getting-started/docker-v1.5.x" text="v1.5.x guides" />}} | {{< doclink path="getting-started/docker" text="v2.0.0 guides" />}} |
+| Upgrade path | Stay on stable for production | Follow {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} from v1.x |
 
 ## Feature Differences
 

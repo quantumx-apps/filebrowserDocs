@@ -1,19 +1,25 @@
 ---
-title: "Running behind a reverse proxy (v2.0.0)"
-description: "Configure FileBrowser v2.0.0 (beta) behind reverse proxies"
+title: "Running behind a reverse proxy (v1.5.x)"
+description: "Configure FileBrowser v1.5.x (stable) behind reverse proxies"
 icon: "other_houses"
 date: "2025-10-28T22:14:01Z"
 lastmod: "2026-08-10T00:00:00Z"
-order: 7
+order: 107
 ---
 
 {{% alert context="info" %}}
-**This guide is for v2.0.0 (beta).** Config examples use `http.baseURL` and `http.trustProxyHeaders`.
+**This guide is for v1.5.x and older (stable).** Config examples use `server.baseURL` and `http.trustedHeaders`.
 
-Using **v1.5.x or older**? See the {{< doclink path="getting-started/reverse-proxy-v1.5.x" text="v1.5.x reverse proxy guide" />}} instead.
+Looking for **v2.0.0 (beta)**? See the {{< doclink path="getting-started/reverse-proxy" text="v2.0.0 reverse proxy guide" />}} instead.
 {{% /alert %}}
 
-Complete guide for running FileBrowser Quantum **v2.0.0 (beta)** behind reverse proxies including nginx, Traefik, and Caddy with authentication, SSL, and performance optimizations.
+{{% alert context="warning" %}}
+**Planning to upgrade to v2.0.0?**
+
+v2.0.0 moves HTTP settings from `server` to `http` and replaces `trustedHeaders` with `trustProxyHeaders`. Follow the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before upgrading.
+{{% /alert %}}
+
+Complete guide for running FileBrowser Quantum **v1.5.x (stable)** behind reverse proxies including nginx, Traefik, and Caddy with authentication, SSL, and performance optimizations.
 
 {{% alert context="info" %}}
 FileBrowser Quantum is designed to work seamlessly behind reverse proxies with proper configuration. This guide covers all major proxy types with complete examples.
@@ -70,7 +76,7 @@ All reverse proxy configurations must include these headers:
 ```yaml
 # Required headers for FileBrowser Quantum
 proxy_set_header Host $host;                                  # Cookie domain scoping
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # Client IP chain
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # IP chain
 proxy_set_header X-Forwarded-Proto $scheme;                   # HTTP/HTTPS protocol
 ```
 
@@ -78,69 +84,14 @@ proxy_set_header X-Forwarded-Proto $scheme;                   # HTTP/HTTPS proto
 **Note**: FileBrowser Quantum also supports `X-Forwarded-Host` as an alternative to the `Host` header for cookie domain scoping.
 {{% /alert %}}
 
-### Proxy headers FileBrowser understands
-
-When FileBrowser runs behind a reverse proxy, your proxy should set standard forwarding headers. FileBrowser must be told to honor them with **`http.trustProxyHeaders: true`**:
-
-#### Client IP
-
-FileBrowser uses the client IP for **authentication rate limiting**, **failed-login lockout**, and **activity logging**. Without header trust enabled, every user appears to share the proxy's IP.
-
-Configure your proxy to set `X-Forwarded-For` (recommended) or `X-Real-IP`, then enable trust in FileBrowser:
-
-```yaml
-http:
-  trustProxyHeaders: true
-```
-
-#### Scheme and host
-
-Your proxy should also set `X-Forwarded-Proto` and `X-Forwarded-Host`. **Forwarding alone is not enough** — enable header trust or FileBrowser ignores them:
-
-```yaml
-http:
-  trustProxyHeaders: true
-```
-
-These affect HTTPS detection, cookie domain, OIDC `redirect_uri`, share URLs, and WebAuthn. Without trusting forwarded headers, FileBrowser sees `http` behind TLS-terminated nginx and OIDC redirects break.
-
-Keep `proxy_set_header Host $host` in nginx. `X-Forwarded-Host` is used when the proxy strips or overwrites `Host`.
-
-#### Proxy authentication username
-
-If you use {{< doclink path="configuration/authentication/proxy/" text="proxy authentication" />}}, your auth middleware sets a username header (commonly `X-Forwarded-User`). That header is configured separately — **not** via `trustProxyHeaders` or `trustedHeaders`:
-
-```yaml
-auth:
-  methods:
-    proxy:
-      enabled: true
-      header: "X-Forwarded-User"
-```
-
-When proxy auth is enabled, FileBrowser accepts the configured header as the username. Only enable this when FileBrowser is unreachable except through your proxy.
-
-{{% alert context="warning" %}}
-Only enable `trustProxyHeaders` when FileBrowser is behind a proxy that controls these headers. If users can reach FileBrowser without going through your proxy, they can spoof `X-Forwarded-*` and bypass per-IP limits.
-{{% /alert %}}
-
-See {{< doclink path="configuration/http/#trustproxyheaders" text="HTTP reverse-proxy headers" />}} and {{< doclink path="configuration/http/#built-in-authentication-rate-limiting" text="built-in authentication rate limiting" />}} for details.
-
 ### FileBrowser Configuration
 
 Configure FileBrowser to work with your reverse proxy:
 
 ```yaml
-http:
-  baseURL: "/files"
-  externalUrl: "https://files.example.com/files"
-  trustProxyHeaders: true
-
-auth:
-  methods:
-    proxy:
-      enabled: true
-      header: "X-Forwarded-User"   # only when using external auth; separate from trustProxyHeaders
+server:
+  baseURL: "/files"                          # Base path for reverse proxy
+  externalUrl: "https://files.example.com/files"   # External URL (used when generated public links)
 ```
 
 ## nginx Configuration
@@ -403,7 +354,6 @@ http:
 
 ## Next Steps
 
-- {{< doclink path="configuration/http/" text="HTTP Settings" />}} - Trusted headers and auth rate limiting
 - {{< doclink path="configuration/authentication/proxy/" text="Proxy Authentication" />}} - Configure header-based authentication
 - {{< doclink path="integrations/office/troubleshooting/" text="Office Integration" />}} - OnlyOffice behind reverse proxy
 - {{< doclink path="user-guides/office-integration/traefik-setup/" text="Traefik Setup" />}} - Filebrowser + OnlyOffice behind traefik reverse proxy.

@@ -1,25 +1,25 @@
 ---
-title: "Docker (v2.0.0)"
-description: "Get started with FileBrowser v2.0.0 (beta) using Docker"
+title: "Docker (v1.5.x)"
+description: "Get started with FileBrowser v1.5.x (stable) using Docker"
 icon: "deployed_code"
 date: "2025-10-08T14:59:30Z"
 lastmod: "2026-08-10T00:00:00Z"
-order: 1
+order: 101
 ---
 
 {{% alert context="info" %}}
-**This guide is for v2.0.0 (beta).** It uses the `beta` Docker image and the **database** (`filebrowser.sqlite`).
+**This guide is for v1.5.x and older (stable).** It uses the `stable` Docker image and the **legacy database** (`database.db`).
 
-Using **v1.5.x or older**? See the {{< doclink path="getting-started/docker-v1.5.x" text="v1.5.x Docker guide" />}} instead.
+Looking for **v2.0.0 (beta)**? See the {{< doclink path="getting-started/docker" text="v2.0.0 Docker guide" />}} instead.
 {{% /alert %}}
 
 {{% alert context="warning" %}}
-**Upgrading from v1.x?**
+**Planning to upgrade to v2.0.0?**
 
-v2.0.0 uses a **new database format** and requires a one-time migration. Use a **directory mount** (`./data:/home/filebrowser/data`) rather than a single database file mount. Replace `FILEBROWSER_DATABASE` with `FILEBROWSER_DATABASE_PATH`. See the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before changing your image tag to `beta`.
+v2.0.0 replaces the legacy database with a new database format and requires a one-time migration. Follow the {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} before changing your image tag.
 {{% /alert %}}
 
-The fastest way to get started with FileBrowser Quantum **v2.0.0 (beta)**.
+The fastest way to get started with FileBrowser Quantum **v1.5.x (stable)**.
 
 ## Available Images
 
@@ -35,7 +35,7 @@ Images from Docker Hub (`gtstef/filebrowser`) and GitHub Container Registry (`gh
 Learn more about the versions and tags {{< doclink path="getting-started/version#docker-version-tags" text="here." />}}
 
 {{% alert context="info" %}}
-To pin a specific v2 release instead of tracking the latest beta, use a version tag such as `2.0-beta` or `2.0.0-beta`.
+To pin a specific v1 release instead of tracking the latest stable, use a version tag such as `1.5-stable` or `1.5.5-stable`.
 {{% /alert %}}
 
 ## Quick Try
@@ -46,7 +46,7 @@ Test without persistence (changes not saved). In this example we run it mounting
 docker run -d \
   -v $(pwd):/srv \
   -p 80:80 \
-  gtstef/filebrowser:beta
+  gtstef/filebrowser:stable
 ```
 
 Access at `http://localhost` with `admin` / `admin`
@@ -54,7 +54,7 @@ Access at `http://localhost` with `admin` / `admin`
 ## Basic Setup with Docker Compose
 
 {{% alert context="warning" %}}
-This set up is just to get the feel of FileBrowser before you get into customization, defining access control, etc. For regular use, Check out the slightly upgraded guide {{< doclink path="user-guides/other/standalone" text="here." />}}
+This set up is just to get the feel of FileBrowser before you get into customization, defining access control, etc. For regular use, check out the slightly upgraded guide {{< doclink path="user-guides/other/standalone-v1.5.x" text="here." />}}
 {{% /alert %}}
 
 
@@ -104,7 +104,7 @@ Then type in the below docker configuration.
 ```yaml
 services:
   filebrowser:
-    image: gtstef/filebrowser:beta
+    image: gtstef/filebrowser:stable
     volumes:
       - /path/to/your/folder:/folder # Do not use a root "/" directory or include the "/var" folder
       - ./data:/home/filebrowser/data
@@ -137,7 +137,7 @@ If you configure FileBrowser to use a different port in your `config.yaml`, you 
 ```yaml
 services:
   filebrowser:
-    image: gtstef/filebrowser:beta
+    image: gtstef/filebrowser:stable
     volumes:
       - /path/to/your/folder:/folder
       - ./data:/home/filebrowser/data
@@ -161,21 +161,15 @@ services:
 
 ## Database Location
 
-{{% alert context="warning" %}}
-**v2.0.0 change**
-
-v2.0.0 uses the **database** (default: `filebrowser.sqlite`), not the legacy database (`database.db`). Set `server.database.path` in config or use `FILEBROWSER_DATABASE_PATH`. Upgrading from v1.x? See {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
-{{% /alert %}}
-
 {{% alert context="info" %}}
-**Default Database Location (v2.0.0+)**: In Docker, the default is `/home/filebrowser/data/filebrowser.sqlite` when using the recommended `./data` mount. Standalone default is `./filebrowser.sqlite` in the current directory.
+**Default Database Location**: In Docker, the default database location is `/home/filebrowser/data/database.db`. This is different from the standalone default of `./database.db` in the current directory.
 
 To persist your database, mount a volume to `/home/filebrowser/data`:
 
 ```yaml
 services:
   filebrowser:
-    image: gtstef/filebrowser:beta
+    image: gtstef/filebrowser:stable
     volumes:
       - /path/to/files:/folder
       - ./data:/home/filebrowser/data  # Database and config stored here
@@ -186,11 +180,18 @@ See {{< doclink path="configuration/server/#database" text="Server configuration
 
 ## Running container with a different user
 
-Docker images run as the built-in `filebrowser` user (UID:GID **1000:1000**) by default. To use a different UID:GID, set `user` in your compose file:
+{{% alert context="info" %}}
+On `v1.2.x` and earlier, the default user is `root`.
+On `v1.3.x` and later, the default user is `filebrowser` (1000:1000).
+{{% /alert %}}
+
+FileBrowser Quantum docker images have a non-default `filebrowser` user built-in. This user has UID:GID of 1000:1000. In `v1.2.x` and earlier you need to specify this user manually:
+
+Add to docker-compose.yaml:
 ```yaml
 services:
   filebrowser:
-    image: gtstef/filebrowser:beta
+    image: gtstef/filebrowser:stable
     user: filebrowser
     volumes:
       - /path/to/files:/folder
@@ -216,9 +217,8 @@ Linux treats **ports below 1024** as *privileged*: a non-root user needs the **`
 On **rootful** Docker Engine or Docker Desktop, the container still usually gets **`NET_BIND_SERVICE`** in the default capability set, so that user **can** listen on `80` or `443` without extra flags. **`bind: permission denied` on a low `server.port` shows up more often when:**
 
 - you use a **rootless** container engine (**Docker rootless**, **Podman rootless**), or  
-- the runtime uses a **stricter** capability profile (some **Podman** installs, explicit `--cap-drop`, hardened policies).
-
-Because the default user is not root, **`bind: permission denied` on a low `server.port` shows up more often** in those environments when `NET_BIND_SERVICE` is not effective. It is **not** “non-root in Docker always breaks port 443 on every machine.”
+- the runtime uses a **stricter** capability profile (some **Podman** installs, explicit `--cap-drop`, hardened policies),
+So the v1.3 switch to a non-root default **pairs with** those environments: the process is no longer UID 0, and if `NET_BIND_SERVICE` is not effective, the kernel rejects the bind. It is **not** “non-root in Docker always breaks port 443 on every machine.”
 
 ### non-root runtimes can use `NET_BIND_SERVICE`
 
