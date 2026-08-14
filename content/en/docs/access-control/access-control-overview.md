@@ -42,7 +42,7 @@ FileBrowser Quantum access rules differ entirely from those in the original File
 
 A user's access to files depends on:
 
-1. **User scope** — Users do not see or use a source until it is part of their scopes. New users can get sources automatically when {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled is true for that source" />}}, or an admin can assign sources in user management.
+1. **User scope** — Users do not see or use a source until it is part of their scopes. Sources with {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled: true" />}} are granted on user create and, from **v2.0.1+**, merged for existing users on every server startup. An admin can still assign non-default sources in user management.
 2. **`denyByDefault`** — With a source scope, paths are normally reachable unless the source sets `denyByDefault: true`. Then the user can still see that the source exists, but file access requires explicit **allow** rules for the paths they need.
 3. **Access rules** — Per-path allow/deny (and deny-all) rules for users or groups, as described below.
 

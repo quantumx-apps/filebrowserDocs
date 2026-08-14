@@ -202,6 +202,12 @@ auth:
 
 Users not in these groups will be denied access even with valid LDAP credentials.
 
+### Access-control groups and sources
+
+On successful LDAP login, groups from `groupsClaim` (default `memberOf`) are synced into FileBrowser’s access-control GroupMap (write-through to the database) so {{< doclink path="access-control/rules" text="group allow/deny rules" />}} apply with {{< doclink path="configuration/sources#denybydefault" text="denyByDefault" />}}.
+
+LDAP users are auto-created on first login and receive every {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled" />}} source. From **v2.0.1+**, missing default-enabled sources are also merged for existing users on every server startup. See {{< doclink path="configuration/authentication/" text="Authentication overview" />}}.
+
 ### Custom Groups Attribute
 
 Change which LDAP attribute contains groups (default: `memberOf`):

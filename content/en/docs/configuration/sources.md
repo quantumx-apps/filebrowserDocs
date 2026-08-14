@@ -105,7 +105,12 @@ server:
 
 ### defaultEnabled
 
-Should be added as a default source for new users? Default: `false`.
+When `true`, this source is granted to **all** users:
+
+- On **user creation** (password signup, admin create, and auto-create via OIDC / LDAP / JWT / proxy).
+- On **every server startup** (v2.0.1+): any user missing this source gets it merged into their scopes. Existing scope paths for sources the user already has are preserved.
+
+Default: `false`. Use `false` for sources that should only be assigned manually.
 
 ```yaml
 server:
@@ -114,6 +119,10 @@ server:
       config:
         defaultEnabled: true
 ```
+
+{{% alert context="info" %}}
+**v2.0.1+:** Before v2.0.1, startup only seeded `defaultEnabled` sources for users with **empty** scopes. Partial-scope users (common after migration or after adding a second source) did not receive new default-enabled sources until you assigned them by hand. From v2.0.1 onward, missing `defaultEnabled` sources are always merged on startup.
+{{% /alert %}}
 
 <div class="pattern-card">
 

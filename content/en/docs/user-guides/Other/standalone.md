@@ -74,7 +74,7 @@ server:
       name: Home
       config:
         defaultUserScope: "/users/" # new users will get created in /users/<username>
-        defaultEnabled: true # new users automatically get access to the source
+        defaultEnabled: true # all users get this source on create; v2.0.1+ also merges for existing users on startup
         createUserDir: true # a user "bill" will see files from /files/users/bill
     - path: "/home/filebrowser" # mount the docker home folder for convenience
       name: Backend

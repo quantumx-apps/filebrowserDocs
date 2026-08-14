@@ -29,7 +29,7 @@ auth:
 If you need group claims, add them to `scopes` (for example `groups`) per your provider.
 
 {{% alert context="info" %}}
-**Note**: Its common to configure a source with {{< doclink path="configuration/sources#denybydefault" text="denyByDefault" />}} and use {{< doclink path="access-control/rules" text="access rules" />}} to enable group based access for OIDC users.
+**Sources:** OIDC users are auto-created on first login and receive every {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled" />}} source (also merged for existing users on startup in v2.0.1+). For path-level group isolation, use {{< doclink path="configuration/sources#denybydefault" text="denyByDefault" />}} with {{< doclink path="access-control/rules" text="access rules" />}} — groups from `groupsClaim` sync into the GroupMap on each successful OIDC login.
 {{% /alert %}}
 
 ## Configuration Options
@@ -164,6 +164,8 @@ auth:
 </div>
 
 ## Group-Based Access Control
+
+On successful OIDC login, groups from `groupsClaim` are synced into FileBrowser’s access-control GroupMap (write-through to the database) so {{< doclink path="access-control/rules" text="group allow/deny rules" />}} apply.
 
 ### Admin Group
 

@@ -202,6 +202,16 @@ auth:
 
 Only users with JWT tokens containing these groups can log in.
 
+### Access-control groups
+
+On JWT login, groups from `groupsClaim` are synced into FileBrowser’s access-control GroupMap (write-through to the database). That membership drives {{< doclink path="access-control/rules" text="group allow/deny rules" />}} with `denyByDefault`.
+
+A string claim works (for example `"tenant": "acme"` with `groupsClaim: tenant`). Subsequent session-cookie requests do not re-sync; the login sync is enough because memberships persist.
+
+### Sources for JWT users
+
+JWT users are auto-created on first successful token auth. They receive every {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled" />}} source on create; from **v2.0.1+**, missing default-enabled sources are also merged for existing users on every server startup. See {{< doclink path="configuration/authentication/" text="Authentication overview" />}}.
+
 ## Advanced Configuration
 
 ### Custom Username Field
