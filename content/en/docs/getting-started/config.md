@@ -110,7 +110,7 @@ server:
   sources:
     - path: "/path/to/your/files" # or '/folder' in above example (do not load the full os filesystem, must be sub path)
       config:
-        defaultEnabled: true  # Give access to all users by default
+        defaultEnabled: true  # Grant to all users on create; v2.0.1+ also merges for existing users on startup
 
 auth:
   adminUsername: admin

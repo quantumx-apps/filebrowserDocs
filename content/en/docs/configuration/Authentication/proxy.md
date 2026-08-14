@@ -47,6 +47,10 @@ auth:
 **Deprecated:** `createUser` in this block is deprecated and ignored for new configs — user provisioning behavior is always on for supported methods.
 {{% /alert %}}
 
+## Sources for proxy users
+
+Proxy users are auto-created on first successful header auth and receive every {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled" />}} source on create. From **v2.0.1+**, missing default-enabled sources are also merged for existing users on every server startup. Proxy auth does not sync IdP groups into the GroupMap (unlike OIDC / LDAP / JWT). See {{< doclink path="configuration/authentication/" text="Authentication overview" />}}.
+
 ## Example Use Cases
 
 - Corporate SSO via proxy

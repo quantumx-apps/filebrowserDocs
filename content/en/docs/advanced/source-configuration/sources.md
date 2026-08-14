@@ -18,7 +18,7 @@ v2.0.0 **removed** source-level `indexingIntervalMinutes` (indexing always uses 
 {{% /alert %}}
 
 {{% alert context="info" %}}
-**Getting Started:** For basic usage, you only need to define the `path` and optionally set **defaultEnabled** set to `true` to give the source to all new users. Most other configuration options can be left at their defaults.
+**Getting Started:** For basic usage, you only need to define the `path` and optionally set **defaultEnabled** to `true` so the source is granted to all users (on create and, from v2.0.1+, merged for existing users on every startup). Most other configuration options can be left at their defaults.
 {{% /alert %}}
 
 ## Source Basics
@@ -84,7 +84,7 @@ The generated config lists every supported key. Under `config`, non-deprecated f
 | `disabled` | Temporarily disable the source in config |
 | `rules` | Per-path indexing and visibility rules (see {{< doclink path="advanced/source-configuration/conditional-rules/" text="Conditional Rules" />}}) |
 | `defaultUserScope` | Initial path scope for new users (under `path`) |
-| `defaultEnabled` | Add this source to new users by default |
+| `defaultEnabled` | Grant this source to all users on create and (v2.0.1+) merge for existing users on startup |
 | `useLogicalSize` | Use logical file sizes instead of disk usage (`du`-style); empty folders report as 0 bytes |
 
 Example `rules` entry (field names match the generator):
@@ -150,7 +150,14 @@ config:
   defaultEnabled: true
 ```
 
-Whether new users automatically get access to this source. Defaults to `false`. Set to `true` for shared sources that all users should see.
+Whether this source is automatically granted to users. Defaults to `false`.
+
+When `true` (v2.0.1+):
+
+- New users receive the source on create (including OIDC / LDAP / JWT / proxy auto-create).
+- On every server startup, any existing user missing this source gets it merged into their scopes. Existing scope paths are preserved.
+
+Set to `false` for sources that only admins should assign. See {{< doclink path="configuration/sources#defaultenabled" text="Sources: defaultEnabled" />}}.
 
 ### `denyByDefault`
 
