@@ -3,10 +3,22 @@ title: "JWT Authentication"
 description: "External JWT token authentication for SSO and proxy integration"
 icon: "security"
 date: "2026-02-27T21:50:04Z"
-lastmod: "2026-04-20T18:55:31Z"
+lastmod: "2026-08-24T17:00:00Z"
 ---
 
 Accept externally-signed JWT tokens for secure authentication, enabling single sign-on, proxy authentication, and iframe embedding scenarios.
+
+{{% alert context="warning" %}}
+**Configure source access for new users**
+
+Authentication alone does not grant file access. When a user is created (password signup, admin/CLI create, or first login via OIDC / LDAP / JWT / proxy), they only receive sources where `config.defaultEnabled: true`.
+
+- Default is **`false`** — without this, new users may log in but see **no files**
+- **One source** in config: FileBrowser auto-enables `defaultEnabled` for that source
+- **Multiple sources**: set `defaultEnabled: true` on each source new users should access
+
+See {{< doclink path="configuration/sources#defaultenabled" text="Sources: defaultEnabled" />}} for full details and examples.
+{{% /alert %}}
 
 ## Basic Configuration
 
@@ -210,7 +222,7 @@ A string claim works (for example `"tenant": "acme"` with `groupsClaim: tenant`)
 
 ### Sources for JWT users
 
-JWT users are auto-created on first successful token auth. They receive every {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled" />}} source on create; from **v2.0.1+**, missing default-enabled sources are also merged for existing users on every server startup. See {{< doclink path="configuration/authentication/" text="Authentication overview" />}}.
+JWT users are auto-created on first successful token auth. Source access follows the callout at the top of this page.
 
 ## Advanced Configuration
 

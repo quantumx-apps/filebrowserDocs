@@ -3,16 +3,22 @@ title: "Sources"
 description: "Configure file system sources"
 icon: "folder_open"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-07-24T01:02:28Z"
+lastmod: "2026-08-24T17:00:00Z"
 order: 3
 ---
 
 Sources are the core concept in FileBrowser - each source represents a file system location users can access.
 
+Indexing on each source provides folder sizes used by the UI and by **indexed-size storage quotas**. Sources with indexing disabled only support **tracked usage** quotas. See {{< doclink path="features/quotas/" text="Storage quotas" />}} and {{< doclink path="features/indexing/" text="Indexing" />}}.
+
 {{% alert context="info" %}}
 **v2.0.0 source config**
 
 Deprecated source options (`indexingIntervalMinutes`, `conditionals` wrapper, old rule field names) were removed in v2.0.0. See {{< doclink path="advanced/source-configuration/sources/" text="Advanced source configuration" />}} for current rule syntax.
+{{% /alert %}}
+
+{{% alert context="warning" %}}
+**Setting up authentication?** New users only receive sources with `defaultEnabled: true`. When enabling password signup, OIDC, LDAP, JWT, or proxy auth, configure `defaultEnabled` on your sources at the same time. See [defaultEnabled](#defaultenabled) below.
 {{% /alert %}}
 
 {{% alert context="warning" %}}
@@ -111,6 +117,24 @@ When `true`, this source is granted to **all** users:
 - On **every server startup** (v2.0.1+): any user missing this source gets it merged into their scopes. Existing scope paths for sources the user already has are preserved.
 
 Default: `false`. Use `false` for sources that should only be assigned manually.
+
+```yaml
+server:
+  sources:
+    - path: "/data/shared"
+      name: "Shared"
+      config:
+        defaultEnabled: true
+    - path: "/data/restricted"
+      name: "Restricted"
+      # defaultEnabled: false — assign via admin UI
+
+auth:
+  methods:
+    oidc:
+      enabled: true
+      # clientId, clientSecret, issuerUrl, ...
+```
 
 ```yaml
 server:
@@ -246,6 +270,7 @@ server:
 
 ## Next Steps
 
+- {{< doclink path="features/quotas/" text="Storage quotas" />}}
 - {{< doclink path="advanced/source-configuration/sources/" text="Advanced Source Configuration" />}}
 - {{< doclink path="configuration/authentication/" text="Configure authentication" />}}
 - {{< doclink path="configuration/users/" text="Manage users" />}}
