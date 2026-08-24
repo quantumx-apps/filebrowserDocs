@@ -182,20 +182,20 @@ Some interface options only apply to normal shares.
   <p class="help-text">The maximum download bandwidth in kbps. Leave empty for unlimited.</p>
 </div>
 
-### Storage quota (upload and create shares)
+### Storage quota (v2.1.0+, upload and create shares)
 
-For **upload shares** and normal shares with **allow create**, you can cap how much data may be uploaded through the link.
+For **upload shares** and normal shares with **allow create**, you can cap how much data may be uploaded through the link (v2.1.0+).
 
 <div class="option-field">
   <label>
     <input type="checkbox" /> Limit storage through this share
   </label>
-  <p class="help-text">Counts bytes uploaded through this share link (tracked usage only — see limitations in {{< doclink path="features/quotas/" text="Storage quotas" />}}). Uploads also count against the share owner's scope quota on that source, if one is set.</p>
+  <p class="help-text">Counts bytes uploaded through this share link (tracked usage only — see limitations in {{< doclink path="features/quotas/" text="Storage quotas (v2.1.0+)" />}}). Uploads also count against the share owner's scope quota on that source, if one is set.</p>
 </div>
 
 When enabled, choose a preset limit (for example 1 GB or 10 GB) or enter a custom size in GB. The dialog shows **used / limit** while editing. Visitors on upload shares can see remaining space before they upload.
 
-Full behavior, measurement types, and admin folder limits are described in {{< doclink path="features/quotas/" text="Storage quotas" />}}.
+Full behavior, measurement types, and admin folder limits are described in {{< doclink path="features/quotas/" text="Storage quotas (v2.1.0+)" />}}.
 
 ### Feature Toggles
 
