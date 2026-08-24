@@ -3,10 +3,22 @@ title: "Password Authentication"
 description: "Configure password authentication"
 icon: "key"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-04-20T18:55:31Z"
+lastmod: "2026-08-24T17:00:00Z"
 ---
 
 Password authentication uses the typical `username` and `password` to login a user. Password authentication also supports **Signup**, **recaptcha**, and **Two-Factor Authentication** features.
+
+{{% alert context="warning" %}}
+**Configure source access for new users**
+
+Authentication alone does not grant file access. When a user is created (password signup, admin/CLI create, or first login via OIDC / LDAP / JWT / proxy), they only receive sources where `config.defaultEnabled: true`.
+
+- Default is **`false`** — without this, new users may log in but see **no files**
+- **One source** in config: FileBrowser auto-enables `defaultEnabled` for that source
+- **Multiple sources**: set `defaultEnabled: true` on each source new users should access
+
+See {{< doclink path="configuration/sources#defaultenabled" text="Sources: defaultEnabled" />}} for full details and examples.
+{{% /alert %}}
 
 ## Basic Configuration
 

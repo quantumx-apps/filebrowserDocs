@@ -3,11 +3,23 @@ title: "Proxy Authentication"
 description: "Header-based authentication"
 icon: "security"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-08-05T15:34:23Z"
+lastmod: "2026-08-24T17:00:00Z"
 order: 2
 ---
 
 Authenticate based on HTTP headers -- strictly designed to be used behind a reverse proxy.
+
+{{% alert context="warning" %}}
+**Configure source access for new users**
+
+Authentication alone does not grant file access. When a user is created (password signup, admin/CLI create, or first login via OIDC / LDAP / JWT / proxy), they only receive sources where `config.defaultEnabled: true`.
+
+- Default is **`false`** — without this, new users may log in but see **no files**
+- **One source** in config: FileBrowser auto-enables `defaultEnabled` for that source
+- **Multiple sources**: set `defaultEnabled: true` on each source new users should access
+
+See {{< doclink path="configuration/sources#defaultenabled" text="Sources: defaultEnabled" />}} for full details and examples.
+{{% /alert %}}
 
 ## Configuration
 
@@ -21,14 +33,18 @@ auth:
     proxy:
       enabled: true
       header: "X-Forwarded-User"  # or "Remote-User"
-      # Optional (same shared fields as OIDC / LDAP / JWT):
-      # adminGroup: ""
-      # userGroups: []
-      # groupsClaim: "groups"
+      # Optional role/group headers (v2.1.0+):
+      # groupsClaim: "x-cosmos-role"  # HTTP header name for group/role value
+      # userGroups: ["2", "1"]        # allow-list; omit to allow all
+      # adminGroup: "2"               # group value that grants admin
       # userIdentifier: ""
       # disableVerifyTLS: false   # testing only
       # logoutRedirectUrl: ""
 ```
+
+{{% alert context="info" %}}
+**v2.1.0+:** `groupsClaim`, `adminGroup`, and `userGroups` enable role-based access for proxy auth. For proxy auth, `groupsClaim` is the **HTTP header name** (for example `x-cosmos-role`), not a JSON claim field. Versions before v2.1.0 ignore these options; admin is only granted when the proxy username matches `auth.adminUsername`.
+{{% /alert %}}
 
 ## Options
 
@@ -36,9 +52,9 @@ auth:
 |--------|-------------|
 | `enabled` | Enable proxy authentication |
 | `header` | **Required.** Header whose value is trusted as the username (must sit behind a trusted proxy) |
-| `adminGroup` | Group name that grants admin (if your proxy/IdP also sends group claims — integration-dependent) |
-| `userGroups` | If set, only users in these groups may log in |
-| `groupsClaim` | JSON field name for groups when reading group data (default: `groups`) |
+| `adminGroup` | **v2.1.0+.** Group/role header value that grants admin privileges |
+| `userGroups` | **v2.1.0+.** If set, only users whose group/role header value is in this list may log in |
+| `groupsClaim` | **v2.1.0+.** HTTP header name for the user's group/role (required when `userGroups` or `adminGroup` is set) |
 | `userIdentifier` | Field to use as username when not using the raw header value in composite setups |
 | `disableVerifyTLS` | Disable TLS verification for any outbound calls (testing only) |
 | `logoutRedirectUrl` | Optional URL to redirect after logout |
@@ -49,7 +65,7 @@ auth:
 
 ## Sources for proxy users
 
-Proxy users are auto-created on first successful header auth and receive every {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled" />}} source on create. From **v2.0.1+**, missing default-enabled sources are also merged for existing users on every server startup. Proxy auth does not sync IdP groups into the GroupMap (unlike OIDC / LDAP / JWT). See {{< doclink path="configuration/authentication/" text="Authentication overview" />}}.
+Proxy users are auto-created on first successful header auth. Source access follows the callout at the top of this page. From **v2.1.0+**, proxy auth syncs group/role header values into the access-control GroupMap (write-through to the database), same as OIDC / LDAP / JWT.
 
 ## Example Use Cases
 
@@ -57,6 +73,36 @@ Proxy users are auto-created on first successful header auth and receive every {
 - Kubernetes ingress authentication
 - Nginx auth_request module
 - Traefik ForwardAuth
+- Cosmos Cloud auth proxy with role headers
+
+<div class="pattern-card">
+
+## Cosmos Cloud Example (v2.1.0+)
+
+Cosmos Cloud sends a username header and a numeric role header (`0` = guest, `1` = user, `2` = admin):
+
+```yaml
+auth:
+  methods:
+    password:
+      enabled: false
+    proxy:
+      enabled: true
+      header: "X-Cosmos-User"
+      groupsClaim: "x-cosmos-role"
+      userGroups:
+        - "2"
+        - "1"
+      adminGroup: "2"
+```
+
+Expected behavior:
+
+- Role `0` (guest): login denied, user not created
+- Role `1` (user): regular user access
+- Role `2` (admin): regular access plus admin privileges
+
+</div>
 
 <div class="pattern-card">
 
@@ -143,4 +189,3 @@ auth:
 
 - {{< doclink path="configuration/authentication/oidc/" text="OIDC authentication" />}}
 - {{< doclink path="configuration/users/" text="Configure users" />}}
-

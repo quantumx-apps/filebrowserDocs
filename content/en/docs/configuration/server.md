@@ -195,6 +195,19 @@ server:
 
 During upgrade from v1.x, set `migrateFrom` to your renamed BoltDB file. Remove it after migration — see {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
 
+**Storage quotas (v2.1.0+)** (folder, per-user scope, and share caps) use additional SQLite tables added in v2.1.0. They are created automatically on upgrade; legacy Bolt imports do not carry over quota limits. See {{< doclink path="features/quotas/" text="Storage quotas (v2.1.0+)" />}}.
+
+Optional quota counter flush tuning (v2.1.0+):
+
+```yaml
+server:
+  database:
+    path: "data/filebrowser.sqlite"
+    quotas:
+      flushIntervalSeconds: 10   # batch write interval for tracked usage counters (default 10)
+      flushMaxBuffers: 500       # flush when this many dirty counters are queued (default 500)
+```
+
 </div>
 
 <div class="pattern-card">

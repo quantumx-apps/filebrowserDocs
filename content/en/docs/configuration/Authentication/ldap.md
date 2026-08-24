@@ -3,10 +3,22 @@ title: "LDAP Authentication"
 description: "Integrate with LDAP directories for centralized user authentication"
 icon: "security"
 date: "2026-02-27T21:50:04Z"
-lastmod: "2026-04-20T18:55:31Z"
+lastmod: "2026-08-24T17:00:00Z"
 ---
 
 Authenticate users against LDAP directories like Active Directory, OpenLDAP, Authentik, and other LDAP-compliant systems.
+
+{{% alert context="warning" %}}
+**Configure source access for new users**
+
+Authentication alone does not grant file access. When a user is created (password signup, admin/CLI create, or first login via OIDC / LDAP / JWT / proxy), they only receive sources where `config.defaultEnabled: true`.
+
+- Default is **`false`** — without this, new users may log in but see **no files**
+- **One source** in config: FileBrowser auto-enables `defaultEnabled` for that source
+- **Multiple sources**: set `defaultEnabled: true` on each source new users should access
+
+See {{< doclink path="configuration/sources#defaultenabled" text="Sources: defaultEnabled" />}} for full details and examples.
+{{% /alert %}}
 
 ## Basic Configuration
 
@@ -204,9 +216,7 @@ Users not in these groups will be denied access even with valid LDAP credentials
 
 ### Access-control groups and sources
 
-On successful LDAP login, groups from `groupsClaim` (default `memberOf`) are synced into FileBrowser’s access-control GroupMap (write-through to the database) so {{< doclink path="access-control/rules" text="group allow/deny rules" />}} apply with {{< doclink path="configuration/sources#denybydefault" text="denyByDefault" />}}.
-
-LDAP users are auto-created on first login and receive every {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled" />}} source. From **v2.0.1+**, missing default-enabled sources are also merged for existing users on every server startup. See {{< doclink path="configuration/authentication/" text="Authentication overview" />}}.
+On successful LDAP login, groups from `groupsClaim` (default `memberOf`) are synced into FileBrowser’s access-control GroupMap (write-through to the database) so {{< doclink path="access-control/rules" text="group allow/deny rules" />}} apply with {{< doclink path="configuration/sources#denybydefault" text="denyByDefault" />}}. LDAP users are auto-created on first login; source access follows the callout at the top of this page.
 
 ### Custom Groups Attribute
 
