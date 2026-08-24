@@ -43,7 +43,7 @@ auth:
 ```
 
 {{% alert context="info" %}}
-**v2.1.0+:** `groupsClaim`, `adminGroup`, and `userGroups` enable role-based access for proxy auth. For proxy auth, `groupsClaim` is the **HTTP header name** (for example `x-cosmos-role`), not a JSON claim field. Versions before v2.1.0 ignore these options; admin is only granted when the proxy username matches `auth.adminUsername`.
+**v2.1.0+:** `groupsClaim`, `adminGroup`, and `userGroups` enable role-based access for proxy auth. For proxy auth, `groupsClaim` is the **HTTP header name** (for example `x-cosmos-role`), not a JSON claim field. Admin privileges come from `adminGroup` only.
 {{% /alert %}}
 
 ## Options
