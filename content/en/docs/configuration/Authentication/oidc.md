@@ -38,7 +38,7 @@ auth:
       userIdentifier: "preferred_username"
 ```
 
-If you need group claims, add them to `scopes` (for example `groups`) per your provider.
+For group-based authorization (`adminGroup`, `userGroups`), ensure your provider returns the configured `groupsClaim` (default `groups`). Some providers (such as PocketID) also require adding `groups` to `scopes`.
 
 ## Configuration Options
 
@@ -168,6 +168,29 @@ auth:
       clientSecret: "xxx"
       issuerUrl: "https://auth.example.com"
 ```
+
+</div>
+
+
+<div class="pattern-card">
+
+### Pocket ID
+
+Pocket ID requires the `groups` scope in `scopes` and emits the group **friendly name** (not the display name) in the `groups` claim:
+
+```yaml
+auth:
+  methods:
+    oidc:
+      enabled: true
+      clientId: "xxx"
+      clientSecret: "xxx"
+      issuerUrl: "https://auth.example.com"
+      scopes: "openid email profile groups"
+      adminGroup: "admins"  # must match the group's friendly name in Pocket ID
+```
+
+Ensure the user is assigned to the group in Pocket ID (Admin > Users > Groups) and that the group is linked to your OIDC client if group restrictions are enabled.
 
 </div>
 

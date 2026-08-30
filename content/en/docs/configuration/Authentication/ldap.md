@@ -44,7 +44,7 @@ auth:
 | `userPassword` | *required* | Password for service account |
 | `userFilter` | `(&(cn=%s)(objectClass=user))` | Search filter for finding users (`%s` = login name) |
 | `userIdentifier` | `""` | LDAP attribute to use as username (e.g., mail, sAMAccountName); empty uses login name |
-| `groupsClaim` | `memberOf` | LDAP attribute containing group memberships (if empty in config, the server defaults to `memberOf`) |
+| `groupsClaim` | `groups` | LDAP attribute containing group memberships (defaults to `groups` when omitted; Active Directory and many directories use `memberOf` instead) |
 | `adminGroup` | `""` | LDAP group DN or CN that grants admin privileges |
 | `userGroups` | `[]` | List of allowed groups (empty = allow all) |
 | `disableVerifyTLS` | `false` | Disable TLS certificate verification (testing only!) |
