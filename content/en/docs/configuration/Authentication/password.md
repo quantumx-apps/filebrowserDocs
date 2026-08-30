@@ -36,6 +36,8 @@ auth:
 | Option | Default | Description |
 |--------|---------|-------------|
 | `enabled` | `true` | Enable password authentication |
+| `adminUsername` | `admin` | Built-in password admin username |
+| `adminPassword` | — | If set, password admin is reset to this value on every startup |
 | `minLength` | `5` | Minimum password length |
 | `signup` | `false` | Allow user self-registration |
 | `enforcedOtp` | `false` | Require all password users to enable Two-Factor Authentication |
@@ -67,10 +69,13 @@ export FILEBROWSER_ADMIN_PASSWORD="secure-password"
 If `adminPassword` is set in config, it is reset on every startup to that value—prefer `FILEBROWSER_ADMIN_PASSWORD` for production.
 {{% /alert %}}
 
-```
+```yaml
 auth:
-  adminUsername: admin
-  adminPassword: admin # if set it will get reset on startup.
+  methods:
+    password:
+      enabled: true
+      adminUsername: admin
+      adminPassword: admin # if set it will get reset on startup.
 ```
 
 ## Two-Factor Authentication (2FA)

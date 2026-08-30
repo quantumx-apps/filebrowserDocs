@@ -7,280 +7,109 @@ lastmod: "2026-04-21T20:01:57Z"
 order: 2
 ---
 
-Configuration options available to both normal and upload shares. These options appear in the share creation dialog when you click the share button.
+Configuration options available to both normal and upload shares. These options appear in the share creation dialog when you click the share button. The layout below matches the application share prompt, including option order.
 
-## Basic Settings
+## Share dialog
 
-### Share Duration
+{{< fb-prompt-mock >}}
 
-<div class="option-field">
-  <label>Share Duration</label>
-  <div class="field-group">
-    <input type="number" placeholder="0" />
-    <select>
-      <option>minutes</option>
-      <option>hours</option>
-      <option>days</option>
-    </select>
-  </div>
-  <p class="help-text">Duration before the share expires. Leave blank for a permanent share.</p>
-</div>
+{{< fb-field label="Share Duration" type="duration" help="Duration before the share expires. Leave blank for a permanent share." />}}
 
-**Available time units:** minutes, hours, days
+{{< fb-field label="Optional Password" type="password" help="Optional password required to access this share, including authenticated users." />}}
 
-### Optional Password
+{{< fb-field label="Share Type" type="select" options="Normal|Upload only" selected="Normal" help="Normal shares allow viewing and downloading files. Upload shares allow uploading files to the share." />}}
 
-<div class="option-field">
-  <label>Optional Password</label>
-  <input type="password" />
-  <p class="help-text">Optional password required to access this share, including authenticated users.</p>
-</div>
+<div class="settings-items">
 
-### Share Type
+{{< fb-toggle name="Allow modify" help="Allow editing files through this share (normal shares only)." />}}
 
-<div class="option-field">
-  <label>Share Type</label>
-  <select>
-    <option>Normal</option>
-    <option>Upload only</option>
-  </select>
-  <p class="help-text">The type of share to create. Normal shares allow viewing and downloading files. Upload shares allow uploading files to the share.</p>
-</div>
+{{< fb-toggle name="Allow create" help="Allow creating and uploading files and folders through this share (normal shares only)." />}}
 
-## Access Control
+{{< fb-toggle name="Allow delete" help="Allow deleting files through this share (normal shares only)." />}}
 
-### Disable Anonymous Access
-
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Disable anonymous access
-  </label>
-  <p class="help-text">Only authenticated users can access the share. The user must have access to the source of the share.</p>
-</div>
-
-### Only Share to Certain Users
-
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Only share to certain users
-  </label>
-  <p class="help-text">Only the specified users can access the share. The user must have access to the source of the share.</p>
-  <input type="text" placeholder="Enter usernames, comma-separated" />
-</div>
-
-When enabled, enter comma-separated usernames (e.g., `john, mary, admin`).
-
-## Appearance
-
-### Enforce Theme Mode
-
-<div class="option-field">
-  <label>Enforce theme mode</label>
-  <select>
-    <option>Use user preference</option>
-    <option>Dark</option>
-    <option>Light</option>
-  </select>
-  <p class="help-text">Force a specific theme mode (dark or light) for this share, overriding user preferences.</p>
-</div>
-
-### Share Theme
-
-<div class="option-field">
-  <label>Share Theme</label>
-  <select>
-    <option>Default theme</option>
-    <option>Custom themes...</option>
-  </select>
-  <p class="help-text">The theme to use for the share link.</p>
-</div>
-
-Choose from available themes configured in your FileBrowser instance.
-
-### Default View Mode
-
-<div class="option-field">
-  <label>Default view mode</label>
-  <select>
-    <option>Normal View</option>
-    <option>List View</option>
-    <option>Compact View</option>
-    <option>Gallery View</option>
-  </select>
-  <p class="help-text">Set the default view mode for anonymous users viewing this share. Logged-in users can still change their view preference.</p>
 </div>
 
 {{% alert context="info" %}}
-Only available for normal shares.
+Allow modify, create, and delete only apply to **normal shares** when the source is not read-only.
 {{% /alert %}}
 
-## Advanced Options
+{{< fb-settings-group >}}
 
-These options are available under the **Show More** section:
+{{< fb-field label="Share Theme" type="select" options="Default theme|Custom themes..." selected="Default theme" help="The theme to use for the share link." />}}
 
-### Keep After Expiration
+{{< fb-field label="Default view mode" type="select" options="Normal View|List View|Compact View|Gallery View" selected="Normal View" help="Set the default view mode for anonymous users viewing this share. Logged-in users can still change their view preference (normal shares only)." />}}
 
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Do not delete share after it expires
-  </label>
-  <p class="help-text">The share will not be deleted after it expires. This is useful if you want to extend a share's expiration or edit it further after it expires.</p>
-</div>
+{{< fb-toggle name="Allow replacements" help="Allow replacing existing files when uploading." />}}
 
-### Interface Options
+{{< fb-toggle name="Disable download" help="Prevent downloading files from this share (normal shares only)." />}}
 
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Disable Thumbnails
-  </label>
-  <p class="help-text">Preview thumbnails will not be shown in the share.</p>
-</div>
+{{< fb-toggle name="Disable File Viewer" help="Disable the built-in file viewer for this share (normal shares only)." />}}
 
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Hide navigation buttons
-  </label>
-  <p class="help-text">Hide the navigation buttons on the navbar in the share to create a minimalistic look.</p>
-</div>
+{{< fb-toggle name="Show Quick Download" help="Display quick download buttons for files in the share (normal shares only)." />}}
 
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Disable share card
-  </label>
-  <p class="help-text">Disable the share card on the shared page in the sidebar or at the top of the page on mobile.</p>
-</div>
+{{< fb-toggle name="Disable anonymous access" help="Only authenticated users can access the share. The user must have access to the source of the share." />}}
 
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Disable sidebar
-  </label>
-  <p class="help-text">Disable the sidebar on the shared page.</p>
-</div>
+{{< fb-toggle name="Only share to certain users" help="Only the specified users can access the share. The user must have access to the source of the share." />}}
 
-{{% alert context="info" %}}
-Some interface options only apply to normal shares.
-{{% /alert %}}
+{{< fb-field id="allowed-usernames" label="" type="text" placeholder="Enter usernames, comma-separated" />}}
 
-### Download Controls
+{{< fb-toggle name="Enable OnlyOffice viewer" help="Allow viewing office files using OnlyOffice in this share (normal shares only, when OnlyOffice is configured)." />}}
 
-<div class="option-field">
-  <label>Downloads Limit</label>
-  <input type="number" placeholder="Leave empty for unlimited" />
-  <p class="help-text">The maximum number of times any file/folder from the share can be downloaded. Leave empty for unlimited.</p>
-</div>
+{{< fb-field label="Enforce theme mode" type="select" options="Use user preference|Dark|Light" selected="Use user preference" help="Force a specific theme mode (dark or light) for this share, overriding user preferences." />}}
 
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Apply the downloads limit to each user
-  </label>
-  <p class="help-text">When enabled, the downloads limit will be applied to each user. Anonymous users will not be able to download any files from this share.</p>
-</div>
+{{< fb-toggle name="Do not delete share after it expires" help="The share will not be deleted after it expires. Useful if you want to extend a share's expiration or edit it further after it expires." />}}
 
-<div class="option-field">
-  <label>Max Bandwidth</label>
-  <input type="number" placeholder="kbps" />
-  <p class="help-text">The maximum download bandwidth in kbps. Leave empty for unlimited.</p>
-</div>
+{{< fb-toggle name="Disable Thumbnails" help="Preview thumbnails will not be shown in the share (normal shares only)." />}}
 
-### Storage quota (v2.1.0+, upload and create shares)
+{{< fb-toggle name="Show hidden files" help="Show hidden files in the share listing (normal shares only)." />}}
 
-For **upload shares** and normal shares with **allow create**, you can cap how much data may be uploaded through the link (v2.1.0+).
+{{< fb-field label="Hide file extensions" type="text" placeholder="e.g., .txt, .log" help="Comma-separated list of file extensions to hide from the listing (normal shares only)." />}}
 
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Limit storage through this share
-  </label>
-  <p class="help-text">Counts bytes uploaded through this share link (tracked usage only — see limitations in {{< doclink path="features/quotas/" text="Storage quotas (v2.1.0+)" />}}). Uploads also count against the share owner's scope quota on that source, if one is set.</p>
-</div>
+{{< fb-toggle name="Hide navigation buttons" help="Hide the navigation buttons on the navbar in the share to create a minimalistic look." />}}
 
-When enabled, choose a preset limit (for example 1 GB or 10 GB) or enter a custom size in GB. The dialog shows **used / limit** while editing. Visitors on upload shares can see remaining space before they upload.
+{{< fb-toggle name="Disable share card" help="Disable the share card on the shared page in the sidebar or at the top of the page on mobile." />}}
+
+{{< fb-toggle name="Disable sidebar" help="Disable the sidebar on the shared page." />}}
+
+{{< fb-toggle name="Apply the downloads limit to each user" help="When enabled, the downloads limit will be applied to each user. Anonymous users will not be able to download any files from this share (normal shares only)." />}}
+
+{{< fb-toggle name="Extract embedded subtitles" help="Extract embedded subtitles from media files on load — this can be slow for large files (normal shares only)." />}}
+
+{{< fb-toggle name="Disable login option" help="Hide the login option on the share page." />}}
+
+{{< fb-field label="Downloads Limit" type="number" placeholder="Leave empty for unlimited" help="The maximum number of times any file/folder from the share can be downloaded (normal shares only)." />}}
+
+{{< fb-field label="Max Bandwidth" type="number" placeholder="kbps" help="The maximum download bandwidth in kbps. Leave empty for unlimited (normal shares only)." />}}
+
+{{< fb-toggle name="Limit storage through this share" help="Counts bytes uploaded through this share link (v2.1.0+). Uploads also count against the share owner's scope quota on that source, if one is set." />}}
+
+{{< fb-field label="Share Theme Color" type="text" placeholder="e.g., red, rgb(33,150,243)" help="CSS color value applied to the share theme." />}}
+
+{{< fb-field label="Share Title" type="text" placeholder="Custom page title" help="Custom page title shown on the share page." />}}
+
+{{< fb-field label="Share Description" type="textarea" placeholder="Short description" help="Short description shown on the share page (may be used in meta tags)." />}}
+
+{{< fb-field label="Share Banner" type="text" placeholder="https://domain.com/banner.png or /path/to/banner.png" help="Banner image URL or path accessible by the client." />}}
+
+{{< fb-field label="Share Favicon" type="text" placeholder="https://domain.com/favicon.png or /path/to/favicon.png" help="Favicon URL or path accessible by the client." />}}
+
+{{< /fb-settings-group >}}
+
+{{< /fb-prompt-mock >}}
+
+**Available time units for duration:** minutes, hours, days
+
+When **Only share to certain users** is enabled, enter comma-separated usernames (e.g., `john, mary, admin`).
+
+### Storage quota (v2.1.0+)
+
+For **upload shares** and normal shares with **allow create**, you can cap how much data may be uploaded through the link. When enabled, choose a preset limit (for example 1 GB or 10 GB) or enter a custom size in GB. The dialog shows **used / limit** while editing.
 
 Full behavior, measurement types, and admin folder limits are described in {{< doclink path="features/quotas/" text="Storage quotas (v2.1.0+)" />}}.
 
-### Feature Toggles
+Paths for banner and favicon can be absolute URLs (`https://domain.com/image.png`) or index paths (`/path/to/image.png`).
 
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Disable File Viewer
-  </label>
-  <p class="help-text">Disable the built-in file viewer for this share.</p>
-</div>
-
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Show Quick Download
-  </label>
-  <p class="help-text">Display quick download buttons for files in the share.</p>
-</div>
-
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Extract embedded subtitles
-  </label>
-  <p class="help-text">Extract embedded subtitles from media files on load -- this can be slow for large files.</p>
-</div>
-
-### OnlyOffice Integration
-
-If OnlyOffice is configured:
-
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Enable OnlyOffice viewer
-  </label>
-  <p class="help-text">Allow viewing office files using OnlyOffice in this share.</p>
-</div>
-
-<div class="option-field">
-  <label>
-    <input type="checkbox" /> Enable OnlyOffice editing
-  </label>
-  <p class="help-text">Allow editing of office files using OnlyOffice in this share.</p>
-</div>
-
-## Customization
-
-Additional branding options (see {{< doclink path="shares/customization/" text="Customization" />}} for detailed examples):
-
-### Theme Color
-
-<div class="option-field">
-  <label>Share Theme Color</label>
-  <input type="text" placeholder="e.g., red, #0ea5e9, rgb(14,165,233)" />
-  <p class="help-text">CSS color value applied to the share's theme.</p>
-</div>
-
-### Page Metadata
-
-<div class="option-field">
-  <label>Share Title</label>
-  <input type="text" placeholder="Custom page title" />
-  <p class="help-text">Custom page title shown on the share page.</p>
-</div>
-
-<div class="option-field">
-  <label>Share Description</label>
-  <textarea placeholder="Short description"></textarea>
-  <p class="help-text">Short description shown on the share page (may be used in meta tags).</p>
-</div>
-
-### Custom Assets
-
-<div class="option-field">
-  <label>Share Banner</label>
-  <input type="text" placeholder="https://domain.com/banner.png or /path/to/banner.png" />
-  <p class="help-text">Banner image URL or path accessible by the client.</p>
-</div>
-
-<div class="option-field">
-  <label>Share Favicon</label>
-  <input type="text" placeholder="https://domain.com/favicon.png or /path/to/favicon.png" />
-  <p class="help-text">Favicon URL or path accessible by the client.</p>
-</div>
-
-Paths can be absolute URLs (`https://domain.com/image.png`) or index paths (`/path/to/image.png`).
-
-## Share Expiration Behavior
+## Share expiration behavior
 
 By default, share links are permanent. When you set an expiration:
 
@@ -289,103 +118,21 @@ By default, share links are permanent. When you set an expiration:
 3. Enable **Keep After Expiration** to retain expired shares in your list
 
 This allows you to:
+
 - Track how many times expired shares were accessed
 - Easily re-enable expired shares with new expiration dates
 - Maintain a history of shares for audit purposes
 
-## Security Best Practices
+## Security best practices
 
-1. **Use Password Protection** for sensitive content
-2. **Set Expiration Dates** for temporary shares
-3. **Use Allowed Usernames** for controlled organizational access
-4. **Disable Anonymous Access** for internal company shares
-5. **Keep After Expiration** for tracking and auditing
+1. **Use password protection** for sensitive content
+2. **Set expiration dates** for temporary shares
+3. **Use allowed usernames** for controlled organizational access
+4. **Disable anonymous access** for internal company shares
+5. **Keep after expiration** for tracking and auditing
 
-## Next Steps
+## Next steps
 
 - {{< doclink path="shares/customization/" text="Customize appearance" />}}
 - {{< doclink path="shares/normal-shares/" text="Normal shares" />}}
 - {{< doclink path="shares/upload-shares/" text="Upload shares" />}}
-
-<style>
-/* Light mode (default) */
-.option-field {
-  margin: 1.5em 0;
-  padding: 1em;
-  border-left: 3px solid var(--primary, #0ea5e9);
-  background: rgba(14, 165, 233, 0.06);
-  border-radius: 4px;
-}
-
-.option-field label {
-  font-weight: 600;
-  display: block;
-  margin-bottom: 0.5em;
-  color: var(--text-default);
-}
-
-.option-field input[type="checkbox"] {
-  margin-right: 0.5em;
-}
-
-.option-field input[type="text"],
-.option-field input[type="password"],
-.option-field input[type="number"],
-.option-field textarea,
-.option-field select {
-  width: 100%;
-  padding: 0.5em;
-  border: 1px solid var(--gray-400);
-  border-radius: 4px;
-  font-family: inherit;
-  background: var(--white);
-  color: var(--text-default);
-}
-
-.option-field textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-.field-group {
-  display: flex;
-  gap: 0.5em;
-}
-
-.field-group input {
-  flex: 2;
-}
-
-.field-group select {
-  flex: 1;
-}
-
-.help-text {
-  margin-top: 0.5em;
-  font-size: 0.9em;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-/* Dark mode support using theme's selector */
-[data-dark-mode] .option-field {
-  background: rgba(14, 165, 233, 0.12);
-}
-
-[data-dark-mode] .option-field input[type="text"],
-[data-dark-mode] .option-field input[type="password"],
-[data-dark-mode] .option-field input[type="number"],
-[data-dark-mode] .option-field textarea,
-[data-dark-mode] .option-field select {
-  background: var(--surfaceSecondary);
-  border: 1px solid var(--gray-700);
-  color: var(--text-default);
-}
-
-[data-dark-mode] .option-field input[type="text"]::placeholder,
-[data-dark-mode] .option-field input[type="password"]::placeholder,
-[data-dark-mode] .option-field input[type="number"]::placeholder,
-[data-dark-mode] .option-field textarea::placeholder {
-  color: var(--text-muted);
-}
-</style>
