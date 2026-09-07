@@ -26,8 +26,9 @@ const MENTIONS = /(?<![\w[/])@([a-zA-Z0-9](?:[a-zA-Z0-9-]{0,38})?)/g;
 const COMPARE_URL_PATTERN = new RegExp(`(?<!\\]\\()https://github\\.com/${REPO_OWNER}/${REPO_NAME}/compare/([^\\s]+)`,'g');
 
 // to skip hugo shortcodes sorrounded by `{{ }}` (just in case)
+// and code blocks and content with backticks
 function splitByShortcodes(content) {
-  return content.split(/(\{\{<[\s\S]*?>\}\})/g);
+  return content.split(/(\{\{<[\s\S]*?>\}\}|```[\s\S]*?```|`[^`\n]+`)/g);
 }
 function isShortcode(index) {
   return index % 2 === 1;
@@ -154,6 +155,7 @@ async function main() {
     anyChanges = anyChanges || changed;
   }
   console.log(checkOnly ? '✅ Check completed' : '✅ Changelogs updated');
+  if (checkOnly && anyChanges) process.exitCode = 1;
   return anyChanges;
 }
 

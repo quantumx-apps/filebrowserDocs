@@ -51,7 +51,7 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 **Bugfixes**:
  - OIDC: `groupsClaim` value is always included in requested scopes and falls back to the UserInfo endpoint when the ID token omits the groups claim.
- - Windows: fix backslash duplication in navigation URLs, folder sizes showing 4 KB, and download/preview failures (#2815, #2816)
+ - Windows: fix backslash duplication in navigation URLs, folder sizes showing 4 KB, and download/preview failures (#2815) (#2816)
  - Wrong extension in the 'new database was created popup ([issue #2817](https://github.com/gtsteffaniak/filebrowser/issues/2817)) ([pr #2824](https://github.com/gtsteffaniak/filebrowser/pull/2824))
  - External subtitles fail to load on public video shares due to authenticated subtitle endpoint ([issue #2822](https://github.com/gtsteffaniak/filebrowser/issues/2822)) ([pr #2827](https://github.com/gtsteffaniak/filebrowser/pull/2827))
  - OnlyOffice is inaccessible on password-protected shares ([issue #2811](https://github.com/gtsteffaniak/filebrowser/issues/2811))
