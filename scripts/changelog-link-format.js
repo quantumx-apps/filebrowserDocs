@@ -79,19 +79,28 @@ async function resolveType(number) {
   const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${number}`;
   const headers = { Accept: 'application/vnd.github+json' };
   if (GH_API_TOKEN) headers.Authorization = `Bearer ${GH_API_TOKEN}`;
+  const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 10000);
 
   try {
-    const res = await fetch(url, { headers });
+    let res;
+    try {
+      res = await fetch(url, { headers, signal: controller.signal });
+    } catch (networkError) {
+      console.warn(`⚠️ Error resolving #${number}: ${networkError.message}`);
+      return null;
+    }
     if (res.status === 403 || res.status === 429) {
       console.warn(`⚠️ Seems like you got rate limited - leaving #${number} unlinked`);
       return null;
     }
-    if (!res.ok) return null;
+    if (res.status === 404) return null;
+    if (!res.ok) {
+      throw new Error(`GitHub returned ${res.status} ${res.statusText} for #${number}`);
+    }
     const data = await res.json();
     return data.pull_request ? 'pull' : 'issues';
-  } catch (error) {
-    console.warn(`⚠️ Error resolving #${number}: ${error.message}`);
-    return null;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -120,8 +129,7 @@ async function convert(content) {
 
 async function processFile(filePath) {
   if (!(await fs.pathExists(filePath))) {
-    console.log(`⚠️ File not found: ${filePath}`);
-    return false;
+    throw new Error(`⚠️ File not found: ${filePath}`);
   }
   const original = await fs.readFile(filePath, 'utf8');
 
