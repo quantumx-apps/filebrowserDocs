@@ -16,7 +16,7 @@ const FILES = [
 
 const args = process.argv.slice(2);
 const checkOnly = args.includes('--check') || args.includes('-c');
-const GITHUB_TOKEN = checkOnly ? '' : (process.env.GITHUB_TOKEN || '');
+const GH_API_TOKEN = checkOnly ? '' : (process.env.GH_API_TOKEN || '');
 const REPO_OWNER = 'gtsteffaniak';
 const REPO_NAME = 'filebrowser';
 const RELEASE_TAG = /(\[[^\]]*\]\([^)]*\)|https?:\/\/\S+)|\b(v\d+\.\d+\.\d+-(?:stable|beta))\b/g;
@@ -78,7 +78,7 @@ function needsChanges(content) {
 async function resolveType(number) {
   const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${number}`;
   const headers = { Accept: 'application/vnd.github+json' };
-  if (GITHUB_TOKEN) headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+  if (GH_API_TOKEN) headers.Authorization = `Bearer ${GH_API_TOKEN}`;
 
   try {
     const res = await fetch(url, { headers });
@@ -145,7 +145,7 @@ async function processFile(filePath) {
 }
 
 async function main() {
-  if (!GITHUB_TOKEN && !checkOnly) { console.log('ℹ️ No GITHUB_TOKEN set, you can be rate-limited by GH'); }
+  if (!GH_API_TOKEN && !checkOnly) { console.log('ℹ️ No GH_API_TOKEN set, you can be rate-limited by GH'); }
   if (checkOnly) { console.log('No files will be modified\n'); }
   console.log('Processing changelog files...\n');
 
