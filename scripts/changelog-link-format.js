@@ -4,7 +4,7 @@
 //
 // (#1234) -> ([issue #1234](https://github.com/owner/repo/issues/1234)) -- or pr if the link is a pull
 // @user -> [@user](https://github.com/user)
-// v2.0.5-beta -> https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.5-beta
+// v2.0.5-beta -> [v2.0.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.5-beta)
 // https://github.com/gtsteffaniak/filebrowser/compare/v1.3.4-beta...v1.3.5-beta -> [v1.3.4-beta...v1.3.5-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.3.4-beta...v1.3.5-beta)
 
 import fs from 'fs-extra';
