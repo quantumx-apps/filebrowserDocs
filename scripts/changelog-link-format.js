@@ -2,7 +2,7 @@
 // it works without a GH token too, but the token is only needed if you got rate-limited.
 // basically does all of this (for example):
 //
-// (#1234) -> ([issue #1234](https://github.com/owner/repo/issues/1234)) -- or pr if the link is a pull
+// (#1234) -> ([issue #1234](https://github.com/owner/repo/issues/1234)) -- or pr/discussion if the link is that
 // @user -> [@user](https://github.com/user)
 // v2.0.5-beta -> [v2.0.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.5-beta)
 // https://github.com/gtsteffaniak/filebrowser/compare/v1.3.4-beta...v1.3.5-beta -> [v1.3.4-beta...v1.3.5-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.3.4-beta...v1.3.5-beta)
@@ -74,34 +74,39 @@ function needsChanges(content) {
   });
 }
 
-// returns null
+// returns null if not found
 async function resolveType(number) {
-  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${number}`;
-  const headers = { Accept: 'application/vnd.github+json' };
-  if (GH_API_TOKEN) headers.Authorization = `Bearer ${GH_API_TOKEN}`;
-  const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 10000);
-
-  try {
-    let res;
+  for (const kind of ['issues', 'discussions']) {
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/${kind}/${number}`;
+    const headers = { Accept: 'application/vnd.github+json' };
+    if (GH_API_TOKEN) headers.Authorization = `Bearer ${GH_API_TOKEN}`;
+    const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 10000);
     try {
-      res = await fetch(url, { headers, signal: controller.signal });
-    } catch (networkError) {
-      console.warn(`⚠️ Error resolving #${number}: ${networkError.message}`);
-      throw networkError;
+      let res;
+      try {
+        res = await fetch(url, { headers, signal: controller.signal });
+      } catch (networkError) {
+        console.warn(`⚠️ Error resolving #${number}: ${networkError.message}`);
+        throw networkError;
+      }
+      if (res.status === 403 || res.status === 429) {
+        console.warn(`⚠️ Seems like you got rate limited - leaving #${number} unlinked`);
+        return null;
+      }
+      if (res.status === 404) continue;
+      if (!res.ok) {
+        throw new Error(`GitHub returned ${res.status} ${res.statusText} for #${number}`);
+      }
+      if (kind === 'issues') {
+        const data = await res.json();
+        return data.pull_request ? 'pull' : 'issues';
+      }
+      return 'discussions';
+    } finally {
+      clearTimeout(timeout);
     }
-    if (res.status === 403 || res.status === 429) {
-      console.warn(`⚠️ Seems like you got rate limited - leaving #${number} unlinked`);
-      return null;
-    }
-    if (res.status === 404) return null;
-    if (!res.ok) {
-      throw new Error(`GitHub returned ${res.status} ${res.statusText} for #${number}`);
-    }
-    const data = await res.json();
-    return data.pull_request ? 'pull' : 'issues';
-  } finally {
-    clearTimeout(timeout);
   }
+  return null;
 }
 
 async function convert(content) {
@@ -121,7 +126,7 @@ async function convert(content) {
       return converted.replace(PATTERN, (fullMatch, num) => {
         const type = types[num];
         if (!type) return fullMatch; // don't do anything if couldn't resolve
-        const label = type === 'pull' ? 'pr' : 'issue';
+        const label = type === 'pull' ? 'pr' : type === 'discussions' ? 'discussion' : 'issue';
         return `([${label} #${num}](https://github.com/${REPO_OWNER}/${REPO_NAME}/${type}/${num}))`;
       });
     }).join('');
