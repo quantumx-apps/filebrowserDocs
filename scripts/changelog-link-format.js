@@ -87,7 +87,7 @@ async function resolveType(number) {
       res = await fetch(url, { headers, signal: controller.signal });
     } catch (networkError) {
       console.warn(`⚠️ Error resolving #${number}: ${networkError.message}`);
-      return null;
+      throw networkError;
     }
     if (res.status === 403 || res.status === 429) {
       console.warn(`⚠️ Seems like you got rate limited - leaving #${number} unlinked`);
@@ -144,7 +144,7 @@ async function processFile(filePath) {
 
   const updated = await convert(original);
   if (updated === original) {
-    console.log(`✅ ${filePath} - no changes needed!`);
+    console.log(`☑️ ${filePath} - no changes needed!`);
     return false;
   }
   await fs.writeFile(filePath, updated, 'utf8');
