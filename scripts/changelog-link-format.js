@@ -15,10 +15,10 @@ const FILES = [
 ];
 
 const args = process.argv.slice(2);
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
+const checkOnly = args.includes('--check') || args.includes('-c');
+const GITHUB_TOKEN = checkOnly ? '' : (process.env.GITHUB_TOKEN || '');
 const REPO_OWNER = 'gtsteffaniak';
 const REPO_NAME = 'filebrowser';
-const checkOnly = args.includes('--check') || args.includes('-c');
 const RELEASE_TAG = /(\[[^\]]*\]\([^)]*\)|https?:\/\/\S+)|\b(v\d+\.\d+\.\d+-(?:stable|beta))\b/g;
 const PATTERN = /(?<!\])\(#(\d+)\)/g;
 const MENTIONS = /(?<![\w[/])@([a-zA-Z0-9](?:[a-zA-Z0-9-]{0,38})?)/g;
