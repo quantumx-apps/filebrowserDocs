@@ -28,7 +28,7 @@ const COMPARE_URL_PATTERN = new RegExp(`(?<!\\]\\()https://github\\.com/${REPO_O
 // to skip hugo shortcodes sorrounded by `{{ }}` (just in case)
 // and code blocks and content with backticks
 function isSkippable(content) {
-  return content.split(/(\{\{<[\s\S]*?>\}\}|```[\s\S]*?```|~~~[\s\S]*?~~~|`[^`\n]+`)/g);
+  return content.split(/(\{\{<[\s\S]*?>\}\}|```[\s\S]*?```|~~~[\s\S]*?~~~|`[^`\n]+`|\[[^\]]*\]\([^)]*\))/g);
 }
 function isShortcode(index) {
   return index % 2 === 1;
