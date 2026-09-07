@@ -18,6 +18,8 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 **Full Changelog**: [v1.5.4-stable...v1.5.5-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.4-stable...v1.5.5-stable)
 
+---
+
 ## [v1.5.4-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.4-stable)
 
 **Security**:
@@ -36,6 +38,8 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 **Full Changelog**: [v1.5.3-stable...v1.5.4-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.3-stable...v1.5.4-stable)
 
+---
+
 ## [v1.5.3-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.3-stable)
 
 **BugFixes**:
@@ -44,6 +48,8 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
  - OnlyOffice is inaccessible if share has optional password ([issue #2811](https://github.com/gtsteffaniak/filebrowser/issues/2811))
 
 **Full Changelog**: [v1.5.2-stable...v1.5.3-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.2-stable...v1.5.3-stable)
+
+---
 
 ## [v1.5.2-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.2-stable)
 
@@ -60,6 +66,8 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 **Full Changelog**: [v1.5.1-stable...v1.5.2-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.1-stable...v1.5.2-stable)
 
+---
+
 ## [v1.5.1-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.1-stable)
 
 **Notes**:
@@ -73,6 +81,8 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
  - Fixed uncustomized (minimal) API tokens creation needed by webdav clients ([issue #2503](https://github.com/gtsteffaniak/filebrowser/issues/2503))
 
 **Full Changelog**: [v1.5.0-stable...v1.5.1-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.0-stable...v1.5.1-stable) -- **Release:**: [v1.5.1-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.1-stable).
+
+---
 
 ## [v1.5.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.0-stable)
 
@@ -185,6 +195,8 @@ Breaking change: removed deprecated `source.config.disableIndexing`, see {{< doc
  - Navigate close settings shows "something went wrong" ([issue #2047](https://github.com/gtsteffaniak/filebrowser/issues/2047)).
 
 **Full Changelog**: [v1.3.3-stable...v1.4.0-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.3.3-stable...v1.4.0-stable) -- **Release:**: [v1.4.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.0-stable).
+
+---
 
 ## [v1.3.3-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.3-stable)
 

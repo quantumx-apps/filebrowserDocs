@@ -16,11 +16,32 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 ---
 
+## [v2.0.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.5-beta)
+
+**Security**:
+ - [Moderate] public metadata api returns file content to anonymous share visitors, ignoring the share's download limit and file-viewer setting (GHSA-55mw-cwg7-m8f5) -- thanks [@kta1kri](https://github.com/kta1kri)
+
+**New Features**:
+ - Users can set default view mode and thumbnail size from Profile settings (Listing options). Admins can set the same defaults for existing users from the user edit prompt. Values persist to the account and apply on new browsers or devices; they do not override view preferences already saved locally ([issue #2884](https://github.com/gtsteffaniak/filebrowser/issues/2884)).
+ - Admins can edit all profile preference defaults for existing users from the user management panel (listing, preview, sidebar, theme, and related options), matching what was previously available only for new users and global user defaults.
+
+**Bugfixes**:
+ - Fixed infinite loading spinner on `/` and `/login` after CSP security hardening ([issue #2886](https://github.com/gtsteffaniak/filebrowser/issues/2886)) ([issue #2890](https://github.com/gtsteffaniak/filebrowser/issues/2890))
+ - Fixed darkmode styling bug where background wouldn't respect configured settings when not logged in
+ - Fixed styling bug where padding was missing from right side of listing view.
+ - Tilde paths for sources were not properly expanded. (eg "~" for home)
+ - Fixed tooltip not showing up for some circumstances on mobile, improved consistency.
+ - A few styling fixes for inconsistencies ([pr #2908](https://github.com/gtsteffaniak/filebrowser/pull/2908))
+
+---
+
 ## [v2.0.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.4-beta)
 
 - Fixed onlyoffice failing to load due to strict csp security requirement ([pr #2876](https://github.com/gtsteffaniak/filebrowser/pull/2876))
 
 **Full Changelog**: [v2.0.3-beta...v2.0.4-beta](https://github.com/gtsteffaniak/filebrowser/compare/v2.0.3-beta...v2.0.4-beta)
+
+---
 
 ## [v2.0.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.3-beta)
 
@@ -47,6 +68,8 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 **Full Changelog**: [v2.0.2-beta...v2.0.3-beta](https://github.com/gtsteffaniak/filebrowser/compare/v2.0.2-beta...v2.0.3-beta)
 
+---
+
 ## [v2.0.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.2-beta)
 
 **Bugfixes**:
@@ -58,6 +81,8 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
  - FFmpeg 9.0 incorrectly detected as below minimum 5.0.0 on Windows ([issue #2820](https://github.com/gtsteffaniak/filebrowser/issues/2820)) -- thanks [@yzxcj797](https://github.com/yzxcj797)
 
 **Full Changelog**: [v2.0.1-beta...v2.0.2-beta](https://github.com/gtsteffaniak/filebrowser/compare/v2.0.1-beta...v2.0.2-beta)
+
+---
 
 ## [v2.0.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.1-beta)
 
@@ -94,6 +119,8 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
  - Members without download permission receive 403 when opening text-based files despite OnlyOffice preview being enabled ([issue #2777](https://github.com/gtsteffaniak/filebrowser/issues/2777))
 
 **Full Changelog**: [v2.0.0-beta...v2.0.1-beta](https://github.com/gtsteffaniak/filebrowser/compare/v2.0.0-beta...v2.0.1-beta)
+
+---
 
 ## [v2.0.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.0-beta)
 
