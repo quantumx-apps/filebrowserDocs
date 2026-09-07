@@ -27,8 +27,8 @@ const COMPARE_URL_PATTERN = new RegExp(`(?<!\\]\\()https://github\\.com/${REPO_O
 
 // to skip hugo shortcodes sorrounded by `{{ }}` (just in case)
 // and code blocks and content with backticks
-function splitByShortcodes(content) {
-  return content.split(/(\{\{<[\s\S]*?>\}\}|```[\s\S]*?```|`[^`\n]+`)/g);
+function isSkippable(content) {
+  return content.split(/(\{\{<[\s\S]*?>\}\}|```[\s\S]*?```|~~~[\s\S]*?~~~|`[^`\n]+`)/g);
 }
 function isShortcode(index) {
   return index % 2 === 1;
@@ -62,7 +62,7 @@ function extractNumbers(content) {
 }
 
 function needsChanges(content) {
-  const parts = splitByShortcodes(content);
+  const parts = isSkippable(content);
   return parts.some((part, i) => {
     if (isShortcode(i)) return false;
     return (
@@ -96,7 +96,7 @@ async function resolveType(number) {
 }
 
 async function convert(content) {
-  const parts = splitByShortcodes(content);
+  const parts = isSkippable(content);
   const textParts = parts.filter((_, i) => !isShortcode(i));
   const numbers = new Set(textParts.flatMap(extractNumbers));
   const types = {};
