@@ -16,7 +16,86 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 ---
 
-## v2.0.0
+## [v2.0.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.4-beta)
+
+- Fixed onlyoffice failing to load due to strict csp security requirement ([pr #2876](https://github.com/gtsteffaniak/filebrowser/pull/2876))
+
+**Full Changelog**: [v2.0.3-beta...v2.0.4-beta](https://github.com/gtsteffaniak/filebrowser/compare/v2.0.3-beta...v2.0.4-beta)
+
+## [v2.0.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.3-beta)
+
+**Security**:
+ - [High] Stored XSS via HTML preview: strip `<script>` from sanitized srcdoc, remove `allow-same-origin` from the preview iframe sandbox, set HttpOnly on the session cookie, and add a nonce-based `script-src` CSP on the SPA shell (GHSA-vvm6-jwrf-hgmg) -- thanks [@qrn12580](https://github.com/qrn12580)
+ - [Moderate] Non-admin users could PATCH privileged fields on their own account (scopes, permissions, etc.), allowing privilege escalation; restores v1 non-admin field guard on PATCH /api/users (GHSA-p5cc-4p84-c4m2) -- thanks [@Chri6s](https://github.com/Chri6s)
+
+**New Features**:
+ - Added option to globally disable the "Install App" message via `frontend.disablePWAInstall`
+ - PWA improvements for installed mobile apps: dedicated maskable icons (192/512), manifest and splash colors that follow the instance default theme, runtime `theme-color` sync on dark-mode toggle, and edge-to-edge safe-area layout for notched devices ([pr #2625](https://github.com/gtsteffaniak/filebrowser/pull/2625)) ([pr #2869](https://github.com/gtsteffaniak/filebrowser/pull/2869)) -- thanks [@APatenaude](https://github.com/APatenaude)
+
+**Bugfixes**:
+ - Fixed Fuji `.raf` thumbnail preview by extracting the camera-embedded JPEG from the RAF header (regression for files where TIFF-based raw extraction does not apply).
+ - Image previews for unsupported decodable formats now return HTTP 415 immediately instead of attempting JPEG decode and returning HTTP 500.
+ - OIDC: preserve the verified ID-token user identifier when falling back to the UserInfo endpoint for missing groups, so login no longer fails with HTTP 500 when UserInfo returns groups but omits the configured identifier.
+ - LDAP: restore `memberOf` as the default `groupsClaim` when unset, fixing group-based admin and login authorization for existing LDAP configs after the v2.0.2 default changed to `groups`.
+ - "Install app" message reappears after being cleared on device.
+ - Restored upload chunk size `0` to disable chunking as documented ([issue #2202](https://github.com/gtsteffaniak/filebrowser/issues/2202)).
+ - Fixed iOS 26 / WebKit multi-chunk upload stall by isolating chunk connections and returning partial chunk JSON responses ([issue #2734](https://github.com/gtsteffaniak/filebrowser/issues/2734)).
+ - Sidebar folder links with custom names, icons, or styles no longer disappear after restart; multiple shortcuts to different folders on the same source are preserved ([issue #2809](https://github.com/gtsteffaniak/filebrowser/issues/2809)).
+ - Adding a source to a user via scopes now auto-adds a matching sidebar link; removing a source keeps the link (shown disabled) so users can delete it manually.
+ - A password reset via CLI returns user to a password method user.
+ - Authentication login methods are consistently enforced without modifying existing account settings.
+
+**Full Changelog**: [v2.0.2-beta...v2.0.3-beta](https://github.com/gtsteffaniak/filebrowser/compare/v2.0.2-beta...v2.0.3-beta)
+
+## [v2.0.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.2-beta)
+
+**Bugfixes**:
+ - OIDC: `groupsClaim` value is always included in requested scopes and falls back to the UserInfo endpoint when the ID token omits the groups claim.
+ - Windows: fix backslash duplication in navigation URLs, folder sizes showing 4 KB, and download/preview failures (#2815, #2816)
+ - Wrong extension in the 'new database was created popup ([issue #2817](https://github.com/gtsteffaniak/filebrowser/issues/2817)) ([pr #2824](https://github.com/gtsteffaniak/filebrowser/pull/2824))
+ - External subtitles fail to load on public video shares due to authenticated subtitle endpoint ([issue #2822](https://github.com/gtsteffaniak/filebrowser/issues/2822)) ([pr #2827](https://github.com/gtsteffaniak/filebrowser/pull/2827))
+ - OnlyOffice is inaccessible on password-protected shares ([issue #2811](https://github.com/gtsteffaniak/filebrowser/issues/2811))
+ - FFmpeg 9.0 incorrectly detected as below minimum 5.0.0 on Windows ([issue #2820](https://github.com/gtsteffaniak/filebrowser/issues/2820)) -- thanks [@yzxcj797](https://github.com/yzxcj797)
+
+**Full Changelog**: [v2.0.1-beta...v2.0.2-beta](https://github.com/gtsteffaniak/filebrowser/compare/v2.0.1-beta...v2.0.2-beta)
+
+## [v2.0.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.1-beta)
+
+**Security**:
+ - [High] Symlink following on read paths no longer escapes source or user/share scope (GHSA-mgqf-5mf5-prfj) -- thanks [@je-lv](https://github.com/je-lv) [@KasperBuilds](https://github.com/KasperBuilds)
+ - [Moderate] Absolute paths in API path/file parameters could bypass user scope and read files outside the source mount (GHSA-rqqq-wv83-rp74) -- thanks [@Wei-Leo](https://github.com/Wei-Leo)
+ - [Moderate] Logout did not invalidate session JWTs with equivalent Base64URL spellings (GHSA-8m35-wcjh-95q7) -- thanks [@corbanvilla](https://github.com/corbanvilla) [@soh3e](https://github.com/soh3e) [@dderpym](https://github.com/dderpym) (This vulnerability was discovered as part of a U.C. Berkeley security research project by: Corban Villa, Sohee Kim, and Austin Chu)
+ - [Moderate] Stored XSS via unsanitized DOCX hyperlink in DocViewer (GHSA-9wm6-jcjh-3m8c) -- thanks [@karen93shieh](https://github.com/karen93shieh) [@je-lv](https://github.com/je-lv) [@EclipsSec](https://github.com/EclipsSec)
+ - [Moderate] Revoked JWTs could still authenticate on public-share and withOrWithoutUser routes until natural expiry, bypassing logout and Api-permission revocation on that surface (GHSA-4wmj-rq3c-m65v) -- thanks [@hypnguyen1209](https://github.com/hypnguyen1209)
+
+**Notes**:
+ - GroupMap `SyncUserGroups` fix so JWT/OIDC/LDAP group memberships survive restart ([issue #2742](https://github.com/gtsteffaniak/filebrowser/issues/2742)).
+ - Session renew is handled by client keep-alive. removed per-request `X-Renew-Token` header handling.
+ - Improvements to document thumbnail generation performance.
+ - behavior changes for typing to select files in listing view.
+ - next/previous buttons don't hide automatically on photos ([issue #2767](https://github.com/gtsteffaniak/filebrowser/issues/2767))
+ - added more actions available in advanced search ([issue #2776](https://github.com/gtsteffaniak/filebrowser/issues/2776))
+
+**Bugfixes**:
+ - GroupMap mutations (`SyncUserGroups`, add/remove group members) are write-through to SQL so JWT/OIDC/LDAP group memberships survive restart ([issue #2742](https://github.com/gtsteffaniak/filebrowser/issues/2742)).
+ - `defaultEnabled` behavior change/fix so defaultEnabled means its always added to users on startup and login. (updated docs too)
+ - Long uploads/downloads no longer lose the session mid-transfer: proactive session JWT keep-alive renews before expiry ([issue #2638](https://github.com/gtsteffaniak/filebrowser/issues/2638)).
+ - Disable auto logout/session expiry if there are active file transfers going ([issue #2638](https://github.com/gtsteffaniak/filebrowser/issues/2638))
+ - upload options get cut off on mobile ([issue #2685](https://github.com/gtsteffaniak/filebrowser/issues/2685))
+ - Uploading image: image gets cut-off ([issue #2765](https://github.com/gtsteffaniak/filebrowser/issues/2765))
+ - Process aborts (not just 500) during PDF thumbnail generation ([issue #2763](https://github.com/gtsteffaniak/filebrowser/issues/2763))
+ - PDF preview generation prevents file uploads from completing ([issue #2752](https://github.com/gtsteffaniak/filebrowser/issues/2752))
+ - Brings back double-tap to zoom images that was mistakenly removed.
+ - multiple embedded subtitles with same language bug ([issue #2756](https://github.com/gtsteffaniak/filebrowser/issues/2756))
+ - gallery view download button missing ([issue #2767](https://github.com/gtsteffaniak/filebrowser/issues/2767))
+ - fixed HEIC rotation regression from v1.5.x
+ - fixed raw image preview regression from v1.5.x
+ - html viewer takes full height
+ - Members without download permission receive 403 when opening text-based files despite OnlyOffice preview being enabled ([issue #2777](https://github.com/gtsteffaniak/filebrowser/issues/2777))
+
+**Full Changelog**: [v2.0.0-beta...v2.0.1-beta](https://github.com/gtsteffaniak/filebrowser/compare/v2.0.0-beta...v2.0.1-beta)
+
+## [v2.0.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.0-beta)
 
 This version is the most significant change to date. It **requires** both a database migration and config structural changes. Use the {{< doclink path="getting-started/v2/config-migration/" text="config migration tool" />}} before upgrading from v1.x.
 
@@ -73,7 +152,7 @@ This version is the most significant change to date. It **requires** both a data
 
 ---
 
-## v1.5.5-beta
+## [v1.5.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.5-beta)
 
  **BugFixes**:
  - Fixed uncustomized (minimal) API token creation needed by WebDAV clients ([issue #2503](https://github.com/gtsteffaniak/filebrowser/issues/2503)).
@@ -82,7 +161,7 @@ This version is the most significant change to date. It **requires** both a data
 
 ---
 
-## v1.5.4-beta
+## [v1.5.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.4-beta)
 
  **Notes**:
  - PWA installation name now capped at 30 characters instead of 12 ([issue #2699](https://github.com/gtsteffaniak/filebrowser/issues/2699)).
@@ -94,7 +173,7 @@ This version is the most significant change to date. It **requires** both a data
 
 ---
 
-## v1.5.3-beta
+## [v1.5.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.3-beta)
 
  **BugFixes**:
  - Fixed probe `canShare` with the real file, not a fixed `text/plain` stand-in ([issue #2664](https://github.com/gtsteffaniak/filebrowser/issues/2664)).
@@ -105,7 +184,7 @@ This version is the most significant change to date. It **requires** both a data
 
 ---
 
-## v1.5.2-beta
+## [v1.5.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.2-beta)
 
  **Notes**:
  - [docker] Upgraded ffmpeg version 8.1 to 8.1.2
@@ -118,7 +197,7 @@ This version is the most significant change to date. It **requires** both a data
 
 ---
 
-## v1.5.1-beta
+## [v1.5.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.1-beta)
 
 **BugFixes**:
  - Fixed http config section being dropped so trustedHeaders and disableRateLimit apply ([pr #2602](https://github.com/gtsteffaniak/filebrowser/pull/2602)) ([issue #2560](https://github.com/gtsteffaniak/filebrowser/issues/2560)).
@@ -130,7 +209,7 @@ This version is the most significant change to date. It **requires** both a data
 
 ---
 
-## v1.5.0-beta
+## [v1.5.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.0-beta)
 
 **New Features**:
  - Added basic `html` viewer with relative reference support ([issue #2522](https://github.com/gtsteffaniak/filebrowser/issues/2522)).
@@ -158,7 +237,7 @@ This version is the most significant change to date. It **requires** both a data
 
 ---
 
-## v1.4.4-beta
+## [v1.4.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.4-beta)
 
 **BugFixes**:
  - Pinning/Unpinning file resets user's scope permission ([issue #2532](https://github.com/gtsteffaniak/filebrowser/issues/2532)).
@@ -168,7 +247,7 @@ This version is the most significant change to date. It **requires** both a data
 
 ---
 
-## v1.4.3-beta
+## [v1.4.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.3-beta)
 
 {{% alert context="danger" %}}
 Pinning items has a bug that can overwrite the users information with defaults.  Please do not use this release, a follow-up release will be made with a fix.
@@ -203,7 +282,7 @@ Pinning items has a bug that can overwrite the users information with defaults. 
 
 ---
 
-## v1.4.2-beta
+## [v1.4.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.2-beta)
 
 {{% alert context="info" %}}
 If you are running behind a proxy, please update your trusted headers to have the rate limits and logging apply correctly.
@@ -245,7 +324,7 @@ http:
 
 ---
 
-## v1.4.1-beta
+## [v1.4.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.1-beta)
 
 **Security**:
  - Fix critical: unauthenticated user can view source info ([GHSA-3jmg-p96m-m328](https://github.com/advisories/GHSA-3jmg-p96m-m328)).
@@ -254,7 +333,7 @@ http:
 
 ---
 
-## v1.4.0-beta
+## [v1.4.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.0-beta)
 
 {{% alert context="danger" %}}
 A security issue was introduced in this release which causes unauthenticated users to access source information on shares. A fix is being rolled out for `v1.4.1` and later an integration test for this to ensure future versions are secure.
@@ -307,7 +386,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.10-beta
+## [v1.3.10-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.10-beta)
 
 {{% alert context="danger" %}}
 A security issue was introduced in this release which causes unauthenticated users to access source information on shares. A fix is being rolled out for 1.4.1 and later an integration test for this to ensure future versions are secure.
@@ -324,7 +403,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.9-beta
+## [v1.3.9-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.9-beta)
 
 **Security**:
  - [Critical] Unauthenticated Path Traversal in Public Share Delete Allows Arbitrary File Deletion ([GHSA-fwj3-42wh-8673](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-fwj3-42wh-8673))
@@ -337,7 +416,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.8-beta
+## [v1.3.8-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.8-beta)
 
 **BugFixes**:
  - Quick download icon style after icon change.
@@ -352,7 +431,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.7-beta
+## [v1.3.7-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.7-beta)
 
 **Notes**:
  - Creating/Deleting password-based user requires reauthentication ([issue #2112](https://github.com/gtsteffaniak/filebrowser/issues/2112)).
@@ -365,7 +444,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.6-beta
+## [v1.3.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.6-beta)
 
 **BugFixes**:
  - File watcher not working for files and not respecting line count ([issue #2314](https://github.com/gtsteffaniak/filebrowser/issues/2314)).
@@ -377,14 +456,14 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.5-beta
+## [v1.3.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.5-beta)
 
 **Notes**:
- - Any password change or admin user property change for a password user requires reauthentication (#2112)
+ - Any password change or admin user property change for a password user requires reauthentication ([#2112](https://github.com/gtsteffaniak/filebrowser/issues/2112))
 
 **BugFixes**:
  - PWA icon fixes ([issue #2292](https://github.com/gtsteffaniak/filebrowser/issues/2292)).
- - Deny-rule'd folders visible in directory listings (regression from `v1.2.4-stable`) ([issue #2295](https://github.com/gtsteffaniak/filebrowser/issues/2295)).
+ - Deny-rule'd folders visible in directory listings (regression from [v1.2.4-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.4-stable)) ([issue #2295](https://github.com/gtsteffaniak/filebrowser/issues/2295)).
  - OTP and password requirement fixes ([issue #2112](https://github.com/gtsteffaniak/filebrowser/issues/2112)) ([issue #2263](https://github.com/gtsteffaniak/filebrowser/issues/2263)).
  - CLI not picking up config properly.
  - Storage usage numbers on first load adjusted.
@@ -400,7 +479,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.4-beta
+## [v1.3.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.4-beta)
 
 **New Features**:
  - Epub placementg url anchors to bookmark a specific location on the doc.
@@ -421,7 +500,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.3-beta
+## [v1.3.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.3-beta)
 
 **New Features**:
  - Copy/paste files and folders (`CTRL+C`/`CTRL+V`) from other apps (win explorer, thunar, finder, etc) to upload them directly ([pr #2197](https://github.com/gtsteffaniak/filebrowser/pull/2197)).
@@ -451,14 +530,14 @@ A security issue was introduced in this release which causes unauthenticated use
  - Chunked download stops after first chunk, add message explaining ([issue #2074](https://github.com/gtsteffaniak/filebrowser/issues/2074)).
  - Esc to Cancel and Enter to confirm popup ([issue #2079](https://github.com/gtsteffaniak/filebrowser/issues/2079)).
  - Language-tagged subtitle files not detected for videos ([issue #2199](https://github.com/gtsteffaniak/filebrowser/issues/2199)).
- - Unable to use proxy auth since `v1.3.0-beta` ([issue #2173](https://github.com/gtsteffaniak/filebrowser/issues/2173)).
+ - Unable to use proxy auth since `[v1.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-beta)` ([issue #2173](https://github.com/gtsteffaniak/filebrowser/issues/2173)).
  - Updating setting on a LDAP user turns the "Login Method" to password. Thus preventing further logins ([issue #2179](https://github.com/gtsteffaniak/filebrowser/issues/2179)).
 
 **Full Changelog**: [v1.3.2-beta...v1.3.3-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.3.2-beta...v1.3.3-beta) -- **Release**: [v1.3.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.3-beta).
 
 ---
 
-## v1.3.2-beta
+## [v1.3.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.2-beta)
 
 **Security**:
  - Patched Username Enumeration via Authentication Timing Side-Channel ([GHSA-7789-65hx-f26w](https://github.com/advisories/GHSA-7789-65hx-f26w)).
@@ -493,7 +572,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.1-beta
+## [v1.3.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.1-beta)
 
 **Security**:
  - Patched Stored XSS in public share page via unsanitized share metadata, `text/template` misuse ([GHSA-r633-fcgp-m532](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-r633-fcgp-m532))
@@ -511,7 +590,7 @@ A security issue was introduced in this release which causes unauthenticated use
  - Changed symlink detection logic.
 
 **BugFixes**:
- - `405` response code error on Webdav in `v1.3.0-beta` ([issue #2054](https://github.com/gtsteffaniak/filebrowser/issues/2054)).
+ - `405` response code error on Webdav in `[v1.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-beta)` ([issue #2054](https://github.com/gtsteffaniak/filebrowser/issues/2054)).
  - Motion Preview setting not saving when changed in profile settings.
  - Context menu on tools not working.
  - E-book thumbanils can't be disabled ([pr #2085](https://github.com/gtsteffaniak/filebrowser/pull/2085)) ([issue #2080](https://github.com/gtsteffaniak/filebrowser/issues/2080)).
@@ -522,7 +601,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.0-beta
+## [v1.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-beta)
 
 Read: [New Announcement](https://github.com/gtsteffaniak/filebrowser/discussions/2048)
 
@@ -587,10 +666,10 @@ Note: A potentially breaking change for docker users: The default user is now `f
 
 ---
 
-## v1.2.7-beta
+## [v1.2.7-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.7-beta)
 
 {{% alert context="info" %}}
-This will be the final update for 1.2.x-beta. Switch to `v1.2.0-stable` for `v1.2.x` updates or wait for `v1.3.0-beta` which is due soon.
+This will be the final update for 1.2.x-beta. Switch to `[v1.2.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.0-stable)` for `v1.2.x` updates or wait for `[v1.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-beta)` which is due soon.
 {{% /alert %}}
 
 **BugFixes**:
@@ -601,7 +680,7 @@ This will be the final update for 1.2.x-beta. Switch to `v1.2.0-stable` for `v1.
 
 ---
 
-## v1.2.6-beta
+## [v1.2.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.6-beta)
 
 Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecting password protected share links.
 
@@ -612,7 +691,7 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ---
 
-## v1.2.5-beta
+## [v1.2.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.5-beta)
 
 **Notes**:
  - Dependency Updates for frontend and backend packages.
@@ -628,7 +707,7 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ---
 
-## v1.2.4-beta
+## [v1.2.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.4-beta)
 
 **Notes**:
  - Changed `/api/media/subtitles` api endpoint to better support subtitles.
@@ -648,7 +727,7 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ---
 
-## v1.2.3-beta
+## [v1.2.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.3-beta)
 
 **Notes**:
  - Removed upload api behavior to assume paths ending in "/" are folders, strictly uses isDir query param
@@ -665,7 +744,7 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ---
 
-## v1.2.2-beta
+## [v1.2.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.2-beta)
 
 **New Features**:
  - Resizable sidebar ([pr #1896](https://github.com/gtsteffaniak/filebrowser/pull/1896))
@@ -701,7 +780,7 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ---
 
-## v1.2.1-beta
+## [v1.2.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.1-beta)
 
  **New Features**:
  - Global disable onlyoffice editor via `*` file option to disable all files for a specific user ([issue #1533](https://github.com/gtsteffaniak/filebrowser/issues/1533)).
@@ -722,7 +801,7 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ---
 
-## v1.2.0-beta
+## [v1.2.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.0-beta)
 
 {{% alert context="info" %}}
 This is a major version update with many code changes which could cause unexpected behavior. Upgrades should proceed with caution and report any undesriable behavior by opening an issue on github. The index is now fully in sqlite database - see {{< doclink path="features/indexing" text="Indexing Overview" />}} for more information.
@@ -769,7 +848,7 @@ Sorry for the delay -- a lot of effort went into this release, specifically abou
 
 ---
 
-## v1.1.6-beta
+## [v1.1.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.6-beta)
 
 **Notes**:
  - `showHidden` is now a backend attribute. Shares will NOT show hidden files by default unless configured to.
@@ -791,7 +870,7 @@ Sorry for the delay -- a lot of effort went into this release, specifically abou
 
 ---
 
-## v1.1.5-beta
+## [v1.1.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.5-beta)
 
 **Notes**:
  - Major git container tag request ([issue #1756](https://github.com/gtsteffaniak/filebrowser/issues/1756)).
@@ -808,7 +887,7 @@ Sorry for the delay -- a lot of effort went into this release, specifically abou
 
 ---
 
-## v1.1.4-beta
+## [v1.1.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.4-beta)
 
 **New Features**:
  - Toggle to show searching results with thumbnails ([issue #1545](https://github.com/gtsteffaniak/filebrowser/issues/1545)).
@@ -837,7 +916,7 @@ Sorry for the delay -- a lot of effort went into this release, specifically abou
 
 ---
 
-## v1.1.3-beta
+## [v1.1.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.3-beta)
 
 **Notes**:
  - Continue create user dir scope even if filesystem path creation fails ([issue #1509](https://github.com/gtsteffaniak/filebrowser/issues/1509)).
@@ -852,7 +931,7 @@ Sorry for the delay -- a lot of effort went into this release, specifically abou
 
 ---
 
-## v1.1.2-beta
+## [v1.1.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.2-beta)
 
 **Notes**:
  - Changes to duplicate detector.
@@ -873,7 +952,7 @@ Sorry for the delay -- a lot of effort went into this release, specifically abou
 
 ---
 
-## v1.1.1-beta
+## [v1.1.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.1-beta)
 
 **Notes**:
  - [Docker] upgraded ffmpeg `8.0` to `8.0.1`.
@@ -884,7 +963,7 @@ Sorry for the delay -- a lot of effort went into this release, specifically abou
 
 **BugFixes**:
  - Added missing `exiftool` to docker image for heic conversion orientation support.
- - `v1.1.0-beta` - Incorrect naming of 1 file in directory-info ([issue #1621](https://github.com/gtsteffaniak/filebrowser/issues/1621)).
+ - `[v1.1.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.0-beta)` - Incorrect naming of 1 file in directory-info ([issue #1621](https://github.com/gtsteffaniak/filebrowser/issues/1621)).
  - Disable only office viewing settings not applying.
  - OnlyOffice integration does not work behind proxy authentication ([issue #1422](https://github.com/gtsteffaniak/filebrowser/issues/1422)).
  - Newly created users "add on" to defined scope of previous user ([issue #1628](https://github.com/gtsteffaniak/filebrowser/issues/1628)) ([issue #1518](https://github.com/gtsteffaniak/filebrowser/issues/1518)).
@@ -898,7 +977,7 @@ Sorry for the delay -- a lot of effort went into this release, specifically abou
 
 ---
 
-## v1.1.0-beta
+## [v1.1.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.0-beta)
 
 {{% alert context="warning" %}}
 URLs for single source configurations will now include the source in the path like multi-source configurations.  Previous: `/files/path/to/text.txt` becomes: `/files/<source name>/path/to/text.txt` to match the pattern used by multiple sources. You may need to update your bookmarks on updating.
@@ -958,7 +1037,7 @@ More than ever, treat this as a beta. I have included many changes that I didn't
 
 ---
 
-## v1.0.1-beta
+## [v1.0.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.0.1-beta)
 
 **New Features**:
  - Login icon support added via `frontend.loginIcon` config path variable.
@@ -988,7 +1067,7 @@ More than ever, treat this as a beta. I have included many changes that I didn't
 
 ---
 
-## v1.0.0-beta
+## [v1.0.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.0.0-beta)
 
 The version number has been bumped to `v1.0.0`! This does mean stable is coming soon :) But this is still the beta release, just with the new naming pattern.
 
@@ -1012,7 +1091,7 @@ Check out {{< doclink path="getting-started/version" text="how releases will wor
 
 ---
 
-## v0.8.11-beta
+## [v0.8.11-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.11-beta)
 
 **New Features**:
  - OnlyOffice debugger now shows backend logs as well for admin users.
@@ -1043,7 +1122,7 @@ Check out {{< doclink path="getting-started/version" text="how releases will wor
 
 ---
 
-## v0.8.10-beta
+## [v0.8.10-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.10-beta)
 
 **New Features**:
  - Marquee selection to listing view -- thanks [@Kurami32](https://github.com/Kurami32) ([pr #1388](https://github.com/gtsteffaniak/filebrowser/pull/1388)) ([issue #1077](https://github.com/gtsteffaniak/filebrowser/issues/1077)).
@@ -1066,7 +1145,7 @@ Check out {{< doclink path="getting-started/version" text="how releases will wor
 
 ---
 
-## v0.8.9-beta
+## [v0.8.9-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.9-beta)
 
 {{% alert context="danger" %}}
 If you have indexing rules -- such as [maxWatchers](https://github.com/gtsteffaniak/filebrowser/blob/39514169f17ed9586d587dd496257588ded6e532/frontend/public/config.generated.yaml#L30), [neverWatchPaths](https://github.com/gtsteffaniak/filebrowser/blob/39514169f17ed9586d587dd496257588ded6e532/frontend/public/config.generated.yaml#L31C9-L31C24), [exclude](https://github.com/gtsteffaniak/filebrowser/blob/39514169f17ed9586d587dd496257588ded6e532/frontend/public/config.generated.yaml#L32C9-L32C16) rules, [include](https://github.com/gtsteffaniak/filebrowser/blob/39514169f17ed9586d587dd496257588ded6e532/frontend/public/config.generated.yaml#L43) rules, see [the migration guide](https://filebrowserquantum.com/en/docs/user-guides/general-configuration/exclusion-rules/) for help.
@@ -1104,7 +1183,7 @@ If you have indexing rules -- such as [maxWatchers](https://github.com/gtsteffan
  - Moving between items using next/previous will reset the req and show a responsive loading spinner -- fixing several state related issues.
  - Access management: child folders accessible stopped showing up ([issue #1332](https://github.com/gtsteffaniak/filebrowser/issues/1332))
  - Make source inaccessible if directory does not exist rather than exiting on start ([issue #1264](https://github.com/gtsteffaniak/filebrowser/issues/1264))
- - HTTP Proxy environment gets ignored since version `v0.8.6-beta` ([issue #1324](https://github.com/gtsteffaniak/filebrowser/issues/1324))
+ - HTTP Proxy environment gets ignored since version `[v0.8.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.6-beta)` ([issue #1324](https://github.com/gtsteffaniak/filebrowser/issues/1324))
  - Album artwork preview not showing on shares.
  - Fixed OIDC logout causing a loop ([issue #995](https://github.com/gtsteffaniak/filebrowser/issues/995)) ([discussion #1361](https://github.com/gtsteffaniak/filebrowser/discussions/1361))
  - Fixed checksum failure ([issue #1372](https://github.com/gtsteffaniak/filebrowser/issues/1372))
@@ -1115,7 +1194,7 @@ If you have indexing rules -- such as [maxWatchers](https://github.com/gtsteffan
 
 ---
 
-## v0.8.8-beta
+## [v0.8.8-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.8-beta)
 
 A special thanks to [@Kurami32](https://github.com/Kurami32) for the player features, debugging, and testing during the dev process.
 
@@ -1166,7 +1245,7 @@ Consider choosing FileBrowser Quantum on the [latest selfh.st survey](https://se
 
 ---
 
-## v0.8.7-beta
+## [v0.8.7-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.7-beta)
 
 **New Features**:
  - `json` logging format support.
@@ -1194,7 +1273,7 @@ Consider choosing FileBrowser Quantum on the [latest selfh.st survey](https://se
 
 ---
 
-## v0.8.6-beta
+## [v0.8.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.6-beta)
 
 **Notes**:
  - Please remove `indexAbumArt` config option from your config: it has been deprecated... I found a way to detect album art without impacting indexing performance -- so its default behavior.
@@ -1207,7 +1286,7 @@ Consider choosing FileBrowser Quantum on the [latest selfh.st survey](https://se
 **BugFixes**:
  - Copy/Move index update changes to be more thorough and update album artwork ([issue #1220](https://github.com/gtsteffaniak/filebrowser/issues/1220)) ([issue #1219](https://github.com/gtsteffaniak/filebrowser/issues/1219))
  - Fix preview related issues ([issue #1225](https://github.com/gtsteffaniak/filebrowser/issues/1225)) ([issue #1223](https://github.com/gtsteffaniak/filebrowser/issues/1223))
- - Scrollbar missing on user-edit-prompt in v0.8.5-beta ([issue #1221](https://github.com/gtsteffaniak/filebrowser/issues/1221))
+ - Scrollbar missing on user-edit-prompt in [v0.8.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.5-beta) ([issue #1221](https://github.com/gtsteffaniak/filebrowser/issues/1221))
  - Copy share download link inconsistency ([issue #1207](https://github.com/gtsteffaniak/filebrowser/issues/1207))
  - Fixed some onlyoffice related issues ([issue #1192](https://github.com/gtsteffaniak/filebrowser/issues/1192)) ([issue #1068](https://github.com/gtsteffaniak/filebrowser/issues/1068))
  - Creating a file, then a folder with the same name makes the folder unusable ([issue #1167](https://github.com/gtsteffaniak/filebrowser/issues/1167))
@@ -1217,7 +1296,7 @@ Consider choosing FileBrowser Quantum on the [latest selfh.st survey](https://se
 
 ---
 
-## v0.8.5-beta
+## [v0.8.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.5-beta)
 
  **New Features**:
  - Backend media metadata processing:
@@ -1241,14 +1320,14 @@ Consider choosing FileBrowser Quantum on the [latest selfh.st survey](https://se
  **Notes**:
  - Added more tests to ensure new features work in future.
  - Caching for preview images is md5 based. Moved, renamed, or duplicate images don't get re-generated. Same album artwork shares cache.
- - Hide `@eaDir` folder by default ([issue #1212](https://github.com/gtsteffaniak/filebrowser/issues/1212))
- - Defaults to hide "@eadir" folders (common for synology) ([issue #1212](https://github.com/gtsteffaniak/filebrowser/issues/1212))
+ - Hide `[@eaDir](https://github.com/eaDir)` folder by default ([issue #1212](https://github.com/gtsteffaniak/filebrowser/issues/1212))
+ - Defaults to hide "[@eadir](https://github.com/eadir)" folders (common for synology) ([issue #1212](https://github.com/gtsteffaniak/filebrowser/issues/1212))
  - After move/copy, ability to move to the destination folder ([issue #999](https://github.com/gtsteffaniak/filebrowser/issues/999))
 
  **BugFixes**:
  - Access Management: issue with access settings ([issue #1195](https://github.com/gtsteffaniak/filebrowser/issues/1195))
  - Fix shutdown panic related to sse connection.
- - Custom theming not working in `v0.8.4-beta` ([issue #1204](https://github.com/gtsteffaniak/filebrowser/issues/1204))
+ - Custom theming not working in `[v0.8.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.4-beta)` ([issue #1204](https://github.com/gtsteffaniak/filebrowser/issues/1204))
  - Config Viewer not working ([issue #1189](https://github.com/gtsteffaniak/filebrowser/issues/1189))
  - `Path not found` when trying to share a file or folder inside a sub-directory ([issue #1139](https://github.com/gtsteffaniak/filebrowser/issues/1139))
  - Files containing `+` in shares ([issue #1089](https://github.com/gtsteffaniak/filebrowser/issues/1089))
@@ -1263,7 +1342,7 @@ Consider choosing FileBrowser Quantum on the [latest selfh.st survey](https://se
 
 ---
 
-## v0.8.4-beta
+## [v0.8.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.4-beta)
 
 **New Features**:
  - New media player styles and features:
@@ -1309,7 +1388,7 @@ New onlyoffice debugger can be enabled going to `settings` > `profile settings` 
 
 ---
 
-## v0.8.3-beta
+## [v0.8.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.3-beta)
 
 **BugFixes**:
  - Fixed search bar style bug in mobile ([issue #1147](https://github.com/gtsteffaniak/filebrowser/issues/1147))
@@ -1318,7 +1397,7 @@ New onlyoffice debugger can be enabled going to `settings` > `profile settings` 
 
 ---
 
-## v0.8.2-beta
+## [v0.8.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.2-beta)
 
 **New Features**:
  - Added `source.config.denyByDefault` configuration to enable a `deny-by-default` access rule. A source enabled with this will deny access unless an `allow` rule was specifically created. (Similar to creating a root-level `denyAll` rule).
@@ -1345,7 +1424,7 @@ New onlyoffice debugger can be enabled going to `settings` > `profile settings` 
 
 ---
 
-## v0.8.1-beta
+## [v0.8.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.1-beta)
 
  **New Features**:
  - API for generate download link (see swagger) ([issue #1007](https://github.com/gtsteffaniak/filebrowser/issues/1007))
@@ -1374,7 +1453,7 @@ New onlyoffice debugger can be enabled going to `settings` > `profile settings` 
 
 ---
 
-## v0.8.0-beta
+## [v0.8.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.0-beta)
 
 This is a major release, new features and changes could introduce breaking behavior. Here are the known potentially breaking changes:
 
@@ -1408,7 +1487,7 @@ This is a major release, new features and changes could introduce breaking behav
 
 ---
 
-## v0.7.18-beta
+## [v0.7.18-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.18-beta)
 
 **Notes**:
  - Desktop context menu "select multiple" enabled as optional user default ([issue #1000](https://github.com/gtsteffaniak/filebrowser/issues/1000))
@@ -1426,7 +1505,7 @@ This is a major release, new features and changes could introduce breaking behav
 
 ---
 
-## v0.7.17-beta
+## [v0.7.17-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.17-beta)
 
 See an example of custom css styling that uses the `reduce-rounded-corners.css` by default and allows users to choose other themes. You can add your own themes as well that users can choose from in profile settings:
 
@@ -1467,7 +1546,7 @@ frontend:
 
 ---
 
-## v0.7.16-beta
+## [v0.7.16-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.16-beta)
 
 **Notes**:
  - More server logging for uploads when debug logging is enabled.
@@ -1484,7 +1563,7 @@ frontend:
 
 ---
 
-## v0.7.15-beta
+## [v0.7.15-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.15-beta)
 
 **New Features**:
  - Added userDefault `disableViewingExt`. The new properties apply to all files, not just office.
@@ -1507,7 +1586,7 @@ frontend:
 
 ---
 
-## v0.7.14-beta
+## [v0.7.14-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.14-beta)
 
 **Notes**:
  - Updated translations ([issue #957](https://github.com/gtsteffaniak/filebrowser/issues/957))
@@ -1524,7 +1603,7 @@ frontend:
 
 ---
 
-## v0.7.13-beta
+## [v0.7.13-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.13-beta)
 
 {{% alert context="info" %}}
 This release includes some highly requested features for uploading. There is now a full upload prompt which displays and tracks the progress of each uploaded item. There's also some big refactoring to make path issues much less likely to happen, so it should be much more consistent and reliable.
@@ -1571,7 +1650,7 @@ userDefaults:
 
 ---
 
-## v0.7.12-beta
+## [v0.7.12-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.12-beta)
 
 Happy 4th of July!
 
@@ -1604,7 +1683,7 @@ The most noteworthy change is that no sources will be automatically enabled for 
 
 ---
 
-## v0.7.11-beta
+## [v0.7.11-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.11-beta)
 
 **Breaking Changes**:
   - `auth.resetAdminOnStart` has been removed. Instead, if you have `auth.adminPassword` set it will always be reset on startup. If you want to change your default admin password afterwards, make sure to unset `auth.adminPassword` so it doesn't get reset on startup.
@@ -1633,7 +1712,7 @@ The most noteworthy change is that no sources will be automatically enabled for 
 
 ---
 
-## v0.7.10-beta
+## [v0.7.10-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.10-beta)
 
 **OIDC change**: if you specify `oidc.userIdentifier: "username"`, originally this would map to `preferred_username` but now it maps to `username` explicitly. To maintain the same behavior update your config to `userIdentifier: "preferred_username"`. This was updated to allow for `username` to work as [some might need](https://github.com/gtsteffaniak/filebrowser/pull/789).
 
@@ -1663,7 +1742,7 @@ The most noteworthy change is that no sources will be automatically enabled for 
 
 ---
 
-## v0.7.9-beta
+## [v0.7.9-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.9-beta)
 
 **New Features**:
  - Admin users will get a small notification banner for available update in sidebar with link to new release (check happens every 24 hours).
@@ -1695,7 +1774,7 @@ The most noteworthy change is that no sources will be automatically enabled for 
 
 ---
 
-## v0.7.8-beta
+## [v0.7.8-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.8-beta)
 
 {{% alert context="info" %}}
 Note: if using OIDC, please update from `v0.7.7` to resolve `invalid_grant` issue. Also - OIDC no longer creates users automatically by default -- must be enabled.
@@ -1716,7 +1795,7 @@ Note: if using OIDC, please update from `v0.7.7` to resolve `invalid_grant` issu
 
 ---
 
-## v0.7.7-beta
+## [v0.7.7-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.7-beta)
 
 This release cleans up some of the native preview (image preview) feature logic. And adds simple docx and epub viewers as well. Going through all of this, I think I know how I can add full-fledge google doc and microsoft office viewer support (no edit). But, for now "onlyOffice" remains the most comprehensive solution with most compatibility and ability to fully edit. One day, I think I will be able to integrate a minimal license-free server into the docker image. But that's something for another time.
 
@@ -1744,7 +1823,7 @@ Native preview (image preview) support is also available for `linux-arm64` and `
 
 ---
 
-## v0.7.6-beta
+## [v0.7.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.6-beta)
 
 **New Features**:
  - Native document preview generation enabled for certain document types on the regular docker image (no office integration needed)
@@ -1777,7 +1856,7 @@ Native preview (image preview) support is also available for `linux-arm64` and `
 
 ---
 
-## v0.7.5-beta
+## [v0.7.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.5-beta)
 
  **New Features**
  - New `./filebrowser.exe setup` command for creating a config.yaml on first run. ([issue #675](https://github.com/gtsteffaniak/filebrowser/issues/675))
@@ -1810,7 +1889,7 @@ Native preview (image preview) support is also available for `linux-arm64` and `
 
 ---
 
-## v0.7.4-beta
+## [v0.7.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.4-beta)
 
 **Notes**:
  - Updated German translation. ([pr #644](https://github.com/gtsteffaniak/filebrowser/pull/644))
@@ -1823,7 +1902,7 @@ Native preview (image preview) support is also available for `linux-arm64` and `
 
 ---
 
-## v0.7.3-beta
+## [v0.7.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.3-beta)
 
 Note: OIDC changes require config update.
 
@@ -1854,7 +1933,7 @@ Note: OIDC changes require config update.
 
 ---
 
-## v0.7.2-beta
+## [v0.7.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.2-beta)
 
 The `media` tags introduced in 0.7.0 have been removed -- all docker images have media enabled now.
 
@@ -1871,7 +1950,7 @@ The `media` tags introduced in 0.7.0 have been removed -- all docker images have
 
 ---
 
-## v0.7.1-beta
+## [v0.7.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.1-beta)
 
 The `media` tags introduced in v0.7.0 have been removed -- all docker images have media enabled now.
 
@@ -1897,7 +1976,7 @@ The `media` tags introduced in v0.7.0 have been removed -- all docker images hav
 
 ---
 
-## v0.7.0-beta
+## [v0.7.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.7.0-beta)
 
 This release includes freeBSD binaries and new `media` docker image tags (see [ghcr](https://github.com/gtsteffaniak/filebrowser/pkgs/container/filebrowser) and [dockerhub](https://hub.docker.com/r/gtstef/filebrowser/tags))! The media versions include the video integration already configured -- but currently do not support armv7. To configure the video integration on other releases (such as the binary download from this page), you will need ffmpeg installed and the bin directory configured as part of the integration.
 
@@ -1959,7 +2038,7 @@ This is a major beta release, it should automatically create a backup of your da
 
 ---
 
-## v0.6.8-beta
+## [v0.6.8-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.6.8-beta)
 
 {{% alert context="warning" %}}
 Hey everyone -- most of your existing configs will not work without adjustments for this release! Keep an eye on your service as you try to start it, it will tell you what needs updating. This one-time pain should make things much more helpful in the future. Thanks for understanding -- I didn't want to group this change in with v0.7.0 (which will get released in approx 2 weeks) since it includes many new features, I wanted to get configs cleaned up beforehand.
@@ -1985,7 +2064,7 @@ Hey everyone -- most of your existing configs will not work without adjustments 
 
 ---
 
-## v0.6.7-beta
+## [v0.6.7-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.6.7-beta)
 
  **Notes**:
  - Added full tests for single source example.
@@ -2002,7 +2081,7 @@ Hey everyone -- most of your existing configs will not work without adjustments 
 
 ---
 
-## v0.6.6-beta
+## [v0.6.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.6.6-beta)
 
 {{% alert context="warning" %}}
 A temp directory is now required for archive creation. By default, a `tmp` dir is created -- can be adjusted with `server.cacheDir`. If you are using an atypical user or running in an atypical environment, make sure the user that executes binary has access to create a `tmp` directory -- or mount/create a temp directory beforehand with the correct permissions.
@@ -2029,7 +2108,7 @@ A temp directory is now required for archive creation. By default, a `tmp` dir i
 
 ---
 
-## v0.6.5-beta
+## [v0.6.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.6.5-beta)
 
  **Notes**:
  - Added more share and download tests
@@ -2042,7 +2121,7 @@ A temp directory is now required for archive creation. By default, a `tmp` dir i
 
 ---
 
-## v0.6.4-beta
+## [v0.6.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.6.4-beta)
 
  **BugFixes**:
  - Fix preview arow ([issue #457](https://github.com/gtsteffaniak/filebrowser/issues/457))
@@ -2053,7 +2132,7 @@ A temp directory is now required for archive creation. By default, a `tmp` dir i
 
 ---
 
-## v0.6.3-beta
+## [v0.6.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.6.3-beta)
 
  **Notes**:
  - Windows directories get better naming, root directories like "D:\ get named "D", otherwise base filepath is the name when unselected "D:\path\to\folder" gets named "folder" (just like linux).
@@ -2069,7 +2148,7 @@ A temp directory is now required for archive creation. By default, a `tmp` dir i
 
 ---
 
-## v0.6.2-beta
+## [v0.6.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.6.2-beta)
 
  **Notes**:
  - Added playwright tests for bugfixes for permantent fix for stability (except onlyoffice since it requires integrations).
@@ -2087,7 +2166,7 @@ A temp directory is now required for archive creation. By default, a `tmp` dir i
 
 ---
 
-## v0.6.1-beta
+## [v0.6.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.6.1-beta)
 
  **New Feature**:
  - Download size information is added, including when downloding multiple files in zip/tar.gz. The browser will see the XMB of X GB and will show browser native progress.
@@ -2103,7 +2182,7 @@ A temp directory is now required for archive creation. By default, a `tmp` dir i
 
 ---
 
-## v0.6.0-beta
+## [v0.6.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.6.0-beta)
 
 {{% alert context="warning" %}}
 This release includes several config changes that could cause issues. Please backup your database file before upgrading.
@@ -2145,10 +2224,10 @@ This is a significant step towards a stable release. There shouldn't be any majo
 
 ---
 
-## v0.5.4-beta
+## [v0.5.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.5.4-beta)
 
  **BugFixes**:
-  - default scope share issue. @theryecatcher ([pr #387](https://github.com/gtsteffaniak/filebrowser/pull/387))
+  - default scope share issue. [@theryecatcher](https://github.com/theryecatcher) ([pr #387](https://github.com/gtsteffaniak/filebrowser/pull/387))
   - drag and drop on empty folders ([issue #361](https://github.com/gtsteffaniak/filebrowser/issues/361))
   - preview navigation issue ([issue #372](https://github.com/gtsteffaniak/filebrowser/issues/372))
   - auth proxy password length error ([issue #375](https://github.com/gtsteffaniak/filebrowser/issues/375))
@@ -2157,7 +2236,7 @@ This is a significant step towards a stable release. There shouldn't be any majo
 
 ---
 
-## v0.5.3-beta
+## [v0.5.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.5.3-beta)
 
  **New Features**:
   - onlyoffice disable filetypes for user specified file types. ([issue #346](https://github.com/gtsteffaniak/filebrowser/issues/346))
@@ -2182,7 +2261,7 @@ This is a significant step towards a stable release. There shouldn't be any majo
 
 ---
 
-## v0.5.2-beta
+## [v0.5.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.5.2-beta)
 
  **New Features**:
   - Markdown file preview ([issue #343](https://github.com/gtsteffaniak/filebrowser/issues/343))
@@ -2202,7 +2281,7 @@ This is a significant step towards a stable release. There shouldn't be any majo
 
 ---
 
-## v0.5.1-beta
+## [v0.5.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.5.1-beta)
 
 {{% alert context="info" %}}
 Note: I changed the config for password auth again... It was a mistake just to make it a boolean, so now you can provide options, going forward this allows for more.
@@ -2219,7 +2298,7 @@ Note: I changed the config for password auth again... It was a mistake just to m
 
 ---
 
-## v0.5.0-beta
+## [v0.5.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.5.0-beta)
 
 {{% alert context="info" %}}
 Note: This Beta release includes a configuration change: `auth.method` is now deprecated. This is done to allow multiple login methods at once. Auth methods are specified via `auth.methods` instead. See example on the wiki. If you don't update your config, you'll see a warning and it will default to password method.
@@ -2243,7 +2322,7 @@ Note: This Beta release includes a configuration change: `auth.method` is now de
 
 ---
 
-## v0.4.2-beta
+## [v0.4.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.4.2-beta)
 
   **New Features**:
   - Hidden files changes
@@ -2263,7 +2342,7 @@ Note: This Beta release includes a configuration change: `auth.method` is now de
 
 ---
 
-## v0.4.1-beta
+## [v0.4.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.4.1-beta)
 
   **New Features**:
   - Right-click actions are available on search. ([issue #273](https://github.com/gtsteffaniak/filebrowser/issues/273))
@@ -2284,7 +2363,7 @@ Note: This Beta release includes a configuration change: `auth.method` is now de
 
 ---
 
-## v0.4.0-beta
+## [v0.4.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.4.0-beta)
 
   **New Features**:
   - Better logging ([issue #288](https://github.com/gtsteffaniak/filebrowser/issues/288))
@@ -2301,7 +2380,7 @@ Note: This Beta release includes a configuration change: `auth.method` is now de
 
 ---
 
-## v0.3.7-beta
+## [v0.3.7-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.3.7-beta)
 
   **Notes**:
   - Adding windows builds back to automated process... will replace manually if they throw malicious defender warnings.
@@ -2316,7 +2395,7 @@ Note: This Beta release includes a configuration change: `auth.method` is now de
 
 ---
 
-## v0.3.6-beta
+## [v0.3.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.3.6-beta)
 
   **New Features**:
   - Adds "externalUrl" server config ([issue #272](https://github.com/gtsteffaniak/filebrowser/issues/272))
@@ -2336,7 +2415,7 @@ Note: This Beta release includes a configuration change: `auth.method` is now de
 
 ---
 
-## v0.3.5-beta
+## [v0.3.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.3.5)
 
   **New Features**:
   - More indexing configuration options possible. However consider waiting on using this feature, because I will soon have a full onboarding experience in the UI to manage sources instead.
@@ -2379,7 +2458,7 @@ Example user settings page:
 
 ---
 
-## v0.3.4-beta
+## [v0.3.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.3.4)
 
   **Bugfixes**:
   - Safari right-click actions.
@@ -2390,7 +2469,7 @@ Example user settings page:
 
 ---
 
-## v0.3.3-beta
+## [v0.3.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.3.3)
 
   **New Features**
   - Navigating remembers your previous scroll position when opening items and then navigating backwards.
@@ -2413,7 +2492,7 @@ Example user settings page:
 
 ---
 
-## v0.3.2-beta
+## [v0.3.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.3.2)
 
   **New Features**
   - Mobile search has the same features as desktop.
@@ -2432,7 +2511,7 @@ Example user settings page:
 
 ---
 
-## v0.3.1-beta
+## [v0.3.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.3.1)
 
   **New Features**
   - Adds Smart Indexing by default.
@@ -2454,7 +2533,7 @@ Example user settings page:
 
 ---
 
-## v0.3.0-beta
+## [v0.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.3.0)
 
   This Release focuses on the API and making it more accessible for developers to access functions without the UI.
 
@@ -2473,7 +2552,7 @@ Example user settings page:
 
   **Bugfixes**:
   - Fixed ui bug with shares with password.
-  - Fixed baseurl related bugs [#228](https://github.com/gtsteffaniak/filebrowser/pull/228) Thanks @SimLV
+  - Fixed baseurl related bugs [#228](https://github.com/gtsteffaniak/filebrowser/pull/228) Thanks [@SimLV](https://github.com/SimLV)
   - Fixed empty directory load issue.
   - Fixed image preview cutoff on mobile.
   - Fixed issue introduced in v0.2.10 where new files and folders were not showing up on ui.
@@ -2485,7 +2564,7 @@ Example user settings page:
 
 ---
 
-## v0.2.10-beta
+## [v0.2.10-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.10)
 
   **New Features**:
   - Allows user creation command line arguments ([issue #196](https://github.com/gtsteffaniak/filebrowser/issues/196)).
@@ -2506,7 +2585,7 @@ Example user settings page:
 
 ---
 
-## v0.2.9-beta
+## [v0.2.9-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.9)
 
   This release focused on UI navigation experience. Improving keyboard navigation and adds right click context menu.
 
@@ -2531,7 +2610,7 @@ Example user settings page:
 
 ---
 
-## v0.2.8-beta
+## [v0.2.8-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.8)
 
 <img width="1170" alt="image" src="https://github.com/user-attachments/assets/82004003-befa-4b83-bc7b-2c8fbd920dfe">
 
@@ -2547,7 +2626,7 @@ Example user settings page:
 
 ---
 
-## v0.2.7-beta
+## [v0.2.7-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.7)
 
  - **Change**: New sidebar style and behavior.
  - **Change**: make search view and button behavior more consistent.
@@ -2557,7 +2636,7 @@ Example user settings page:
 
 **Release**: [v0.2.7](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.7).
 
-## v0.2.6-beta
+## [v0.2.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.6)
 
 This change focuses on minimizing and simplifying build process.
 
@@ -2577,13 +2656,13 @@ This change focuses on minimizing and simplifying build process.
 
 ---
 
-## v0.2.5-beta
+## [v0.2.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.5)
 
 - Fix: delete user prompt works using native hovers.
 
 ---
 
-## v0.2.4-beta
+## [v0.2.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.4)
 
 - Feature: [create-folder-feature](https://github.com/gtsteffaniak/filebrowser/pull/105)
 - Feature: [playable shared video](https://github.com/filebrowser/filebrowser/issues/2537)
@@ -2599,7 +2678,7 @@ This change focuses on minimizing and simplifying build process.
 
 ---
 
-## v0.2.3-beta
+## [v0.2.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.3)
 
 - Feature: token expiration time now configurable
 - FIX: Hidden files are still directly accessible ([issue #2698](https://github.com/gtsteffaniak/filebrowser/issues/2698)).
@@ -2607,7 +2686,7 @@ This change focuses on minimizing and simplifying build process.
 
 ---
 
-## v0.2.2-beta
+## [v0.2.2-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.2)
 
 - CHG: **Speed:** (0m57s) - Decreased by 78% compared to the previous release.
 - CHG: **Memory Usage:** (41MB) - Reduced by 45% compared to the previous release.
@@ -2616,7 +2695,7 @@ This change focuses on minimizing and simplifying build process.
 
 ---
 
-## v0.2.1-beta
+## [v0.2.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.1)
 
 - Addressed [issue #29](https://github.com/gtsteffaniak/filebrowser/issues/29) - Rules can now be configured and read from the configuration YAML.
 - Addressed [issue #28](https://github.com/gtsteffaniak/filebrowser/issues/28) - Allows disabling settings per user.
@@ -2631,7 +2710,7 @@ This change focuses on minimizing and simplifying build process.
 
 ---
 
-## v0.2.0-beta
+## [v0.2.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.2.0)
 
 - **Improved UI:**
   - Enhanced the cohesive and unified look.
@@ -2646,7 +2725,7 @@ This change focuses on minimizing and simplifying build process.
 
 ---
 
-## v0.1.4-beta
+## [v0.1.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.1.4)
 
 - **Various UI fixes:**
   - Reintroduced the download button to the toolbar.
@@ -2663,7 +2742,7 @@ This change focuses on minimizing and simplifying build process.
 
 ---
 
-## v0.1.3-beta
+## v0.1.3
 
 - Enhanced styling with improved colors, transparency, and blur effects.
 - Hid the sidebar on desktop views.
@@ -2675,7 +2754,7 @@ This change focuses on minimizing and simplifying build process.
 
 ---
 
-## v0.1.2-beta
+## v0.1.2
 
 - Updated the UI to better utilize search features:
   - Added more filter options.
@@ -2688,7 +2767,7 @@ This change focuses on minimizing and simplifying build process.
 
 ---
 
-## v0.1.1-beta
+## v0.1.1
 
 - Improved search functionality with indexing.
 - **Index Changes (Baseline Results):**
@@ -2697,7 +2776,7 @@ This change focuses on minimizing and simplifying build process.
 
 ---
 
-## v0.1.0-beta
+## v0.1.0
 
 - No changes from the original.
 

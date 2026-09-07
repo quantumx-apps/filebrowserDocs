@@ -231,6 +231,12 @@ update-link-cache:
 	@bash scripts/check-external-links.sh --refresh-cache
 	@echo "   Commit .external-links to share with team"
 
+update-changelog-link-format:
+	npm run changelog:link-format
+
+check-changelog-link-format:
+	npm run changelog:link-format:check
+
 # 9. Validate image references
 check-images:
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -411,6 +417,10 @@ help:
 	@echo "  make doclinks-convert - Convert relative links to doclink shortcodes"
 	@echo "  make doclinks-check   - Check doclinks without modifying"
 	@echo "  make doclinks-revert  - Revert doclinks to relative links"
+	@echo ""
+	@echo "Changelog:"
+	@echo "  make update-changelog-link-format  - Converts references like '(#1234)' to GitHub issues/prs links"
+	@echo "  make check-changelog-link-format   - Checks without modifying anything"
 	@echo ""
 	@echo "Front matter:"
 	@echo "  make update-publish-dates - Set date/lastmod from git history"

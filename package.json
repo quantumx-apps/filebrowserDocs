@@ -11,7 +11,9 @@
     "doclinks:convert": "node ./scripts/doclinks.js",
     "doclinks:check": "node ./scripts/doclinks.js --check",
     "doclinks:validate-paths": "node ./scripts/check-doclink-paths.js",
-    "doclinks:revert": "node ./scripts/doclinks.js --mode=revert"
+    "doclinks:revert": "node ./scripts/doclinks.js --mode=revert",
+    "changelog:link-format": "node ./scripts/changelog-link-format.js",
+    "changelog:link-format:check": "node ./scripts/changelog-link-format.js --check"
   },
   "dependencies": {
     "deepl-node": "^1.12.0",
