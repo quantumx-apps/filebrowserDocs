@@ -211,7 +211,7 @@ Breaking change: removed deprecated `source.config.disableIndexing`, see {{< doc
 ## [v1.3.1-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.1-stable)
 
 {{% alert context="danger" %}}
-A security issue was introduced in this release which causes unauthenticated users to access source information on shares. A fix is being rolled out for `[v1.3.2-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.2-stable)`
+A security issue was introduced in this release which causes unauthenticated users to access source information on shares. A fix is being rolled out for [v1.3.2-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.2-stable)
 {{% /alert %}}
 
 **Security**:

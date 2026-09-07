@@ -51,7 +51,7 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 **Bugfixes**:
  - OIDC: `groupsClaim` value is always included in requested scopes and falls back to the UserInfo endpoint when the ID token omits the groups claim.
- - Windows: fix backslash duplication in navigation URLs, folder sizes showing 4 KB, and download/preview failures (#2815) (#2816)
+ - Windows: fix backslash duplication in navigation URLs, folder sizes showing 4 KB, and download/preview failures ([issue #2815](https://github.com/gtsteffaniak/filebrowser/issues/2815)) ([issue #2816](https://github.com/gtsteffaniak/filebrowser/issues/2816))
  - Wrong extension in the 'new database was created popup ([issue #2817](https://github.com/gtsteffaniak/filebrowser/issues/2817)) ([pr #2824](https://github.com/gtsteffaniak/filebrowser/pull/2824))
  - External subtitles fail to load on public video shares due to authenticated subtitle endpoint ([issue #2822](https://github.com/gtsteffaniak/filebrowser/issues/2822)) ([pr #2827](https://github.com/gtsteffaniak/filebrowser/pull/2827))
  - OnlyOffice is inaccessible on password-protected shares ([issue #2811](https://github.com/gtsteffaniak/filebrowser/issues/2811))
@@ -530,7 +530,7 @@ A security issue was introduced in this release which causes unauthenticated use
  - Chunked download stops after first chunk, add message explaining ([issue #2074](https://github.com/gtsteffaniak/filebrowser/issues/2074)).
  - Esc to Cancel and Enter to confirm popup ([issue #2079](https://github.com/gtsteffaniak/filebrowser/issues/2079)).
  - Language-tagged subtitle files not detected for videos ([issue #2199](https://github.com/gtsteffaniak/filebrowser/issues/2199)).
- - Unable to use proxy auth since `[v1.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-beta)` ([issue #2173](https://github.com/gtsteffaniak/filebrowser/issues/2173)).
+ - Unable to use proxy auth since [v1.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-beta) ([issue #2173](https://github.com/gtsteffaniak/filebrowser/issues/2173)).
  - Updating setting on a LDAP user turns the "Login Method" to password. Thus preventing further logins ([issue #2179](https://github.com/gtsteffaniak/filebrowser/issues/2179)).
 
 **Full Changelog**: [v1.3.2-beta...v1.3.3-beta](https://github.com/gtsteffaniak/filebrowser/compare/v1.3.2-beta...v1.3.3-beta) -- **Release**: [v1.3.3-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.3-beta).
@@ -590,7 +590,7 @@ A security issue was introduced in this release which causes unauthenticated use
  - Changed symlink detection logic.
 
 **BugFixes**:
- - `405` response code error on Webdav in `[v1.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-beta)` ([issue #2054](https://github.com/gtsteffaniak/filebrowser/issues/2054)).
+ - `405` response code error on Webdav in [v1.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-beta) ([issue #2054](https://github.com/gtsteffaniak/filebrowser/issues/2054)).
  - Motion Preview setting not saving when changed in profile settings.
  - Context menu on tools not working.
  - E-book thumbanils can't be disabled ([pr #2085](https://github.com/gtsteffaniak/filebrowser/pull/2085)) ([issue #2080](https://github.com/gtsteffaniak/filebrowser/issues/2080)).
@@ -669,7 +669,7 @@ Note: A potentially breaking change for docker users: The default user is now `f
 ## [v1.2.7-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.7-beta)
 
 {{% alert context="info" %}}
-This will be the final update for 1.2.x-beta. Switch to `[v1.2.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.0-stable)` for `v1.2.x` updates or wait for `[v1.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-beta)` which is due soon.
+This will be the final update for 1.2.x-beta. Switch to [v1.2.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.0-stable) for `v1.2.x` updates or wait for [v1.3.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-beta) which is due soon.
 {{% /alert %}}
 
 **BugFixes**:
@@ -963,7 +963,7 @@ Sorry for the delay -- a lot of effort went into this release, specifically abou
 
 **BugFixes**:
  - Added missing `exiftool` to docker image for heic conversion orientation support.
- - `[v1.1.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.0-beta)` - Incorrect naming of 1 file in directory-info ([issue #1621](https://github.com/gtsteffaniak/filebrowser/issues/1621)).
+ - [v1.1.0-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.0-beta) - Incorrect naming of 1 file in directory-info ([issue #1621](https://github.com/gtsteffaniak/filebrowser/issues/1621)).
  - Disable only office viewing settings not applying.
  - OnlyOffice integration does not work behind proxy authentication ([issue #1422](https://github.com/gtsteffaniak/filebrowser/issues/1422)).
  - Newly created users "add on" to defined scope of previous user ([issue #1628](https://github.com/gtsteffaniak/filebrowser/issues/1628)) ([issue #1518](https://github.com/gtsteffaniak/filebrowser/issues/1518)).
@@ -1183,7 +1183,7 @@ If you have indexing rules -- such as [maxWatchers](https://github.com/gtsteffan
  - Moving between items using next/previous will reset the req and show a responsive loading spinner -- fixing several state related issues.
  - Access management: child folders accessible stopped showing up ([issue #1332](https://github.com/gtsteffaniak/filebrowser/issues/1332))
  - Make source inaccessible if directory does not exist rather than exiting on start ([issue #1264](https://github.com/gtsteffaniak/filebrowser/issues/1264))
- - HTTP Proxy environment gets ignored since version `[v0.8.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.6-beta)` ([issue #1324](https://github.com/gtsteffaniak/filebrowser/issues/1324))
+ - HTTP Proxy environment gets ignored since version [v0.8.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.6-beta) ([issue #1324](https://github.com/gtsteffaniak/filebrowser/issues/1324))
  - Album artwork preview not showing on shares.
  - Fixed OIDC logout causing a loop ([issue #995](https://github.com/gtsteffaniak/filebrowser/issues/995)) ([discussion #1361](https://github.com/gtsteffaniak/filebrowser/discussions/1361))
  - Fixed checksum failure ([issue #1372](https://github.com/gtsteffaniak/filebrowser/issues/1372))
@@ -1320,14 +1320,14 @@ Consider choosing FileBrowser Quantum on the [latest selfh.st survey](https://se
  **Notes**:
  - Added more tests to ensure new features work in future.
  - Caching for preview images is md5 based. Moved, renamed, or duplicate images don't get re-generated. Same album artwork shares cache.
- - Hide `[@eaDir](https://github.com/eaDir)` folder by default ([issue #1212](https://github.com/gtsteffaniak/filebrowser/issues/1212))
+ - Hide `@eaDir` folder by default ([issue #1212](https://github.com/gtsteffaniak/filebrowser/issues/1212))
  - Defaults to hide "[@eadir](https://github.com/eadir)" folders (common for synology) ([issue #1212](https://github.com/gtsteffaniak/filebrowser/issues/1212))
  - After move/copy, ability to move to the destination folder ([issue #999](https://github.com/gtsteffaniak/filebrowser/issues/999))
 
  **BugFixes**:
  - Access Management: issue with access settings ([issue #1195](https://github.com/gtsteffaniak/filebrowser/issues/1195))
  - Fix shutdown panic related to sse connection.
- - Custom theming not working in `[v0.8.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.4-beta)` ([issue #1204](https://github.com/gtsteffaniak/filebrowser/issues/1204))
+ - Custom theming not working in [v0.8.4-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v0.8.4-beta) ([issue #1204](https://github.com/gtsteffaniak/filebrowser/issues/1204))
  - Config Viewer not working ([issue #1189](https://github.com/gtsteffaniak/filebrowser/issues/1189))
  - `Path not found` when trying to share a file or folder inside a sub-directory ([issue #1139](https://github.com/gtsteffaniak/filebrowser/issues/1139))
  - Files containing `+` in shares ([issue #1089](https://github.com/gtsteffaniak/filebrowser/issues/1089))
