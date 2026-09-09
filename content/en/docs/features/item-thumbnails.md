@@ -52,17 +52,13 @@ If the file is a video and "enable motion preview for videos" is enabled, it wil
 
 <img src="/images/features/item-thumbnails/popup-preview-example.gif">
 
-## Viewing HEIC/HEIF files
+## HEIC/HEIF thumbnails
 
-Safari is the only browser that can nativly support viewing HEIC images (typically from iphones). However, when the media integration is present, its possible to enable non-safari browsers to view the images through conversion.
+Safari displays HEIC images natively; other browsers need server-side conversion via media integration. See {{< doclink path="features/previewing-files/#heic-heif-apple-photos" text="Previewing files — HEIC/HEIF" />}} for full viewer support.
 
-When media integration is configured, there's a possiblity to preview more image types. Currently, only heic images are supported [via conversion](https://filebrowserquantum.com/en/docs/integrations/media/configuration/#hl-2-5). It requires enabling `integrations.media.convert.imagePreview.heic: true`.
+When media integration is configured, HEIC images can be converted for thumbnails and previews on non-Safari browsers. Enable `integrations.media.convert.imagePreview.heic: true` — see {{< doclink path="integrations/media/configuration/#format-support" text="Media integration — Format support" />}} for setup.
 
-{{% alert context="info" %}}
-If you are not using docker, you'll also want to install [exiftool](https://exiftool.org/) for proper image rotation support
-{{% /alert %}}
-
-This feature is disabled by default because it does take a bit of extra work on the server.
+This feature is disabled by default because each image requires extra server-side processing.
 
 ## Folder Previews
 

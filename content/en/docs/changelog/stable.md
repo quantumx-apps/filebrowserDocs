@@ -562,7 +562,7 @@ This update brings all changes present in {{< doclink path="changelog/beta/#v114
  - `[docker]` Upgraded ffmpeg 8.0 to 8.0.1
 
 **BugFixes**:
- - Added missing exiftool to docker image for heic conversion orientation support.
+ - Fixed HEIC conversion orientation support in the Docker image.
  - Uploading a file will silently overwrite any existing file with the same name ([issue #1564](https://github.com/gtsteffaniak/filebrowser/issues/1564)).
  - Unable to download folder as ZIP ([issue #1604](https://github.com/gtsteffaniak/filebrowser/issues/1604))
  - Issues downloading and file actions on password protected share.

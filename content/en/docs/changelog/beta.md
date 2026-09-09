@@ -60,7 +60,7 @@ This version is the most significant change to date. It **requires** both a data
  - Access allow/deny rules control path visibility; they do **not** replace create/modify/delete scope permissions.
  - `user.id` is a backend property; frontend APIs use **username**. Swagger updated.
  - Removed legacy properties from API responses and generated config output.
- - Removed exiftool as an optional helper — always built with supported libraries (64-bit OS required).
+ - Image metadata and rotation handling always built with supported libraries (64-bit OS required).
  - Default browser media player option removed — always uses themed plyr.
  - Swipe gestures to dismiss notifications ([#2672](https://github.com/gtsteffaniak/filebrowser/pull/2672)).
  - Refreshed dropdown and input styles.
@@ -883,7 +883,7 @@ Sorry for the delay -- a lot of effort went into this release, specifically abou
  - Duplicate file detector has stricter partial checksum match ([issue #1617](https://github.com/gtsteffaniak/filebrowser/issues/1617)).
 
 **BugFixes**:
- - Added missing `exiftool` to docker image for heic conversion orientation support.
+ - Fixed HEIC conversion orientation support in the Docker image.
  - `v1.1.0-beta` - Incorrect naming of 1 file in directory-info ([issue #1621](https://github.com/gtsteffaniak/filebrowser/issues/1621)).
  - Disable only office viewing settings not applying.
  - OnlyOffice integration does not work behind proxy authentication ([issue #1422](https://github.com/gtsteffaniak/filebrowser/issues/1422)).
