@@ -19,6 +19,7 @@ on:
           - 'check-images'
           - 'check-external-links'
           - 'check-no-todos'
+          - 'check-changelog-link-format'
           - 'build-strict'
           - 'hugo-audit'
         default: 'check-quick'

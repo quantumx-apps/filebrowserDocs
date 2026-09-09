@@ -231,6 +231,12 @@ update-link-cache:
 	@bash scripts/check-external-links.sh --refresh-cache
 	@echo "   Commit .external-links to share with team"
 
+update-changelog-link-format:
+	npm run changelog:link-format
+
+check-changelog-link-format:
+	npm run changelog:link-format:check
+
 # 9. Validate image references
 check-images:
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -307,7 +313,7 @@ check-no-todos:
 	@echo ""
 
 # Run all validation checks
-check-all: check-frontmatter check-frontmatter-fields build-strict hugo-audit check-doclinks check-internal-links check-images check-external-links check-no-todos
+check-all: check-frontmatter check-frontmatter-fields build-strict hugo-audit check-doclinks check-internal-links check-images check-external-links check-no-todos check-changelog-link-format
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	@echo "✅ ALL VALIDATION CHECKS PASSED!"
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -322,9 +328,10 @@ check-all: check-frontmatter check-frontmatter-fields build-strict hugo-audit ch
 	@echo "✓ Image references validated"
 	@echo "✓ External links validated"
 	@echo "✓ No TODO/FIXME markers"
+	@echo "✓ Changelog links"
 
 # Quick validation (skip slow external link checks)
-check-quick: check-frontmatter check-frontmatter-fields build-strict hugo-audit check-doclinks check-images
+check-quick: check-frontmatter check-frontmatter-fields build-strict hugo-audit check-doclinks check-images check-changelog-link-format
 	@echo "✅ Quick validation passed!"
 
 # Install all dependencies
@@ -391,6 +398,7 @@ help:
 	@echo "  make check-quick            - Run validation without external link checks"
 	@echo "  make check-frontmatter      - Validate YAML front matter syntax"
 	@echo "  make check-frontmatter-fields - Check required front matter fields"
+	@echo "  make check-changelog-link-format - Validates changelog issue/pr links"
 	@echo "  make check-translations     - Validate translations are in sync"
 	@echo "  make check-doclinks         - Validate doclinks"
 	@echo "  make check-internal-links   - Check for broken internal links"
@@ -411,6 +419,10 @@ help:
 	@echo "  make doclinks-convert - Convert relative links to doclink shortcodes"
 	@echo "  make doclinks-check   - Check doclinks without modifying"
 	@echo "  make doclinks-revert  - Revert doclinks to relative links"
+	@echo ""
+	@echo "Changelog:"
+	@echo "  make update-changelog-link-format  - Converts references like '(#1234)' to GitHub issues/prs links"
+	@echo "  make check-changelog-link-format   - Checks without modifying anything"
 	@echo ""
 	@echo "Front matter:"
 	@echo "  make update-publish-dates - Set date/lastmod from git history"

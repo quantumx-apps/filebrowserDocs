@@ -12,7 +12,79 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 ---
 
-## v1.5.0-stable
+## [v1.5.5-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.5-stable)
+
+- Fixed onlyoffice failing to load due to strict csp security requirement introduced in v1.5.4
+
+**Full Changelog**: [v1.5.4-stable...v1.5.5-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.4-stable...v1.5.5-stable)
+
+---
+
+## [v1.5.4-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.4-stable)
+
+**Security**:
+ - [High] Stored XSS via HTML preview: `<script>` is no longer preserved in srcdoc, the preview iframe is opaque-origin (no `allow-same-origin`), the session cookie is HttpOnly, and the SPA shell sends a `script-src` CSP inherited by srcdoc frames (GHSA-vvm6-jwrf-hgmg) -- thanks [@qrn12580](https://github.com/qrn12580)
+
+**New Features**:
+ - Added option to globally disable the "Install App" message via `frontend.disablePWAInstall`
+
+**Notes**:
+ - [docker] upgraded ffmpeg version 8.1.2 to 9.0.1
+
+**BugFixes**:
+ - "install app" message reappears after being cleared on device.
+ - External subtitles fail to load on public video shares due to authenticated subtitle endpoint ([issue #2822](https://github.com/gtsteffaniak/filebrowser/issues/2822)) ([pr #2827](https://github.com/gtsteffaniak/filebrowser/pull/2827))
+ - Restored upload chunk size `0` to disable chunking as documented ([issue #2202](https://github.com/gtsteffaniak/filebrowser/issues/2202)); workaround for iOS 26 multi-chunk upload stalls (issue [#2734](https://github.com/gtsteffaniak/filebrowser/issues/2734)).
+
+**Full Changelog**: [v1.5.3-stable...v1.5.4-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.3-stable...v1.5.4-stable)
+
+---
+
+## [v1.5.3-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.3-stable)
+
+**BugFixes**:
+ - windows backslash inserted into directory URLs causing malformed paths and path escapes from parent ([issue #2815](https://github.com/gtsteffaniak/filebrowser/issues/2815)) ([issue #2816](https://github.com/gtsteffaniak/filebrowser/issues/2816))
+ - root download of a shared file/folder returns HTTP 500 ([issue #2807](https://github.com/gtsteffaniak/filebrowser/issues/2807)) ([issue #2810](https://github.com/gtsteffaniak/filebrowser/issues/2810)) ([issue #2821](https://github.com/gtsteffaniak/filebrowser/issues/2821)) ([issue #2818](https://github.com/gtsteffaniak/filebrowser/issues/2818))
+ - OnlyOffice is inaccessible if share has optional password ([issue #2811](https://github.com/gtsteffaniak/filebrowser/issues/2811))
+
+**Full Changelog**: [v1.5.2-stable...v1.5.3-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.2-stable...v1.5.3-stable)
+
+---
+
+## [v1.5.2-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.2-stable)
+
+**Security**:
+ - [High] Symlink following on read paths no longer escapes source or user/share scope (GHSA-mgqf-5mf5-prfj) -- thanks [@je-lv](https://github.com/je-lv) [@KasperBuilds](https://github.com/KasperBuilds)
+ - [High] Share create/update could set delete/modify/create flags beyond the owner's permissions; POST /api/share with hash could update another user's share (GHSA-x79q-5hqm-x839) -- thanks [@pant0m](https://github.com/pant0m)
+ - [High] PATCH /api/share could re-point a share outside the owner's scope (GHSA-wfjp-qhvc-69wp) -- thanks [@maximeborges](https://github.com/maximeborges)
+ - [High] Public upload ACL check used scope-stripped path, bypassing per-folder DENY rules (GHSA-qv53-4557-m65h) -- thanks [@hypnguyen1209](https://github.com/hypnguyen1209)
+ - [Moderate] Absolute paths in API path/file parameters could bypass user scope and read files outside the source mount (GHSA-rqqq-wv83-rp74) -- thanks [@Wei-Leo](https://github.com/Wei-Leo)
+ - [Moderate] Authenticated upload and pause endpoints checked access rules on scope-relative paths, bypassing per-folder DENY rules (GHSA-cw65-p35p-633w) -- thanks [@5ud0er](https://github.com/5ud0er)
+ - [Moderate] Logout did not invalidate session JWTs with equivalent Base64URL spellings (GHSA-8m35-wcjh-95q7) -- thanks [@corbanvilla](https://github.com/corbanvilla) [@soh3e](https://github.com/soh3e) [@dderpym](https://github.com/dderpym) (This vulnerability was discovered as part of a U.C. Berkeley security research project by: Corban Villa, Sohee Kim, and Austin Chu)
+ - [Moderate] Stored XSS via unsanitized DOCX hyperlink in DocViewer (GHSA-9wm6-jcjh-3m8c) -- thanks [@karen93shieh](https://github.com/karen93shieh) [@je-lv](https://github.com/je-lv) [@EclipsSec](https://github.com/EclipsSec)
+ - [Moderate] Revoked JWTs could still authenticate on public-share and withOrWithoutUser routes until natural expiry, bypassing logout and Api-permission revocation on that surface (GHSA-4wmj-rq3c-m65v) -- thanks [@hypnguyen1209](https://github.com/hypnguyen1209)
+
+**Full Changelog**: [v1.5.1-stable...v1.5.2-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.1-stable...v1.5.2-stable)
+
+---
+
+## [v1.5.1-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.1-stable)
+
+**Notes**:
+ - PWA installation name now capped at 30 characters instead of 12 ([issue #2699](https://github.com/gtsteffaniak/filebrowser/issues/2699))
+
+**BugFixes**:
+ - Fixed forward slash blocked in text fields when the search shortcut listener intercepts `/` ([issue #2696](https://github.com/gtsteffaniak/filebrowser/issues/2696))
+ - Fixed probe canShare with the real file, not a fixed text/plain stand-in ([pr #2664](https://github.com/gtsteffaniak/filebrowser/pull/2664))
+ - When the logout button is pressed, the user is redirected to an invalid URL that does not honor baseURL / externalUrl ([issue #2657](https://github.com/gtsteffaniak/filebrowser/issues/2657))
+ - Fixed redirect to login when an authenticated request returns 401 (expired session)
+ - Fixed uncustomized (minimal) API tokens creation needed by webdav clients ([issue #2503](https://github.com/gtsteffaniak/filebrowser/issues/2503))
+
+**Full Changelog**: [v1.5.0-stable...v1.5.1-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.0-stable...v1.5.1-stable) -- **Release:**: [v1.5.1-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.1-stable).
+
+---
+
+## [v1.5.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.0-stable)
 
 This release is based on {{< doclink path="changelog/beta/#v152-beta" text="v1.5.2-beta" />}}!
 
@@ -40,13 +112,13 @@ This release is based on {{< doclink path="changelog/beta/#v152-beta" text="v1.5
  - Fixed token when returning from preview on shares with pass ([pr #2588](https://github.com/gtsteffaniak/filebrowser/pull/2588)) ([issue #2573](https://github.com/gtsteffaniak/filebrowser/issues/2573)).
  - Fixed share undefined url after editing a existent share ([pr #2567](https://github.com/gtsteffaniak/filebrowser/pull/2567)) ([issue #2523](https://github.com/gtsteffaniak/filebrowser/issues/2523)).
  - Fixed PWA manifest `scope` and `id` so install works when the app is served under a base URL.
- - Fixed installation of a public share as a PWA. Now opens the share URL instead of the site root (#2302).
+ - Fixed installation of a public share as a PWA. Now opens the share URL instead of the site root ([#2302](https://github.com/gtsteffaniak/filebrowser/issues/2302)).
 
 **Full Changelog**: [v1.4.0-stable...v1.5.0-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.4.0-stable...v1.5.0-stable) -- **Release:**: [v1.5.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.0-stable).
 
 ---
 
-## v1.4.0-stable
+## [v1.4.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.0-stable)
 
 This release is based on {{< doclink path="changelog/beta/#v144-beta" text="v1.4.4-beta" />}}!
 
@@ -124,7 +196,9 @@ Breaking change: removed deprecated `source.config.disableIndexing`, see {{< doc
 
 **Full Changelog**: [v1.3.3-stable...v1.4.0-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.3.3-stable...v1.4.0-stable) -- **Release:**: [v1.4.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.4.0-stable).
 
-## v1.3.3-stable
+---
+
+## [v1.3.3-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.3-stable)
 
 **Security**:
  - [Critical] Path traversal in public share PATCH allows file ops outside shared directory -- thanks [@fg0x0](https://github.com/fg0x0) and [@Revanth011](https://github.com/Revanth011) for reporting ([GHSA-qqqm-5547-774x](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-qqqm-5547-774x)).
@@ -137,7 +211,7 @@ Breaking change: removed deprecated `source.config.disableIndexing`, see {{< doc
 
 ---
 
-## v1.3.2-stable
+## [v1.3.2-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.2-stable)
 
 **Security**:
  - Fix critical: unauthenticated user can view source info ([GHSA-3jmg-p96m-m328](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-3jmg-p96m-m328)).
@@ -146,10 +220,10 @@ Breaking change: removed deprecated `source.config.disableIndexing`, see {{< doc
 
 ---
 
-## v1.3.1-stable
+## [v1.3.1-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.1-stable)
 
 {{% alert context="danger" %}}
-A security issue was introduced in this release which causes unauthenticated users to access source information on shares. A fix is being rolled out for `v1.3.2-stable`
+A security issue was introduced in this release which causes unauthenticated users to access source information on shares. A fix is being rolled out for [v1.3.2-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.2-stable)
 {{% /alert %}}
 
 **Security**:
@@ -175,7 +249,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.3.0-stable
+## [v1.3.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.3.0-stable)
 
 {{% alert context="danger" %}}
 **Breaking changes:**
@@ -249,7 +323,7 @@ A security issue was introduced in this release which causes unauthenticated use
   - Deprecated `source.config.CreateUserDir`, now it's always `true`. If a user directory doesn't exist it will get created empty.
   - `CTRL`+`Mouse Wheel` shortcut to change listing size. Also for changing font size in editor ([pr #2250](https://github.com/gtsteffaniak/filebrowser/pull/2250)) ([issue #2227](https://github.com/gtsteffaniak/filebrowser/issues/2227)).
   - Docs preview for text and PDF has a 2-second timeout. If it hangs for whatever reason, the maximum time would be 2 seconds ([issue #2105](https://github.com/gtsteffaniak/filebrowser/issues/2105)) ([pr #2114](https://github.com/gtsteffaniak/filebrowser/pull/2114)).
-  - Downloading multiple file streams the archive creation rather than using cacheDir -- thanks @janakoram ([pr #2125](https://github.com/gtsteffaniak/filebrowser/pull/2125)) ([issue #2130](https://github.com/gtsteffaniak/filebrowser/issues/2130)).
+  - Downloading multiple file streams the archive creation rather than using cacheDir -- thanks [@janakoram](https://github.com/janakoram) ([pr #2125](https://github.com/gtsteffaniak/filebrowser/pull/2125)) ([issue #2130](https://github.com/gtsteffaniak/filebrowser/issues/2130)).
     - `server.maxArchiveSizeGB` now defaults to 20 (GB) and only applies to archive/unarchive actions (not downloads).
     - The browser download progress bar will no longer show for archive downloads. This is the main drawback to the streaming approach.
     - Should allow for much higher parallel download support and lower cleanup maintenance.
@@ -278,7 +352,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.2.4-stable
+## [v1.2.4-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.4-stable)
 
 **Security**:
  - Anonymous user shouldn't see server folder path with the `Go to source location` button from the share page ([issue #2216](https://github.com/gtsteffaniak/filebrowser/issues/2216)).
@@ -293,7 +367,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.2.3-stable
+## [v1.2.3-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.3-stable)
 
 **Security**:
  - Patched Username Enumeration via Authentication Timing Side-Channel ([GHSA-7789-65hx-f26w](https://github.com/gtsteffaniak/filebrowser/security/advisories/GHSA-7789-65hx-f26w)).
@@ -312,7 +386,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.2.2-stable
+## [v1.2.2-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.2-stable)
 
 {{% alert context="warning" %}}
 **Breaking changes moving from 1.1.x to 1.2.x:**
@@ -339,7 +413,7 @@ A security issue was introduced in this release which causes unauthenticated use
 
 ---
 
-## v1.2.1-stable
+## [v1.2.1-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.1-stable)
 
 Read: [New Announcement](https://github.com/gtsteffaniak/filebrowser/discussions/2048)
 
@@ -359,7 +433,7 @@ Read: [New Announcement](https://github.com/gtsteffaniak/filebrowser/discussions
 
 ---
 
-## v1.2.0-stable
+## [v1.2.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.2.0-stable)
 
 Read: [New Announcement](https://github.com/gtsteffaniak/filebrowser/discussions/2048)
 
@@ -432,7 +506,7 @@ This is a major version update with many changes which could cause unexpected be
 
 ---
 
-## v1.1.3-stable
+## [v1.1.3-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.3-stable)
 
 Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecting password protected share links.
 
@@ -443,7 +517,7 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ---
 
-## v1.1.2-stable
+## [v1.1.2-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.2-stable)
 
 **BugFixes**:
  - Fix transversal vulnerability.
@@ -453,7 +527,7 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ---
 
-## v1.1.1-stable
+## [v1.1.1-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.1-stable)
 
 **Notes**:
  - Major git container tag request ([issue #1756](https://github.com/gtsteffaniak/filebrowser/issues/1756))
@@ -482,7 +556,7 @@ Resolves CVE found by [@ByteAfterlife](https://github.com/ByteAfterlife) affecti
 
 ---
 
-## v1.1.0-stable
+## [v1.1.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.1.0-stable)
 
 {{% alert context="info" %}}
 Upgrading from `1.0.x` you may need to add [defaultEnabled](https://filebrowserquantum.com/en/docs/advanced/source-configuration/sources/#minimal-configuration) to keep same functionality automatically adding sources for users.
@@ -547,7 +621,7 @@ This update brings all changes present in {{< doclink path="changelog/beta/#v114
 
 ---
 
-## v1.0.3-stable
+## [v1.0.3-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.0.3-stable)
 
 **BugFixes**:
  - Download progress is not shown ([issue #1687](https://github.com/gtsteffaniak/filebrowser/issues/1687)).
@@ -556,7 +630,7 @@ This update brings all changes present in {{< doclink path="changelog/beta/#v114
 
 ---
 
-## v1.0.2-stable
+## [v1.0.2-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.0.2-stable)
 
 **Notes**:
  - `[docker]` Upgraded ffmpeg 8.0 to 8.0.1
@@ -571,7 +645,7 @@ This update brings all changes present in {{< doclink path="changelog/beta/#v114
 
 ---
 
-## v1.0.1-stable
+## [v1.0.1-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.0.1-stable)
 
 **BugFixes**:
  - UserDefault always applies to newly created users ([issue #1518](https://github.com/gtsteffaniak/filebrowser/issues/1518))
@@ -586,7 +660,7 @@ This update brings all changes present in {{< doclink path="changelog/beta/#v114
 
 ---
 
-## v1.0.0-stable
+## [v1.0.0-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.0.0-stable)
 
 {{% alert context="info" %}}
 This is the initial stable release -- based on [v1.0.1-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.0.1-beta)
