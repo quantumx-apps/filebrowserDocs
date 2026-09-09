@@ -46,12 +46,23 @@ The **Text Editor** provides syntax highlighting and editing capabilities for co
 The **Image Viewer** displays photos and graphics with smooth navigation:
 
 **Supported formats:**
-- whatever your browser's supported formats are
-- `.heic`, `.heif` - viewable natively on Safari; other browsers require media integration
+- Common web formats: JPEG, PNG, GIF, WebP, SVG (depends on your browser)
 - Raw formats: `.raw`, `.cr2`, `.nef`, `.arw`, `.dng`, `.orf`, and others
+- `.heic`, `.heif` — see [HEIC/HEIF support](#heic-heif-apple-photos) below
+
+#### HEIC/HEIF (Apple photos)
+
+`.heic` and `.heif` are common on iPhones and other Apple devices. **Safari** can display them natively. **Chrome, Firefox, Edge, and other browsers cannot** — FileBrowser can convert them server-side when media integration is configured.
+
+**To enable HEIC preview on non-Safari browsers:**
+
+1. Ensure FFmpeg is available (included in the official `stable` and `beta` Docker images, or install FFmpeg on your system).
+2. Set `integrations.media.convert.imagePreview.heic: true` in your server configuration.
+
+See {{< doclink path="integrations/media/configuration/#format-support" text="Media integration — Format support" />}} for configuration details and a complete example.
 
 {{% alert context="info" %}}
-**HEIC/HEIF Support:** These Apple image formats work natively in Safari. For other browsers, enable HEIC conversion in the {{< doclink path="integrations/media/configuration/#format-support" text="media integration" />}}.
+HEIC conversion is **disabled by default** because each image requires server-side processing. When enabled, conversion applies to both the file viewer and thumbnails.
 {{% /alert %}}
 
 {{% alert context="success" %}}
