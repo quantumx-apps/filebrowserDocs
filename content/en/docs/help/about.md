@@ -91,7 +91,7 @@ FileBrowser Quantum compares favorably with alternatives:
 | WebDAV support | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ |
 | Standalone binary | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ |
 | Docker image size | 180 MB | 31 MB | 240 MB | 250 MB | ❌ | > 2 GB |
-| Min. memory | 512 MB | 128 MB | 128 MB | 512 MB | ❌ | 512 MB |
+| Min. memory | 256 MB | 128 MB | 128 MB | 512 MB | ❌ | 512 MB |
 | Price | Free | Free | Free | Free tier | Free tier | $99+ |
 | Advanced search | ✅ | ❌ | ✅ | Configurable | ✅ | ✅ |
 | Indexed search | ✅ | ❌ | ✅ | Configurable | ✅ | ✅ |
