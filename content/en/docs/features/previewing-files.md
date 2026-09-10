@@ -56,7 +56,7 @@ The **Image Viewer** displays photos and graphics with smooth navigation:
 
 **To enable HEIC preview on non-Safari browsers:**
 
-1. Ensure FFmpeg is available (included in the official `stable` and `beta` Docker images, or install FFmpeg on your system).
+1. Ensure FFmpeg is available (included in the official `stable` and `beta` Docker images, or install FFmpeg version 8.1 or greater on your system).
 2. Set `integrations.media.convert.imagePreview.heic: true` in your server configuration.
 
 See {{< doclink path="integrations/media/configuration/#format-support" text="Media integration — Format support" />}} for configuration details and a complete example.
