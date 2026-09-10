@@ -20,7 +20,7 @@ FileBrowser Quantum uses FFmpeg for media processing capabilities including vide
 
 **Subtitle Extraction**: Extract embedded subtitles from video files (IO-intensive, 10-30 seconds for large files).
 
-**Conversion Support**: Convert support is currently limited, only heic image conversion is supported for non-safari browsers to be able to view images.
+**Conversion Support**: Convert support is currently limited, only heic image conversion is supported for non-safari browsers to be able to view images. Note: this requires ffmpeg version 8.1+ which comes bundled with docker, if you use your own ffmpeg version make sure its at least version 8.1 to suppor this feature.
 
 ## Requirements
 

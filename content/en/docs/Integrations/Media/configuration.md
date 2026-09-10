@@ -189,7 +189,7 @@ integrations:
     extractEmbeddedSubtitles: true  # Enable subtitle extraction
     convert:
       imagePreview:
-        heic: true  # Enable HEIC conversion
+        heic: false  # Enable HEIC conversion
       videoPreview:
         mp4: true
         mkv: true
