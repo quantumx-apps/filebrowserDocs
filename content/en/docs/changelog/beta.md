@@ -16,6 +16,25 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 
 ---
 
+## [v2.0.6-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.6-beta)
+
+**Security**:
+ - Share download links no longer create links with token, instead they link to the UI prompting for password before download. If a direct download is required, the `/api/share/direct` api exists and documented by swagger ([issue #2888](https://github.com/gtsteffaniak/filebrowser/issues/2888)).
+
+**Notes**:
+ - Renaming sources updates sidebar links ([issue #2878](https://github.com/gtsteffaniak/filebrowser/issues/2878)).
+ - Disabling/deleting a user source removes that source from sidebar links ([issue #2942](https://github.com/gtsteffaniak/filebrowser/issues/2942)).
+
+**Bugfixes**:
+ - Fixed disk-usage overstatement on virtiofs bind mounts ([issue #2894](https://github.com/gtsteffaniak/filebrowser/issues/2894)) ([issue #2894](https://github.com/gtsteffaniak/filebrowser/issues/2894)).
+ - Support non-ASCII share passwords ([pr #2933](https://github.com/gtsteffaniak/filebrowser/pull/2933)).
+ - Fall back to buffered copies when FUSE rejects fast paths ([pr #2938](https://github.com/gtsteffaniak/filebrowser/pull/2938)) ([issue #2924](https://github.com/gtsteffaniak/filebrowser/issues/2924)).
+ - Preserve deleted sidebar links across restarts ([pr #2935](https://github.com/gtsteffaniak/filebrowser/pull/2935)).
+
+**Full Changelog**: [v2.0.5-beta...v2.0.6-beta](https://github.com/gtsteffaniak/filebrowser/compare/v2.0.5-beta...v2.0.6-beta)
+
+---
+
 ## [v2.0.5-beta](https://github.com/gtsteffaniak/filebrowser/releases/tag/v2.0.5-beta)
 
 **Security**:
