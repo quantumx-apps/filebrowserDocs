@@ -3,7 +3,7 @@ title: "Source Configuration"
 description: "Understanding and configuring sources in FileBrowser Quantum"
 icon: "storage"
 date: "2025-10-17T21:34:59Z"
-lastmod: "2026-07-24T01:02:28Z"
+lastmod: "2026-08-24T17:05:51Z"
 order: 1
 ---
 

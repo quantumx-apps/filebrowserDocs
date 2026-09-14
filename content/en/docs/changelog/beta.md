@@ -3,7 +3,7 @@ title: "Beta"
 description: "See what changed in beta versions"
 icon: "rocket_launch"
 date: "2026-07-02T23:17:05Z"
-lastmod: "2026-08-07T18:10:00Z"
+lastmod: "2026-09-14T19:27:36Z"
 ---
 
 {{% alert context="info" %}}

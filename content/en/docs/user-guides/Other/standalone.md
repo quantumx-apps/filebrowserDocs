@@ -3,7 +3,7 @@ title: "Standalone docker guide (v2.0.0)"
 description: "A basic working example on setting up FileBrowser v2.0.0 in Docker with persistent indexing"
 icon: "deployed_Code"
 date: "2026-01-30T13:20:14Z"
-lastmod: "2026-08-10T00:00:00Z"
+lastmod: "2026-08-14T19:16:36Z"
 ---
 
 This guide will help you set up your FileBrowser **v2.0.0** instance alone. This will be helpful for users who just want to access their files over LAN for storage.

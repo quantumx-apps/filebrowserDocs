@@ -3,7 +3,7 @@ title: "Sidebar Customization"
 description: "Sidebar Link usage and examples"
 icon: "read_more"
 date: "2025-12-23T00:30:21Z"
-lastmod: "2026-05-01T16:02:24Z"
+lastmod: "2026-08-07T19:41:04Z"
 ---
 
 The sidebar is fully customizable per user — configure your own links, icons, and order.

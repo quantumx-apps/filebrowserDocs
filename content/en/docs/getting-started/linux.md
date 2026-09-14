@@ -3,7 +3,7 @@ title: "Linux (v2.0.0)"
 description: "Install FileBrowser v2.0.0 (beta) on Linux"
 icon: "terminal"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-08-10T00:00:00Z"
+lastmod: "2026-08-10T15:05:25Z"
 order: 2
 ---
 

@@ -2,8 +2,8 @@
 title: "User Defaults"
 description: "Universal user defaults and enforceable profile preferences in FileBrowser Quantum v2.0.0"
 icon: "tune"
-date: "2026-08-07T16:57:00Z"
-lastmod: "2026-08-07T17:43:00Z"
+date: "2026-08-07T19:31:41Z"
+lastmod: "2026-08-07T19:31:41Z"
 order: 3
 ---
 

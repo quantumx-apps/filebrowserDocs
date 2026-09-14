@@ -2,8 +2,8 @@
 title: "User Permissions"
 description: "Global and per-source permissions in FileBrowser Quantum v2.0.0, including the new view grant"
 icon: "lock"
-date: "2026-08-07T16:57:00Z"
-lastmod: "2026-08-07T17:43:00Z"
+date: "2026-08-07T19:31:41Z"
+lastmod: "2026-08-07T19:31:41Z"
 order: 2
 ---
 

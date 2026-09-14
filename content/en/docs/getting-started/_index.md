@@ -3,7 +3,7 @@ title: "Getting Started"
 description: "Quick start guides for all platforms"
 icon: "rocket_launch"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-08-10T00:00:00Z"
+lastmod: "2026-08-10T15:05:25Z"
 order: 1
 ---
 

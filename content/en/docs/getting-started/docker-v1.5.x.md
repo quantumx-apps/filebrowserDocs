@@ -3,7 +3,7 @@ title: "Docker (v1.5.x)"
 description: "Get started with FileBrowser v1.5.x (stable) using Docker"
 icon: "deployed_code"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-08-10T00:00:00Z"
+lastmod: "2026-08-10T15:05:25Z"
 order: 101
 ---
 

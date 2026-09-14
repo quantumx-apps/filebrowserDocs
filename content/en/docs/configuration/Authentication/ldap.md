@@ -3,7 +3,7 @@ title: "LDAP Authentication"
 description: "Integrate with LDAP directories for centralized user authentication"
 icon: "security"
 date: "2026-02-27T21:50:04Z"
-lastmod: "2026-08-24T17:00:00Z"
+lastmod: "2026-08-30T16:50:15Z"
 ---
 
 Authenticate users against LDAP directories like Active Directory, OpenLDAP, Authentik, and other LDAP-compliant systems.
