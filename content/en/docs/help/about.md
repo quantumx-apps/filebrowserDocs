@@ -3,7 +3,7 @@ title: "About FileBrowser Quantum"
 description: "Learn about FileBrowser Quantum"
 icon: "info"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-09-06T19:37:00Z"
+lastmod: "2026-09-09T23:07:19Z"
 ---
 
 Learn about FileBrowser Quantum - the best free self-hosted web-based file manager.

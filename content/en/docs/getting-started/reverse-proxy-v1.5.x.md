@@ -3,7 +3,7 @@ title: "Running behind a reverse proxy (v1.5.x)"
 description: "Configure FileBrowser v1.5.x (stable) behind reverse proxies"
 icon: "other_houses"
 date: "2025-10-28T22:14:01Z"
-lastmod: "2026-08-10T00:00:00Z"
+lastmod: "2026-08-10T15:05:25Z"
 order: 107
 ---
 

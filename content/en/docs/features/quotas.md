@@ -2,8 +2,8 @@
 title: "Storage Quotas"
 description: "Limit how much storage users, folders, and share links can use"
 icon: "storage"
-date: "2026-08-16T14:00:00Z"
-lastmod: "2026-08-18T20:00:00Z"
+date: "2026-08-24T17:05:51Z"
+lastmod: "2026-08-24T17:05:51Z"
 order: 6
 ---
 

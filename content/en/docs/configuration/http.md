@@ -3,7 +3,7 @@ title: "HTTP Settings"
 description: "Configure HTTP listening, URLs, TLS, WebDAV, reverse-proxy headers, and auth rate limiting"
 icon: "http"
 date: "2026-05-22T15:40:53Z"
-lastmod: "2026-08-05T15:34:23Z"
+lastmod: "2026-08-07T19:41:04Z"
 order: 4
 ---
 

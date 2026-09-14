@@ -3,7 +3,7 @@ title: "User Management"
 description: "Manage users and permissions"
 icon: "group"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-07-24T01:02:28Z"
+lastmod: "2026-08-07T19:31:41Z"
 order: 5
 ---
 

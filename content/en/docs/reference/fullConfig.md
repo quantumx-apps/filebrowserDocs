@@ -3,7 +3,7 @@ title: "Full Config Example"
 description: "Complete config file example"
 icon: "settings"
 date: "2025-10-09T00:23:04Z"
-lastmod: "2026-07-24T01:02:28Z"
+lastmod: "2026-08-05T23:41:25Z"
 ---
 
 A config needs to be validated using a few simple rules:

@@ -3,7 +3,7 @@ title: "JWT Authentication"
 description: "External JWT token authentication for SSO and proxy integration"
 icon: "security"
 date: "2026-02-27T21:50:04Z"
-lastmod: "2026-08-24T17:00:00Z"
+lastmod: "2026-08-30T16:50:15Z"
 ---
 
 Accept externally-signed JWT tokens for secure authentication, enabling single sign-on, proxy authentication, and iframe embedding scenarios.

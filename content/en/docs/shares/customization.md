@@ -3,7 +3,7 @@ title: "Customization"
 description: "Branding and appearance options"
 icon: "auto_awesome"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-04-21T20:01:57Z"
+lastmod: "2026-08-30T16:50:15Z"
 order: 1
 ---
 

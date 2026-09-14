@@ -3,7 +3,7 @@ title: "Sources"
 description: "Configure file system sources"
 icon: "folder_open"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-08-24T17:00:00Z"
+lastmod: "2026-08-24T17:05:51Z"
 order: 3
 ---
 

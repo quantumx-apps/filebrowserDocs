@@ -3,7 +3,7 @@ title: "Configuration"
 description: "Configure media integration settings"
 icon: "settings"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-04-21T20:01:57Z"
+lastmod: "2026-09-10T19:12:44Z"
 ---
 
 Configure FFmpeg paths, subtitle extraction, and media processing options for video thumbnails and subtitle support.

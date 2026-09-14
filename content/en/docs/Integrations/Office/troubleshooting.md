@@ -3,7 +3,7 @@ title: "Troubleshooting"
 description: "Common OnlyOffice integration issues and solutions"
 icon: "troubleshoot"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-08-05T15:34:23Z"
+lastmod: "2026-08-07T19:41:04Z"
 ---
 
 Solutions for common OnlyOffice integration problems including connectivity, authentication, and document opening issues.

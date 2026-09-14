@@ -3,7 +3,7 @@ title: "Configuration Files (v2.0.0)"
 description: "Understanding and using configuration files in FileBrowser v2.0.0 (beta)"
 icon: "settings"
 date: "2025-10-23T00:50:09Z"
-lastmod: "2026-08-10T00:00:00Z"
+lastmod: "2026-08-14T19:16:36Z"
 order: 6
 ---
 
