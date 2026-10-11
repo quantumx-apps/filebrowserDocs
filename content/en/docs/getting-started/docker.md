@@ -9,8 +9,6 @@ order: 1
 
 {{% alert context="info" %}}
 **This guide is for v2.0.x (stable).** It uses the `stable` or `2.0-stable` Docker image and a SQLite database. The image default file is `database.sqlite` (see [Database Location](#database-location)). For **v2.1.x** previews, use the `beta` or `2.1-beta` tag instead — see {{< doclink path="getting-started/version/" text="release channels" />}}.
-
-Using **v1.5.x or older**? See the {{< doclink path="getting-started/docker-v1.5.x" text="v1.5.x Docker guide" />}} instead.
 {{% /alert %}}
 
 {{% alert context="warning" %}}

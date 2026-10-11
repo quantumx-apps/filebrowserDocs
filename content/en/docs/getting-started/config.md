@@ -7,10 +7,6 @@ lastmod: "2026-10-04T17:20:00Z"
 order: 6
 ---
 
-{{% alert context="info" %}}
-Using **v1.5.x or older**? See the {{< doclink path="getting-started/config-v1.5.x" text="v1.5.x configuration guide" />}} instead.
-{{% /alert %}}
-
 {{% alert context="warning" %}}
 **Upgrading from v1.x?**
 

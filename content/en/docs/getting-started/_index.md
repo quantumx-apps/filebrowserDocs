@@ -8,7 +8,7 @@ order: 1
 ---
 
 {{% alert context="info" %}}
-**Documentation versions:** Getting started guides target **v2.0.x (stable)** by default. **v2.1.x** features ship on the `beta` channel — see {{< doclink path="getting-started/version/" text="Which version should I use?" />}}. Using **v1.5.x (stable)**? Each guide links to its v1.5.x counterpart — for example {{< doclink path="getting-started/docker-v1.5.x" text="Docker (v1.5.x)" />}} or {{< doclink path="getting-started/config-v1.5.x" text="Configuration (v1.5.x)" />}}.
+**Documentation versions:** Getting started guides target **v2.0.x (stable)** by default. **v2.1.x** features ship on the `beta` channel — see {{< doclink path="getting-started/version/" text="Which version should I use?" />}}.
 {{% /alert %}}
 
 {{% alert context="warning" %}}
