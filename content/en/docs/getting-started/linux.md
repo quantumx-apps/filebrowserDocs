@@ -9,8 +9,6 @@ order: 2
 
 {{% alert context="info" %}}
 **This guide is for v2.0.x (stable).** Download a **stable** release from GitHub (or use `beta` for v2.1.x previews).
-
-Using **v1.5.x or older**? See the {{< doclink path="getting-started/linux-v1.5.x" text="v1.5.x Linux guide" />}} instead.
 {{% /alert %}}
 
 {{% alert context="warning" %}}
