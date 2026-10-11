@@ -3,7 +3,7 @@ title: "Multiple Config Files"
 description: "Use YAML anchoring for modular configuration"
 icon: "inventory_2"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2025-11-17T16:32:34Z"
+lastmod: "2026-10-03T16:30:00Z"
 ---
 
 Use YAML anchoring with multi-file configuration for modular, reusable configurations.
@@ -62,9 +62,11 @@ server:
 **File: `server-config.yaml`**
 ```yaml
 # Development server - multiple sources, verbose logging
-server_dev: &server_dev
+http_dev: &http_dev
   port: 8080
   baseURL: "/dev"
+
+server_dev: &server_dev
   logging:
     - levels: "info|debug|warning|error"
   sources:
@@ -74,9 +76,11 @@ server_dev: &server_dev
       name: "projects"
 
 # Production server - restricted sources, minimal logging
-server_production: &server_production
+http_production: &http_production
   port: 80
   baseURL: "/"
+
+server_production: &server_production
   logging:
     - levels: "warning|error"
   sources:
@@ -84,9 +88,11 @@ server_production: &server_production
       name: "public"
 
 # Minimal server - single source
-server_minimal: &server_minimal
+http_minimal: &http_minimal
   port: 8080
   baseURL: "/"
+
+server_minimal: &server_minimal
   sources:
     - path: "/data"
 ```
@@ -94,6 +100,12 @@ server_minimal: &server_minimal
 **File: `config.yaml`**
 ```yaml
 # Simply change the anchor name to switch configurations!
+# v2.0.0 and later: port and baseURL belong under http, not server.
+http:
+  <<: *http_dev                # Use development listen settings
+  # <<: *http_production       # OR use production listen settings
+  # <<: *http_minimal          # OR use minimal listen settings
+
 server:
   <<: *server_dev              # Use development config
   # <<: *server_production     # OR use production config
@@ -106,34 +118,39 @@ server:
 
 **File: `users-config.yaml`**
 ```yaml
-# Admin user - full permissions
+# Admin user - global account permissions
 user_admin: &user_admin
-  showHidden: true
-  permissions:
-    admin: true
-    modify: true
-    share: true
-    api: true
+  listing:
+    showHidden: true
+  account:
+    permissions:
+      admin: true
+      share: true
+      api: true
 
-# Regular user - standard permissions
+# Regular user - standard account permissions
 user_regular: &user_regular
-  showHidden: false
-  permissions:
-    admin: false
-    modify: true
-    share: true
-    api: false
+  listing:
+    showHidden: false
+  account:
+    permissions:
+      admin: false
+      share: true
+      api: false
 
-# Read-only user - view only
+# Read-only user - no share or API
 user_readonly: &user_readonly
-  showHidden: false
-  permissions:
-    admin: false
-    modify: false
-    share: false
-    api: false
-  lockPassword: true
+  listing:
+    showHidden: false
+  account:
+    lockPassword: true
+    permissions:
+      admin: false
+      share: false
+      api: false
 ```
+
+File **view**, **download**, **modify**, **create**, and **delete** are not `userDefaults` keys on v2.0.0. Set those with `server.sources[].config.defaultPermissions`.
 
 **File: `config.yaml`**
 ```yaml
@@ -150,9 +167,11 @@ You can also extend an anchor and add/override specific fields:
 
 **File: `server-config.yaml`**
 ```yaml
-server_base: &server_base
+http_base: &http_base
   port: 80
   baseURL: "/"
+
+server_base: &server_base
   sources:
     - path: "/data"
 
@@ -165,9 +184,12 @@ server_extended: &server_extended
 **File: `config.yaml`**
 ```yaml
 # Use extended config but override the port
+http:
+  <<: *http_base
+  port: 8080                   # Override just this one field
+
 server:
   <<: *server_extended
-  port: 8080                   # Override just this one field
 ```
 
 ## Complete Multi-File Setup
