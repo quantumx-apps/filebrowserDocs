@@ -9,8 +9,6 @@ order: 7
 
 {{% alert context="info" %}}
 **This guide is for v2.0.x (stable).** Config examples use `http.baseURL` and `http.trustProxyHeaders`.
-
-Using **v1.5.x or older**? See the {{< doclink path="getting-started/reverse-proxy-v1.5.x" text="v1.5.x reverse proxy guide" />}} instead.
 {{% /alert %}}
 
 Complete guide for running FileBrowser Quantum **v2.0.x (stable)** behind reverse proxies including nginx, Traefik, and Caddy with authentication, SSL, and performance optimizations.

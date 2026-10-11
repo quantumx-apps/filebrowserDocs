@@ -69,7 +69,7 @@ One major difference is the release cadence between the two versions:
 |---|---|---|---|
 | Release channel | `stable`, `1.5-stable` | `stable`, `2.0-stable` | `beta`, `2.1-beta` |
 | Database | Legacy (`database.db`) | SQLite (`filebrowser.sqlite`) | Same as v2.0.x |
-| Getting started docs | {{< doclink path="getting-started/docker-v1.5.x" text="v1.5.x guides" />}} | {{< doclink path="getting-started/docker" text="v2.0.x guides" />}} | Same v2 guides; see {{< doclink path="changelog/beta/" text="beta changelog" />}} for v2.1.x-only features |
+| Getting started docs | Migrate via {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} | {{< doclink path="getting-started/docker" text="v2.0.x guides" />}} | Same v2 guides; see {{< doclink path="changelog/beta/" text="beta changelog" />}} for v2.1.x-only features |
 | Upgrade path | Stay on 1.5-stable for legacy | Default for new v2 installs | Move from v2.0.x when you want v2.1.x features |
 | From v1.x | N/A | Follow {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}} | Migrate to v2.0.x first, then beta if desired |
 
