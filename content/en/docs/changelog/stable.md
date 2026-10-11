@@ -119,6 +119,34 @@ You can also check the releases on [GitHub!](https://github.com/gtsteffaniak/fil
 - Support non-ASCII share passwords ([issue #2933](https://github.com/gtsteffaniak/filebrowser/issues/2933)); fall back to buffered copies when FUSE rejects fast paths ([issue #2938](https://github.com/gtsteffaniak/filebrowser/issues/2938)) ([issue #2924](https://github.com/gtsteffaniak/filebrowser/issues/2924)); tilde (`~`) source paths expand properly.
 - Fixed slow/broken file listing when `http.baseURL` is a subpath.
 
+**Full Changelog**: [v1.5.9-stable...v2.0.0-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.9-stable...v2.0.0-stable)
+
+---
+
+## [v1.5.8-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.8-stable)
+
+**Security**:
+ - [High] TOTP re-enrollment via `POST /api/auth/otp/generate` and `POST /api/auth/otp/verify` no longer allows anonymous callers to replace an existing second factor using only the account password; reset or replace requires an authenticated self or admin session (first-time enrollment without MFA unchanged) (GHSA-qx86-4v5r-26g5) -- thanks [@tao0845](https://github.com/tao0845).
+
+**Notes**:
+ - Supersedes [v1.5.7-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.7-stable), so including its release notes for visibility.
+ - [docker] upgraded ffmpeg version from 9.0.1 to 9.0.2
+
+**Full Changelog**: [v1.5.7-stable...v1.5.8-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.7-stable...v1.5.8-stable)
+
+---
+
+## [v1.5.7-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.7-stable)
+
+**Security**:
+ - [High] TOTP re-enrollment via `POST /api/auth/otp/generate` and `POST /api/auth/otp/verify` no longer allows anonymous callers to replace an existing second factor using only the account password; reset or replace requires an authenticated self or admin session (first-time enrollment without MFA unchanged) (GHSA-qx86-4v5r-26g5) -- thanks [@tao0845](https://github.com/tao0845).
+
+**Notes**:
+ - This release has been superseded by [v1.5.8-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.8-stable), as it introduces a TOTP login change that prevented login in some circumstances.
+ - [docker] upgraded ffmpeg version from 9.0.1 to 9.0.2
+
+**Full Changelog**: [v1.5.6-stable...v1.5.7-stable](https://github.com/gtsteffaniak/filebrowser/compare/v1.5.6-stable...v1.5.7-stable)
+
 ---
 
 ## [v1.5.6-stable](https://github.com/gtsteffaniak/filebrowser/releases/tag/v1.5.6-stable)
