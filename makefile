@@ -75,7 +75,11 @@ check-frontmatter:
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	@if command -v yq >/dev/null 2>&1; then \
 		find content -name "*.md" -type f | while read file; do \
-			awk '/^---$$/ {flag++; next} flag==1' "$$file" | yq e '.' - > /dev/null 2>&1 || { \
+			content=$$(awk 'NR==1 { if (!/^---$$/) { exit 0 } else { delims=1; next } } delims==1 && /^---$$/ { delims=2; exit 0 } delims==1 { print } END { if (delims==1) exit 1 }' "$$file") || { \
+				echo "❌ Invalid or unclosed front matter in: $$file"; \
+				exit 1; \
+			}; \
+			echo "$$content" | yq e '.' - > /dev/null 2>&1 || { \
 				echo "❌ Invalid front matter in: $$file"; \
 				exit 1; \
 			}; \
