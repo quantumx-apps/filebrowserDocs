@@ -9,7 +9,7 @@ lastmod: "2026-09-09T23:07:19Z"
 Learn about FileBrowser Quantum - the best free self-hosted web-based file manager.
 
 {{% alert context="info" %}}
-**v2.0.0 is now in beta!** See {{< doclink path="getting-started/v2/about/" text="About v2.0.0" />}} for what's new and migration steps.
+**v2.0.x** ships on the **stable** release channel; **v2.1.x** is the current **beta** line. See {{< doclink path="getting-started/version/" text="Which version should I use?" />}} and {{< doclink path="getting-started/v2/about/" text="About v2.0.0" />}} for channels, what's new, and migration steps.
 {{% /alert %}}
 
 ## Overview
@@ -74,8 +74,8 @@ FileBrowser Quantum uses **SQLite-based indexing** — metadata is stored on dis
 
 ## Current Status
 
-- **v2.0.0** is in beta — the largest upgrade to date! See {{< doclink path="getting-started/v2/about/" text="About v2.0.0" />}}
-- **Stable releases** are available on the main release channel
+- **v2.0.x** is available on the **stable** channel (the largest upgrade to date). See {{< doclink path="getting-started/v2/about/" text="About v2.0.0" />}} and {{< doclink path="getting-started/version/" text="Which version should I use?" />}}
+- **v2.1.x** previews ship on the **beta** channel
 
 See [latest announcements](https://github.com/gtsteffaniak/filebrowser/discussions) for updates.
 

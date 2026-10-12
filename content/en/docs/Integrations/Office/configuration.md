@@ -109,7 +109,7 @@ server {
 <div class="pattern-card">
 
 ```yaml
-# v2.0.0+
+# v2.0.x
 http:
   externalUrl: "https://files.yourdomain.com"  # Public URL (browser / shares)
   internalUrl: "http://filebrowser:80"         # Docker/LAN URL OnlyOffice uses to reach FileBrowser
@@ -150,7 +150,7 @@ integrations:
 | FileBrowser → OnlyOffice | `integrations.office.internalUrl` (or `url`) | Server-side API calls |
 | OnlyOffice → FileBrowser | `http.internalUrl` → `http.externalUrl` → request | Download/callback URLs embedded in editor config |
 
-- **`http.trustProxyHeaders`** (v2.0.0+) or **`http.trustedHeaders`** (v1.4.x–v1.5.x) affects user-facing request flows (cookies, OIDC, activity IP). Neither gates `http.internalUrl`.
+- **`http.trustProxyHeaders`** (v2.0.x) or **`http.trustedHeaders`** (v1.4.x–v1.5.x) affects user-facing request flows (cookies, OIDC, activity IP). Neither gates `http.internalUrl`.
 - **`http.externalUrl`** is used for shares and (when `internalUrl` is unset) OnlyOffice paths — **not** for OIDC redirects.
 
 </div>

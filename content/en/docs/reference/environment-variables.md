@@ -14,7 +14,7 @@ The preferred configuration method is to use config.yaml. However, environment v
 Database env vars changed between major versions:
 
 - **`FILEBROWSER_DATABASE`** — **v1.x.x only** 
-- **`FILEBROWSER_DATABASE_PATH`** — **v2.0.0+**
+- **`FILEBROWSER_DATABASE_PATH`** — **v2.0.x**
 
 When upgrading, rename **`FILEBROWSER_DATABASE`** → **`FILEBROWSER_DATABASE_PATH`** and point it at your new SQLite file. See {{< doclink path="getting-started/v2/migration/" text="v2 migration guide" />}}.
 {{% /alert %}}
@@ -25,7 +25,7 @@ When upgrading, rename **`FILEBROWSER_DATABASE`** → **`FILEBROWSER_DATABASE_PA
 |----------|-------------------|-------------|
 | `FILEBROWSER_CONFIG` | - | Config file path when no CLI argument provided |
 | `FILEBROWSER_DATABASE` | `server.database` | **v1.x.x only.** BoltDB database file path (e.g. `database.db`). Removed in v2.0.0 — use `FILEBROWSER_DATABASE_PATH` instead. |
-| `FILEBROWSER_DATABASE_PATH` | `server.database.path` | **v2.0.0+.** SQLite path used when `server.database.path` is empty (application default: `filebrowser.sqlite`). Official Docker images set this to `/home/filebrowser/data/database.sqlite`. A path in config is not overridden by this variable. |
+| `FILEBROWSER_DATABASE_PATH` | `server.database.path` | **v2.0.x.** SQLite path used when `server.database.path` is empty (application default: `filebrowser.sqlite`). Official Docker images set this to `/home/filebrowser/data/database.sqlite`. A path in config is not overridden by this variable. |
 | `FILEBROWSER_ADMIN_PASSWORD` | `auth.methods.password.adminPassword` | Password admin password |
 | `FILEBROWSER_ONLYOFFICE_SECRET` | `integrations.office.secret` | OnlyOffice JWT secret |
 | `FILEBROWSER_FFMPEG_PATH` | `integrations.media.ffmpegPath` | Path to FFmpeg binaries |

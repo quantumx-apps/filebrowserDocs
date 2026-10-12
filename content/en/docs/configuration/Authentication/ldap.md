@@ -44,7 +44,7 @@ auth:
 | `userPassword` | *required* | Password for service account |
 | `userFilter` | `(&(cn=%s)(objectClass=user))` | Search filter for finding users (`%s` = login name) |
 | `userIdentifier` | `""` | LDAP attribute to use as username (e.g., mail, sAMAccountName); empty uses login name |
-| `groupsClaim` | `memberOf` | **v2.0.3+ (beta).** LDAP attribute for group membership. When omitted, FileBrowser uses `memberOf`. **v1.5.x (stable)** does not fill in a default. |
+| `groupsClaim` | `memberOf` | **v2.0.x.** LDAP attribute for group membership. When omitted, FileBrowser uses `memberOf`. **v1.5.x** does not fill in a default. |
 | `adminGroup` | `""` | LDAP group DN or CN that grants admin privileges |
 | `userGroups` | `[]` | List of allowed groups (empty = allow all) |
 | `disableVerifyTLS` | `false` | Disable TLS certificate verification (testing only!) |

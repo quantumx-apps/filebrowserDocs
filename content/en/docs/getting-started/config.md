@@ -63,7 +63,7 @@ Named `FILEBROWSER_*` variables in {{< doclink path="reference/environment-varia
 
 The database path is configured under `server.database.path`. See {{< doclink path="configuration/server/#database" text="Server configuration" />}} for details.
 
-**Default database locations (v2.0.0+):**
+**Default database locations (v2.0.x):**
 - Standalone, when neither config nor `FILEBROWSER_DATABASE_PATH` sets a path: `./filebrowser.sqlite`
 - Docker image, when config omits `server.database.path`: `/home/filebrowser/data/database.sqlite` (`FILEBROWSER_DATABASE_PATH` in `_docker/Dockerfile`)
 
@@ -119,7 +119,7 @@ server:
   sources:
     - path: "/path/to/your/files" # or '/folder' in above example (do not load the full os filesystem, must be sub path)
       config:
-        defaultEnabled: true  # Grant to all users on create; v2.0.1+ also merges for existing users on startup
+        defaultEnabled: true  # Grant to all users on create; v2.0.x also merges for existing users on startup
 
 auth:
   methods:
@@ -127,7 +127,7 @@ auth:
       enabled: true
 ```
 
-On v2.x (v2.0.0+), if `adminPassword` is unset or left as `admin`, a random admin password is generated, logged once, and a password reset is required on first login. Any other value of `auth.methods.password.adminPassword` or `auth.adminPassword` is used as-is.
+On v2.x (v2.0.x), if `adminPassword` is unset or left as `admin`, a random admin password is generated, logged once, and a password reset is required on first login. Any other value of `auth.methods.password.adminPassword` or `auth.adminPassword` is used as-is.
 
 ## Configuration Options
 

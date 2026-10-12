@@ -14,7 +14,7 @@ Starting in **v2.0.0**, user CLI commands changed. Use `user set <username> --pa
 
 FileBrowser provides a minimal CLI for setup and user management.
 
-## CLI migration (v2.0.0+)
+## CLI migration (v2.0.x)
 
 ```bash
 # User create
@@ -38,7 +38,7 @@ filebrowser -c cfg
 filebrowser setup
 filebrowser version
 
-# Initialize or migrate the database without starting the server (v2.0.7-beta+)
+# Initialize or migrate the database without starting the server (v2.0.x)
 filebrowser init -c cfg
 ```
 
@@ -228,7 +228,7 @@ docker run -it --rm \
   ./filebrowser user set newuser --password password -c /home/filebrowser/data/config.yaml
 ```
 
-Mount the data directory, not a single database file. Official images keep config and the database under `/home/filebrowser/data` (`FILEBROWSER_CONFIG`). **v1.5.x (stable)** stores `database.db` there. **v2.0.0+ (beta)** stores `database.sqlite` there unless `server.database.path` is set. Use the `beta` image tag when the data directory is a v2 install.
+Mount the data directory, not a single database file. Official images keep config and the database under `/home/filebrowser/data` (`FILEBROWSER_CONFIG`). **v1.5.x** stores `database.db` there. **v2.0.x** stores `database.sqlite` there unless `server.database.path` is set. Use the `stable` tag for **v2.0.x** or `beta` for **v2.1.x** — see {{< doclink path="getting-started/version/" text="release channels" />}}.
 
 ## Common Operations
 

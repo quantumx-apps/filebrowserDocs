@@ -8,9 +8,9 @@ order: 3
 ---
 
 {{% alert context="warning" %}}
-**This page applies to v2.0.0+**
+**This page applies to v2.0.x**
 
-User defaults have always been possible to set in the configuration file. However, in **v2.0.0+** they are now configurable and optionally enforce them in the UI by an admin user to apply to non-admin users.
+User defaults have always been possible to set in the configuration file. However, in **v2.0.x** they are now configurable and optionally enforce them in the UI by an admin user to apply to non-admin users.
 {{% /alert %}}
 
 

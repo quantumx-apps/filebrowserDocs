@@ -61,7 +61,7 @@ Legacy flat keys (for example `hideFilesInTree`, `permissions.modify`) are no lo
 **Note**: Config `userDefaults` do not overwrite existing users after creation. They seed universal defaults for **new** users and the admin **User defaults** template in SQLite.
 {{% /alert %}}
 
-This shape is valid on **v2.0.0-beta** through **v2.1.0-beta**. Omit keys you want to leave at defaults. v2.1.0-beta also adds `listing.promptRightCloseButton`, `listing.newFileTemplate`, and `account.showAdvancedProfile`.
+This shape is valid on **v2.0.x** through **v2.1.x**. Omit keys you want to leave at defaults. v2.1.x also adds `listing.promptRightCloseButton`, `listing.newFileTemplate`, and `account.showAdvancedProfile`.
 
 ```yaml
 userDefaults:
@@ -181,7 +181,7 @@ Configure on the user record; apply everywhere:
 
 Admins receive full file-operation access on every source automatically.
 
-### Per-source file permissions (v2.0.0+)
+### Per-source file permissions (v2.0.x)
 
 Configure **per scope** in User Management when editing a user — expand a source row to set:
 
@@ -195,7 +195,7 @@ Configure **per scope** in User Management when editing a user — expand a sour
 
 Omitting permissions on a scope when saving via API lets the server apply **Access management default permissions** for that source. Explicit values override defaults. See {{< doclink path="features/user-permissions/" text="User permissions" />}}.
 
-### API user shape (v2.0.0+)
+### API user shape (v2.0.x)
 
 ```json
 {

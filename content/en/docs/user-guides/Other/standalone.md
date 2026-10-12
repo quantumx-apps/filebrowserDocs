@@ -74,7 +74,7 @@ server:
       name: Home
       config:
         defaultUserScope: "/users/" # new users will get created in /users/<username>
-        defaultEnabled: true # all users get this source on create; v2.0.1+ also merges for existing users on startup
+        defaultEnabled: true # all users get this source on create; v2.0.x also merges for existing users on startup
         createUserDir: true # a user "bill" will see files from /files/users/bill
     - path: "/home/filebrowser" # mount the docker home folder for convenience
       name: Backend
@@ -91,7 +91,7 @@ auth:
 
 ```
 
-On v2.x (v2.0.0+), if `adminPassword` is unset or left as `admin`, a random admin password is generated, logged once, and a password reset is required on first login. Any other value of `auth.methods.password.adminPassword` or `auth.adminPassword` is used as-is.
+On v2.x (v2.0.x), if `adminPassword` is unset or left as `admin`, a random admin password is generated, logged once, and a password reset is required on first login. Any other value of `auth.methods.password.adminPassword` or `auth.adminPassword` is used as-is.
 
 ## Running container with a different user
 

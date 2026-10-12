@@ -9,7 +9,7 @@ order: 3
 
 Sources are the core concept in FileBrowser - each source represents a file system location users can access.
 
-Indexing on each source provides folder sizes used by the UI and by **indexed-size storage quotas (v2.1.0+)**. Sources with indexing disabled only support **tracked usage** quotas (v2.1.0+). See {{< doclink path="features/quotas/" text="Storage quotas (v2.1.0+)" />}} and {{< doclink path="features/indexing/" text="Indexing" />}}.
+Indexing on each source provides folder sizes used by the UI and by **indexed-size storage quotas (v2.1.x)**. Sources with indexing disabled only support **tracked usage** quotas (v2.1.x). See {{< doclink path="features/quotas/" text="Storage quotas (v2.1.x)" />}} and {{< doclink path="features/indexing/" text="Indexing" />}}.
 
 {{% alert context="info" %}}
 **v2.0.0 source config**
@@ -116,7 +116,7 @@ server:
 When `true`, this source is granted to **all** users:
 
 - On **user creation** (password signup, admin create, and auto-create via OIDC / LDAP / JWT / proxy).
-- On **every server startup** (v2.0.1+): any user missing this source gets it merged into their scopes. Existing scope paths for sources the user already has are preserved.
+- On **every server startup** (v2.0.x): any user missing this source gets it merged into their scopes. Existing scope paths for sources the user already has are preserved.
 
 Default: `false`. Use `false` for sources that should only be assigned manually.
 
@@ -147,7 +147,7 @@ server:
 ```
 
 {{% alert context="info" %}}
-**v2.0.1+:** Before v2.0.1, startup only seeded `defaultEnabled` sources for users with **empty** scopes. Partial-scope users (common after migration or after adding a second source) did not receive new default-enabled sources until you assigned them by hand. From v2.0.1 onward, missing `defaultEnabled` sources are always merged on startup.
+**v2.0.x:** Before v2.0.1, startup only seeded `defaultEnabled` sources for users with **empty** scopes. Partial-scope users (common after migration or after adding a second source) did not receive new default-enabled sources until you assigned them by hand. From v2.0.1 onward, missing `defaultEnabled` sources are always merged on startup.
 {{% /alert %}}
 
 <div class="pattern-card">
@@ -272,7 +272,7 @@ server:
 
 ## Next Steps
 
-- {{< doclink path="features/quotas/" text="Storage quotas (v2.1.0+)" />}}
+- {{< doclink path="features/quotas/" text="Storage quotas (v2.1.x)" />}}
 - {{< doclink path="advanced/source-configuration/sources/" text="Advanced Source Configuration" />}}
 - {{< doclink path="configuration/authentication/" text="Configure authentication" />}}
 - {{< doclink path="configuration/users/" text="Manage users" />}}

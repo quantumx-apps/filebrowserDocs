@@ -77,7 +77,7 @@ v2.0.0 and later read the listen port from `http.port`. A `server.port` key is r
 
 Access at `http://localhost:80`.
 
-On v2.x (v2.0.0+), if `adminPassword` is unset or left as `admin`, a random admin password is generated, logged once, and a password reset is required on first login. Any other value of `auth.methods.password.adminPassword` or `auth.adminPassword` is used as-is.
+On v2.x (v2.0.x), if `adminPassword` is unset or left as `admin`, a random admin password is generated, logged once, and a password reset is required on first login. Any other value of `auth.methods.password.adminPassword` or `auth.adminPassword` is used as-is.
 
 ## Run as Service (launchd)
 

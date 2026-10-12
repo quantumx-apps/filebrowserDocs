@@ -28,7 +28,7 @@ These apply to the user account everywhere. Configure them in **Settings → Use
 | **Share** | Create and manage share links |
 | **Realtime** | Real-time connections and live updates |
 
-### Per-source file permissions (v2.0.0+)
+### Per-source file permissions (v2.0.x)
 
 These permissions apply to each source.
 
@@ -42,7 +42,7 @@ These permissions apply to each source.
 
 ## View vs download
 
-**View** and **download** are separate permissions in v2.0.0+. A user can browse and preview without being allowed to save file bytes — useful for read-only galleries, internal document review, or limiting share recipients to in-browser viewing. This also extends to office integrations.
+**View** and **download** are separate permissions in v2.0.x. A user can browse and preview without being allowed to save file bytes — useful for read-only galleries, internal document review, or limiting share recipients to in-browser viewing. This also extends to office integrations.
 
 | Action | Permission required | Counts as download? | Activity logged? |
 |---|---|---|---|

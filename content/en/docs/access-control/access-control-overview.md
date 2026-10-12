@@ -12,13 +12,13 @@ order: 1
 FileBrowser combines three separate ideas. Together they decide whether someone can see a source, open a path, and perform actions there:
 
 1. **User permissions** — Global capabilities that apply **across** sources: **admin**, **api**, **share**, and **realtime**. File operations (view, download, modify, create, delete) are **not** global; see per-source permissions below.
-2. **Per-source permissions** — For each source in a user's **scopes**, what they may do with files in that source: **view**, **download**, **modify**, **create**, and **delete**. These are configured in User Management on each scope row (v2.0.0+).
+2. **Per-source permissions** — For each source in a user's **scopes**, what they may do with files in that source: **view**, **download**, **modify**, **create**, and **delete**. These are configured in User Management on each scope row (v2.0.x).
 3. **Source-level access** — Whether the user even **has** a given source (scopes and defaults such as {{< doclink path="configuration/sources/" text="source configuration" />}}, including `defaultEnabled` and `denyByDefault`). This is **broad**: it gates the whole source or the user’s subtree under it, not individual paths inside the tree.
 4. **Access control rules** — **Additional, path-specific** allow/deny rules for directories under a source, optionally scoped to users or groups. Use these when you need fine control (“this folder, for this user or group”) rather than changing per-source permissions or whole-source defaults.
 
 Access rules refine **which paths** under a source are reachable once the user already has that source and sufficient **per-source permissions** for the action.
 
-**Storage quotas (v2.1.0+)** are a separate control: they limit how much data can be stored in a folder, user scope, or share link without changing who can see a path. See {{< doclink path="features/quotas/" text="Storage quotas (v2.1.0+)" />}}.
+**Storage quotas (v2.1.x)** are a separate control: they limit how much data can be stored in a folder, user scope, or share link without changing who can see a path. See {{< doclink path="features/quotas/" text="Storage quotas (v2.1.x)" />}}.
 
 {{% alert context="info" %}}
 **Access rules are not file permissions.** Allow/deny rules control path visibility. They do **not** replace **create**, **modify**, or **delete** on the user's scope — those are configured in **User management** (per user) and **Access management** (defaults and enforce). See {{< doclink path="features/user-permissions/" text="User permissions" />}}.
@@ -44,7 +44,7 @@ FileBrowser Quantum access rules differ entirely from those in the original File
 
 A user's access to files depends on:
 
-1. **User scope** — Users do not see or use a source until it is part of their scopes. Sources with {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled: true" />}} are granted on user create and, from **v2.0.1+**, merged for existing users on every server startup. An admin can still assign non-default sources in user management.
+1. **User scope** — Users do not see or use a source until it is part of their scopes. Sources with {{< doclink path="configuration/sources#defaultenabled" text="defaultEnabled: true" />}} are granted on user create and, from **v2.0.x**, merged for existing users on every server startup. An admin can still assign non-default sources in user management.
 2. **`denyByDefault`** — With a source scope, paths are normally reachable unless the source sets `denyByDefault: true`. Then the user can still see that the source exists, but file access requires explicit **allow** rules for the paths they need.
 3. **Access rules** — Per-path allow/deny (and deny-all) rules for users or groups, as described below.
 
@@ -86,7 +86,7 @@ Access rules are configured in the admin UI or via the API: per user or group, p
 
 ## Next steps
 
-- {{< doclink path="features/quotas/" text="Storage quotas (v2.1.0+)" />}}
+- {{< doclink path="features/quotas/" text="Storage quotas (v2.1.x)" />}}
 - {{< doclink path="access-control/rules/" text="Access rules" />}}
 - {{< doclink path="access-control/troubleshooting/" text="Troubleshooting" />}}
 - {{< doclink path="configuration/users/" text="User management" />}}

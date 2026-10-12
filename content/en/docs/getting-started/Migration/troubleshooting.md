@@ -24,7 +24,7 @@ Common issues and solutions for migration.
 
 **Can't log in with old credentials**: Verify database migration was successful and database file has correct permissions. You can also {{< doclink path="reference/cli/#password-reset" text="reset via CLI" />}} if needed.
 
-## Permission changes (v2.0.0+)
+## Permission changes (v2.0.x)
 
 {{% alert context="warning" %}}
 **v2.0.0 behavior change**

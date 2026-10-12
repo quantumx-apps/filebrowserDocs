@@ -49,7 +49,7 @@ docker run -d \
 
 Access at `http://localhost`.
 
-On v2.x (v2.0.0+), if `adminPassword` is unset or left as `admin`, a random admin password is generated, logged once, and a password reset is required on first login. Any other value of `auth.methods.password.adminPassword` or `auth.adminPassword` is used as-is.
+On v2.x (v2.0.x), if `adminPassword` is unset or left as `admin`, a random admin password is generated, logged once, and a password reset is required on first login. Any other value of `auth.methods.password.adminPassword` or `auth.adminPassword` is used as-is.
 
 ## Basic Setup with Docker Compose
 
@@ -168,7 +168,7 @@ v2.0.0 uses SQLite, not the legacy database (`database.db`). Upgrading from v1.x
 {{% /alert %}}
 
 {{% alert context="info" %}}
-**Default Database Location (v2.0.0+)**: The Docker image sets `FILEBROWSER_DATABASE_PATH=/home/filebrowser/data/database.sqlite`. With the recommended `./data` mount, that file is `./data/database.sqlite` on the host when `server.database.path` is omitted. A path set in config wins over that environment variable. Standalone builds with no env var and no config path use `./filebrowser.sqlite`.
+**Default Database Location (v2.0.x)**: The Docker image sets `FILEBROWSER_DATABASE_PATH=/home/filebrowser/data/database.sqlite`. With the recommended `./data` mount, that file is `./data/database.sqlite` on the host when `server.database.path` is omitted. A path set in config wins over that environment variable. Standalone builds with no env var and no config path use `./filebrowser.sqlite`.
 
 To persist your database, mount a volume to `/home/filebrowser/data`:
 
