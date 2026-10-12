@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import yaml from 'yaml';
 
 /**
  * Recursively find all markdown files in a directory.
@@ -22,7 +23,7 @@ function findMarkdownFiles(dir, fileList = []) {
 }
 
 /**
- * Basic YAML syntax validation for Hugo front matter.
+ * YAML syntax validation for Hugo front matter using the YAML parser.
  */
 function validateYamlFrontMatter(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
@@ -44,26 +45,15 @@ function validateYamlFrontMatter(filePath) {
     return { valid: false, error: 'Unclosed front matter block (missing closing ---)' };
   }
   
-  const frontMatterLines = lines.slice(1, endIdx);
+  const frontMatterText = lines.slice(1, endIdx).join('\n');
   
-  // Validate basic YAML key-value formatting
-  for (let i = 0; i < frontMatterLines.length; i++) {
-    const line = frontMatterLines[i];
-    const trimmed = line.trim();
-    
-    // Ignore comments and empty lines
-    if (!trimmed || trimmed.startsWith('#')) continue;
-    
-    // Validate list item or key-value pair
-    if (trimmed.startsWith('-')) continue;
-    
-    if (!trimmed.includes(':') && !trimmed.endsWith(':')) {
-      return { 
-        valid: false, 
-        lineNum: i + 2, 
-        error: `Malformed YAML line (missing colon): "${line}"` 
-      };
-    }
+  try {
+    yaml.parse(frontMatterText);
+  } catch (err) {
+    return {
+      valid: false,
+      error: `Invalid YAML syntax: ${err.message}`
+    };
   }
   
   return { valid: true };
