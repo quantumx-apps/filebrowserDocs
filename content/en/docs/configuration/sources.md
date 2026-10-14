@@ -3,7 +3,7 @@ title: "Sources"
 description: "Configure file system sources"
 icon: "folder_open"
 date: "2025-10-08T14:59:30Z"
-lastmod: "2026-10-03T16:40:00Z"
+lastmod: "2026-10-12T18:00:00Z"
 order: 3
 ---
 
@@ -223,6 +223,66 @@ server:
       config:
         disabled: true
 ```
+
+### Copy Path mappings
+
+The existing **Copy Path** action normally copies the path shown inside
+FileBrowser. Set these optional mappings independently under each source's
+`config` to copy a path suitable for use outside FileBrowser.
+
+{{% alert context="info" %}}
+These options require a build that includes
+[configurable Copy Path mappings](https://github.com/gtsteffaniak/filebrowser/pull/3134).
+{{% /alert %}}
+
+| Option | Default | Behavior |
+| --- | --- | --- |
+| `copyPathPrefix` | Empty | Prepend an explicit absolute POSIX prefix starting with `/`. Trailing slashes on the prefix are accepted. |
+| `copyPathWindows` | `false` | Convert a leading single-letter drive component, such as `/D/path` or `/D`, into `D:\path` or `D:\`. Other paths retain POSIX separators. |
+
+```yaml
+server:
+  sources:
+    - name: Home
+      path: /mnt/home
+      config:
+        copyPathPrefix: /home/rt
+    - name: Data
+      path: /mnt/data
+      config:
+        copyPathPrefix: /data
+    - name: RT
+      path: /mnt/rt
+      config:
+        copyPathWindows: true
+```
+
+| Source | Path in FileBrowser | Copied path |
+| --- | --- | --- |
+| Home | `/pact_runs/books/` | `/home/rt/pact_runs/books/` |
+| Data | `/movies/test.mkv` | `/data/movies/test.mkv` |
+| RT | `/D/qwen36-longtest-nomtp.txt` | `D:\qwen36-longtest-nomtp.txt` |
+
+When both options are enabled, the prefix is applied before Windows conversion.
+Directory trailing separators, spaces, Unicode and literal `%` characters are
+preserved; Windows drive paths use backslashes.
+
+An enabled mapping includes the user's source-relative scope before the displayed
+path. For example, prefix `/home`, scope `/rt/`, and displayed path `/books/`
+produce `/home/rt/books/`. Search results use the selected item's source settings.
+Public shares keep share-relative paths. With neither option enabled, Copy Path
+keeps its previous output, including for scoped users.
+
+{{% alert context="warning" %}}
+Setting these options explicitly permits exposing the configured clipboard mapping
+to users with access to that source through the source-info API and updates.
+Choose a prefix those users are allowed to see. FileBrowser never derives the
+prefix from the source's filesystem `path` or resolves symlinks for Copy Path.
+{{% /alert %}}
+
+These mappings affect clipboard text only. Source paths, access rules, download
+URLs and filesystem operations are unchanged. Restart FileBrowser after changing
+the server configuration to load the options.
 
 ### useLogicalSize
 
