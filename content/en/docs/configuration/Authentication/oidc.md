@@ -34,7 +34,7 @@ auth:
       clientId: "filebrowser-client"
       clientSecret: "xxx"  # Use environment variable
       issuerUrl: "https://sso.example.com/application/o/filebrowser/"
-      scopes: "openid email profile"
+      scopes: "openid email profile groups"
       userIdentifier: "preferred_username"
 ```
 
